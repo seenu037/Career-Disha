@@ -1,0 +1,279 @@
+You are an expert full-stack AI engineer. Build a complete career guidance web application 
+for students in Andhra Pradesh and Telangana (India). The app must be production-quality, 
+visually rich, and work entirely in a single HTML file with embedded CSS and JavaScript.
+
+---
+
+## APPLICATION NAME
+"CareerDisha" — AI-Powered Career Guidance for AP & Telangana Students
+
+---
+
+## USER INPUTS (Form Section)
+
+Build a clean multi-step form collecting:
+
+### Step 1: Academic Profile
+- 10th Class marks (percentage or CGPA, board: AP/TS/CBSE/ICSE)
+- Intermediate marks (percentage, stream: MPC / BiPC / CEC / MEC / HEC)
+- Polytechnic DECE score (if applicable)
+- Navodaya Vidyalaya entrance score (if applicable)
+- Competitive exam scores (multi-select + score input):
+  - EAMCET (AP/TS), NEET, JEE Mains, JEE Advanced, CLAT, NDA, NIFT,
+    CA Foundation, ICET, ECET, POLYCET, LAWCET, PGECET
+
+### Step 2: Personal Profile
+- Age and current class/year
+- Interests (multi-select chips): Technology, Medicine, Law, Agriculture,
+  Arts & Design, Music & Performing Arts, Business, Teaching, Government Service,
+  Sports, Social Work, Media & Journalism, Digital Marketing, Finance
+- Passion statement (free text, max 200 chars)
+- Strength areas (multi-select): Logical thinking, Creativity, Communication,
+  Leadership, Analytical, Empathy, Technical, Research
+
+### Step 3: Practical Constraints
+- Budget for full education (slider + input):
+  - Under ₹1 Lakh / ₹1–3 Lakh / ₹3–7 Lakh / ₹7–15 Lakh / ₹15–30 Lakh / Above ₹30 Lakh
+- Location preference: Stay in AP/TS / Open to other states / Open to abroad
+- Family background context (optional): First-generation graduate / Parents in govt /
+  Parents in private / Business family
+- Scholarship eligibility (multi-select): SC/ST/BC/EWS/Minority/None/Not sure
+
+---
+
+## AI PROCESSING (Claude API Integration)
+
+On form submission, call the Anthropic Claude API (claude-sonnet-4-20250514) with a 
+carefully structured prompt that:
+
+1. Analyzes the student's complete academic + personal profile
+2. Generates career path recommendations
+3. Returns a strictly structured JSON response
+
+### API System Prompt:
+"""
+You are CareerDisha, an expert career counselor specializing in educational pathways 
+for students in Andhra Pradesh and Telangana, India. You have deep knowledge of:
+- AP and Telangana state education boards, entrance exams, and university systems
+- Central government schemes: PM Vidyalakshmi, SC/ST scholarships, EBC schemes
+- State schemes: AP Jagananna Vidya Deevena, TS Kalyana Lakshmi, fee reimbursement
+- Supply-demand dynamics across career domains in AP/TS job market (2024-2026 data)
+- Top colleges: JNTU, AU, OU, IITs/NITs in region, AIIMS Mangalagiri, NLU etc.
+
+Always respond ONLY with valid JSON. No markdown, no explanation outside JSON.
+"""
+
+### API User Prompt Template:
+"""
+Analyze this student profile and return career guidance as JSON:
+
+STUDENT PROFILE:
+- 10th Marks: {tenth_marks}% ({board})
+- Intermediate: {inter_marks}% (Stream: {stream})
+- Polytechnic Score: {poly_score}
+- Competitive Exams: {exam_scores}
+- Age: {age} | Current Level: {current_level}
+- Interests: {interests}
+- Passion: {passion}
+- Strengths: {strengths}
+- Education Budget: {budget}
+- Location Preference: {location}
+- Scholarship Eligibility: {scholarship}
+
+Return this exact JSON structure:
+{
+  "student_summary": "2-3 sentence profile summary",
+  "top_paths": [
+    {
+      "rank": 1,
+      "domain": "Engineering / Medicine / Law / etc",
+      "specific_career": "Software Engineer / Doctor / etc",
+      "match_score": 92,
+      "match_reason": "why this fits",
+      "entry_route": "EAMCET → B.Tech CSE → TCS/Infosys",
+      "top_colleges_ap_ts": ["college1", "college2", "college3"],
+      "duration_years": 4,
+      "estimated_cost": "₹3-5 Lakh (govt college)",
+      "scholarship_options": ["fee reimbursement", "merit scholarship"],
+      "starting_salary_range": "₹4-8 LPA",
+      "5yr_salary_range": "₹10-25 LPA",
+      "job_locations": ["Hyderabad", "Vizag", "Bengaluru"],
+      "supply_demand": {
+        "demand_level": "Very High",
+        "supply_level": "High",
+        "competition_index": "Medium",
+        "ap_ts_job_market_score": 85,
+        "growth_trend": "Rising",
+        "data_source": "NASSCOM 2025 / AP Skill Dev report"
+      },
+      "decision_tree": {
+        "current_node": "After 12th MPC",
+        "next_step": "Appear for EAMCET",
+        "branch_yes": "Score > 60% → Govt Engineering College",
+        "branch_no": "Score < 60% → Private College / Lateral Entry",
+        "milestone_3yr": "Internship at IT company",
+        "milestone_final": "Campus placement or GATE for M.Tech"
+      },
+      "risk_factors": ["Market saturation in basic IT", "Requires upskilling in AI/Cloud"],
+      "upside_factors": ["Hyderabad is India's #2 IT hub", "Remote work expands options"]
+    }
+  ],
+  "domain_market_data": [
+    {
+      "domain": "Engineering & IT",
+      "ap_ts_demand_score": 88,
+      "ap_ts_supply_score": 75,
+      "opportunity_gap": "High",
+      "annual_jobs_created_ap_ts": "45,000+",
+      "avg_salary_entry": "₹4.5 LPA",
+      "trend": "Rising",
+      "source": "NASSCOM India 2025"
+    },
+    {
+      "domain": "Medicine & Healthcare",
+      "ap_ts_demand_score": 82,
+      "ap_ts_supply_score": 45,
+      "opportunity_gap": "Very High",
+      "annual_jobs_created_ap_ts": "12,000+",
+      "avg_salary_entry": "₹6 LPA",
+      "trend": "Stable Rising",
+      "source": "NHA India Health Workforce Report 2024"
+    },
+    {
+      "domain": "Agriculture & AgriTech",
+      "ap_ts_demand_score": 70,
+      "ap_ts_supply_score": 30,
+      "opportunity_gap": "Very High",
+      "annual_jobs_created_ap_ts": "8,000+",
+      "avg_salary_entry": "₹3.5 LPA",
+      "trend": "Rising Fast",
+      "source": "AP AgriTech Policy 2024"
+    },
+    {
+      "domain": "Law",
+      "ap_ts_demand_score": 65,
+      "ap_ts_supply_score": 60,
+      "opportunity_gap": "Medium",
+      "annual_jobs_created_ap_ts": "5,000+",
+      "avg_salary_entry": "₹3-5 LPA",
+      "trend": "Stable",
+      "source": "Bar Council of India 2024"
+    },
+    {
+      "domain": "Digital Marketing & Media",
+      "ap_ts_demand_score": 78,
+      "ap_ts_supply_score": 40,
+      "opportunity_gap": "High",
+      "annual_jobs_created_ap_ts": "15,000+",
+      "avg_salary_entry": "₹3-4 LPA",
+      "trend": "Rising Fast",
+      "source": "IAMAI Digital Report 2025"
+    },
+    {
+      "domain": "Music & Performing Arts",
+      "ap_ts_demand_score": 50,
+      "ap_ts_supply_score": 35,
+      "opportunity_gap": "Medium",
+      "annual_jobs_created_ap_ts": "2,000+",
+      "avg_salary_entry": "Variable",
+      "trend": "Niche Growing",
+      "source": "Ministry of Culture India 2024"
+    },
+    {
+      "domain": "Government & Civil Services",
+      "ap_ts_demand_score": 90,
+      "ap_ts_supply_score": 95,
+      "opportunity_gap": "Low (High Competition)",
+      "annual_jobs_created_ap_ts": "20,000+",
+      "avg_salary_entry": "₹4-6 LPA",
+      "trend": "Stable",
+      "source": "APPSC / TSPSC Annual Report 2024"
+    },
+    {
+      "domain": "Finance & CA/CMA",
+      "ap_ts_demand_score": 72,
+      "ap_ts_supply_score": 55,
+      "opportunity_gap": "Medium-High",
+      "annual_jobs_created_ap_ts": "7,000+",
+      "avg_salary_entry": "₹5-8 LPA",
+      "trend": "Rising",
+      "source": "ICAI India Report 2024"
+    }
+  ],
+  "scholarship_alert": "Specific scholarships this student qualifies for based on profile",
+  "warning_flags": ["Any academic gaps or budget mismatches to flag"],
+  "counselor_note": "Personalized motivational note in Telugu-friendly tone"
+}
+"""
+
+---
+
+## OUTPUT VISUALIZATIONS
+
+Build these 4 visualization panels after AI response:
+
+### Panel 1: Career Match Cards
+- Top 3 recommended careers as visual cards
+- Each card shows: Domain icon, Match % circular gauge, Entry route, Salary range
+- Color coded: Green (>80% match), Yellow (60-80%), Orange (<60%)
+- Expandable to show full details
+
+### Panel 2: Interactive Decision Tree
+- SVG-based visual decision tree for the top recommended path
+- Nodes: Current position → Entrance Exam → College Type → Specialization → Career
+- Clickable nodes that expand to show details
+- Color: Blue (completed/current) → Green (recommended) → Gray (alternative)
+
+### Panel 3: AP/TS Domain Supply-Demand Chart
+- Horizontal bar chart (use Chart.js from CDN)
+- For each domain: show Demand score vs Supply score as grouped bars
+- Color the "opportunity gap" — wider gap = more opportunity
+- Add trend arrows (↑↓→)
+- Label with data source
+
+### Panel 4: Budget vs Path Feasibility Matrix
+- Table showing each recommended path vs budget buckets
+- Traffic light: Green = feasible, Yellow = stretch with scholarship, Red = out of range
+- Show scholarship options that bridge the gap
+
+---
+
+## DESIGN REQUIREMENTS
+
+- Telugu + English bilingual UI (key labels in both)
+- Mobile-first responsive design
+- Color palette: Saffron (#FF6B00), Deep Blue (#1A237E), White — AP/TS flag inspired
+- Use Google Fonts: Noto Sans Telugu + Inter
+- Progress indicator for multi-step form
+- Loading animation while Claude API processes
+- Print/Download button for the final guidance report
+- No frameworks — pure HTML/CSS/JS only (single file)
+
+---
+
+## TECHNICAL REQUIREMENTS
+
+- Single self-contained HTML file
+- Claude API key input field at top (stored in sessionStorage only, never logged)
+- API call to: https://api.anthropic.com/v1/messages
+- Model: claude-sonnet-4-20250514
+- max_tokens: 4000
+- Graceful error handling: API errors, JSON parse errors, network failures
+- Show raw JSON toggle for debugging
+- All Chart.js loaded from: https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js
+
+---
+
+## SAMPLE DATA
+Pre-fill a demo student profile button:
+- 10th: 78%, TS Board
+- Inter: 72%, MPC stream
+- EAMCET score: 45,000 rank
+- Interests: Technology, Agriculture
+- Passion: "Want to use technology to help farmers"
+- Budget: ₹3-7 Lakh
+- Scholarship: BC category
+
+Build the complete application now. Make it impressive, accurate, and genuinely useful 
+for a rural student in AP or Telangana making one of the most important decisions of 
+their life.
