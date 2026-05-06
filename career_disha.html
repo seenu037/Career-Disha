@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CareerDisha — AI Career Guidance for AP & Telangana Students</title>
+<title>CareerDisha — AI Career Guidance for Indian Students</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -280,7 +280,7 @@ textarea{resize:vertical;min-height:78px}
     <div class="logo-icon">🧭</div>
     <div class="logo-text">
       <h1>CareerDisha</h1>
-      <p>AI-Powered Career Guidance • AP & Telangana Students</p>
+      <p>AI-Powered Career Guidance • For Students Across India</p>
     </div>
   </div>
   <button class="btn btn-outline" onclick="window.print()" style="color:#fff;border-color:rgba(255,255,255,.4);font-size:13px;padding:8px 16px;">🖨️ Print</button>
@@ -304,88 +304,65 @@ textarea{resize:vertical;min-height:78px}
       <div class="step-circle" id="sc3">3</div>
     </div>
     <div class="step-labels">
-      <div class="step-label active" id="lbl1">Academic Profile</div>
-      <div class="step-label" id="lbl2">Personal Profile</div>
+      <div class="step-label active" id="lbl1">Personal Profile</div>
+      <div class="step-label" id="lbl2">Academic Profile</div>
       <div class="step-label" id="lbl3">Constraints</div>
     </div>
   </div>
 
-  <!-- STEP 1 -->
+  <!-- STEP 1: Personal Profile -->
   <div id="step1" class="card">
-    <div class="card-title">📚 Step 1: Academic Profile</div>
-    <div class="card-sub">Enter subject-wise marks and exam scores • మీ మార్కులు నమోదు చేయండి</div>
+    <div class="card-title">👤 Step 1: Personal Profile</div>
+    <div class="card-sub">Your background and interests • మీ నేపథ్యం మరియు ఆసక్తులు</div>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="field-label">10th Board <span class="tel">బోర్డు</span></label>
-        <select id="f_board">
-          <option value="">Select Board</option>
-          <option value="AP State">AP State Board (SSC)</option>
-          <option value="TS State">TS State Board (SSC)</option>
-          <option value="CBSE">CBSE</option>
-          <option value="ICSE">ICSE</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="field-label">Intermediate Stream <span class="tel">గ్రూపు</span></label>
-        <select id="f_stream" onchange="updateInterSubjects()">
-          <option value="">Select Stream</option>
-          <option value="MPC">MPC (Maths, Physics, Chemistry)</option>
-          <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
-          <option value="CEC">CEC (Civics, Economics, Commerce)</option>
-          <option value="MEC">MEC (Maths, Economics, Commerce)</option>
-          <option value="HEC">HEC (History, Economics, Civics)</option>
-          <option value="Not yet completed">Not yet completed Inter</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label class="field-label">State <span class="tel">రాష్ట్రం</span></label>
+      <select id="f_state" onchange="onStateChange()">
+        <option value="">Select State</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Puducherry">Puducherry</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option>
+        <option value="Ladakh">Ladakh</option>
+      </select>
     </div>
 
-    <!-- 10th Subjects -->
-    <div class="form-group full mt4">
-      <label class="field-label">10th Class — Subject-wise Marks <span class="tel">10వ తరగతి సబ్జెక్ట్ మార్కులు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject (SSC/10th standard)</div>
-      <table class="subj-table">
-        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
-        <tbody id="tenthTbody"></tbody>
-      </table>
-      <div id="topSubjDisplay" style="margin-top:8px;min-height:24px"></div>
-    </div>
-
-    <!-- Inter Subjects (dynamic) -->
-    <div class="form-group full mt4" id="interSection" style="display:none">
-      <label class="field-label">Intermediate — Subject-wise Marks <span class="tel">ఇంటర్ మార్కులు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each inter subject</div>
-      <table class="subj-table">
-        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
-        <tbody id="interTbody"></tbody>
-      </table>
-    </div>
-
-    <!-- ALL Competitive Exams -->
-    <div class="form-group full mt4">
-      <label class="field-label">Competitive Exams Appeared <span class="tel">పోటీ పరీక్షలు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click any exam you have appeared for and enter your score or rank</div>
-      <div id="examCategories"></div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn btn-outline" onclick="loadDemo()">⚡ Load Demo</button>
-      <button class="btn btn-primary" onclick="gotoStep(2)">Next: Personal Profile →</button>
-    </div>
-  </div>
-
-  <!-- STEP 2 -->
-  <div id="step2" class="card hidden">
-    <div class="card-title">👤 Step 2: Personal Profile</div>
-    <div class="card-sub">Your interests and strengths • మీ ఆసక్తులు మరియు బలాలు</div>
-    <div class="form-grid">
+    <div class="form-grid" style="margin-top:16px">
       <div class="form-group">
         <label class="field-label">Age <span class="tel">వయసు</span></label>
         <input type="number" id="f_age" min="12" max="30" placeholder="e.g. 17">
       </div>
       <div class="form-group">
         <label class="field-label">Current Class/Year <span class="tel">ప్రస్తుత తరగతి</span></label>
-        <select id="f_level">
+        <select id="f_level" onchange="onClassChange()">
           <option value="">Select Level</option>
           <option value="10th studying">10th Studying</option>
           <option value="10th completed">10th Completed</option>
@@ -399,6 +376,15 @@ textarea{resize:vertical;min-height:78px}
         </select>
       </div>
     </div>
+
+    <!-- Current Branch (shown when class is not 10th) -->
+    <div id="branchSection" class="form-group mt4" style="display:none">
+      <label id="branchLabel" class="field-label">Current Branch/Stream <span class="tel">గ్రూపు</span></label>
+      <select id="f_branch" onchange="onBranchChange()">
+        <option value="">Select Branch</option>
+      </select>
+    </div>
+
     <div class="form-group mt4">
       <label class="field-label">Career Interests <span class="tel">ఆసక్తులు</span></label>
       <div style="font-size:12px;color:var(--saffron);font-weight:600;margin-bottom:5px;">⭐ Your FIRST selection becomes your primary interest for alignment analysis</div>
@@ -414,6 +400,66 @@ textarea{resize:vertical;min-height:78px}
       <div class="chips" id="strengthChips"></div>
     </div>
     <div class="form-actions">
+      <button class="btn btn-outline" onclick="loadDemo()">⚡ Load Demo</button>
+      <button class="btn btn-primary" onclick="gotoStep(2)">Next: Academic Profile →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Academic Profile -->
+  <div id="step2" class="card hidden">
+    <div class="card-title">📚 Step 2: Academic Profile</div>
+    <div class="card-sub">Enter subject-wise marks and exam scores • మీ మార్కులు నమోదు చేయండి</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="field-label" id="boardLabel">10th Board <span class="tel">బోర్డు</span></label>
+        <select id="f_board">
+          <option value="">Select Board</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="field-label" id="streamLabel">Intermediate Stream <span class="tel">గ్రూపు</span></label>
+        <select id="f_stream" onchange="updateInterSubjects()">
+          <option value="">Select Stream</option>
+          <option value="MPC">MPC (Maths, Physics, Chemistry)</option>
+          <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
+          <option value="CEC">CEC (Civics, Economics, Commerce)</option>
+          <option value="MEC">MEC (Maths, Economics, Commerce)</option>
+          <option value="HEC">HEC (History, Economics, Civics)</option>
+          <option value="Not yet completed">Not yet completed</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 10th Subjects -->
+    <div class="form-group full mt4">
+      <label class="field-label">10th Class — Subject-wise Marks <span class="tel">10వ తరగతి సబ్జెక్ట్ మార్కులు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
+      <table class="subj-table">
+        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
+        <tbody id="tenthTbody"></tbody>
+      </table>
+      <div id="topSubjDisplay" style="margin-top:8px;min-height:24px"></div>
+    </div>
+
+    <!-- Inter Subjects (dynamic) -->
+    <div class="form-group full mt4" id="interSection" style="display:none">
+      <label class="field-label" id="interLabel">Intermediate — Subject-wise Marks <span class="tel">ఇంటర్ మార్కులు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
+      <table class="subj-table">
+        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
+        <tbody id="interTbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Competitive Exams -->
+    <div class="form-group full mt4">
+      <label class="field-label">Competitive Exams Appeared <span class="tel">పోటీ పరీక్షలు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click any exam you have appeared for and enter your score or rank</div>
+      <div id="examCategories"></div>
+    </div>
+
+    <div class="form-actions">
       <button class="btn btn-outline" onclick="gotoStep(1)">← Back</button>
       <button class="btn btn-primary" onclick="gotoStep(3)">Next: Constraints →</button>
     </div>
@@ -423,6 +469,7 @@ textarea{resize:vertical;min-height:78px}
   <div id="step3" class="card hidden">
     <div class="card-title">⚖️ Step 3: Practical Constraints</div>
     <div class="card-sub">Help us find realistic options • మీ పరిస్థితికి అనుకూలమైన మార్గాలు</div>
+    <div style="font-size:12px;background:var(--blue-pale);border-radius:8px;padding:8px 12px;margin-bottom:14px;color:var(--deep-blue)">ℹ️ Location options and scholarship information are tailored to your selected state.</div>
     <div class="form-group">
       <label class="field-label">Education Budget <span class="tel">విద్యకు బడ్జెట్</span></label>
       <div class="budget-grid" id="budgetGrid"></div>
@@ -471,7 +518,7 @@ textarea{resize:vertical;min-height:78px}
   </div>
 
   <div class="card">
-    <div class="section-title">📊 AP/TS Job Market Analysis <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">ఉద్యోగ అవకాశాలు</span></div>
+    <div class="section-title">📊 Job Market Analysis <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">ఉద్యోగ అవకాశాలు</span></div>
     <div class="chart-wrap"><canvas id="mChart"></canvas></div>
   </div>
 
@@ -513,7 +560,17 @@ var INTER_SUBJECTS = {
   'BiPC': ['Botany','Zoology','Physics','Chemistry','English','Second Language'],
   'CEC':  ['Commerce','Economics','Civics','English','Second Language'],
   'MEC':  ['Mathematics','Economics','Commerce','English','Second Language'],
-  'HEC':  ['History','Economics','Civics','English','Second Language']
+  'HEC':  ['History','Economics','Civics','English','Second Language'],
+  // State-specific stream aliases
+  'Science (PCM)':   ['Mathematics','Physics','Chemistry','English','Second Language'],
+  'Science (PCMB)':  ['Botany','Zoology','Physics','Chemistry','English','Second Language'],
+  'Science (PCB)':   ['Botany','Zoology','Physics','Chemistry','English','Second Language'],
+  'Science':         ['Mathematics','Physics','Chemistry','English','Second Language'],
+  'Commerce':        ['Commerce','Economics','Business Studies','English','Second Language'],
+  'Arts':            ['History','Political Science','Economics','English','Second Language'],
+  'Arts/Humanities': ['History','Political Science','Economics','English','Second Language'],
+  'Humanities':      ['History','Political Science','Economics','English','Second Language'],
+  'Vocational':      ['Vocational Subject','English','Second Language']
 };
 
 var EXAM_CATEGORIES = [
@@ -565,9 +622,42 @@ var INTEREST_DOMAIN = {
   'Finance':              ['Finance','CA/CMA/CS']
 };
 
+var STATE_BOARDS = {
+  'Andhra Pradesh': ['AP State Board (SSC)','CBSE','ICSE'],
+  'Telangana':      ['TS State Board (SSC)','CBSE','ICSE'],
+  'Karnataka':      ['Karnataka SSLC Board','CBSE','ICSE'],
+  'Maharashtra':    ['Maharashtra SSC Board','CBSE','ICSE'],
+  'Tamil Nadu':     ['TN State Board (SSLC)','CBSE','ICSE'],
+  'Kerala':         ['Kerala SSLC Board','CBSE','ICSE'],
+  'Gujarat':        ['GSEB (SSC)','CBSE','ICSE'],
+  'West Bengal':    ['WBBSE (Madhyamik)','CBSE','ICSE'],
+  'Rajasthan':      ['RBSE','CBSE','ICSE'],
+  'Uttar Pradesh':  ['UP Board (High School)','CBSE','ICSE'],
+  'Madhya Pradesh': ['MPBSE','CBSE','ICSE'],
+  'Bihar':          ['BSEB','CBSE','ICSE'],
+  'Punjab':         ['PSEB','CBSE','ICSE'],
+  'Haryana':        ['HBSE','CBSE','ICSE'],
+  'Odisha':         ['BSE Odisha','CBSE','ICSE'],
+  'Assam':          ['SEBA','CBSE','ICSE'],
+  'Delhi':          ['CBSE','ICSE','Delhi State Board'],
+  '_default':       ['State Board','CBSE','ICSE']
+};
+
+var STATE_STREAMS = {
+  'Andhra Pradesh': { label:'Intermediate Group', options:['MPC','BiPC','CEC','MEC','HEC','Other'] },
+  'Telangana':      { label:'Intermediate Group', options:['MPC','BiPC','CEC','MEC','HEC','Other'] },
+  'Karnataka':      { label:'PUC Stream',         options:['Science (PCM)','Science (PCMB)','Science (PCB)','Commerce','Arts','Other'] },
+  'Maharashtra':    { label:'HSC Stream',          options:['Science','Commerce','Arts','Other'] },
+  'Tamil Nadu':     { label:'HSC Group',           options:['Science (PCM)','Science (PCMB)','Commerce','Arts','Vocational','Other'] },
+  'Kerala':         { label:'Plus Two Stream',     options:['Science','Commerce','Humanities','Other'] },
+  '_default':       { label:'Current Branch/Stream', options:['Science (PCM)','Science (PCMB/Bio)','Commerce','Arts/Humanities','Other'] }
+};
+
 // ── STATE ────────────────────────────────────────────────
 var step = 1;
 var currentStream = '';
+var currentState = '';
+var currentBranch = '';
 var sel = { interests:[], strengths:[], scholarships:[], budget:'', location:'', family:'' };
 var mChart = null;
 
@@ -577,13 +667,14 @@ var mChart = null;
 (function init() {
   buildSubjRows('tenthTbody', TENTH_SUBJECTS, 'tenth');
   buildExamCategories();
-  makeChips('interestChips',['Technology','Medicine','Law','Agriculture','Arts & Design',
-    'Music & Performing Arts','Business','Teaching','Government Service','Sports',
+  makeChips('interestChips',['Medicine','Law','Agriculture','Arts & Design',
+    'Music & Performing Arts','Business','Teaching','Government Service','Technology','Sports',
     'Social Work','Media & Journalism','Digital Marketing','Finance'], 'interests', false);
   makeChips('strengthChips',['Logical thinking','Creativity','Communication','Leadership',
     'Analytical','Empathy','Technical','Research'], 'strengths', false);
-  makeChips('schlChips',['SC','ST','BC','EWS','Minority','None','Not sure'], 'scholarships', false);
-  makeChips('locChips',['Stay in AP/TS only','Open to other states','Open to abroad'], 'location', true);
+  makeChips('schlChips',['SC (Scheduled Caste)','ST (Scheduled Tribe)','OBC / BC','EWS',
+    'Minority','General / Open','None','Not sure'], 'scholarships', false);
+  // locChips built dynamically by onStateChange() when state is selected
   makeChips('famChips',['First-generation graduate','Parents in government',
     'Parents in private sector','Business family'], 'family', true);
   var budgets = ['Under ₹1 Lakh','₹1–3 Lakh','₹3–7 Lakh','₹7–15 Lakh','₹15–30 Lakh','Above ₹30 Lakh'];
@@ -676,7 +767,9 @@ function refreshTopSubjDisplay() {
 
 function buildExamCategories() {
   var container = document.getElementById('examCategories');
-  EXAM_CATEGORIES.forEach(function(cat) {
+  container.innerHTML = '';
+  var cats = getExamCategoriesForState(currentState);
+  cats.forEach(function(cat) {
     var wrap = document.createElement('div');
     wrap.className = 'exam-category';
     wrap.innerHTML = '<div class="exam-cat-title">' + cat.name + '</div>';
@@ -700,6 +793,164 @@ function buildExamCategories() {
 function toggleExam(el) {
   el.classList.toggle('on');
   el.querySelector('.exam-cb').checked = el.classList.contains('on');
+}
+
+// ── STATE / CLASS EVENT HANDLERS ──────────────────────────
+function onStateChange() {
+  currentState = document.getElementById('f_state').value;
+  populateBoardDropdown(currentState);
+  populateBranchOptions();
+  rebuildLocChips(currentState);
+  buildExamCategories();
+}
+
+function onClassChange() {
+  var level = document.getElementById('f_level').value;
+  var is10th = (!level || level === '10th studying' || level === '10th completed');
+  document.getElementById('branchSection').style.display = is10th ? 'none' : 'block';
+  if (!is10th) populateBranchOptions();
+  // Hide inter section in step 2 when student is in 10th
+  var interSection = document.getElementById('interSection');
+  if (interSection && is10th) {
+    interSection.style.display = 'none';
+    currentStream = '';
+  }
+}
+
+function onBranchChange() {
+  currentBranch = document.getElementById('f_branch').value;
+  // Pre-select matching stream in Step 2
+  var streamSel = document.getElementById('f_stream');
+  for (var i = 0; i < streamSel.options.length; i++) {
+    if (streamSel.options[i].value === currentBranch) {
+      streamSel.value = currentBranch;
+      currentStream = currentBranch;
+      updateInterSubjects();
+      break;
+    }
+  }
+}
+
+function populateBoardDropdown(state) {
+  var boards = STATE_BOARDS[state] || STATE_BOARDS['_default'];
+  var sel2 = document.getElementById('f_board');
+  var prev = sel2.value;
+  sel2.innerHTML = '<option value="">Select Board</option>';
+  boards.forEach(function(b) {
+    var o = document.createElement('option');
+    o.value = b; o.textContent = b;
+    if (b === prev) o.selected = true;
+    sel2.appendChild(o);
+  });
+}
+
+function populateBranchOptions() {
+  var state = document.getElementById('f_state').value;
+  var info = STATE_STREAMS[state] || STATE_STREAMS['_default'];
+  // Update Step 1 branch field
+  var branchLbl = document.getElementById('branchLabel');
+  var branchSel = document.getElementById('f_branch');
+  if (branchLbl) branchLbl.innerHTML = info.label + ' <span class="tel">గ్రూపు</span>';
+  var prevBranch = branchSel ? branchSel.value : '';
+  if (branchSel) {
+    branchSel.innerHTML = '<option value="">Select ' + info.label + '</option>';
+    info.options.forEach(function(opt) {
+      var o = document.createElement('option');
+      o.value = opt; o.textContent = opt;
+      if (opt === prevBranch) o.selected = true;
+      branchSel.appendChild(o);
+    });
+  }
+  // Update Step 2 stream dropdown
+  var streamLbl = document.getElementById('streamLabel');
+  var streamSel = document.getElementById('f_stream');
+  if (streamLbl) streamLbl.innerHTML = info.label + ' <span class="tel">గ్రూపు</span>';
+  var prevStream = streamSel ? streamSel.value : '';
+  if (streamSel) {
+    var opts = info.options.concat(['Not yet completed']);
+    streamSel.innerHTML = '<option value="">Select ' + info.label + '</option>';
+    opts.forEach(function(opt) {
+      var o = document.createElement('option');
+      o.value = opt; o.textContent = opt;
+      if (opt === prevStream) o.selected = true;
+      streamSel.appendChild(o);
+    });
+    if (prevStream) { currentStream = prevStream; updateInterSubjects(); }
+  }
+}
+
+function rebuildLocChips(state) {
+  var stateLabel = state || 'Home State';
+  var locOptions = ['Stay in ' + stateLabel + ' only', 'Open to other states', 'Open to abroad'];
+  var prevLoc = sel.location;
+  var c = document.getElementById('locChips');
+  c.innerHTML = '';
+  sel.location = '';
+  locOptions.forEach(function(item) {
+    var d = document.createElement('div');
+    d.className = 'chip single';
+    d.textContent = item;
+    d.addEventListener('click', function() {
+      c.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('on'); });
+      d.classList.add('on'); sel.location = item;
+    });
+    if (item === prevLoc || (prevLoc && item !== locOptions[0] && item === prevLoc)) {
+      d.classList.add('on'); sel.location = item;
+    }
+    c.appendChild(d);
+  });
+}
+
+function getExamCategoriesForState(state) {
+  var base = EXAM_CATEGORIES;
+  if (!state || state === 'Andhra Pradesh' || state === 'Telangana') return base;
+  if (state === 'Karnataka') {
+    return [
+      { name:'Engineering & Technology', exams:['KCET (Karnataka CET)','COMEDK UGET','JEE Mains','JEE Advanced','BITSAT','VITEEE'] },
+      { name:'Medical & Pharmacy',       exams:['NEET UG','KCET Medical','AIIMS (NEET)'] },
+      { name:'Law',                       exams:['CLAT','AILET (NLU Delhi)','LSAT India'] },
+      { name:'Architecture & Design',    exams:['NATA','JEE Paper 2 (B.Arch)','NID DAT','NIFT Entrance'] },
+      { name:'Defense & Police',         exams:['NDA','CDS','AFCAT (Air Force)','KSP (Karnataka Police)'] },
+      { name:'Finance & Commerce',       exams:['CA Foundation','CMA Foundation','CS Foundation'] },
+      { name:'Agriculture',              exams:['ICAR AIEEA','KCET Agriculture'] },
+      { name:'Civil Services',           exams:['UPSC Civil Services Prelims','KPSC Group A','KPSC Group C'] },
+      { name:'Banking & Insurance',      exams:['IBPS PO','SBI PO','RBI Grade B','IBPS Clerk','LIC ADO'] },
+      { name:'SSC & Railway',            exams:['SSC CGL','SSC CHSL','RRB NTPC','RRB Group D'] },
+      { name:'Teaching & Education',     exams:['KARTET','CTET'] },
+      { name:'Polytechnic & PG Entry',   exams:['DCET (Karnataka Lateral Entry)','GATE','CAT','MAT'] }
+    ];
+  }
+  if (state === 'Maharashtra') {
+    return [
+      { name:'Engineering & Technology', exams:['MHT-CET (Engg)','JEE Mains','JEE Advanced','BITSAT','VITEEE'] },
+      { name:'Medical & Pharmacy',       exams:['NEET UG','MHT-CET Medical','AIIMS (NEET)'] },
+      { name:'Law',                       exams:['CLAT','AILET (NLU Delhi)','MH-CET Law'] },
+      { name:'Architecture & Design',    exams:['NATA','JEE Paper 2 (B.Arch)','NID DAT','NIFT Entrance'] },
+      { name:'Defense & Police',         exams:['NDA','CDS','AFCAT (Air Force)'] },
+      { name:'Finance & Commerce',       exams:['CA Foundation','CMA Foundation','CS Foundation'] },
+      { name:'Agriculture',              exams:['ICAR AIEEA','MHT-CET Agriculture'] },
+      { name:'Civil Services',           exams:['UPSC Civil Services Prelims','MPSC Group A','MPSC Group B'] },
+      { name:'Banking & Insurance',      exams:['IBPS PO','SBI PO','RBI Grade B','IBPS Clerk'] },
+      { name:'SSC & Railway',            exams:['SSC CGL','SSC CHSL','RRB NTPC'] },
+      { name:'Teaching & Education',     exams:['MAHTET','CTET'] },
+      { name:'Polytechnic & PG Entry',   exams:['MAH-POLY CET','GATE','CAT','MAT'] }
+    ];
+  }
+  // Generic national exams for all other states
+  return [
+    { name:'Engineering & Technology', exams:['JEE Mains','JEE Advanced','BITSAT','VITEEE','SRMJEEE','MET Manipal'] },
+    { name:'Medical & Pharmacy',       exams:['NEET UG','AIIMS (NEET)'] },
+    { name:'Law',                       exams:['CLAT','AILET (NLU Delhi)','LSAT India'] },
+    { name:'Architecture & Design',    exams:['NATA','JEE Paper 2 (B.Arch)','NID DAT','NIFT Entrance'] },
+    { name:'Defense & Police',         exams:['NDA','CDS','AFCAT (Air Force)'] },
+    { name:'Finance & Commerce',       exams:['CA Foundation','CMA Foundation','CS Foundation'] },
+    { name:'Agriculture',              exams:['ICAR AIEEA'] },
+    { name:'Civil Services',           exams:['UPSC Civil Services Prelims','State PSC (Group 1)','State PSC (Group 2)'] },
+    { name:'Banking & Insurance',      exams:['IBPS PO','SBI PO','RBI Grade B','IBPS Clerk','LIC ADO'] },
+    { name:'SSC & Railway',            exams:['SSC CGL','SSC CHSL','RRB NTPC','RRB Group D'] },
+    { name:'Teaching & Education',     exams:['State TET','CTET'] },
+    { name:'Polytechnic & PG Entry',   exams:['GATE','CAT','MAT','XAT'] }
+  ];
 }
 
 function makeChips(containerId, items, key, single) {
@@ -736,6 +987,22 @@ function updateCC() {
 // ── VALIDATION ────────────────────────────────────────────
 function validateStep(n) {
   if (n === 1) {
+    // Step 1 = Personal Profile
+    if (!document.getElementById('f_state').value) {
+      alert('Please select your state before continuing.'); return false;
+    }
+    if (!document.getElementById('f_age').value) {
+      alert('Please enter your age before continuing.'); return false;
+    }
+    if (!document.getElementById('f_level').value) {
+      alert('Please select your current class/year before continuing.'); return false;
+    }
+    if (sel.interests.length === 0) {
+      alert('Please select at least one career interest before continuing.'); return false;
+    }
+  }
+  if (n === 2) {
+    // Step 2 = Academic Profile
     if (!document.getElementById('f_board').value) {
       alert('Please select your 10th class board before continuing.'); return false;
     }
@@ -746,10 +1013,6 @@ function validateStep(n) {
     if (!hasTenthMark) {
       alert('Please enter at least one 10th class subject mark before continuing.'); return false;
     }
-  }
-  if (n === 2) {
-    if (!document.getElementById('f_age').value) { alert('Please enter your age before continuing.'); return false; }
-    if (sel.interests.length === 0) { alert('Please select at least one career interest.'); return false; }
   }
   if (n === 3) {
     if (!sel.budget) { alert('Please select your education budget range.'); return false; }
@@ -798,8 +1061,10 @@ function collectData() {
     exams.push(el.getAttribute('data-exam') + ': ' + (el.querySelector('.exam-score').value || 'appeared'));
   });
   return {
+    state: document.getElementById('f_state').value || 'Not specified',
     board: document.getElementById('f_board').value || 'Not specified',
     stream: currentStream || 'Not specified',
+    branch: currentBranch || currentStream || 'Not specified',
     tenthMarks: tenthMarks, tenthAvg: avg(tenthMarks),
     interMarks: interMarks, interAvg: avg(interMarks),
     exams: exams.length ? exams.join('; ') : 'None',
@@ -871,6 +1136,7 @@ function showAlignModal(topSubj, topInterest, aligned) {
 }
 
 async function proceedWithAnalysis(pathChoice) {
+  window._savedFormSnapshot = captureFormSnapshot();
   document.getElementById('alignModal').classList.remove('on');
   var data = window._pendingData;
   var topSubj = window._pendingTopSubj;
@@ -900,12 +1166,17 @@ async function callAPI(d) {
 
   var tenthRows = Object.keys(d.tenthMarks).map(function(s){ return '  ' + s + ': ' + d.tenthMarks[s] + '/100'; }).join('\n') || '  Not provided';
   var interRows = Object.keys(d.interMarks).map(function(s){ return '  ' + s + ': ' + d.interMarks[s] + '/100'; }).join('\n') || '  Not provided';
+  var is10th = (d.level === '10th studying' || d.level === '10th completed');
 
-  var sys = 'You are CareerDisha, an expert career counselor specializing in Andhra Pradesh and Telangana students. You have deep knowledge of:\n- AP/TS state boards, entrance exams, and university systems\n- NIRF 2024 college rankings (nirf.ac.in)\n- Central schemes: PM Vidyalakshmi, National SC/ST/BC/EWS/Minority scholarships\n- AP schemes (CM Chandrababu Naidu, TDP, 2024+): AP Fee Reimbursement, NTR Vidyonnathi education loans, Thalliki Vandanam, APSSDC skill development\n- TS schemes (CM Revanth Reddy, Congress, 2024+): TS Fee Reimbursement, TS Vidya Deevena, Kalyana Lakshmi/Shaadi Mubarak, TSPSC free coaching\n- AP/TS job market supply-demand data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB\n- All major competitive exams and their eligibility criteria\n\nRespond ONLY with valid JSON. No markdown, no text outside JSON.';
+  var sys = 'You are CareerDisha, an expert career counselor for Indian students across all states. You have deep knowledge of:\n- State boards: AP State (SSC), TS State (SSC), Karnataka SSLC, Maharashtra SSC, TN State Board, Kerala SSLC, GSEB, WBBSE, CBSE, ICSE and all other state boards\n- Higher secondary: AP/TS Intermediate (MPC/BiPC/CEC/MEC/HEC), Karnataka PUC, Maharashtra HSC, TN HSC, Kerala Plus Two\n- NIRF 2024 college rankings (nirf.ac.in)\n- Central schemes: PM Vidyalakshmi, National SC/ST/OBC/EWS/Minority scholarships\n- AP schemes (CM Chandrababu Naidu, TDP, 2024+): AP Fee Reimbursement, NTR Vidyonnathi education loans, Thalliki Vandanam, APSSDC skill development\n- TS schemes (CM Revanth Reddy, Congress, 2024+): TS Fee Reimbursement, TS Vidya Deevena, Kalyana Lakshmi/Shaadi Mubarak, TSPSC free coaching\n- Karnataka: Karnataka Rajyotsava Scholarship, KSSM Portal, KCET, COMEDK\n- Maharashtra: MAHADBT, MHT-CET, MPSC\n- All state PSCs and competitive exams; job market data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB\n\nRespond ONLY with valid JSON. No markdown, no text outside JSON.';
 
-  var schema = '{\n  "student_summary": "2-3 sentence profile based on subject marks and interests",\n  "top_paths": [\n    {\n      "rank": 1,\n      "domain": "broad domain",\n      "specific_career": "specific job title",\n      "match_score": 92,\n      "match_reason": "why this fits based on subject scores and interests",\n      "entry_route": "step-by-step route e.g. EAMCET → B.Tech CSE → Placement",\n      "top_colleges_ranked": [\n        {"name": "IIT Hyderabad", "nirf_rank": "8", "nirf_year": "2024", "type": "IIT/Central/State/Deemed/Private", "state": "TS"}\n      ],\n      "duration_years": 4,\n      "estimated_cost": "₹3-5 Lakh (govt college)",\n      "scholarship_options": ["scholarship1"],\n      "starting_salary_range": "₹4-8 LPA",\n      "5yr_salary_range": "₹10-25 LPA",\n      "job_locations": ["Hyderabad","Vizag"],\n      "supply_demand": {\n        "demand_level": "Very High",\n        "supply_level": "High",\n        "competition_index": "Medium",\n        "ap_ts_job_market_score": 85,\n        "growth_trend": "Rising",\n        "data_source": "NASSCOM 2024"\n      },\n      "jobs_market": {\n        "total_vacancies_ap_ts_annual": "45,000",\n        "estimated_applicants": "2,50,000",\n        "competition_ratio": "1 job per 5.5 applicants",\n        "data_source": "NASSCOM Strategic Review 2024",\n        "data_url": "https://nasscom.in"\n      },\n      "job_portals": [\n        {"name": "Naukri.com", "url": "https://naukri.com", "focus": "General IT/Engineering"},\n        {"name": "LinkedIn Jobs", "url": "https://linkedin.com/jobs", "focus": "Professional Network"},\n        {"name": "NCS Portal", "url": "https://ncs.gov.in", "focus": "Govt/PSU Jobs"}\n      ],\n      "citations": [\n        {"fact": "exact statistic being cited", "source": "Source Name Year", "url": "https://official-url"}\n      ],\n      "decision_tree": {\n        "current_node": "Current Position",\n        "next_step": "Immediate next step",\n        "branch_yes": "If criteria met",\n        "branch_no": "Alternative path",\n        "milestone_3yr": "3-year milestone",\n        "milestone_final": "Final career goal"\n      },\n      "risk_factors": ["risk1"],\n      "upside_factors": ["upside1"]\n    }\n  ],\n  "domain_market_data": [\n    {"domain":"Engineering & IT","ap_ts_demand_score":88,"ap_ts_supply_score":75,"opportunity_gap":"High","annual_jobs_created_ap_ts":"45,000+","avg_salary_entry":"₹4.5 LPA","trend":"Rising","source":"NASSCOM 2024"},\n    {"domain":"Medicine & Healthcare","ap_ts_demand_score":82,"ap_ts_supply_score":45,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"12,000+","avg_salary_entry":"₹6 LPA","trend":"Stable Rising","source":"MoHFW 2024"},\n    {"domain":"Agriculture & AgriTech","ap_ts_demand_score":70,"ap_ts_supply_score":30,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"8,000+","avg_salary_entry":"₹3.5 LPA","trend":"Rising Fast","source":"APEDA 2024"},\n    {"domain":"Law","ap_ts_demand_score":65,"ap_ts_supply_score":60,"opportunity_gap":"Medium","annual_jobs_created_ap_ts":"5,000+","avg_salary_entry":"₹3-5 LPA","trend":"Stable","source":"Bar Council 2024"},\n    {"domain":"Digital Marketing","ap_ts_demand_score":78,"ap_ts_supply_score":40,"opportunity_gap":"High","annual_jobs_created_ap_ts":"15,000+","avg_salary_entry":"₹3-4 LPA","trend":"Rising Fast","source":"IAMAI 2024"},\n    {"domain":"Government & Civil Services","ap_ts_demand_score":90,"ap_ts_supply_score":95,"opportunity_gap":"Low","annual_jobs_created_ap_ts":"20,000+","avg_salary_entry":"₹4-6 LPA","trend":"Stable","source":"APPSC 2024"},\n    {"domain":"Finance & CA/CMA","ap_ts_demand_score":72,"ap_ts_supply_score":55,"opportunity_gap":"Medium-High","annual_jobs_created_ap_ts":"7,000+","avg_salary_entry":"₹5-8 LPA","trend":"Rising","source":"ICAI 2024"}\n  ],\n  "scholarship_alert": "Specific scholarships this student qualifies for",\n  "warning_flags": ["any academic gaps or budget issues"],\n  "counselor_note": "Personalized motivational note in Telugu-friendly warm tone"\n}';
+  var schema = '{\n  "student_summary": "2-3 sentence profile based on subject marks and interests",\n  "top_paths": [\n    {\n      "rank": 1,\n      "domain": "broad domain",\n      "specific_career": "specific job title",\n      "match_score": 92,\n      "match_reason": "why this fits based on subject scores and interests",\n      "entry_route": "step-by-step route e.g. EAMCET → B.Tech CSE → Placement",\n      "intermediate_stream_recommendation": "Recommended stream for 10th student e.g. MPC/BiPC/Science — include only if student is in 10th class",\n      "entrance_exam_links": [\n        {"exam": "EAMCET/JEE/NEET/KCET etc.", "url": "official exam website URL", "eligibility": "After 12th with which stream"}\n      ],\n      "top_colleges_ranked": [\n        {"name": "IIT Hyderabad", "nirf_rank": "8", "nirf_year": "2024", "type": "IIT/Central/State/Deemed/Private", "state": "TS"}\n      ],\n      "duration_years": 4,\n      "estimated_cost": "₹3-5 Lakh (govt college)",\n      "scholarship_options": ["scholarship1"],\n      "starting_salary_range": "₹4-8 LPA",\n      "5yr_salary_range": "₹10-25 LPA",\n      "job_locations": ["Hyderabad","Vizag"],\n      "supply_demand": {\n        "demand_level": "Very High",\n        "supply_level": "High",\n        "competition_index": "Medium",\n        "ap_ts_job_market_score": 85,\n        "growth_trend": "Rising",\n        "data_source": "NASSCOM 2024"\n      },\n      "jobs_market": {\n        "total_vacancies_ap_ts_annual": "45,000",\n        "estimated_applicants": "2,50,000",\n        "competition_ratio": "1 job per 5.5 applicants",\n        "data_source": "NASSCOM Strategic Review 2024",\n        "data_url": "https://nasscom.in"\n      },\n      "job_portals": [\n        {"name": "Naukri.com", "url": "https://naukri.com", "focus": "General IT/Engineering"},\n        {"name": "LinkedIn Jobs", "url": "https://linkedin.com/jobs", "focus": "Professional Network"},\n        {"name": "NCS Portal", "url": "https://ncs.gov.in", "focus": "Govt/PSU Jobs"}\n      ],\n      "citations": [\n        {"fact": "exact statistic being cited", "source": "Source Name Year", "url": "https://official-url"}\n      ],\n      "decision_tree": {\n        "current_node": "Current Position",\n        "next_step": "Immediate next step",\n        "branch_yes": "If criteria met",\n        "branch_no": "Alternative path",\n        "milestone_3yr": "3-year milestone",\n        "milestone_final": "Final career goal"\n      },\n      "risk_factors": ["risk1"],\n      "upside_factors": ["upside1"]\n    }\n  ],\n  "domain_market_data": [\n    {"domain":"Engineering & IT","ap_ts_demand_score":88,"ap_ts_supply_score":75,"opportunity_gap":"High","annual_jobs_created_ap_ts":"45,000+","avg_salary_entry":"₹4.5 LPA","trend":"Rising","source":"NASSCOM 2024"},\n    {"domain":"Medicine & Healthcare","ap_ts_demand_score":82,"ap_ts_supply_score":45,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"12,000+","avg_salary_entry":"₹6 LPA","trend":"Stable Rising","source":"MoHFW 2024"},\n    {"domain":"Agriculture & AgriTech","ap_ts_demand_score":70,"ap_ts_supply_score":30,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"8,000+","avg_salary_entry":"₹3.5 LPA","trend":"Rising Fast","source":"APEDA 2024"},\n    {"domain":"Law","ap_ts_demand_score":65,"ap_ts_supply_score":60,"opportunity_gap":"Medium","annual_jobs_created_ap_ts":"5,000+","avg_salary_entry":"₹3-5 LPA","trend":"Stable","source":"Bar Council 2024"},\n    {"domain":"Digital Marketing","ap_ts_demand_score":78,"ap_ts_supply_score":40,"opportunity_gap":"High","annual_jobs_created_ap_ts":"15,000+","avg_salary_entry":"₹3-4 LPA","trend":"Rising Fast","source":"IAMAI 2024"},\n    {"domain":"Government & Civil Services","ap_ts_demand_score":90,"ap_ts_supply_score":95,"opportunity_gap":"Low","annual_jobs_created_ap_ts":"20,000+","avg_salary_entry":"₹4-6 LPA","trend":"Stable","source":"APPSC 2024"},\n    {"domain":"Finance & CA/CMA","ap_ts_demand_score":72,"ap_ts_supply_score":55,"opportunity_gap":"Medium-High","annual_jobs_created_ap_ts":"7,000+","avg_salary_entry":"₹5-8 LPA","trend":"Rising","source":"ICAI 2024"}\n  ],\n  "scholarship_alert": "Specific scholarships this student qualifies for",\n  "warning_flags": ["any academic gaps or budget issues"],\n  "counselor_note": "Personalized motivational note in Telugu-friendly warm tone"\n}';
 
-  var prompt = pathNote + '\n\nSTUDENT PROFILE:\nBoard: ' + d.board + ' | Stream: ' + d.stream +
+  var tenthNote = is10th
+    ? '\n\nIMPORTANT — 10TH CLASS STUDENT: For each career path, the decision_tree MUST show the full intermediate pathway: stream selection (MPC/BiPC/Science/Commerce etc.) → 11th-12th study → entrance exam → degree → career. Include intermediate_stream_recommendation and entrance_exam_links with official government URLs.'
+    : '';
+
+  var prompt = pathNote + '\n\nSTUDENT PROFILE:\nState: ' + d.state + '\nBoard: ' + d.board + ' | Stream/Branch: ' + d.branch +
     '\n\n10th Subject Marks:\n' + tenthRows + '\n10th Average: ' + d.tenthAvg + '%' +
     '\n\nIntermediate Subject Marks:\n' + interRows + '\nInter Average: ' + d.interAvg + '%' +
     '\n\nTop Merit Subject (aggregated 10th+inter): ' + d.topMeritSubject + (d.topMeritScore >= 0 ? ' (' + d.topMeritScore.toFixed(1) + '%)' : '') +
@@ -919,7 +1190,8 @@ async function callAPI(d) {
     '\nLocation: ' + d.location +
     '\nFamily: ' + d.family +
     '\nScholarship: ' + d.scholarship +
-    '\n\nMANDATORY REQUIREMENTS:\n1. Every demand/supply fact MUST cite the exact authoritative source name and year\n2. Include REAL job numbers: annual vacancies in AP/TS, estimated applicants, competition ratio\n3. Top colleges MUST include their real NIRF 2024 rank number from nirf.ac.in\n4. Include 3-4 official job portal URLs relevant to each career domain\n5. Use only 2023-2025 data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB, ICAI, Bar Council, APPSC, TSPSC etc.\n\nReturn ONLY this JSON (no markdown):\n' + schema;
+    tenthNote +
+    '\n\nMANDATORY REQUIREMENTS:\n1. Every demand/supply fact MUST cite the exact authoritative source name and year\n2. Include REAL job numbers: annual vacancies, estimated applicants, competition ratio relevant to student\'s state\n3. Top colleges MUST include their real NIRF 2024 rank number from nirf.ac.in\n4. Include 3-4 official job portal URLs relevant to each career domain\n5. Use only 2023-2025 data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB, ICAI, Bar Council, PSC websites etc.\n\nReturn ONLY this JSON (no markdown):\n' + schema;
 
   var res = await fetch('/.netlify/functions/chat', {
     method: 'POST',
@@ -927,7 +1199,7 @@ async function callAPI(d) {
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       max_tokens: 4000,
-      messages: [{ role:'system', content:sys }, { role:'user', content:prompt }]
+      messages: [{ role: 'system', content: sys }, { role: 'user', content: prompt }]
     })
   });
 
@@ -1089,6 +1361,8 @@ function renderCards(paths) {
         collegesHtml +
         '<div style="font-size:12px;font-weight:700;color:var(--purple);margin:12px 0 6px">📊 AP/TS Job Market Data</div>' +
         jobsHtml +
+        (p.intermediate_stream_recommendation ? '<div class="drow"><span class="dlabel">Recommended Stream</span><span class="dval" style="color:var(--green)">'+p.intermediate_stream_recommendation+'</span></div>' : '') +
+        (p.entrance_exam_links && p.entrance_exam_links.length ? '<div style="font-size:12px;font-weight:700;color:var(--green);margin:12px 0 6px">📝 Entrance Exams to Target</div><div class="portals-grid">'+p.entrance_exam_links.map(function(el){ return '<a href="'+el.url+'" target="_blank" rel="noopener" class="portal-link" style="border-color:var(--green);background:var(--green-light);color:var(--green)">🎓 '+el.exam+'</a>'; }).join('')+'</div>' : '') +
         '<div style="font-size:12px;font-weight:700;color:var(--blue);margin:12px 0 6px">🌐 Official Job Application Portals</div>' +
         portalsHtml +
         (risks ? '<div class="risks"><h5>⚠️ Risk Factors</h5>'+risks+'</div>' : '') +
@@ -1211,13 +1485,25 @@ function renderBudget(paths, userBudget) {
 
 // ── DEMO DATA ─────────────────────────────────────────────
 function loadDemo() {
-  document.getElementById('f_board').value = 'TS State';
-  document.getElementById('f_stream').value = 'MPC';
-  updateInterSubjects();
+  // Step 1: state → triggers board/stream rebuilds
+  document.getElementById('f_state').value = 'Telangana';
+  onStateChange();
+
   document.getElementById('f_age').value = '17';
   document.getElementById('f_level').value = 'Inter 2nd year';
+  onClassChange();
+
+  var branchEl = document.getElementById('f_branch');
+  if (branchEl) { branchEl.value = 'MPC'; currentBranch = 'MPC'; }
+
   document.getElementById('f_passion').value = 'Want to use technology to help farmers in AP and Telangana region';
   updateCC();
+
+  // Step 2: board + stream (populated after onStateChange)
+  document.getElementById('f_board').value = 'TS State Board (SSC)';
+  document.getElementById('f_stream').value = 'MPC';
+  currentStream = 'MPC';
+  updateInterSubjects();
 
   // 10th marks
   var tenthData = {English:78, SecondLanguage:72, Mathematics:88, Science:82, SocialStudies:70};
@@ -1242,19 +1528,18 @@ function loadDemo() {
     }
   });
 
-  // Interests
+  // Interests (Agriculture first so it's primary, Technology second)
   sel.interests = [];
-  ['Technology','Agriculture'].forEach(function(v) {
+  ['Agriculture','Technology'].forEach(function(v) {
     document.querySelectorAll('#interestChips .chip').forEach(function(c) {
-      if (c.textContent === v && !c.classList.contains('on')) {
-        c.classList.add('on'); sel.interests.push(v);
-      }
+      if (c.textContent === v && !c.classList.contains('on')) { c.classList.add('on'); sel.interests.push(v); }
     });
   });
   document.querySelectorAll('#interestChips .chip.on').forEach(function(x,i){
-    if(i===0)x.classList.add('primary-int');else x.classList.remove('primary-int');
+    if(i===0)x.classList.add('primary-int'); else x.classList.remove('primary-int');
   });
 
+  sel.strengths = [];
   ['Logical thinking','Technical','Analytical'].forEach(function(v) {
     document.querySelectorAll('#strengthChips .chip').forEach(function(c) {
       if (c.textContent === v && !c.classList.contains('on')) { c.classList.add('on'); sel.strengths.push(v); }
@@ -1263,17 +1548,123 @@ function loadDemo() {
 
   sel.budget = '₹3–7 Lakh';
   document.querySelectorAll('.budget-opt').forEach(function(b) { b.classList.toggle('on', b.textContent==='₹3–7 Lakh'); });
-  sel.location = 'Stay in AP/TS only';
-  document.querySelectorAll('#locChips .chip').forEach(function(c) { if(c.textContent==='Stay in AP/TS only') c.classList.add('on'); });
-  sel.scholarships = ['BC'];
-  document.querySelectorAll('#schlChips .chip').forEach(function(c) { if(c.textContent==='BC'){ c.classList.add('on'); } });
+
+  // Location chip was rebuilt with "Stay in Telangana only" by onStateChange
+  sel.location = 'Stay in Telangana only';
+  document.querySelectorAll('#locChips .chip').forEach(function(c) {
+    c.classList.toggle('on', c.textContent === 'Stay in Telangana only');
+  });
+
+  sel.scholarships = ['OBC / BC'];
+  document.querySelectorAll('#schlChips .chip').forEach(function(c) {
+    c.classList.toggle('on', c.textContent === 'OBC / BC');
+  });
 
   var banner = document.createElement('div');
   banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
-  banner.innerHTML = '⚡ Demo data loaded! Groq API key is pre-filled — click "Get AI Career Guidance"';
+  banner.innerHTML = '⚡ Demo data loaded! Navigate to Step 3 and click "Get AI Career Guidance"';
   document.querySelector('.api-bar').insertAdjacentElement('afterend', banner);
-  // (api-bar now shows "secured server-side" — no key input to focus)
-  setTimeout(function(){ banner.remove(); }, 4000);
+  setTimeout(function(){ if(banner.parentNode) banner.remove(); }, 4000);
+}
+
+// ── FORM SNAPSHOT ─────────────────────────────────────────
+function captureFormSnapshot() {
+  var tenthMarks = {}, interMarks = {};
+  TENTH_SUBJECTS.forEach(function(s) {
+    var el = document.getElementById(subjKey('tenth', s));
+    if (el && el.value) tenthMarks[s] = el.value;
+  });
+  (INTER_SUBJECTS[currentStream] || []).forEach(function(s) {
+    var el = document.getElementById(subjKey('inter', s));
+    if (el && el.value) interMarks[s] = el.value;
+  });
+  var exams = [];
+  document.querySelectorAll('.exam-item.on').forEach(function(el) {
+    exams.push({ name: el.getAttribute('data-exam'), score: el.querySelector('.exam-score').value || '' });
+  });
+  return {
+    state: document.getElementById('f_state').value,
+    age: document.getElementById('f_age').value,
+    level: document.getElementById('f_level').value,
+    branch: document.getElementById('f_branch') ? document.getElementById('f_branch').value : '',
+    board: document.getElementById('f_board').value,
+    stream: document.getElementById('f_stream').value,
+    passion: document.getElementById('f_passion').value,
+    interests: sel.interests.slice(),
+    strengths: sel.strengths.slice(),
+    scholarships: sel.scholarships.slice(),
+    budget: sel.budget, location: sel.location, family: sel.family,
+    tenthMarks: tenthMarks, interMarks: interMarks, exams: exams
+  };
+}
+
+function restoreFormSnapshot(snap) {
+  if (!snap) return;
+  if (snap.state) {
+    document.getElementById('f_state').value = snap.state;
+    onStateChange();
+  }
+  if (snap.age) document.getElementById('f_age').value = snap.age;
+  if (snap.level) { document.getElementById('f_level').value = snap.level; onClassChange(); }
+  if (snap.branch) {
+    var br = document.getElementById('f_branch');
+    if (br) { br.value = snap.branch; currentBranch = snap.branch; }
+  }
+  if (snap.board) document.getElementById('f_board').value = snap.board;
+  if (snap.stream) {
+    document.getElementById('f_stream').value = snap.stream;
+    currentStream = snap.stream;
+    updateInterSubjects();
+  }
+  Object.keys(snap.tenthMarks || {}).forEach(function(s) {
+    var el = document.getElementById(subjKey('tenth', s));
+    if (el) { el.value = snap.tenthMarks[s]; onSubjInput(el); }
+  });
+  Object.keys(snap.interMarks || {}).forEach(function(s) {
+    var el = document.getElementById(subjKey('inter', s));
+    if (el) { el.value = snap.interMarks[s]; onSubjInput(el); }
+  });
+  (snap.exams || []).forEach(function(exam) {
+    document.querySelectorAll('.exam-item').forEach(function(el) {
+      if (el.getAttribute('data-exam') === exam.name && !el.classList.contains('on')) {
+        toggleExam(el);
+        if (exam.score) el.querySelector('.exam-score').value = exam.score;
+      }
+    });
+  });
+  if (snap.passion) { document.getElementById('f_passion').value = snap.passion; updateCC(); }
+  sel.interests = [];
+  document.querySelectorAll('#interestChips .chip').forEach(function(c) {
+    var on = snap.interests && snap.interests.indexOf(c.textContent) !== -1;
+    c.classList.toggle('on', on);
+    c.classList.remove('primary-int');
+    if (on) sel.interests.push(c.textContent);
+  });
+  document.querySelectorAll('#interestChips .chip.on').forEach(function(x, i) {
+    if (i === 0) x.classList.add('primary-int');
+  });
+  sel.strengths = [];
+  document.querySelectorAll('#strengthChips .chip').forEach(function(c) {
+    var on = snap.strengths && snap.strengths.indexOf(c.textContent) !== -1;
+    c.classList.toggle('on', on);
+    if (on) sel.strengths.push(c.textContent);
+  });
+  if (snap.budget) {
+    sel.budget = snap.budget;
+    document.querySelectorAll('.budget-opt').forEach(function(b) { b.classList.toggle('on', b.textContent === snap.budget); });
+  }
+  if (snap.location) {
+    sel.location = snap.location;
+    document.querySelectorAll('#locChips .chip').forEach(function(c) { c.classList.toggle('on', c.textContent === snap.location); });
+  }
+  if (snap.family) {
+    sel.family = snap.family;
+    document.querySelectorAll('#famChips .chip').forEach(function(c) { c.classList.toggle('on', c.textContent === snap.family); });
+  }
+  sel.scholarships = (snap.scholarships || []).slice();
+  document.querySelectorAll('#schlChips .chip').forEach(function(c) {
+    c.classList.toggle('on', sel.scholarships.indexOf(c.textContent) !== -1);
+  });
 }
 
 // ── UTILITIES ─────────────────────────────────────────────
@@ -1296,6 +1687,7 @@ function startOver() {
   ['sc1','sc2','sc3'].forEach(function(id,i){ var c=document.getElementById(id); c.className='step-circle'+(i===0?' active':''); c.textContent=i+1; });
   ['sl1','sl2'].forEach(function(id){ document.getElementById(id).classList.remove('done'); });
   document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
+  if (window._savedFormSnapshot) restoreFormSnapshot(window._savedFormSnapshot);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
