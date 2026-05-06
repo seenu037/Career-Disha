@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="data/data.js"></script>
+<script src="data/matcher.js"></script>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#FF6B00">
 <meta name="mobile-web-app-capable" content="yes">
@@ -95,6 +97,23 @@ textarea{resize:vertical;min-height:78px}
 .exam-name{font-size:11px;font-weight:600;color:var(--gray-700)}
 .exam-score{width:100%;padding:4px 7px;border:1px solid var(--gray-200);border-radius:5px;font-size:12px;display:none;margin-top:2px}
 .exam-item.on .exam-score{display:block}
+
+/* EXAM MULTI-SELECT DROPDOWN */
+.exam-md-wrap{position:relative}
+.exam-md-trigger{cursor:pointer;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);background:#fff;font-size:13px;font-weight:500;color:var(--gray-700);display:flex;justify-content:space-between;align-items:center;transition:border-color .2s}
+.exam-md-trigger:hover{border-color:var(--blue)}
+.exam-md-trigger.open{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,107,0,.1)}
+.exam-md-arrow{font-size:11px;color:var(--gray-500);transition:transform .2s}
+.exam-md-trigger.open .exam-md-arrow{transform:rotate(180deg)}
+.exam-md-panel{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:380px;overflow-y:auto;background:#fff;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);padding:12px;z-index:50}
+.exam-md-panel.open{display:block}
+#examMdSearch{margin-bottom:10px;padding:7px 10px;font-size:13px}
+.exam-md-chips{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.exam-md-chip{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#FFF3E8;border:1.5px solid var(--saffron);border-radius:8px;font-size:13px}
+.exam-md-chip-name{flex:1;font-weight:600;color:var(--saffron-dark);font-size:12px}
+.exam-md-chip input{width:160px;padding:5px 8px;border:1px solid var(--gray-200);border-radius:5px;font-size:12px;background:#fff}
+.exam-md-chip-x{cursor:pointer;color:var(--red);font-weight:700;padding:0 4px;font-size:14px;line-height:1}
+.exam-md-chip-x:hover{color:#991B1B}
 
 /* CHIPS */
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
@@ -466,8 +485,18 @@ textarea{resize:vertical;min-height:78px}
     <!-- Competitive Exams -->
     <div class="form-group full mt4">
       <label class="field-label">Competitive Exams Appeared <span class="tel" data-lkey="exams">పోటీ పరీక్షలు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click any exam you have appeared for and enter your score or rank</div>
-      <div id="examCategories"></div>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click the dropdown, tick the exams you appeared for, then enter your score/rank below</div>
+      <div class="exam-md-wrap">
+        <div class="exam-md-trigger" id="examMdTrigger" onclick="toggleExamDD(event)">
+          <span id="examMdLabel">Select Competitive Exams</span>
+          <span class="exam-md-arrow" id="examMdArrow">▼</span>
+        </div>
+        <div class="exam-md-panel" id="examMdPanel">
+          <input type="text" id="examMdSearch" placeholder="🔍 Search exams..." oninput="filterExamMd()" onclick="event.stopPropagation()">
+          <div id="examCategories"></div>
+        </div>
+        <div id="examMdChips" class="exam-md-chips"></div>
+      </div>
     </div>
 
     <div class="form-actions">
@@ -886,12 +915,86 @@ function buildExamCategories() {
     wrap.appendChild(grid);
     container.appendChild(wrap);
   });
+  updateExamMdChips();
 }
 
 function toggleExam(el) {
   el.classList.toggle('on');
   el.querySelector('.exam-cb').checked = el.classList.contains('on');
+  updateExamMdChips();
 }
+
+function toggleExamDD(e) {
+  if (e) e.stopPropagation();
+  var trigger = document.getElementById('examMdTrigger');
+  var panel = document.getElementById('examMdPanel');
+  var open = !panel.classList.contains('open');
+  panel.classList.toggle('open', open);
+  trigger.classList.toggle('open', open);
+}
+
+function filterExamMd() {
+  var q = (document.getElementById('examMdSearch').value || '').toLowerCase();
+  document.querySelectorAll('#examCategories .exam-item').forEach(function(el) {
+    var name = (el.getAttribute('data-exam') || '').toLowerCase();
+    el.style.display = (!q || name.indexOf(q) !== -1) ? '' : 'none';
+  });
+  document.querySelectorAll('#examCategories .exam-category').forEach(function(cat) {
+    var anyVisible = false;
+    cat.querySelectorAll('.exam-item').forEach(function(it) { if (it.style.display !== 'none') anyVisible = true; });
+    cat.style.display = anyVisible ? '' : 'none';
+  });
+}
+
+function findExamItemByName(name) {
+  var items = document.querySelectorAll('.exam-item');
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].getAttribute('data-exam') === name) return items[i];
+  }
+  return null;
+}
+
+function updateExamMdChips() {
+  var chipsWrap = document.getElementById('examMdChips');
+  var label = document.getElementById('examMdLabel');
+  if (!chipsWrap || !label) return;
+  chipsWrap.innerHTML = '';
+  var selected = document.querySelectorAll('.exam-item.on');
+  label.textContent = selected.length
+    ? 'Competitive Exams (' + selected.length + ' selected) — click to edit'
+    : 'Select Competitive Exams';
+  selected.forEach(function(srcEl) {
+    var name = srcEl.getAttribute('data-exam');
+    var score = srcEl.querySelector('.exam-score').value || '';
+    var chip = document.createElement('div');
+    chip.className = 'exam-md-chip';
+    var safeName = name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeScore = score.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    chip.innerHTML =
+      '<span class="exam-md-chip-name">' + safeName + '</span>' +
+      '<input type="text" placeholder="Score / Rank" value="' + safeScore + '">' +
+      '<span class="exam-md-chip-x" title="Remove">✕</span>';
+    chip.querySelector('input').addEventListener('input', function() {
+      var src = findExamItemByName(name);
+      if (src) src.querySelector('.exam-score').value = this.value;
+    });
+    chip.querySelector('.exam-md-chip-x').addEventListener('click', function() {
+      var src = findExamItemByName(name);
+      if (src) toggleExam(src);
+    });
+    chipsWrap.appendChild(chip);
+  });
+}
+
+document.addEventListener('click', function(e) {
+  var wrap = document.querySelector('.exam-md-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    var panel = document.getElementById('examMdPanel');
+    var trigger = document.getElementById('examMdTrigger');
+    if (panel) panel.classList.remove('open');
+    if (trigger) trigger.classList.remove('open');
+  }
+});
 
 // ── STATE / CLASS EVENT HANDLERS ──────────────────────────
 function updateFormLanguage(state) {
@@ -1330,6 +1433,34 @@ async function proceedWithAnalysis(pathChoice) {
   data.topMeritSubject = topSubj.name;
   data.topMeritScore = topSubj.score;
   data.topInterest = topInterest;
+
+  // ── DETERMINISTIC MATCH ENGINE (shadow run) ─────────────────────────────
+  // Runs alongside the LLM call without changing existing behavior so we can
+  // verify the matcher output before replacing the LLM's match cards.
+  // Results are stashed on window._deterministicMatches and logged to console.
+  try {
+    if (window.CareerMatcher) {
+      var det = window.CareerMatcher.run(data);
+      window._deterministicMatches = det;
+      console.log('[CareerDisha] deterministic profile:', det.profile);
+      console.table(det.matches.map(function (m) {
+        return {
+          career: m.career.name.en,
+          score: m.score.toFixed(3),
+          interest: m.breakdown.interest,
+          strength: m.breakdown.strength,
+          subject: m.breakdown.subject,
+          location: m.breakdown.location,
+          density: m.breakdown.density,
+          blockers: (m.blockers || []).join(',') || '—'
+        };
+      }));
+    }
+  } catch (mErr) {
+    console.warn('[CareerDisha] matcher failed (non-fatal):', mErr);
+  }
+  // ────────────────────────────────────────────────────────────────────────
+
   document.getElementById('loading').classList.add('on');
   try {
     var resp = await callAPI(data);
@@ -1379,8 +1510,10 @@ async function callAPI(d) {
     '\n\nMANDATORY REQUIREMENTS:\n1. Provide EXACTLY 5 career paths in top_paths, covering DIFFERENT budget tiers: at least one Free/Govt path (₹0-50K), one Low (under ₹3L), one Medium (₹3-7L), one High (₹7-15L), and one best-fit regardless of cost\n2. Every demand/supply fact MUST cite the exact authoritative source name and year\n3. Include REAL job numbers: annual vacancies, estimated applicants, competition ratio relevant to student\'s state\n4. Top colleges MUST include their real NIRF 2024 rank number from nirf.ac.in\n5. Include 3-4 official job portal URLs relevant to each career domain\n6. Use only 2023-2025 data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB, ICAI, Bar Council, PSC websites etc.\n7. student_summary_local and counselor_note_local MUST be written in ' + d.language + ' script only (not English)\n8. job_listings MUST contain 8-10 realistic current fresher/entry-level openings relevant to the top career paths, with real company names, real salary ranges, and real apply portal URLs\n\nReturn ONLY this JSON (no markdown):\n' + schema;
 
   var payload = JSON.stringify({
-    model: 'llama-3.3-70b-versatile',
+    // model: 'llama-3.1-8b-instant',
+    model:'llama-3.3-70b-versatile',
     max_tokens: 4000,
+    // response_format: { type: 'json_object' },
     messages: [{ role: 'system', content: sys }, { role: 'user', content: prompt }]
   });
 
@@ -1758,6 +1891,7 @@ function _demoReset() {
   document.querySelectorAll('.exam-item').forEach(function(el){
     el.classList.remove('on'); el.querySelector('.exam-cb').checked=false; el.querySelector('.exam-score').value='';
   });
+  updateExamMdChips();
   document.querySelectorAll('.subj-input').forEach(function(el){ el.value=''; onSubjInput(el); });
   document.getElementById('f_passion').value=''; updateCC();
 }
@@ -1804,6 +1938,7 @@ function _demoExam(name, score) {
       if (score) el.querySelector('.exam-score').value=score;
     }
   });
+  updateExamMdChips();
 }
 
 function _demoBudget(val) {
