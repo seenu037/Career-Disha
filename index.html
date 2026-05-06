@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerDisha — AI Career Guidance for AP & Telangana Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FF6B00">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="CareerDisha">
+<style>
+:root {
+  --saffron:#FF6B00;--saffron-dark:#CC5500;
+  --deep-blue:#1A237E;--blue:#3949AB;--blue-light:#7986CB;--blue-pale:#E8EAF6;
+  --white:#FFFFFF;
+  --gray-50:#F9FAFB;--gray-100:#F3F4F6;--gray-200:#E5E7EB;
+  --gray-300:#D1D5DB;--gray-400:#9CA3AF;--gray-500:#6B7280;
+  --gray-600:#4B5563;--gray-700:#374151;--gray-900:#111827;
+  --green:#059669;--green-light:#D1FAE5;
+  --yellow:#D97706;--yellow-light:#FEF3C7;
+  --red:#DC2626;--red-light:#FEE2E2;
+  --purple:#7C3AED;--purple-light:#EDE9FE;
+  --radius:12px;--radius-sm:8px;--radius-lg:16px;
+  --shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
+  --shadow-md:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
+  --shadow-lg:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Noto Sans Telugu',sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh}
+
+.header{background:linear-gradient(135deg,var(--deep-blue),var(--blue));color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-md);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:44px;height:44px;background:var(--saffron);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo-text h1{font-size:21px;font-weight:700;letter-spacing:-.5px}
+.logo-text p{font-size:11px;opacity:.8;font-family:'Noto Sans Telugu','Inter',sans-serif}
+
+.api-bar{background:#fff;border-bottom:2px solid var(--saffron);padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.api-bar label{font-size:13px;font-weight:600;color:var(--gray-700);white-space:nowrap}
+.api-key-input{flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);font-size:13px;font-family:monospace;transition:border-color .2s}
+.api-key-input:focus{outline:none;border-color:var(--blue)}
+.api-notice{font-size:11px;color:var(--gray-500)}
+
+.container{max-width:980px;margin:0 auto;padding:24px 16px}
+
+.progress-wrap{margin-bottom:28px}
+.progress-steps{display:flex;align-items:center;justify-content:center}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:2.5px solid var(--gray-300);background:#fff;color:var(--gray-400);transition:all .3s;z-index:1}
+.step-circle.active{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.step-circle.done{border-color:var(--green);background:var(--green);color:#fff}
+.step-line{height:2.5px;width:100px;background:var(--gray-200);transition:background .3s}
+.step-line.done{background:var(--green)}
+.step-labels{display:flex;justify-content:space-around;margin-top:6px}
+.step-label{font-size:11px;color:var(--gray-400);font-weight:500;text-align:center}
+.step-label.active{color:var(--saffron);font-weight:600}
+
+.card{background:#fff;border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow);margin-bottom:24px}
+.card-title{font-size:19px;font-weight:700;color:var(--deep-blue);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card-sub{font-size:13px;color:var(--gray-500);margin-bottom:22px;font-family:'Noto Sans Telugu','Inter',sans-serif}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.field-label{font-size:13px;font-weight:600;color:var(--gray-700)}
+.tel{font-family:'Noto Sans Telugu',sans-serif;font-size:11px;color:var(--gray-400);margin-left:4px;font-weight:400}
+input[type=number],input[type=text],select,textarea{padding:9px 12px;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);font-size:14px;font-family:inherit;transition:border-color .2s,box-shadow .2s;background:#fff;color:var(--gray-900);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(57,73,171,.1)}
+textarea{resize:vertical;min-height:78px}
+.char-count{font-size:11px;color:var(--gray-400);text-align:right}
+
+/* SUBJECT TABLE */
+.subj-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.subj-table th{background:var(--blue-pale);color:var(--deep-blue);padding:8px 12px;text-align:left;font-weight:600;font-size:12px}
+.subj-table td{padding:7px 10px;border-bottom:1px solid var(--gray-100);vertical-align:middle}
+.subj-name{font-weight:500;color:var(--gray-700)}
+.subj-input{padding:5px 8px!important;font-size:13px!important;text-align:center;width:100px!important}
+.subj-bar-wrap{height:7px;background:var(--gray-200);border-radius:4px;width:120px;display:inline-block;vertical-align:middle}
+.subj-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--saffron),#FF9D4D);transition:width .3s}
+.top-subj-pill{display:inline-block;padding:4px 12px;background:linear-gradient(135deg,var(--saffron),#FF9D4D);color:#fff;border-radius:12px;font-size:12px;font-weight:700;margin-top:8px}
+
+/* EXAM CATEGORIES */
+.exam-category{margin-bottom:16px}
+.exam-cat-title{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;padding:4px 0 4px 8px;border-left:3px solid var(--saffron);background:var(--blue-pale);border-radius:0 4px 4px 0}
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px}
+.exam-item{border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);padding:8px;cursor:pointer;transition:all .2s}
+.exam-item.on{border-color:var(--saffron);background:#FFF3E8}
+.exam-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.exam-cb{width:14px;height:14px;accent-color:var(--saffron)}
+.exam-name{font-size:11px;font-weight:600;color:var(--gray-700)}
+.exam-score{width:100%;padding:4px 7px;border:1px solid var(--gray-200);border-radius:5px;font-size:12px;display:none;margin-top:2px}
+.exam-item.on .exam-score{display:block}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.chip{padding:6px 14px;border-radius:20px;border:2px solid var(--gray-200);background:#fff;font-size:13px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all .2s;user-select:none}
+.chip:hover{border-color:var(--blue-light);background:var(--blue-pale)}
+.chip.on{border-color:var(--blue);background:var(--blue);color:#fff}
+.chip.single.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.chip.primary-int{border-color:var(--green)!important;background:var(--green)!important;color:#fff!important}
+
+/* BUDGET */
+.budget-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+@media(max-width:480px){.budget-grid{grid-template-columns:repeat(2,1fr)}}
+.budget-opt{padding:10px 6px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s}
+.budget-opt:hover{border-color:#FFB380}
+.budget-opt.on{border-color:var(--saffron);background:#FFF3E8;color:var(--saffron-dark)}
+
+/* BUTTONS */
+.btn{padding:11px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:var(--saffron);color:#fff}
+.btn-primary:hover{background:var(--saffron-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-secondary{background:#fff;color:var(--deep-blue);border:2px solid var(--deep-blue)}
+.btn-secondary:hover{background:var(--blue-pale)}
+.btn-outline{background:transparent;color:var(--gray-500);border:1.5px solid var(--gray-300)}
+.btn-submit{background:var(--deep-blue);color:#fff;font-size:15px;padding:13px 30px}
+.btn-submit:hover{background:var(--blue);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.form-actions{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:10px;flex-wrap:wrap}
+
+/* LOADING */
+.loading{display:none;position:fixed;inset:0;background:rgba(26,35,126,.9);z-index:2000;align-items:center;justify-content:center;flex-direction:column;gap:20px;color:#fff}
+.loading.on{display:flex}
+.spinner{width:54px;height:54px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--saffron);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-size:18px;font-weight:600;text-align:center}
+.loading-sub{font-size:13px;opacity:.75;font-family:'Noto Sans Telugu',sans-serif}
+
+/* ALIGNMENT MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1500;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.on{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:540px;width:100%;box-shadow:var(--shadow-lg);text-align:center;animation:modalIn .3s ease}
+@keyframes modalIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-icon{font-size:54px;margin-bottom:14px}
+.modal-title{font-size:22px;font-weight:700;color:var(--gray-900);margin-bottom:10px}
+.modal-msg{font-size:14px;color:var(--gray-600);line-height:1.65;margin-bottom:4px}
+.modal-divider{height:1px;background:var(--gray-200);margin:18px 0}
+.modal-options{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.modal-opt{flex:1;min-width:190px;padding:16px 14px;border-radius:14px;border:2.5px solid;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;line-height:1.4}
+.modal-opt:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.opt-merit{border-color:var(--deep-blue);background:var(--blue-pale);color:var(--deep-blue)}
+.opt-merit:hover{background:var(--deep-blue);color:#fff}
+.opt-passion{border-color:var(--saffron);background:#FFF3E8;color:var(--saffron-dark)}
+.opt-passion:hover{background:var(--saffron);color:#fff}
+.opt-both{border-color:var(--green);background:var(--green-light);color:#065F46}
+.opt-both:hover{background:var(--green);color:#fff}
+.align-tag{display:inline-block;padding:3px 12px;border-radius:12px;font-size:12px;font-weight:700;margin:4px}
+.tag-match{background:var(--green-light);color:var(--green)}
+.tag-miss{background:var(--red-light);color:var(--red)}
+
+/* RESULTS */
+.results{display:none}
+.results.on{display:block}
+.results-header{background:linear-gradient(135deg,var(--deep-blue),var(--blue));border-radius:var(--radius-lg);padding:22px 26px;color:#fff;margin-bottom:20px}
+.results-header h2{font-size:21px;font-weight:700;margin-bottom:6px}
+.student-summary{font-size:14px;line-height:1.6;opacity:.93}
+.section-title{font-size:17px;font-weight:700;color:var(--deep-blue);margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid var(--blue-pale);display:flex;align-items:center;gap:7px}
+
+/* PATH BANNER */
+.path-banner{border-radius:var(--radius);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}
+.path-banner.merit{background:var(--blue-pale);border:1.5px solid var(--blue-light);color:var(--deep-blue)}
+.path-banner.passion{background:#FFF3E8;border:1.5px solid var(--saffron);color:var(--saffron-dark)}
+.path-banner.both{background:var(--green-light);border:1.5px solid var(--green);color:#065F46}
+
+/* CAREER CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.cc{border-radius:var(--radius);border:2px solid var(--gray-200);padding:18px;cursor:pointer;transition:all .3s;position:relative}
+.cc:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.cc.r1{border-color:var(--green);background:linear-gradient(135deg,#F0FDF4,#fff)}
+.cc.r2{border-color:#0891B2;background:linear-gradient(135deg,#F0F9FF,#fff)}
+.cc.r3{border-color:var(--yellow);background:linear-gradient(135deg,#FFFBEB,#fff)}
+.cc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.rank-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;text-transform:uppercase}
+.r1 .rank-badge{background:var(--green-light);color:var(--green)}
+.r2 .rank-badge{background:#E0F2FE;color:#0284C7}
+.r3 .rank-badge{background:var(--yellow-light);color:var(--yellow)}
+.match-gauge{position:relative;width:58px;height:58px;flex-shrink:0}
+.match-gauge svg{transform:rotate(-90deg)}
+.match-pct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12px;font-weight:700;color:var(--gray-900)}
+.cc-domain{font-size:10px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px}
+.cc-title{font-size:16px;font-weight:700;color:var(--gray-900);margin:3px 0 7px}
+.cc-route{font-size:12px;color:var(--gray-600);background:var(--gray-100);padding:5px 9px;border-radius:6px;margin-bottom:9px}
+.cc-salary{display:flex;gap:14px;flex-wrap:wrap}
+.sal-item{display:flex;flex-direction:column}
+.sal-label{font-size:10px;color:var(--gray-400)}
+.sal-val{font-size:13px;font-weight:700;color:var(--green)}
+.cc-expand{margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-200);display:none}
+.cc.open .cc-expand{display:block}
+.expand-btn{font-size:12px;color:var(--blue);font-weight:600;cursor:pointer;margin-top:10px;display:flex;align-items:center;gap:4px}
+.drow{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--gray-100)}
+.dlabel{color:var(--gray-500)}
+.dval{font-weight:600;color:var(--gray-800);text-align:right;max-width:60%}
+.risks h5{color:var(--red);font-size:12px;margin:8px 0 3px}
+.upsides h5{color:var(--green);font-size:12px;margin:8px 0 3px}
+.fi{font-size:11px;padding:2px 0;color:var(--gray-600)}
+.fi::before{content:'• '}
+
+/* NIRF COLLEGES */
+.college-list{margin-top:6px}
+.college-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--gray-100)}
+.nirf-badge{background:var(--deep-blue);color:#fff;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.college-name{font-size:12px;font-weight:600;color:var(--gray-800)}
+.college-meta{font-size:10px;color:var(--gray-400)}
+
+/* JOB PORTALS */
+.portals-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.portal-link{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid var(--blue-light);border-radius:20px;font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;background:var(--blue-pale);transition:all .2s}
+.portal-link:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* JOBS STATS BANNER */
+.jobs-banner{background:linear-gradient(135deg,var(--purple-light),#fff);border:1.5px solid var(--purple);border-radius:10px;padding:12px 14px;margin-top:10px}
+.jobs-stats-row{display:flex;gap:0;flex-wrap:wrap;margin-bottom:6px}
+.jobs-stat{flex:1;min-width:80px;text-align:center;padding:4px}
+.jobs-stat-val{font-size:17px;font-weight:700;color:var(--purple)}
+.jobs-stat-label{font-size:10px;color:var(--gray-500);margin-top:1px}
+.jobs-source{font-size:10px;color:var(--gray-400);text-align:right}
+
+/* CITATIONS */
+.citations-box{margin-top:10px;padding:10px 12px;background:var(--gray-50);border-radius:8px;border-left:3px solid var(--blue-light)}
+.citations-title{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.cite-row{font-size:11px;color:var(--gray-600);padding:3px 0;border-bottom:1px dotted var(--gray-200)}
+.cite-source{font-weight:600;color:var(--deep-blue)}
+.cite-link{color:var(--blue);text-decoration:none;font-size:10px;margin-left:4px}
+.cite-link:hover{text-decoration:underline}
+
+/* ALERTS */
+.alert-green{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid var(--green);border-radius:var(--radius);padding:14px;font-size:14px;color:#065F46;margin-bottom:14px}
+.alert-yellow{background:var(--yellow-light);border:1.5px solid var(--yellow);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.alert-blue{background:var(--blue-pale);border:1.5px solid var(--blue-light);border-radius:var(--radius);padding:14px;margin-bottom:14px;font-size:14px;color:var(--deep-blue);line-height:1.6}
+.counselor-note{background:linear-gradient(135deg,var(--blue-pale),#fff);border-left:4px solid var(--saffron);border-radius:var(--radius);padding:18px;font-size:15px;line-height:1.65;font-style:italic;color:var(--gray-700);font-family:'Noto Sans Telugu','Inter',sans-serif;margin-bottom:14px}
+
+/* DECISION TREE */
+.tree-wrap{overflow-x:auto;padding:12px 0}
+
+/* CHART */
+.chart-wrap{position:relative;height:380px}
+
+/* BUDGET TABLE */
+.btable{width:100%;border-collapse:collapse;font-size:13px}
+.btable th{background:var(--deep-blue);color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+.btable td{padding:9px 12px;border-bottom:1px solid var(--gray-200)}
+.btable tr:hover td{background:var(--blue-pale)}
+.fbadge{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:700}
+.f-green{background:var(--green-light);color:var(--green)}
+.f-yellow{background:var(--yellow-light);color:var(--yellow)}
+.f-red{background:var(--red-light);color:var(--red)}
+
+/* DEBUG */
+.debug-json{display:none;background:var(--gray-900);color:#4ADE80;padding:14px;border-radius:var(--radius-sm);font-family:monospace;font-size:12px;overflow:auto;max-height:380px;white-space:pre-wrap;margin-top:8px}
+.hidden{display:none!important}
+.mt4{margin-top:16px}
+@media print{.header,.api-bar,.form-section,.form-actions,.debug-section{display:none}.results{display:block}}
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div class="loading-title">CareerDisha AI విశ్లేషిస్తోంది...</div>
+  <div class="loading-sub">Analyzing your complete profile • కొన్ని సెకండ్లు వేచి ఉండండి</div>
+</div>
+
+<!-- Alignment Modal -->
+<div class="modal-overlay" id="alignModal">
+  <div class="modal-box">
+    <div class="modal-icon" id="alignIcon"></div>
+    <div class="modal-title" id="alignTitle"></div>
+    <div class="modal-msg" id="alignMsg"></div>
+    <div class="modal-divider"></div>
+    <div id="alignBody"></div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">🧭</div>
+    <div class="logo-text">
+      <h1>CareerDisha</h1>
+      <p>AI-Powered Career Guidance • AP & Telangana Students</p>
+    </div>
+  </div>
+  <button class="btn btn-outline" onclick="window.print()" style="color:#fff;border-color:rgba(255,255,255,.4);font-size:13px;padding:8px 16px;">🖨️ Print</button>
+</header>
+
+<div class="api-bar">
+  <span style="font-size:13px;font-weight:600;color:var(--gray-700)">🔒 Powered by Groq AI — API key secured server-side</span>
+  <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;" onclick="loadDemo()">⚡ Demo Profile</button>
+</div>
+
+<div class="container">
+<div id="formSection" class="form-section">
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-steps">
+      <div class="step-circle active" id="sc1">1</div>
+      <div class="step-line" id="sl1"></div>
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-line" id="sl2"></div>
+      <div class="step-circle" id="sc3">3</div>
+    </div>
+    <div class="step-labels">
+      <div class="step-label active" id="lbl1">Academic Profile</div>
+      <div class="step-label" id="lbl2">Personal Profile</div>
+      <div class="step-label" id="lbl3">Constraints</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div id="step1" class="card">
+    <div class="card-title">📚 Step 1: Academic Profile</div>
+    <div class="card-sub">Enter subject-wise marks and exam scores • మీ మార్కులు నమోదు చేయండి</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="field-label">10th Board <span class="tel">బోర్డు</span></label>
+        <select id="f_board">
+          <option value="">Select Board</option>
+          <option value="AP State">AP State Board (SSC)</option>
+          <option value="TS State">TS State Board (SSC)</option>
+          <option value="CBSE">CBSE</option>
+          <option value="ICSE">ICSE</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Intermediate Stream <span class="tel">గ్రూపు</span></label>
+        <select id="f_stream" onchange="updateInterSubjects()">
+          <option value="">Select Stream</option>
+          <option value="MPC">MPC (Maths, Physics, Chemistry)</option>
+          <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
+          <option value="CEC">CEC (Civics, Economics, Commerce)</option>
+          <option value="MEC">MEC (Maths, Economics, Commerce)</option>
+          <option value="HEC">HEC (History, Economics, Civics)</option>
+          <option value="Not yet completed">Not yet completed Inter</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 10th Subjects -->
+    <div class="form-group full mt4">
+      <label class="field-label">10th Class — Subject-wise Marks <span class="tel">10వ తరగతి సబ్జెక్ట్ మార్కులు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject (SSC/10th standard)</div>
+      <table class="subj-table">
+        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
+        <tbody id="tenthTbody"></tbody>
+      </table>
+      <div id="topSubjDisplay" style="margin-top:8px;min-height:24px"></div>
+    </div>
+
+    <!-- Inter Subjects (dynamic) -->
+    <div class="form-group full mt4" id="interSection" style="display:none">
+      <label class="field-label">Intermediate — Subject-wise Marks <span class="tel">ఇంటర్ మార్కులు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each inter subject</div>
+      <table class="subj-table">
+        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
+        <tbody id="interTbody"></tbody>
+      </table>
+    </div>
+
+    <!-- ALL Competitive Exams -->
+    <div class="form-group full mt4">
+      <label class="field-label">Competitive Exams Appeared <span class="tel">పోటీ పరీక్షలు</span></label>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click any exam you have appeared for and enter your score or rank</div>
+      <div id="examCategories"></div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="loadDemo()">⚡ Load Demo</button>
+      <button class="btn btn-primary" onclick="gotoStep(2)">Next: Personal Profile →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" class="card hidden">
+    <div class="card-title">👤 Step 2: Personal Profile</div>
+    <div class="card-sub">Your interests and strengths • మీ ఆసక్తులు మరియు బలాలు</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="field-label">Age <span class="tel">వయసు</span></label>
+        <input type="number" id="f_age" min="12" max="30" placeholder="e.g. 17">
+      </div>
+      <div class="form-group">
+        <label class="field-label">Current Class/Year <span class="tel">ప్రస్తుత తరగతి</span></label>
+        <select id="f_level">
+          <option value="">Select Level</option>
+          <option value="10th studying">10th Studying</option>
+          <option value="10th completed">10th Completed</option>
+          <option value="Inter 1st year">Intermediate 1st Year</option>
+          <option value="Inter 2nd year">Intermediate 2nd Year</option>
+          <option value="Inter completed">Intermediate Completed</option>
+          <option value="Degree 1st year">Degree 1st Year</option>
+          <option value="Degree 2nd year">Degree 2nd Year</option>
+          <option value="Degree 3rd year">Degree 3rd Year</option>
+          <option value="Degree completed">Degree Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Career Interests <span class="tel">ఆసక్తులు</span></label>
+      <div style="font-size:12px;color:var(--saffron);font-weight:600;margin-bottom:5px;">⭐ Your FIRST selection becomes your primary interest for alignment analysis</div>
+      <div class="chips" id="interestChips"></div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Passion Statement <span class="tel">మీ లక్ష్యం</span></label>
+      <textarea id="f_passion" maxlength="200" placeholder="What do you want to achieve? e.g. 'I want to use technology to help farmers'" oninput="updateCC()"></textarea>
+      <div class="char-count"><span id="cc">0</span>/200</div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Strength Areas <span class="tel">బలమైన అంశాలు</span></label>
+      <div class="chips" id="strengthChips"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="gotoStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="gotoStep(3)">Next: Constraints →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" class="card hidden">
+    <div class="card-title">⚖️ Step 3: Practical Constraints</div>
+    <div class="card-sub">Help us find realistic options • మీ పరిస్థితికి అనుకూలమైన మార్గాలు</div>
+    <div class="form-group">
+      <label class="field-label">Education Budget <span class="tel">విద్యకు బడ్జెట్</span></label>
+      <div class="budget-grid" id="budgetGrid"></div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Location Preference <span class="tel">స్థాన ప్రాధాన్యత</span></label>
+      <div class="chips" id="locChips"></div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Family Background <span class="tel">కుటుంబ నేపథ్యం</span></label>
+      <div class="chips" id="famChips"></div>
+    </div>
+    <div class="form-group mt4">
+      <label class="field-label">Scholarship Eligibility <span class="tel">స్కాలర్‌షిప్ అర్హత</span></label>
+      <div class="chips" id="schlChips"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="gotoStep(2)">← Back</button>
+      <button class="btn btn-submit" onclick="submitForm()">🚀 Get AI Career Guidance</button>
+    </div>
+  </div>
+
+</div><!-- /formSection -->
+
+<!-- RESULTS -->
+<div class="results" id="results">
+  <div class="results-header">
+    <div style="font-size:12px;opacity:.8;margin-bottom:4px;">🎯 AI Career Analysis Complete • AI విశ్లేషణ పూర్తైంది</div>
+    <h2>Your Personalized Career Roadmap</h2>
+    <div class="student-summary" id="rSummary"></div>
+  </div>
+
+  <div id="rPathBanner" class="hidden"></div>
+  <div class="alert-blue hidden" id="rAlignSummary"></div>
+  <div class="alert-green hidden" id="rScholarship"></div>
+  <div class="alert-yellow hidden" id="rWarning"></div>
+
+  <div class="card">
+    <div class="section-title">🏆 Top Career Recommendations <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">సిఫార్సు చేసిన కెరీర్లు</span></div>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🗺️ Career Roadmap Decision Tree <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">మీ కెరీర్ పథం</span></div>
+    <div class="tree-wrap" id="treeWrap"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">📊 AP/TS Job Market Analysis <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">ఉద్యోగ అవకాశాలు</span></div>
+    <div class="chart-wrap"><canvas id="mChart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">💰 Budget vs Path Feasibility <span style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">బడ్జెట్ అనుకూలత</span></div>
+    <div style="overflow-x:auto">
+      <table class="btable">
+        <thead><tr>
+          <th>Career Path</th><th>Duration</th><th>Estimated Cost</th>
+          <th>Your Budget</th><th>Feasibility</th><th>Scholarship Bridge</th>
+        </tr></thead>
+        <tbody id="budgetBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="counselor-note" id="rNote"></div>
+
+  <div class="card" style="padding:14px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Print Report</button>
+      <button class="btn btn-secondary" onclick="startOver()">🔄 New Analysis</button>
+      <div class="debug-section" style="margin-left:auto">
+        <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="toggleDebug()">{} Raw JSON</button>
+        <div class="debug-json" id="debugJson"></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /results -->
+
+</div><!-- /container -->
+
+<script>
+// ── CONSTANTS ─────────────────────────────────────────────
+var TENTH_SUBJECTS = ['English','Second Language','Mathematics','Science','Social Studies'];
+
+var INTER_SUBJECTS = {
+  'MPC':  ['Mathematics','Physics','Chemistry','English','Second Language'],
+  'BiPC': ['Botany','Zoology','Physics','Chemistry','English','Second Language'],
+  'CEC':  ['Commerce','Economics','Civics','English','Second Language'],
+  'MEC':  ['Mathematics','Economics','Commerce','English','Second Language'],
+  'HEC':  ['History','Economics','Civics','English','Second Language']
+};
+
+var EXAM_CATEGORIES = [
+  { name:'Engineering & Technology', exams:['EAMCET AP (Engg)','EAMCET TS (Engg)','JEE Mains','JEE Advanced','BITSAT','VITEEE','SRMJEEE','MET Manipal','COMEDK'] },
+  { name:'Medical & Pharmacy',       exams:['NEET UG','EAMCET AP (Medical)','EAMCET TS (Medical)','AIIMS (NEET)'] },
+  { name:'Law',                       exams:['CLAT','AILET (NLU Delhi)','LSAT India','LAWCET AP/TS'] },
+  { name:'Architecture & Design',    exams:['NATA','JEE Paper 2 (B.Arch)','NID DAT','NIFT Entrance','UCEED (IIT Design)'] },
+  { name:'Defense & Police',         exams:['NDA','CDS','AFCAT (Air Force)','AP Police SI','TS Police SI'] },
+  { name:'Finance & Commerce',       exams:['CA Foundation','CMA Foundation','CS Foundation','ICET (MBA/MCA)'] },
+  { name:'Agriculture',              exams:['ICAR AIEEA','AgriCET AP','AgriCET TS'] },
+  { name:'Civil Services',           exams:['UPSC Civil Services Prelims','APPSC Group 1','APPSC Group 2','TSPSC Group 1','TSPSC Group 2'] },
+  { name:'Banking & Insurance',      exams:['IBPS PO','SBI PO','RBI Grade B','IBPS Clerk','LIC ADO'] },
+  { name:'SSC & Railway',            exams:['SSC CGL','SSC CHSL','RRB NTPC','RRB Group D','RRB JE'] },
+  { name:'Teaching & Education',     exams:['TET AP','TET TS','CTET','AP DSC','TS DSC'] },
+  { name:'Polytechnic & PG Entry',   exams:['POLYCET','ECET (Lateral Entry)','GATE','PGECET','CAT','MAT','XAT'] }
+];
+
+var SUBJECT_DOMAIN = {
+  'Mathematics':    ['Engineering','Data Science','Finance','Architecture'],
+  'Physics':        ['Engineering','Defense','Research'],
+  'Chemistry':      ['Medicine','Pharmacy','Research'],
+  'Biology':        ['Medicine','Agriculture','Research'],
+  'Botany':         ['Medicine','Agriculture','Research'],
+  'Zoology':        ['Medicine','Research'],
+  'Science':        ['Engineering','Medicine','Research'],
+  'Commerce':       ['Business','Finance','CA/CMA/CS'],
+  'Economics':      ['Finance','Government','Business'],
+  'Civics':         ['Law','Government'],
+  'History':        ['Law','Teaching'],
+  'English':        ['Law','Journalism','Management','Teaching'],
+  'Social Studies': ['Government','Teaching'],
+  'Second Language':['Teaching','Journalism']
+};
+
+var INTEREST_DOMAIN = {
+  'Technology':           ['Engineering','Data Science'],
+  'Medicine':             ['Medicine','Pharmacy'],
+  'Law':                  ['Law'],
+  'Agriculture':          ['Agriculture'],
+  'Arts & Design':        ['Architecture','Design'],
+  'Music & Performing Arts':['Arts'],
+  'Business':             ['Business','Finance'],
+  'Teaching':             ['Teaching'],
+  'Government Service':   ['Government'],
+  'Sports':               ['Sports','Defense'],
+  'Social Work':          ['Government','Teaching'],
+  'Media & Journalism':   ['Journalism'],
+  'Digital Marketing':    ['Business','Engineering'],
+  'Finance':              ['Finance','CA/CMA/CS']
+};
+
+// ── STATE ────────────────────────────────────────────────
+var step = 1;
+var currentStream = '';
+var sel = { interests:[], strengths:[], scholarships:[], budget:'', location:'', family:'' };
+var mChart = null;
+
+// API key is stored server-side (Netlify env var) — no client-side key needed
+
+// ── INIT ─────────────────────────────────────────────────
+(function init() {
+  buildSubjRows('tenthTbody', TENTH_SUBJECTS, 'tenth');
+  buildExamCategories();
+  makeChips('interestChips',['Technology','Medicine','Law','Agriculture','Arts & Design',
+    'Music & Performing Arts','Business','Teaching','Government Service','Sports',
+    'Social Work','Media & Journalism','Digital Marketing','Finance'], 'interests', false);
+  makeChips('strengthChips',['Logical thinking','Creativity','Communication','Leadership',
+    'Analytical','Empathy','Technical','Research'], 'strengths', false);
+  makeChips('schlChips',['SC','ST','BC','EWS','Minority','None','Not sure'], 'scholarships', false);
+  makeChips('locChips',['Stay in AP/TS only','Open to other states','Open to abroad'], 'location', true);
+  makeChips('famChips',['First-generation graduate','Parents in government',
+    'Parents in private sector','Business family'], 'family', true);
+  var budgets = ['Under ₹1 Lakh','₹1–3 Lakh','₹3–7 Lakh','₹7–15 Lakh','₹15–30 Lakh','Above ₹30 Lakh'];
+  var bg = document.getElementById('budgetGrid');
+  budgets.forEach(function(b) {
+    var d = document.createElement('div');
+    d.className = 'budget-opt';
+    d.textContent = b;
+    d.addEventListener('click', function() {
+      document.querySelectorAll('.budget-opt').forEach(function(x){ x.classList.remove('on'); });
+      this.classList.add('on'); sel.budget = b;
+    });
+    bg.appendChild(d);
+  });
+})();
+
+function subjKey(prefix, subj) {
+  return prefix + '_' + subj.replace(/[^a-zA-Z0-9]/g,'');
+}
+
+function buildSubjRows(tbodyId, subjects, prefix) {
+  var tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  subjects.forEach(function(subj) {
+    var id = subjKey(prefix, subj);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="subj-name">' + subj + '</td>' +
+      '<td><input type="number" id="' + id + '" class="subj-input" min="0" max="100" step="1" placeholder="—" oninput="onSubjInput(this)"></td>' +
+      '<td><div class="subj-bar-wrap"><div class="subj-bar" id="bar_' + id + '" style="width:0%"></div></div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function onSubjInput(inp) {
+  var val = Math.min(100, Math.max(0, parseFloat(inp.value) || 0));
+  var bar = document.getElementById('bar_' + inp.id);
+  if (bar) bar.style.width = val + '%';
+  refreshTopSubjDisplay();
+}
+
+function updateInterSubjects() {
+  var stream = document.getElementById('f_stream').value;
+  currentStream = stream;
+  var subjects = INTER_SUBJECTS[stream] || [];
+  var section = document.getElementById('interSection');
+  if (!subjects.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  buildSubjRows('interTbody', subjects, 'inter');
+  refreshTopSubjDisplay();
+}
+
+function getTopMeritSubject() {
+  var agg = {};
+  TENTH_SUBJECTS.forEach(function(s) {
+    var el = document.getElementById(subjKey('tenth', s));
+    if (el && el.value) {
+      if (!agg[s]) agg[s] = [];
+      agg[s].push(parseFloat(el.value));
+    }
+  });
+  var interSubjs = INTER_SUBJECTS[currentStream] || [];
+  interSubjs.forEach(function(s) {
+    var el = document.getElementById(subjKey('inter', s));
+    if (el && el.value) {
+      var key = (s === 'Botany' || s === 'Zoology') ? 'Biology' : s;
+      if (!agg[key]) agg[key] = [];
+      agg[key].push(parseFloat(el.value));
+    }
+  });
+  var topName = '', topScore = -1, allScores = {};
+  Object.keys(agg).forEach(function(k) {
+    var arr = agg[k];
+    var mean = arr.reduce(function(a,b){return a+b;},0) / arr.length;
+    allScores[k] = mean;
+    if (mean > topScore) { topScore = mean; topName = k; }
+  });
+  return { name: topName, score: topScore, allScores: allScores };
+}
+
+function refreshTopSubjDisplay() {
+  var ts = getTopMeritSubject();
+  var el = document.getElementById('topSubjDisplay');
+  if (ts.name && ts.score >= 0) {
+    el.innerHTML = '<span class="top-subj-pill">⭐ Strongest Subject: ' + ts.name + ' (' + ts.score.toFixed(1) + '%)</span>';
+  } else {
+    el.innerHTML = '';
+  }
+}
+
+function buildExamCategories() {
+  var container = document.getElementById('examCategories');
+  EXAM_CATEGORIES.forEach(function(cat) {
+    var wrap = document.createElement('div');
+    wrap.className = 'exam-category';
+    wrap.innerHTML = '<div class="exam-cat-title">' + cat.name + '</div>';
+    var grid = document.createElement('div');
+    grid.className = 'exam-grid';
+    cat.exams.forEach(function(name) {
+      var d = document.createElement('div');
+      d.className = 'exam-item';
+      d.setAttribute('data-exam', name);
+      d.innerHTML =
+        '<div class="exam-head"><input type="checkbox" class="exam-cb" onclick="event.stopPropagation()"><span class="exam-name">' + name + '</span></div>' +
+        '<input type="text" class="exam-score" placeholder="Score / Rank" onclick="event.stopPropagation()">';
+      d.addEventListener('click', function() { toggleExam(this); });
+      grid.appendChild(d);
+    });
+    wrap.appendChild(grid);
+    container.appendChild(wrap);
+  });
+}
+
+function toggleExam(el) {
+  el.classList.toggle('on');
+  el.querySelector('.exam-cb').checked = el.classList.contains('on');
+}
+
+function makeChips(containerId, items, key, single) {
+  var c = document.getElementById(containerId);
+  items.forEach(function(item) {
+    var d = document.createElement('div');
+    d.className = 'chip' + (single ? ' single' : '');
+    d.textContent = item;
+    d.addEventListener('click', function() {
+      if (single) {
+        c.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('on'); });
+        d.classList.add('on'); sel[key] = item;
+      } else {
+        d.classList.toggle('on');
+        var arr = sel[key];
+        var idx = arr.indexOf(item);
+        if (idx === -1) arr.push(item); else arr.splice(idx, 1);
+        // Update primary interest visual
+        if (key === 'interests') {
+          c.querySelectorAll('.chip.on').forEach(function(x, i) {
+            if (i === 0) x.classList.add('primary-int'); else x.classList.remove('primary-int');
+          });
+        }
+      }
+    });
+    c.appendChild(d);
+  });
+}
+
+function updateCC() {
+  document.getElementById('cc').textContent = document.getElementById('f_passion').value.length;
+}
+
+// ── VALIDATION ────────────────────────────────────────────
+function validateStep(n) {
+  if (n === 1) {
+    if (!document.getElementById('f_board').value) {
+      alert('Please select your 10th class board before continuing.'); return false;
+    }
+    var hasTenthMark = TENTH_SUBJECTS.some(function(s) {
+      var el = document.getElementById(subjKey('tenth', s));
+      return el && el.value;
+    });
+    if (!hasTenthMark) {
+      alert('Please enter at least one 10th class subject mark before continuing.'); return false;
+    }
+  }
+  if (n === 2) {
+    if (!document.getElementById('f_age').value) { alert('Please enter your age before continuing.'); return false; }
+    if (sel.interests.length === 0) { alert('Please select at least one career interest.'); return false; }
+  }
+  if (n === 3) {
+    if (!sel.budget) { alert('Please select your education budget range.'); return false; }
+  }
+  return true;
+}
+
+// ── STEP NAVIGATION ───────────────────────────────────────
+function gotoStep(n) {
+  if (n > step && !validateStep(step)) return;
+  document.getElementById('step' + step).classList.add('hidden');
+  var oldCircle = document.getElementById('sc' + step);
+  var newCircle = document.getElementById('sc' + n);
+  if (n > step) {
+    oldCircle.className = 'step-circle done'; oldCircle.textContent = '✓';
+    if (step < 3) document.getElementById('sl' + step).classList.add('done');
+  } else {
+    oldCircle.className = 'step-circle'; oldCircle.textContent = step;
+    newCircle.className = 'step-circle active'; newCircle.textContent = n;
+    if (n < 3) document.getElementById('sl' + n).classList.remove('done');
+  }
+  if (!newCircle.classList.contains('done')) newCircle.className = 'step-circle active';
+  document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active', i+1===n); });
+  step = n;
+  document.getElementById('step' + step).classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── COLLECT DATA ──────────────────────────────────────────
+function collectData() {
+  var tenthMarks = {}, interMarks = {};
+  TENTH_SUBJECTS.forEach(function(s) {
+    var el = document.getElementById(subjKey('tenth', s));
+    if (el && el.value) tenthMarks[s] = parseFloat(el.value);
+  });
+  (INTER_SUBJECTS[currentStream] || []).forEach(function(s) {
+    var el = document.getElementById(subjKey('inter', s));
+    if (el && el.value) interMarks[s] = parseFloat(el.value);
+  });
+  function avg(obj) {
+    var vals = Object.values(obj);
+    return vals.length ? (vals.reduce(function(a,b){return a+b;},0)/vals.length).toFixed(1) : 'N/A';
+  }
+  var exams = [];
+  document.querySelectorAll('.exam-item.on').forEach(function(el) {
+    exams.push(el.getAttribute('data-exam') + ': ' + (el.querySelector('.exam-score').value || 'appeared'));
+  });
+  return {
+    board: document.getElementById('f_board').value || 'Not specified',
+    stream: currentStream || 'Not specified',
+    tenthMarks: tenthMarks, tenthAvg: avg(tenthMarks),
+    interMarks: interMarks, interAvg: avg(interMarks),
+    exams: exams.length ? exams.join('; ') : 'None',
+    age: document.getElementById('f_age').value || 'Not specified',
+    level: document.getElementById('f_level').value || 'Not specified',
+    interests: sel.interests.join(', ') || 'Not specified',
+    primaryInterest: sel.interests[0] || 'Not specified',
+    passion: document.getElementById('f_passion').value || 'Not specified',
+    strengths: sel.strengths.join(', ') || 'Not specified',
+    budget: sel.budget || 'Not specified',
+    location: sel.location || 'Not specified',
+    family: sel.family || 'Not specified',
+    scholarship: sel.scholarships.join(', ') || 'None'
+  };
+}
+
+// ── SUBMIT → ALIGNMENT CHECK ──────────────────────────────
+function submitForm() {
+  if (!validateStep(3)) return;
+  var data = collectData();
+  var topSubj = getTopMeritSubject();
+  var topInterest = sel.interests[0] || '';
+  var meritDomains = SUBJECT_DOMAIN[topSubj.name] || [];
+  var interestDomains = INTEREST_DOMAIN[topInterest] || [];
+  var aligned = meritDomains.some(function(d){ return interestDomains.indexOf(d) !== -1; });
+  window._pendingData = data;
+  window._pendingTopSubj = topSubj;
+  window._pendingTopInterest = topInterest;
+  showAlignModal(topSubj, topInterest, aligned);
+}
+
+function showAlignModal(topSubj, topInterest, aligned) {
+  var subName = topSubj.name || 'your strongest subject';
+  var subScore = topSubj.score >= 0 ? topSubj.score.toFixed(1) + '%' : '';
+  var icon = document.getElementById('alignIcon');
+  var title = document.getElementById('alignTitle');
+  var msg = document.getElementById('alignMsg');
+  var body = document.getElementById('alignBody');
+  if (aligned) {
+    icon.textContent = '🎯';
+    title.textContent = 'Great Alignment!';
+    msg.innerHTML =
+      'Your strongest academic subject is <strong>' + subName + '</strong>' + (subScore ? ' (' + subScore + ')' : '') +
+      ' and your top interest is <strong>' + topInterest + '</strong>.<br><br>' +
+      '<span class="align-tag tag-match">✓ Your merit & interest point to the same career domain!</span>';
+    body.innerHTML =
+      '<div class="modal-options">' +
+        '<button class="modal-opt opt-both" onclick="proceedWithAnalysis(\'both\')">🚀 Proceed to Career Analysis</button>' +
+      '</div>';
+  } else {
+    icon.textContent = '⚡';
+    title.textContent = 'Interesting Contrast!';
+    msg.innerHTML =
+      'Your strongest academic subject is <strong>' + subName + '</strong>' + (subScore ? ' (' + subScore + ')' : '') +
+      ' but your top career interest is in <strong>' + topInterest + '</strong>.<br><br>' +
+      '<span class="align-tag tag-miss">Your academic merit and stated interest are in different domains.</span><br><br>' +
+      '<strong>Which path would you like to explore?</strong>';
+    body.innerHTML =
+      '<div class="modal-options">' +
+        '<button class="modal-opt opt-merit" onclick="proceedWithAnalysis(\'merit\')">' +
+          '🎯 Option 1: Follow My Strengths<br><small style="font-weight:400">Careers based on ' + subName + ' excellence</small>' +
+        '</button>' +
+        '<button class="modal-opt opt-passion" onclick="proceedWithAnalysis(\'interest\')">' +
+          '❤️ Option 2: Follow My Passion<br><small style="font-weight:400">Careers based on ' + topInterest + ' interest</small>' +
+        '</button>' +
+      '</div>';
+  }
+  document.getElementById('alignModal').classList.add('on');
+}
+
+async function proceedWithAnalysis(pathChoice) {
+  document.getElementById('alignModal').classList.remove('on');
+  var data = window._pendingData;
+  var topSubj = window._pendingTopSubj;
+  var topInterest = window._pendingTopInterest;
+  data.pathChoice = pathChoice;
+  data.topMeritSubject = topSubj.name;
+  data.topMeritScore = topSubj.score;
+  data.topInterest = topInterest;
+  document.getElementById('loading').classList.add('on');
+  try {
+    var resp = await callAPI(data);
+    renderAll(resp, data);
+  } catch(e) {
+    alert('Error: ' + (e.message || 'Unknown error') + '\n\nPlease try again.');
+  } finally {
+    document.getElementById('loading').classList.remove('on');
+  }
+}
+
+// ── API CALL (via Netlify serverless proxy) ───────────────
+async function callAPI(d) {
+  var pathNote = d.pathChoice === 'merit'
+    ? 'STUDENT CHOSE PATH BASED ON ACADEMIC MERIT. Focus recommendations primarily on careers aligned with their strongest subject: ' + d.topMeritSubject + '.'
+    : d.pathChoice === 'interest'
+    ? 'STUDENT CHOSE PATH BASED ON PASSION/INTEREST. Focus recommendations primarily on careers aligned with their top interest: ' + d.topInterest + '.'
+    : 'Student academic merit and interests are ALIGNED. Provide holistic recommendations.';
+
+  var tenthRows = Object.keys(d.tenthMarks).map(function(s){ return '  ' + s + ': ' + d.tenthMarks[s] + '/100'; }).join('\n') || '  Not provided';
+  var interRows = Object.keys(d.interMarks).map(function(s){ return '  ' + s + ': ' + d.interMarks[s] + '/100'; }).join('\n') || '  Not provided';
+
+  var sys = 'You are CareerDisha, an expert career counselor specializing in Andhra Pradesh and Telangana students. You have deep knowledge of:\n- AP/TS state boards, entrance exams, and university systems\n- NIRF 2024 college rankings (nirf.ac.in)\n- Central schemes: PM Vidyalakshmi, National SC/ST/BC/EWS/Minority scholarships\n- AP schemes (CM Chandrababu Naidu, TDP, 2024+): AP Fee Reimbursement, NTR Vidyonnathi education loans, Thalliki Vandanam, APSSDC skill development\n- TS schemes (CM Revanth Reddy, Congress, 2024+): TS Fee Reimbursement, TS Vidya Deevena, Kalyana Lakshmi/Shaadi Mubarak, TSPSC free coaching\n- AP/TS job market supply-demand data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB\n- All major competitive exams and their eligibility criteria\n\nRespond ONLY with valid JSON. No markdown, no text outside JSON.';
+
+  var schema = '{\n  "student_summary": "2-3 sentence profile based on subject marks and interests",\n  "top_paths": [\n    {\n      "rank": 1,\n      "domain": "broad domain",\n      "specific_career": "specific job title",\n      "match_score": 92,\n      "match_reason": "why this fits based on subject scores and interests",\n      "entry_route": "step-by-step route e.g. EAMCET → B.Tech CSE → Placement",\n      "top_colleges_ranked": [\n        {"name": "IIT Hyderabad", "nirf_rank": "8", "nirf_year": "2024", "type": "IIT/Central/State/Deemed/Private", "state": "TS"}\n      ],\n      "duration_years": 4,\n      "estimated_cost": "₹3-5 Lakh (govt college)",\n      "scholarship_options": ["scholarship1"],\n      "starting_salary_range": "₹4-8 LPA",\n      "5yr_salary_range": "₹10-25 LPA",\n      "job_locations": ["Hyderabad","Vizag"],\n      "supply_demand": {\n        "demand_level": "Very High",\n        "supply_level": "High",\n        "competition_index": "Medium",\n        "ap_ts_job_market_score": 85,\n        "growth_trend": "Rising",\n        "data_source": "NASSCOM 2024"\n      },\n      "jobs_market": {\n        "total_vacancies_ap_ts_annual": "45,000",\n        "estimated_applicants": "2,50,000",\n        "competition_ratio": "1 job per 5.5 applicants",\n        "data_source": "NASSCOM Strategic Review 2024",\n        "data_url": "https://nasscom.in"\n      },\n      "job_portals": [\n        {"name": "Naukri.com", "url": "https://naukri.com", "focus": "General IT/Engineering"},\n        {"name": "LinkedIn Jobs", "url": "https://linkedin.com/jobs", "focus": "Professional Network"},\n        {"name": "NCS Portal", "url": "https://ncs.gov.in", "focus": "Govt/PSU Jobs"}\n      ],\n      "citations": [\n        {"fact": "exact statistic being cited", "source": "Source Name Year", "url": "https://official-url"}\n      ],\n      "decision_tree": {\n        "current_node": "Current Position",\n        "next_step": "Immediate next step",\n        "branch_yes": "If criteria met",\n        "branch_no": "Alternative path",\n        "milestone_3yr": "3-year milestone",\n        "milestone_final": "Final career goal"\n      },\n      "risk_factors": ["risk1"],\n      "upside_factors": ["upside1"]\n    }\n  ],\n  "domain_market_data": [\n    {"domain":"Engineering & IT","ap_ts_demand_score":88,"ap_ts_supply_score":75,"opportunity_gap":"High","annual_jobs_created_ap_ts":"45,000+","avg_salary_entry":"₹4.5 LPA","trend":"Rising","source":"NASSCOM 2024"},\n    {"domain":"Medicine & Healthcare","ap_ts_demand_score":82,"ap_ts_supply_score":45,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"12,000+","avg_salary_entry":"₹6 LPA","trend":"Stable Rising","source":"MoHFW 2024"},\n    {"domain":"Agriculture & AgriTech","ap_ts_demand_score":70,"ap_ts_supply_score":30,"opportunity_gap":"Very High","annual_jobs_created_ap_ts":"8,000+","avg_salary_entry":"₹3.5 LPA","trend":"Rising Fast","source":"APEDA 2024"},\n    {"domain":"Law","ap_ts_demand_score":65,"ap_ts_supply_score":60,"opportunity_gap":"Medium","annual_jobs_created_ap_ts":"5,000+","avg_salary_entry":"₹3-5 LPA","trend":"Stable","source":"Bar Council 2024"},\n    {"domain":"Digital Marketing","ap_ts_demand_score":78,"ap_ts_supply_score":40,"opportunity_gap":"High","annual_jobs_created_ap_ts":"15,000+","avg_salary_entry":"₹3-4 LPA","trend":"Rising Fast","source":"IAMAI 2024"},\n    {"domain":"Government & Civil Services","ap_ts_demand_score":90,"ap_ts_supply_score":95,"opportunity_gap":"Low","annual_jobs_created_ap_ts":"20,000+","avg_salary_entry":"₹4-6 LPA","trend":"Stable","source":"APPSC 2024"},\n    {"domain":"Finance & CA/CMA","ap_ts_demand_score":72,"ap_ts_supply_score":55,"opportunity_gap":"Medium-High","annual_jobs_created_ap_ts":"7,000+","avg_salary_entry":"₹5-8 LPA","trend":"Rising","source":"ICAI 2024"}\n  ],\n  "scholarship_alert": "Specific scholarships this student qualifies for",\n  "warning_flags": ["any academic gaps or budget issues"],\n  "counselor_note": "Personalized motivational note in Telugu-friendly warm tone"\n}';
+
+  var prompt = pathNote + '\n\nSTUDENT PROFILE:\nBoard: ' + d.board + ' | Stream: ' + d.stream +
+    '\n\n10th Subject Marks:\n' + tenthRows + '\n10th Average: ' + d.tenthAvg + '%' +
+    '\n\nIntermediate Subject Marks:\n' + interRows + '\nInter Average: ' + d.interAvg + '%' +
+    '\n\nTop Merit Subject (aggregated 10th+inter): ' + d.topMeritSubject + (d.topMeritScore >= 0 ? ' (' + d.topMeritScore.toFixed(1) + '%)' : '') +
+    '\nPrimary Career Interest: ' + d.topInterest +
+    '\nAll Interests: ' + d.interests +
+    '\n\nCompetitive Exams:\n' + d.exams +
+    '\n\nAge: ' + d.age + ' | Level: ' + d.level +
+    '\nPassion: ' + d.passion +
+    '\nStrengths: ' + d.strengths +
+    '\nBudget: ' + d.budget +
+    '\nLocation: ' + d.location +
+    '\nFamily: ' + d.family +
+    '\nScholarship: ' + d.scholarship +
+    '\n\nMANDATORY REQUIREMENTS:\n1. Every demand/supply fact MUST cite the exact authoritative source name and year\n2. Include REAL job numbers: annual vacancies in AP/TS, estimated applicants, competition ratio\n3. Top colleges MUST include their real NIRF 2024 rank number from nirf.ac.in\n4. Include 3-4 official job portal URLs relevant to each career domain\n5. Use only 2023-2025 data from NASSCOM, AICTE, NITI Aayog, MoHFW, NHB, ICAI, Bar Council, APPSC, TSPSC etc.\n\nReturn ONLY this JSON (no markdown):\n' + schema;
+
+  var res = await fetch('/.netlify/functions/chat', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      max_tokens: 4000,
+      messages: [{ role:'system', content:sys }, { role:'user', content:prompt }]
+    })
+  });
+
+  if (!res.ok) {
+    var err = await res.json().catch(function(){ return {}; });
+    throw new Error((err.error && err.error.message) || ('API error ' + res.status));
+  }
+
+  var body = await res.json();
+  var raw = body.choices[0].message.content.trim();
+  raw = raw.replace(/^```[a-zA-Z]*\s*/m,'').replace(/\s*```\s*$/m,'').trim();
+  var jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (jsonMatch) raw = jsonMatch[0];
+  return JSON.parse(raw);
+}
+
+// ── RENDER ALL ────────────────────────────────────────────
+function renderAll(data, formData) {
+  document.getElementById('formSection').classList.add('hidden');
+  var r = document.getElementById('results');
+  r.classList.add('on');
+
+  document.getElementById('rSummary').textContent = data.student_summary || '';
+
+  // Path choice banner
+  var pb = document.getElementById('rPathBanner');
+  if (formData.pathChoice) {
+    var pathLabels = { merit:'🎯 Showing paths based on academic merit (top subject: ' + formData.topMeritSubject + ')', interest:'❤️ Showing paths based on your passion for ' + formData.topInterest, both:'🎯 Your merit & interests are aligned — showing combined best-fit paths' };
+    var pathCls = { merit:'merit', interest:'passion', both:'both' };
+    pb.className = 'path-banner ' + (pathCls[formData.pathChoice] || 'both');
+    pb.innerHTML = pathLabels[formData.pathChoice] || '';
+    pb.classList.remove('hidden');
+  }
+
+  // Subject alignment summary
+  var as = document.getElementById('rAlignSummary');
+  if (formData.topMeritSubject && formData.topInterest) {
+    as.innerHTML = '<strong>🧠 Academic Strength:</strong> ' + formData.topMeritSubject +
+      (formData.topMeritScore >= 0 ? ' (' + formData.topMeritScore.toFixed(1) + '%)' : '') +
+      ' &nbsp;|&nbsp; <strong>❤️ Top Interest:</strong> ' + formData.topInterest +
+      (formData.pathChoice === 'both' ? ' &nbsp;→&nbsp; <strong style="color:var(--green)">Aligned!</strong>' : '');
+    as.classList.remove('hidden');
+  }
+
+  var sa = document.getElementById('rScholarship');
+  if (data.scholarship_alert) {
+    sa.classList.remove('hidden');
+    sa.innerHTML = '<strong>🎓 Scholarship Opportunity:</strong> ' + data.scholarship_alert;
+  }
+  var wa = document.getElementById('rWarning');
+  if (data.warning_flags && data.warning_flags.length) {
+    wa.classList.remove('hidden');
+    wa.innerHTML = '<strong style="color:var(--yellow)">⚠️ Points to Note:</strong><div style="font-size:13px;margin-top:5px;color:#92400E">' +
+      data.warning_flags.map(function(f){ return '• ' + f; }).join('<br>') + '</div>';
+  }
+  document.getElementById('rNote').innerHTML = '<strong>💬 Counselor\'s Note:</strong><br>' + (data.counselor_note || '');
+  document.getElementById('debugJson').textContent = JSON.stringify(data, null, 2);
+
+  renderCards(data.top_paths || []);
+  renderTree(data.top_paths && data.top_paths[0]);
+  renderChart(data.domain_market_data || []);
+  renderBudget(data.top_paths || [], formData.budget);
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── CARDS (enhanced with NIRF, portals, citations) ────────
+function renderCards(paths) {
+  var g = document.getElementById('cardsGrid');
+  var cols = ['#059669','#0891B2','#D97706'];
+  var tracks = ['#D1FAE5','#E0F2FE','#FEF3C7'];
+  g.innerHTML = paths.slice(0,3).map(function(p, i) {
+    var s = p.match_score || 75;
+    var r = 26, circ = 2*Math.PI*r, dash = (s/100)*circ;
+    var rc = 'r'+(i+1);
+
+    // Colleges
+    var collegesHtml = '';
+    if (p.top_colleges_ranked && p.top_colleges_ranked.length) {
+      collegesHtml = '<div class="college-list">' + p.top_colleges_ranked.slice(0,4).map(function(c){
+        return '<div class="college-row">' +
+          '<span class="nirf-badge">NIRF #' + c.nirf_rank + '</span>' +
+          '<div><div class="college-name">' + c.name + '</div>' +
+          '<div class="college-meta">' + (c.type||'') + (c.state ? ' • '+c.state : '') + ' • NIRF ' + (c.nirf_year||'2024') + '</div></div>' +
+          '</div>';
+      }).join('') + '</div>';
+    } else if (p.top_colleges_ap_ts) {
+      collegesHtml = (p.top_colleges_ap_ts||[]).slice(0,3).map(function(c){ return '<div class="fi">'+c+'</div>'; }).join('');
+    }
+
+    // Jobs market
+    var jobsHtml = '';
+    if (p.jobs_market) {
+      var jm = p.jobs_market;
+      jobsHtml = '<div class="jobs-banner">' +
+        '<div class="jobs-stats-row">' +
+          '<div class="jobs-stat"><div class="jobs-stat-val">' + (jm.total_vacancies_ap_ts_annual||'—') + '</div><div class="jobs-stat-label">Annual Vacancies (AP/TS)</div></div>' +
+          '<div class="jobs-stat"><div class="jobs-stat-val">' + (jm.estimated_applicants||'—') + '</div><div class="jobs-stat-label">Total Applicants</div></div>' +
+          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (jm.competition_ratio||'—') + '</div><div class="jobs-stat-label">Competition</div></div>' +
+        '</div>' +
+        '<div class="jobs-source">Source: ' + (jm.data_source||'') + (jm.data_url ? ' <a href="'+jm.data_url+'" target="_blank" class="cite-link">[link]</a>' : '') + '</div>' +
+        '</div>';
+    }
+
+    // Job portals
+    var portalsHtml = '';
+    if (p.job_portals && p.job_portals.length) {
+      portalsHtml = '<div class="portals-grid">' + p.job_portals.map(function(jp){
+        return '<a href="' + jp.url + '" target="_blank" rel="noopener" class="portal-link">🔗 ' + jp.name + '</a>';
+      }).join('') + '</div>';
+    }
+
+    // Citations
+    var citeHtml = '';
+    if (p.citations && p.citations.length) {
+      citeHtml = '<div class="citations-box">' +
+        '<div class="citations-title">📚 Data Sources & Citations</div>' +
+        p.citations.map(function(c){
+          return '<div class="cite-row">"' + c.fact + '" — <span class="cite-source">' + c.source + '</span>' +
+            (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="cite-link">[official link]</a>' : '') + '</div>';
+        }).join('') + '</div>';
+    }
+
+    var sd = p.supply_demand || {};
+    var jobs = (p.job_locations||[]).join(', ');
+    var schls = (p.scholarship_options||[]).join(', ');
+    var risks = (p.risk_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
+    var ups = (p.upside_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
+
+    return '<div class="cc ' + rc + '" onclick="toggleCard(this)">' +
+      '<div class="cc-header">' +
+        '<div>' +
+          '<div class="cc-domain">' + (p.domain||'') + '</div>' +
+          '<div class="cc-title">' + (p.specific_career||'') + '</div>' +
+          '<span class="rank-badge">#' + (p.rank||i+1) + ' Recommended</span>' +
+        '</div>' +
+        '<div class="match-gauge">' +
+          '<svg width="58" height="58" viewBox="0 0 58 58">' +
+            '<circle cx="29" cy="29" r="'+r+'" fill="none" stroke="'+tracks[i]+'" stroke-width="5"/>' +
+            '<circle cx="29" cy="29" r="'+r+'" fill="none" stroke="'+cols[i]+'" stroke-width="5" stroke-dasharray="'+dash.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/>' +
+          '</svg>' +
+          '<div class="match-pct">'+s+'%</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cc-route">📍 ' + (p.entry_route||'') + '</div>' +
+      '<div class="cc-salary">' +
+        '<div class="sal-item"><span class="sal-label">Starting</span><span class="sal-val">'+(p.starting_salary_range||'N/A')+'</span></div>' +
+        '<div class="sal-item"><span class="sal-label">5-Year</span><span class="sal-val">'+(p['5yr_salary_range']||'N/A')+'</span></div>' +
+        '<div class="sal-item"><span class="sal-label">Duration</span><span class="sal-val">'+(p.duration_years||'?')+' yrs</span></div>' +
+      '</div>' +
+      '<div class="cc-expand">' +
+        '<div class="drow"><span class="dlabel">Estimated Cost</span><span class="dval">'+(p.estimated_cost||'N/A')+'</span></div>' +
+        '<div class="drow"><span class="dlabel">Job Locations</span><span class="dval">'+jobs+'</span></div>' +
+        '<div class="drow"><span class="dlabel">Scholarships</span><span class="dval">'+schls+'</span></div>' +
+        '<div class="drow"><span class="dlabel">Market Demand</span><span class="dval">'+(sd.demand_level||'N/A')+'</span></div>' +
+        '<div class="drow"><span class="dlabel">Competition Level</span><span class="dval">'+(sd.competition_index||'N/A')+'</span></div>' +
+        '<div class="drow"><span class="dlabel">Growth Trend</span><span class="dval">'+(sd.growth_trend||'N/A')+'</span></div>' +
+        (p.match_reason ? '<div style="font-size:12px;color:var(--green);font-style:italic;margin:8px 0">✓ '+p.match_reason+'</div>' : '') +
+        '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:12px 0 6px">🏛️ Top Colleges — NIRF 2024 Ranked</div>' +
+        collegesHtml +
+        '<div style="font-size:12px;font-weight:700;color:var(--purple);margin:12px 0 6px">📊 AP/TS Job Market Data</div>' +
+        jobsHtml +
+        '<div style="font-size:12px;font-weight:700;color:var(--blue);margin:12px 0 6px">🌐 Official Job Application Portals</div>' +
+        portalsHtml +
+        (risks ? '<div class="risks"><h5>⚠️ Risk Factors</h5>'+risks+'</div>' : '') +
+        (ups ? '<div class="upsides"><h5>✅ Upside Factors</h5>'+ups+'</div>' : '') +
+        citeHtml +
+      '</div>' +
+      '<div class="expand-btn"><span class="etxt">▼ Details, Rankings & Citations</span></div>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleCard(el) {
+  el.classList.toggle('open');
+  var t = el.querySelector('.etxt');
+  if (t) t.textContent = el.classList.contains('open') ? '▲ Hide details' : '▼ Details, Rankings & Citations';
+}
+
+// ── DECISION TREE ─────────────────────────────────────────
+function renderTree(path) {
+  if (!path) return;
+  var dt = path.decision_tree || {};
+  var wrap = document.getElementById('treeWrap');
+  var nodes = [
+    {id:'n0',x:400,y:45, text:dt.current_node||'Current Position', bg:'#1A237E',fg:'#fff'},
+    {id:'n1',x:400,y:145,text:dt.next_step||'Next Step',          bg:'#FF6B00',fg:'#fff'},
+    {id:'n2',x:210,y:255,text:dt.branch_yes||'Success Path',      bg:'#059669',fg:'#fff'},
+    {id:'n3',x:590,y:255,text:dt.branch_no||'Alternative Path',   bg:'#D97706',fg:'#fff'},
+    {id:'n4',x:400,y:365,text:dt.milestone_3yr||'3-Year Goal',    bg:'#0891B2',fg:'#fff'},
+    {id:'n5',x:400,y:465,text:dt.milestone_final||'Final Goal',   bg:'#059669',fg:'#fff'}
+  ];
+  var edges = [
+    {f:'n0',t:'n1',lbl:''},{f:'n1',t:'n2',lbl:'Yes ✓'},{f:'n1',t:'n3',lbl:'Alt ↗'},
+    {f:'n2',t:'n4',lbl:''},{f:'n3',t:'n4',lbl:''},{f:'n4',t:'n5',lbl:''}
+  ];
+  var nmap = {};
+  nodes.forEach(function(n){ nmap[n.id]=n; });
+  function wrapText(t,mx) {
+    var words=t.split(' '),lines=[],cur='';
+    words.forEach(function(w){var tr=cur?cur+' '+w:w;if(tr.length>mx&&cur){lines.push(cur);cur=w;}else cur=tr;});
+    if(cur)lines.push(cur); return lines;
+  }
+  var svgEdges='';
+  edges.forEach(function(e){
+    var f=nmap[e.f],t=nmap[e.t];
+    var x1=f.x,y1=f.y+28,x2=t.x,y2=t.y-28,mx=(x1+x2)/2,my=(y1+y2)/2;
+    svgEdges+='<path d="M'+x1+','+y1+' C'+x1+','+my+' '+x2+','+my+' '+x2+','+y2+'" fill="none" stroke="#CBD5E1" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arr)"/>';
+    if(e.lbl)svgEdges+='<text x="'+(mx+8)+'" y="'+my+'" font-size="11" fill="#6B7280" font-family="Inter,sans-serif">'+e.lbl+'</text>';
+  });
+  var svgNodes='';
+  nodes.forEach(function(n){
+    var lines=wrapText(n.text,20),w=170,h=52,extra=(lines.length-1)*15;
+    svgNodes+='<rect x="'+(n.x-w/2)+'" y="'+(n.y-h/2)+'" width="'+w+'" height="'+(h+extra)+'" rx="10" fill="'+n.bg+'" opacity=".95" filter="url(#ds)"/>';
+    lines.forEach(function(ln,i){
+      var oy=lines.length===1?5:-5+i*16;
+      svgNodes+='<text x="'+n.x+'" y="'+(n.y+oy)+'" text-anchor="middle" font-size="11" font-weight="600" fill="'+n.fg+'" font-family="Inter,sans-serif">'+escHtml(ln)+'</text>';
+    });
+  });
+  wrap.innerHTML='<svg width="100%" viewBox="0 0 800 530" style="max-width:800px;min-width:300px"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#CBD5E1"/></marker><filter id="ds"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".15"/></filter></defs>'+svgEdges+svgNodes+'</svg>';
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── JOB MARKET CHART ──────────────────────────────────────
+function renderChart(domains) {
+  if (mChart) { mChart.destroy(); mChart=null; }
+  var ctx = document.getElementById('mChart').getContext('2d');
+  mChart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels:domains.map(function(d){return d.domain;}),
+      datasets:[
+        {label:'Demand Score',data:domains.map(function(d){return d.ap_ts_demand_score;}),backgroundColor:'rgba(255,107,0,.85)',borderColor:'#FF6B00',borderWidth:1,borderRadius:4},
+        {label:'Supply Score',data:domains.map(function(d){return d.ap_ts_supply_score;}),backgroundColor:'rgba(26,35,126,.7)',borderColor:'#1A237E',borderWidth:1,borderRadius:4}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{
+        legend:{position:'top',labels:{font:{family:'Inter',size:12}}},
+        tooltip:{callbacks:{afterLabel:function(ctx){
+          var d=domains[ctx.dataIndex];
+          return ctx.datasetIndex===0?'Jobs: '+d.annual_jobs_created_ap_ts+'\nTrend: '+d.trend:'Gap: '+d.opportunity_gap+'\nSrc: '+d.source;
+        }}}
+      },
+      scales:{
+        x:{min:0,max:100,title:{display:true,text:'Score (0–100)',font:{size:12}},grid:{color:'rgba(0,0,0,.05)'}},
+        y:{ticks:{font:{family:'Inter',size:11}},grid:{display:false}}
+      }
+    }
+  });
+}
+
+// ── BUDGET TABLE ──────────────────────────────────────────
+function renderBudget(paths, userBudget) {
+  var ranks={'Under ₹1 Lakh':1,'₹1–3 Lakh':2,'₹3–7 Lakh':3,'₹7–15 Lakh':4,'₹15–30 Lakh':5,'Above ₹30 Lakh':6};
+  var ur=ranks[userBudget]||3;
+  var tbody=document.getElementById('budgetBody');
+  tbody.innerHTML=paths.slice(0,3).map(function(p){
+    var cost=p.estimated_cost||'';
+    var cr=3;
+    if(/free|50,000|₹1\s*L/i.test(cost))cr=1;
+    else if(/1[-–]3|₹2\s*L/i.test(cost))cr=2;
+    else if(/3[-–][57]|₹[34]\s*L/i.test(cost))cr=3;
+    else if(/7[-–]15|₹[89]\s*L|₹10/i.test(cost))cr=4;
+    else if(/15[-–]30|₹2\d\s*L/i.test(cost))cr=5;
+    else if(/30\+|₹[3-9]\d\s*L/i.test(cost))cr=6;
+    var diff=ur-cr;
+    var label,cls;
+    if(diff>=0){label='Feasible ✓';cls='f-green';}
+    else if(diff===-1){label='Stretch (scholarship)';cls='f-yellow';}
+    else{label='Out of range';cls='f-red';}
+    var schls=(p.scholarship_options||[]).slice(0,2).join(', ')||'—';
+    return '<tr><td><strong>'+p.specific_career+'</strong><br><span style="font-size:11px;color:var(--gray-500)">'+p.domain+'</span></td>' +
+      '<td>'+(p.duration_years||'?')+' yrs</td><td>'+cost+'</td><td>'+(userBudget||'Not specified')+'</td>' +
+      '<td><span class="fbadge '+cls+'">'+label+'</span></td><td style="font-size:12px;color:var(--gray-600)">'+schls+'</td></tr>';
+  }).join('');
+}
+
+// ── DEMO DATA ─────────────────────────────────────────────
+function loadDemo() {
+  document.getElementById('f_board').value = 'TS State';
+  document.getElementById('f_stream').value = 'MPC';
+  updateInterSubjects();
+  document.getElementById('f_age').value = '17';
+  document.getElementById('f_level').value = 'Inter 2nd year';
+  document.getElementById('f_passion').value = 'Want to use technology to help farmers in AP and Telangana region';
+  updateCC();
+
+  // 10th marks
+  var tenthData = {English:78, SecondLanguage:72, Mathematics:88, Science:82, SocialStudies:70};
+  Object.keys(tenthData).forEach(function(k) {
+    var el = document.getElementById('tenth_' + k);
+    if (el) { el.value = tenthData[k]; onSubjInput(el); }
+  });
+
+  // Inter marks
+  var interData = {Mathematics:85, Physics:80, Chemistry:75, English:72, SecondLanguage:68};
+  Object.keys(interData).forEach(function(k) {
+    var el = document.getElementById('inter_' + k);
+    if (el) { el.value = interData[k]; onSubjInput(el); }
+  });
+
+  // Exam
+  document.querySelectorAll('.exam-item').forEach(function(el) {
+    if (el.getAttribute('data-exam') === 'EAMCET TS (Engg)') {
+      el.classList.add('on');
+      el.querySelector('.exam-cb').checked = true;
+      el.querySelector('.exam-score').value = '45000 rank';
+    }
+  });
+
+  // Interests
+  sel.interests = [];
+  ['Technology','Agriculture'].forEach(function(v) {
+    document.querySelectorAll('#interestChips .chip').forEach(function(c) {
+      if (c.textContent === v && !c.classList.contains('on')) {
+        c.classList.add('on'); sel.interests.push(v);
+      }
+    });
+  });
+  document.querySelectorAll('#interestChips .chip.on').forEach(function(x,i){
+    if(i===0)x.classList.add('primary-int');else x.classList.remove('primary-int');
+  });
+
+  ['Logical thinking','Technical','Analytical'].forEach(function(v) {
+    document.querySelectorAll('#strengthChips .chip').forEach(function(c) {
+      if (c.textContent === v && !c.classList.contains('on')) { c.classList.add('on'); sel.strengths.push(v); }
+    });
+  });
+
+  sel.budget = '₹3–7 Lakh';
+  document.querySelectorAll('.budget-opt').forEach(function(b) { b.classList.toggle('on', b.textContent==='₹3–7 Lakh'); });
+  sel.location = 'Stay in AP/TS only';
+  document.querySelectorAll('#locChips .chip').forEach(function(c) { if(c.textContent==='Stay in AP/TS only') c.classList.add('on'); });
+  sel.scholarships = ['BC'];
+  document.querySelectorAll('#schlChips .chip').forEach(function(c) { if(c.textContent==='BC'){ c.classList.add('on'); } });
+
+  var banner = document.createElement('div');
+  banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
+  banner.innerHTML = '⚡ Demo data loaded! Groq API key is pre-filled — click "Get AI Career Guidance"';
+  document.querySelector('.api-bar').insertAdjacentElement('afterend', banner);
+  // (api-bar now shows "secured server-side" — no key input to focus)
+  setTimeout(function(){ banner.remove(); }, 4000);
+}
+
+// ── UTILITIES ─────────────────────────────────────────────
+function startOver() {
+  document.getElementById('results').classList.remove('on');
+  ['rScholarship','rWarning','rAlignSummary','rPathBanner'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) { el.classList.add('hidden'); el.innerHTML=''; }
+  });
+  document.getElementById('cardsGrid').innerHTML = '';
+  document.getElementById('treeWrap').innerHTML = '';
+  document.getElementById('budgetBody').innerHTML = '';
+  document.getElementById('rNote').innerHTML = '';
+  document.getElementById('debugJson').textContent = '';
+  document.getElementById('debugJson').style.display = 'none';
+  if (mChart) { mChart.destroy(); mChart=null; }
+  document.getElementById('formSection').classList.remove('hidden');
+  step=1;
+  ['step1','step2','step3'].forEach(function(id,i){ document.getElementById(id).classList.toggle('hidden',i!==0); });
+  ['sc1','sc2','sc3'].forEach(function(id,i){ var c=document.getElementById(id); c.className='step-circle'+(i===0?' active':''); c.textContent=i+1; });
+  ['sl1','sl2'].forEach(function(id){ document.getElementById(id).classList.remove('done'); });
+  document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleDebug() {
+  var el = document.getElementById('debugJson');
+  el.style.display = el.style.display==='block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>
