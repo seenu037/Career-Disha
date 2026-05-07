@@ -8,13 +8,13 @@ CareerDisha is a single-file HTML career guidance web app for Indian students. A
 
 ## Running / Testing
 
-No build step. Open `career_disha.html` directly in a browser as a local file. The JS detects `window.location.protocol === 'file:'` and calls the Groq API directly with the hardcoded key in `callAPI()`. For deployed use, `netlify/functions/chat.js` proxies the request server-side using `process.env.GROQ_API_KEY`.
+No build step. Open `index.html` directly in a browser as a local file, or run `netlify dev` from the project root. The JS detects `window.location.protocol === 'file:'` and prompts for a Groq API key (stored in sessionStorage). For deployed use, `netlify/functions/chat.js` proxies the request server-side using `process.env.GROQ_API_KEY`.
 
-`index.html` is an older copy of the app — **`career_disha.html` is the active file** where all development happens.
+`index.html` is the active app file (replaced an older snapshot in May 2026). The deterministic match engine and slim-prompt composer live in `data/` and load via `<script src>` tags.
 
 ## Architecture
 
-Everything lives in `career_disha.html`: HTML structure, CSS (embedded `<style>`), and JS (embedded `<script>`). There are no imports, bundlers, or external JS files. Chart.js is loaded from CDN.
+Markup, CSS, and form/render JS live in `index.html`. The deterministic match engine (`data/data.js`, `data/matcher.js`) and the LLM prompt composer (`data/composer.js`) are loaded as separate `<script src>` files but have no build step — they assign to `window.CAREER_DATA`, `window.CareerMatcher`, `window.CareerComposer`. Chart.js loads from CDN. See `ARCHITECTURE.md` for the deterministic-vs-LLM split and request flow diagrams.
 
 ### Form Flow
 

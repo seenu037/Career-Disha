@@ -1,0 +1,24 @@
+{
+  "_doc": "Maps the chip labels rendered in index.html (strengthChips) to canonical IDs used in careers.json.",
+  "_chip_source": "index.html line 782",
+  "labels": {
+    "Logical thinking": "logical-thinking",
+    "Creativity":       "creativity",
+    "Communication":    "communication",
+    "Leadership":       "leadership",
+    "Analytical":       "analytical",
+    "Empathy":          "empathy",
+    "Technical":        "technical",
+    "Research":         "research"
+  },
+  "canonical": {
+    "logical-thinking": { "label_en": "Logical thinking" },
+    "creativity":       { "label_en": "Creativity" },
+    "communication":    { "label_en": "Communication" },
+    "leadership":       { "label_en": "Leadership" },
+    "analytical":       { "label_en": "Analytical" },
+    "empathy":          { "label_en": "Empathy" },
+    "technical":        { "label_en": "Technical" },
+    "research":         { "label_en": "Research" }
+  }
+}

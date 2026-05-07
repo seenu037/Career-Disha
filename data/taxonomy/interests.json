@@ -1,0 +1,36 @@
+{
+  "_doc": "Maps the chip labels rendered in index.html (interestChips) to canonical IDs used in careers.json. Renaming a chip in the UI only requires updating this file — no career data changes.",
+  "_chip_source": "index.html line 779",
+  "labels": {
+    "Medicine": "medicine",
+    "Law": "law",
+    "Agriculture": "agriculture",
+    "Arts & Design": "arts-design",
+    "Music & Performing Arts": "performing-arts",
+    "Business": "business",
+    "Teaching": "teaching",
+    "Government Service": "government-service",
+    "Technology": "technology",
+    "Sports": "sports",
+    "Social Work": "social-work",
+    "Media & Journalism": "media-journalism",
+    "Digital Marketing": "digital-marketing",
+    "Finance": "finance"
+  },
+  "canonical": {
+    "medicine":          { "label_en": "Medicine",            "related": ["biology","healthcare","empathy"] },
+    "law":               { "label_en": "Law",                 "related": ["legal","reasoning","communication"] },
+    "agriculture":       { "label_en": "Agriculture",         "related": ["biology","outdoors","applied-science"] },
+    "arts-design":       { "label_en": "Arts & Design",       "related": ["creativity","visual","aesthetics"] },
+    "performing-arts":   { "label_en": "Music & Performing Arts", "related": ["creativity","stage","expression"] },
+    "business":          { "label_en": "Business",            "related": ["entrepreneurship","commerce","strategy"] },
+    "teaching":          { "label_en": "Teaching",            "related": ["communication","empathy","knowledge-sharing"] },
+    "government-service":{ "label_en": "Government Service",  "related": ["civics","public-service","stability"] },
+    "technology":        { "label_en": "Technology",          "related": ["coding","engineering","problem-solving"] },
+    "sports":            { "label_en": "Sports",              "related": ["physical","competition","discipline"] },
+    "social-work":       { "label_en": "Social Work",         "related": ["empathy","community","public-service"] },
+    "media-journalism":  { "label_en": "Media & Journalism",  "related": ["communication","writing","current-affairs"] },
+    "digital-marketing": { "label_en": "Digital Marketing",   "related": ["creativity","analytics","communication"] },
+    "finance":           { "label_en": "Finance",             "related": ["math","analytical","commerce"] }
+  }
+}

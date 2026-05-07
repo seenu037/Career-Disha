@@ -1,0 +1,30 @@
+{
+  "_doc": "Maps subject names appearing in TENTH_SUBJECTS and INTER_SUBJECTS (index.html lines 608-625) to canonical IDs used in careers.json vector.subjects. The 'expand' field is used by normalizeMarks() to fan one mark out to multiple canonical subjects when a 10th-level subject covers several 12th-level ones (e.g. Science → physics+chemistry+biology).",
+  "_subject_source": "index.html line 608 (TENTH_SUBJECTS) and 610 (INTER_SUBJECTS)",
+  "labels": {
+    "Mathematics":       { "id": "math" },
+    "Physics":           { "id": "physics" },
+    "Chemistry":         { "id": "chemistry" },
+    "Botany":            { "id": "botany",  "expand": ["biology"] },
+    "Zoology":           { "id": "zoology", "expand": ["biology"] },
+    "Biology":           { "id": "biology" },
+    "Computer Science":  { "id": "cs" },
+    "English":           { "id": "english" },
+    "Second Language":   { "id": "second-language" },
+    "Science":           { "id": "science", "expand": ["physics","chemistry","biology"] },
+    "Social Studies":    { "id": "social-studies", "expand": ["history","civics","political-science","geography"] },
+    "Commerce":          { "id": "commerce" },
+    "Economics":         { "id": "economics" },
+    "Civics":            { "id": "civics" },
+    "History":           { "id": "history" },
+    "Political Science": { "id": "political-science" },
+    "Business Studies":  { "id": "business-studies" },
+    "Vocational Subject":{ "id": "vocational" }
+  },
+  "canonical": [
+    "math","physics","chemistry","biology","botany","zoology","cs",
+    "english","second-language","science","social-studies","geography",
+    "commerce","economics","civics","history","political-science",
+    "business-studies","vocational"
+  ]
+}
