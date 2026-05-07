@@ -549,6 +549,16 @@ textarea{resize:vertical;min-height:78px}
   <div class="alert-green hidden" id="rScholarship"></div>
   <div class="alert-yellow hidden" id="rWarning"></div>
 
+  <div class="card" id="inputSummaryCard" style="display:none">
+    <div class="section-title">📋 Your Profile Inputs</div>
+    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this is what drove your match results</div>
+    <div style="overflow-x:auto">
+      <table class="btable">
+        <tbody id="inputSummaryBody"></tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="card">
     <div class="section-title">🏆 Top Career Recommendations <span id="resCareerTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">సిఫార్సు చేసిన కెరీర్లు</span></div>
     <div class="cards-grid" id="cardsGrid"></div>
@@ -1479,7 +1489,7 @@ async function callAPI(d) {
 
   var payload = JSON.stringify({
     model: 'llama-3.3-70b-versatile',
-    max_tokens: 2500,
+    max_tokens: 2200,
     messages: [
       { role: 'system', content: built.sys },
       { role: 'user',   content: built.prompt }
@@ -1572,12 +1582,53 @@ function renderAll(data, formData) {
   document.getElementById('rNote').innerHTML = noteHtml;
   document.getElementById('debugJson').textContent = JSON.stringify(data, null, 2);
 
+  renderInputSummary(formData);
   renderCards(data.top_paths || []);
   renderTree(data.top_paths && data.top_paths[0]);
   renderChart(data.domain_market_data || []);
   renderJobListings(data.job_listings || []);
   renderBudget(data.top_paths || [], formData.budget);
   window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── INPUT SUMMARY (deterministic, no LLM) ─────────────────
+function renderInputSummary(formData) {
+  var card = document.getElementById('inputSummaryCard');
+  var body = document.getElementById('inputSummaryBody');
+  if (!card || !body) return;
+  function fmt(v) { return (!v || v === 'Not specified' || v === 'None' || v === '') ? '—' : String(v); }
+  var tenthAvg = (formData.tenthAvg && formData.tenthAvg !== 'N/A' && formData.tenthAvg !== 0 && formData.tenthAvg !== '0') ? formData.tenthAvg + '%' : '—';
+  var interAvg = (formData.interAvg && formData.interAvg !== 'N/A' && formData.interAvg !== 0 && formData.interAvg !== '0') ? formData.interAvg + '%' : '—';
+  var topSubj = formData.topMeritSubject ? formData.topMeritSubject + (formData.topMeritScore >= 0 ? ' (' + Number(formData.topMeritScore).toFixed(1) + '%)' : '') : '—';
+  var pathLabel = formData.pathChoice === 'merit'    ? '🎯 Following academic merit'
+                : formData.pathChoice === 'interest' ? '❤️ Following passion'
+                : formData.pathChoice === 'both'     ? '🎯❤️ Merit & interest aligned' : '—';
+  var rows = [
+    ['📍 State',              formData.state],
+    ['🎓 Current Class',      formData.level],
+    ['📚 Stream / Branch',    formData.branch || formData.stream],
+    ['🏛️ Board',              formData.board],
+    ['🎂 Age',                formData.age],
+    ['💯 10th Average',       tenthAvg],
+    ['💯 Inter Average',      interAvg],
+    ['⭐ Top Merit Subject',  topSubj],
+    ['❤️ Primary Interest',   formData.topInterest || (formData.interests || '').split(',')[0]],
+    ['🎯 All Interests',      formData.interests],
+    ['💪 Strengths',          formData.strengths],
+    ['📝 Exams Appeared',     formData.exams],
+    ['💰 Education Budget',   formData.budget],
+    ['🌍 Location Preference',formData.location],
+    ['👨‍👩‍👧 Family Background',formData.family],
+    ['🎓 Scholarship Cat.',   formData.scholarship],
+    ['🛣️ Path Choice',        pathLabel]
+  ];
+  body.innerHTML = rows.map(function(r) {
+    return '<tr>' +
+      '<td style="font-weight:600;color:var(--gray-700);width:38%">' + r[0] + '</td>' +
+      '<td style="color:var(--gray-900)">' + escHtml(fmt(r[1])) + '</td>' +
+    '</tr>';
+  }).join('');
+  card.style.display = 'block';
 }
 
 // ── CARDS (enhanced with NIRF, portals, citations) ────────
@@ -2193,6 +2244,7 @@ function startOver() {
   document.getElementById('jobListingsBody').innerHTML = '';
   document.getElementById('jobListingsCard').style.display = 'none';
   document.getElementById('rSummaryLocal').style.display = 'none';
+  var ic = document.getElementById('inputSummaryCard'); if (ic) ic.style.display = 'none';
   document.getElementById('rNote').innerHTML = '';
   document.getElementById('debugJson').textContent = '';
   document.getElementById('debugJson').style.display = 'none';
