@@ -1507,8 +1507,19 @@ async function callAPI(d) {
       sessionStorage.setItem('GROQ_KEY', localKey);
     }
     fetchHeaders['authorization'] = 'Bearer ' + localKey;
+  } else {
+    // Send canonical cache key to the Netlify function. Same canonical profile
+    // → same key → cached response served with zero LLM tokens.
+    try {
+      var ck = await window.CareerComposer.canonicalCacheKey(d);
+      fetchHeaders['x-cache-key'] = ck;
+      console.log('[CareerDisha] cache key:', ck);
+    } catch (e) {
+      console.warn('[CareerDisha] cache key generation failed (non-fatal):', e);
+    }
   }
   var res = await fetch(fetchUrl, { method: 'POST', headers: fetchHeaders, body: payload });
+  console.log('[CareerDisha] cache:', res.headers.get('x-cache') || '(not set)');
 
   if (!res.ok) {
     var err = await res.json().catch(function(){ return {}; });

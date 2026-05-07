@@ -422,9 +422,56 @@
     };
   }
 
+  // ── Canonical cache key ────────────────────────────────────────────────
+  // Hashes the profile fields that drive LLM output. Excludes free-text
+  // (passion) and exact mark numbers (we bucket them) so similar students
+  // hit the same cache entry. Returns a 24-hex-char SHA-256 prefix.
+  function bucket10(n) {
+    if (typeof n !== 'number' || isNaN(n) || n < 0) return -1;
+    return Math.round(n / 10) * 10;
+  }
+  function sortedTrim(csv, n) {
+    return (csv || '').split(',').map(function (s) { return s.trim(); })
+      .filter(Boolean).slice(0, n).sort();
+  }
+  async function canonicalCacheKey(formData) {
+    var canon = {
+      v:           1,                                     // bump if cache invalidation needed
+      state:       formData.state       || '',
+      level:       formData.level       || '',
+      stream:      formData.stream      || '',
+      interests:   sortedTrim(formData.interests, 3),
+      strengths:   sortedTrim(formData.strengths, 3),
+      tenthBkt:    bucket10(parseFloat(formData.tenthAvg)),
+      interBkt:    bucket10(parseFloat(formData.interAvg)),
+      topMerit:    formData.topMeritSubject || '',
+      topMeritBkt: bucket10(formData.topMeritScore),
+      topInterest: formData.topInterest || '',
+      pathChoice:  formData.pathChoice  || '',
+      budget:      formData.budget      || '',
+      location:    formData.location    || '',
+      family:      formData.family      || '',
+      scholarship: formData.scholarship || ''
+    };
+    var json = JSON.stringify(canon);
+    if (typeof crypto !== 'undefined' && crypto.subtle && crypto.subtle.digest) {
+      var buf = new TextEncoder().encode(json);
+      var hash = await crypto.subtle.digest('SHA-256', buf);
+      var hex = Array.from(new Uint8Array(hash))
+        .map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+      return hex.slice(0, 24);
+    }
+    // Fallback: simple djb2 hash if SubtleCrypto unavailable. Less collision-resistant
+    // but stable; only used in dev environments without crypto.subtle.
+    var h = 5381;
+    for (var i = 0; i < json.length; i++) h = ((h << 5) + h + json.charCodeAt(i)) | 0;
+    return ('00000000' + (h >>> 0).toString(16)).slice(-12);
+  }
+
   window.CareerComposer = {
-    buildSlimPrompt:   buildSlimPrompt,
-    mergeLLMResponse:  mergeLLMResponse
+    buildSlimPrompt:    buildSlimPrompt,
+    mergeLLMResponse:   mergeLLMResponse,
+    canonicalCacheKey:  canonicalCacheKey
   };
 
   console.log('[CareerDisha] composer.js loaded');
