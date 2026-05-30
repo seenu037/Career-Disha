@@ -1919,7 +1919,8 @@ function renderBudget(paths, userBudget) {
     var costCell = cb
       ? '<strong>'+cb.total_est+'</strong> total'
         + '<div style="font-size:10px;color:var(--gray-600);margin-top:3px;line-height:1.5">'
-        + '• Tuition: '+cb.tuition+(cb.tuition_source?' <span style="color:var(--gray-500)">('+cb.tuition_source+')</span>':'')+'<br>'
+        + '• Tuition: '+cb.tuition+(cb.tuition_source?' <span style="color:var(--gray-500)">('+cb.tuition_source+')</span>':'')
+          +(cb.tuition_ref?' <a href="'+cb.tuition_ref.url+'" target="_blank" rel="noopener" style="color:var(--deep-blue)">↗ verify: '+cb.tuition_ref.label+'</a>':'')+'<br>'
         + '• Boarding &amp; Lodging: '+cb.boarding_lodging+'<br>'
         + '• Books &amp; Misc: '+cb.books_misc+'<br>'
         + '<em style="color:var(--gray-500)">'+cb.living_tier+' · '+cb.note+'</em></div>'

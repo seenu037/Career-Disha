@@ -156,6 +156,39 @@
     'defence-officer': [0.1, 1], 'agricultural-scientist': [0.5, 5]
   };
 
+  // A link to a page that ACTUALLY LISTS the fee (not a regulator homepage). Resolved by
+  // course + state. Where no fee-listing page is verifiable, returns null and renders no link
+  // (the per-college fees shown in the college lists remain the concrete reference).
+  // Course-level fee pages (single-body courses that publish their own fee):
+  var COURSE_FEE_PAGE = {
+    'chartered-accountant': { label: 'ICAI — scheme & fees', url: 'https://www.icai.org/post/scheme-of-education-and-training' },
+    'company-secretary': { label: 'ICSI — student services & fees', url: 'https://www.icsi.edu/student/' }
+  };
+  // State Fee Regulating Authority pages that publish APPROVED per-college fees (verified).
+  var STATE_FEE_PAGE = {
+    'Maharashtra': { label: 'Maharashtra FRA — approved fees', url: 'https://mahafra.org/feesInformation' },
+    'Karnataka': { label: 'Karnataka KEA — fee structure', url: 'https://cetonline.karnataka.gov.in/kea/' },
+    'Andhra Pradesh': { label: 'AP AFRC — fee orders', url: 'https://afrc.ap.gov.in/' }
+  };
+  var MCC_FEE_REF = { label: 'MCC — MBBS/BDS fee & seat matrix', url: 'https://mcc.nic.in/' };
+  // Courses whose fees are set by state FRAs (private professional colleges).
+  var STATE_REGULATED = {
+    'software-engineer': 1, 'data-scientist': 1, 'cybersecurity-analyst': 1, 'mechanical-engineer': 1,
+    'civil-engineer': 1, 'electronics-engineer': 1, 'aerospace-engineer': 1, 'architect': 1,
+    'doctor-mbbs': 1, 'dentist-bds': 1, 'nurse': 1, 'physiotherapist': 1, 'veterinarian': 1, 'pharmacist': 1,
+    'investment-banker': 1, 'financial-analyst': 1, 'business-analyst': 1, 'digital-marketer': 1
+  };
+  var MEDICAL_COUNSELLING = { 'doctor-mbbs': 1, 'dentist-bds': 1 };
+  function feeRef(c, formData) {
+    if (COURSE_FEE_PAGE[c.id]) return COURSE_FEE_PAGE[c.id];
+    if (STATE_REGULATED[c.id]) {
+      var sp = STATE_FEE_PAGE[formData && formData.state];
+      if (sp) return sp;
+      if (MEDICAL_COUNSELLING[c.id]) return MCC_FEE_REF;
+    }
+    return null; // no verifiable fee-listing page → rely on per-college fees in the college lists
+  }
+
   function costBreakdown(c, formData) {
     var yrs = durationYears(c);
     var tier = c.budget_tier || 'mid';
@@ -180,6 +213,7 @@
     return {
       tuition: R(tu),
       tuition_source: tuition_source,
+      tuition_ref: feeRef(c, formData),
       boarding_lodging: R(hostel) + ' (₹' + L(hYr[0]) + '–' + L(hYr[1]) + 'L/yr × ' + yrs + ' yrs)',
       books_misc: R(books),
       total_est: R(total),
