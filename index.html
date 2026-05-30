@@ -1508,7 +1508,9 @@ async function callAPI(d) {
   });
 
   var isLocal = window.location.protocol === 'file:';
-  var fetchUrl = isLocal ? 'https://api.groq.com/openai/v1/chat/completions' : '/.netlify/functions/chat';
+  // Deployed: always call /api/chat. On Vercel this hits api/chat.js; on Netlify a rewrite in
+  // netlify.toml maps /api/chat -> /.netlify/functions/chat. Local file:// uses Groq direct (BYOK).
+  var fetchUrl = isLocal ? 'https://api.groq.com/openai/v1/chat/completions' : '/api/chat';
   var fetchHeaders = { 'content-type': 'application/json' };
   if (isLocal) {
     var localKey = sessionStorage.getItem('GROQ_KEY');

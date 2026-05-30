@@ -6,3 +6,11 @@
   publish = "."
   functions = "netlify/functions"
   port = 8888
+
+# The front-end calls /api/chat on every platform. On Netlify, rewrite it to the
+# existing Netlify Function (Vercel serves /api/chat from api/chat.js natively).
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
+  force = true
