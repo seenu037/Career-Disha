@@ -131,23 +131,30 @@
   // / NIRF institute disclosures. The budget table labels these as indicative.
   var HIGH_COST_STATES = ['Maharashtra', 'Delhi', 'Karnataka', 'Tamil Nadu', 'Telangana', 'Gujarat'];
 
-  // Tuition range (₹ Lakh) anchored to the ACTUAL NIRF colleges shown for this career
-  // (national top 5 ∪ home-state), using their curated fee_total. Returns null when none of
-  // the shown colleges have a sourced fee (caller falls back to the indicative band).
-  function tuitionFromColleges(career, formData) {
-    var nat = nirfCollegesFor(career, formData) || [];
-    var hs = nirfCollegesInState(career, formData);
-    var all = nat.concat(hs ? hs.colleges : []);
-    var seen = {}, withFee = [];
-    all.forEach(function (c) { if (c.fee_total && !seen[c.name]) { seen[c.name] = 1; withFee.push(c); } });
-    if (!withFee.length) return null;
-    return {
-      min: Math.min.apply(null, withFee.map(function (c) { return c.fee_total[0]; })),
-      max: Math.max.apply(null, withFee.map(function (c) { return c.fee_total[1]; })),
-      count: withFee.length,
-      year: withFee[0].fee_year || ''
-    };
-  }
+  // Per-CAREER total-program tuition range (₹ Lakh), govt-seat → private. Keyed by career so each
+  // path reflects its ACTUAL degree (an MBBS is not a B.Sc Nursing) instead of borrowing the NIRF
+  // category's flagship-course fee. Indicative figures from typical govt/private course fees;
+  // refresh periodically. Careers absent here fall back to the budget_tier band.
+  var COURSE_FEE = {
+    // Engineering / IT — B.Tech (state-govt → IIT/private)
+    'software-engineer': [1, 16], 'data-scientist': [1, 16], 'cybersecurity-analyst': [1, 16],
+    'mechanical-engineer': [1, 14], 'civil-engineer': [1, 14], 'electronics-engineer': [1, 16],
+    'aerospace-engineer': [2, 14],
+    'architect': [2, 12],
+    // Medical cluster — distinct courses
+    'doctor-mbbs': [0.5, 95], 'dentist-bds': [1, 35], 'pharmacist': [1, 10],
+    'veterinarian': [0.5, 6], 'physiotherapist': [1, 12], 'nurse': [0.3, 9],
+    // Commerce / management
+    'chartered-accountant': [0.3, 3], 'company-secretary': [0.2, 2],
+    'investment-banker': [2, 28], 'financial-analyst': [2, 20], 'business-analyst': [2, 24],
+    'digital-marketer': [1, 10],
+    // Law / civic / social
+    'lawyer': [0.5, 16], 'civil-servant': [0.3, 5], 'journalist': [0.5, 8],
+    'psychologist': [0.5, 8], 'teacher': [0.5, 5],
+    // Design / hospitality / defence / agri
+    'graphic-designer': [2, 16], 'fashion-designer': [3, 18], 'hotel-management': [2, 12],
+    'defence-officer': [0.1, 1], 'agricultural-scientist': [0.5, 5]
+  };
 
   function costBreakdown(c, formData) {
     var yrs = durationYears(c);
@@ -155,15 +162,15 @@
     var livingHigh = HIGH_COST_STATES.indexOf(formData && formData.state) !== -1;
     var hYr = livingHigh ? [90000, 150000] : [60000, 100000];   // hostel + mess /yr
     var bYr = [10000, 25000];                                    // books / exam / misc /yr
-    // Prefer tuition from the real fees of the colleges shown; else indicative tier band.
-    var tc = tuitionFromColleges(c, formData);
+    // Tuition is per-COURSE for this career (govt→private), not the NIRF category's flagship fee.
+    var cf = COURSE_FEE[c.id];
     var tu, tuition_source;
-    if (tc) {
-      tu = [tc.min * 100000, tc.max * 100000];
-      tuition_source = 'from ' + tc.count + ' NIRF-listed college fee' + (tc.count > 1 ? 's' : '') + (tc.year ? ' · ' + tc.year : '');
+    if (cf) {
+      tu = [cf[0] * 100000, cf[1] * 100000];
+      tuition_source = 'typical ' + (DEGREE_FOR[c.id] || 'course') + ' fee · govt→private (indicative)';
     } else {
       tu = tier === 'low' ? [10000, 200000] : tier === 'high' ? [300000, 6000000] : [50000, 800000];
-      tuition_source = 'indicative band (no listed-college fee)';
+      tuition_source = 'indicative band';
     }
     var hostel = [hYr[0] * yrs, hYr[1] * yrs];
     var books = [bYr[0] * yrs, bYr[1] * yrs];
