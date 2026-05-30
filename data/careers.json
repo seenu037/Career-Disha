@@ -2,486 +2,2156 @@
   "_doc": "Seed career dataset for the deterministic match engine. Each entry is a final-destination career (not a transitional path). Salary figures are INR/year for Indian market (2025 estimates). job_density values are 0..1 by location tier. Vector subjects use canonical IDs from taxonomy/subjects.json. Vector interests/strengths use canonical IDs from interests.json and strengths.json.",
   "_schema_version": 1,
   "careers": [
-
-    { "id": "software-engineer", "name": { "en": "Software Engineer" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology","digital-marketing","finance"],
-        "strengths": ["logical-thinking","analytical","technical"],
-        "subjects": { "math": 0.40, "physics": 0.20, "cs": 0.25, "english": 0.15 }
+    {
+      "id": "software-engineer",
+      "name": {
+        "en": "Software Engineer"
       },
-      "exams": ["jee-main","jee-advanced","bitsat","viteee","eamcet","comedk","mht-cet"],
-      "college_tags": ["iit","nit","iiit","bits","tier1-engg","private-engg-college"],
-      "salary_inr": { "entry": 600000, "mid": 1500000, "senior": 3500000 },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology",
+          "digital-marketing",
+          "finance"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "analytical",
+          "technical"
+        ],
+        "subjects": {
+          "math": 0.4,
+          "physics": 0.2,
+          "cs": 0.25,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "bitsat",
+        "viteee",
+        "eamcet",
+        "comedk",
+        "mht-cet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "bits",
+        "tier1-engg",
+        "private-engg-college"
+      ],
+      "salary_inr": {
+        "entry": 600000,
+        "mid": 1500000,
+        "senior": 3500000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.95, "tier2": 0.55, "rural": 0.10 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Hyderabad","Pune","Chennai","Gurgaon"]
-    },
-
-    { "id": "data-scientist", "name": { "en": "Data Scientist" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "graduate",
-      "vector": {
-        "interests": ["technology","finance","digital-marketing"],
-        "strengths": ["analytical","logical-thinking","research"],
-        "subjects": { "math": 0.45, "cs": 0.30, "physics": 0.15, "english": 0.10 }
+      "job_density": {
+        "metro": 0.95,
+        "tier2": 0.55,
+        "rural": 0.1
       },
-      "exams": ["jee-main","gate","cat"],
-      "college_tags": ["iit","iiit","iim","tier1-engg"],
-      "salary_inr": { "entry": 800000, "mid": 2000000, "senior": 4500000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Chennai",
+        "Gurgaon"
+      ],
+      "adzuna_listings": {
+        "count": 27172,
+        "coverage": "ok",
+        "query": "Software Engineer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "data-scientist",
+      "name": {
+        "en": "Data Scientist"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "technology",
+          "finance",
+          "digital-marketing"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.45,
+          "cs": 0.3,
+          "physics": 0.15,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "jee-main",
+        "gate",
+        "cat"
+      ],
+      "college_tags": [
+        "iit",
+        "iiit",
+        "iim",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 800000,
+        "mid": 2000000,
+        "senior": 4500000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.90, "tier2": 0.40, "rural": 0.05 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Hyderabad","Mumbai","Gurgaon"]
-    },
-
-    { "id": "cybersecurity-analyst", "name": { "en": "Cybersecurity Analyst" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology","government-service"],
-        "strengths": ["analytical","logical-thinking","technical","research"],
-        "subjects": { "math": 0.30, "cs": 0.40, "physics": 0.15, "english": 0.15 }
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.4,
+        "rural": 0.05
       },
-      "exams": ["jee-main","bitsat","viteee","eamcet"],
-      "college_tags": ["iit","nit","iiit","bits","tier1-engg"],
-      "salary_inr": { "entry": 700000, "mid": 1800000, "senior": 4000000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Mumbai",
+        "Gurgaon"
+      ],
+      "adzuna_listings": {
+        "count": 10920,
+        "coverage": "ok",
+        "query": "Data Scientist",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "cybersecurity-analyst",
+      "name": {
+        "en": "Cybersecurity Analyst"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology",
+          "government-service"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "technical",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.3,
+          "cs": 0.4,
+          "physics": 0.15,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "bitsat",
+        "viteee",
+        "eamcet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 700000,
+        "mid": 1800000,
+        "senior": 4000000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.85, "tier2": 0.35, "rural": 0.05 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Hyderabad","Pune","Mumbai"]
-    },
-
-    { "id": "mechanical-engineer", "name": { "en": "Mechanical Engineer" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology","government-service"],
-        "strengths": ["logical-thinking","technical","analytical"],
-        "subjects": { "math": 0.35, "physics": 0.40, "chemistry": 0.10, "english": 0.15 }
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.35,
+        "rural": 0.05
       },
-      "exams": ["jee-main","jee-advanced","bitsat","eamcet","mht-cet","kcet"],
-      "college_tags": ["iit","nit","bits","tier1-engg","govt-engg-college"],
-      "salary_inr": { "entry": 400000, "mid": 900000, "senior": 2200000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Mumbai"
+      ],
+      "adzuna_listings": {
+        "count": 77,
+        "coverage": "ok",
+        "query": "Cybersecurity Analyst",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "mechanical-engineer",
+      "name": {
+        "en": "Mechanical Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology",
+          "government-service"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "physics": 0.4,
+          "chemistry": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "bitsat",
+        "eamcet",
+        "mht-cet",
+        "kcet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "bits",
+        "tier1-engg",
+        "govt-engg-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 900000,
+        "senior": 2200000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.70, "tier2": 0.65, "rural": 0.30 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Pune","Chennai","Bengaluru","Coimbatore","Jamshedpur"]
-    },
-
-    { "id": "civil-engineer", "name": { "en": "Civil Engineer" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology","government-service","business"],
-        "strengths": ["logical-thinking","technical","leadership"],
-        "subjects": { "math": 0.40, "physics": 0.35, "chemistry": 0.10, "english": 0.15 }
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.65,
+        "rural": 0.3
       },
-      "exams": ["jee-main","jee-advanced","eamcet","mht-cet","wbjee"],
-      "college_tags": ["iit","nit","bits","govt-engg-college","private-engg-college"],
-      "salary_inr": { "entry": 350000, "mid": 800000, "senior": 2000000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Pune",
+        "Chennai",
+        "Bengaluru",
+        "Coimbatore",
+        "Jamshedpur"
+      ],
+      "adzuna_listings": {
+        "count": 5904,
+        "coverage": "ok",
+        "query": "Mechanical Engineer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "civil-engineer",
+      "name": {
+        "en": "Civil Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology",
+          "government-service",
+          "business"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "leadership"
+        ],
+        "subjects": {
+          "math": 0.4,
+          "physics": 0.35,
+          "chemistry": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "eamcet",
+        "mht-cet",
+        "wbjee"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "bits",
+        "govt-engg-college",
+        "private-engg-college"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 800000,
+        "senior": 2000000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.70, "tier2": 0.75, "rural": 0.55 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Delhi","Hyderabad","Bengaluru","Ahmedabad"]
-    },
-
-    { "id": "electronics-engineer", "name": { "en": "Electronics & Communication Engineer" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology"],
-        "strengths": ["logical-thinking","technical","analytical"],
-        "subjects": { "math": 0.35, "physics": 0.40, "cs": 0.15, "english": 0.10 }
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.75,
+        "rural": 0.55
       },
-      "exams": ["jee-main","jee-advanced","bitsat","viteee","eamcet","mht-cet"],
-      "college_tags": ["iit","nit","iiit","bits","tier1-engg"],
-      "salary_inr": { "entry": 500000, "mid": 1200000, "senior": 2800000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Hyderabad",
+        "Bengaluru",
+        "Ahmedabad"
+      ],
+      "adzuna_listings": {
+        "count": 3125,
+        "coverage": "ok",
+        "query": "Civil Engineer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "electronics-engineer",
+      "name": {
+        "en": "Electronics & Communication Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "physics": 0.4,
+          "cs": 0.15,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "bitsat",
+        "viteee",
+        "eamcet",
+        "mht-cet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1200000,
+        "senior": 2800000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.80, "tier2": 0.50, "rural": 0.10 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Hyderabad","Pune","Chennai"]
-    },
-
-    { "id": "aerospace-engineer", "name": { "en": "Aerospace Engineer" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["technology","government-service"],
-        "strengths": ["logical-thinking","technical","analytical","research"],
-        "subjects": { "math": 0.40, "physics": 0.45, "chemistry": 0.05, "english": 0.10 }
+      "job_density": {
+        "metro": 0.8,
+        "tier2": 0.5,
+        "rural": 0.1
       },
-      "exams": ["jee-main","jee-advanced"],
-      "college_tags": ["iit","nit","bits","tier1-engg"],
-      "salary_inr": { "entry": 600000, "mid": 1300000, "senior": 3000000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 473,
+        "coverage": "ok",
+        "query": "Electronics & Communication Engineer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "aerospace-engineer",
+      "name": {
+        "en": "Aerospace Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "technology",
+          "government-service"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.4,
+          "physics": 0.45,
+          "chemistry": 0.05,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 600000,
+        "mid": 1300000,
+        "senior": 3000000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.50, "tier2": 0.20, "rural": 0.05 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Hyderabad","Thiruvananthapuram","Chennai"]
-    },
-
-    { "id": "architect", "name": { "en": "Architect" },
-      "streams": ["MPC","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["arts-design","technology","business"],
-        "strengths": ["creativity","technical","analytical"],
-        "subjects": { "math": 0.35, "physics": 0.20, "english": 0.15, "cs": 0.10 }
+      "job_density": {
+        "metro": 0.5,
+        "tier2": 0.2,
+        "rural": 0.05
       },
-      "exams": ["nata","jee-arch"],
-      "college_tags": ["arch-tier1","govt-arch-college"],
-      "salary_inr": { "entry": 400000, "mid": 1000000, "senior": 2500000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Thiruvananthapuram",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 354,
+        "coverage": "ok",
+        "query": "Aerospace Engineer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "architect",
+      "name": {
+        "en": "Architect"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "arts-design",
+          "technology",
+          "business"
+        ],
+        "strengths": [
+          "creativity",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "physics": 0.2,
+          "english": 0.15,
+          "cs": 0.1
+        }
+      },
+      "exams": [
+        "nata",
+        "jee-arch"
+      ],
+      "college_tags": [
+        "arch-tier1",
+        "govt-arch-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2500000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.85, "tier2": 0.45, "rural": 0.10 },
-      "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Pune","Ahmedabad"]
-    },
-
-    { "id": "doctor-mbbs", "name": { "en": "Doctor (MBBS)" },
-      "streams": ["BiPC","Science (PCMB)","Science (PCB)"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","social-work","government-service"],
-        "strengths": ["empathy","research","analytical"],
-        "subjects": { "biology": 0.45, "chemistry": 0.30, "physics": 0.15, "english": 0.10 }
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.45,
+        "rural": 0.1
       },
-      "exams": ["neet-ug","neet-pg","aiims"],
-      "college_tags": ["aiims","jipmer","afmc","govt-medical","private-medical"],
-      "salary_inr": { "entry": 800000, "mid": 2000000, "senior": 5000000 },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Pune",
+        "Ahmedabad"
+      ],
+      "adzuna_listings": {
+        "count": 25405,
+        "coverage": "ok",
+        "query": "Architect",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "doctor-mbbs",
+      "name": {
+        "en": "Doctor (MBBS)"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "empathy",
+          "research",
+          "analytical"
+        ],
+        "subjects": {
+          "biology": 0.45,
+          "chemistry": 0.3,
+          "physics": 0.15,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "neet-pg",
+        "aiims"
+      ],
+      "college_tags": [
+        "aiims",
+        "jipmer",
+        "afmc",
+        "govt-medical",
+        "private-medical"
+      ],
+      "salary_inr": {
+        "entry": 800000,
+        "mid": 2000000,
+        "senior": 5000000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.85, "tier2": 0.85, "rural": 0.70 },
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.85,
+        "rural": 0.7
+      },
       "budget_tier": "high",
-      "preferred_locations": ["Delhi","Mumbai","Chennai","Hyderabad","Bengaluru","Vellore"]
-    },
-
-    { "id": "dentist-bds", "name": { "en": "Dentist (BDS)" },
-      "streams": ["BiPC","Science (PCMB)","Science (PCB)"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","business"],
-        "strengths": ["empathy","technical","analytical"],
-        "subjects": { "biology": 0.45, "chemistry": 0.30, "physics": 0.10, "english": 0.15 }
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Chennai",
+        "Hyderabad",
+        "Bengaluru",
+        "Vellore"
+      ],
+      "adzuna_listings": {
+        "count": 2624,
+        "coverage": "ok",
+        "query": "Doctor",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["neet-ug"],
-      "college_tags": ["bds-college","govt-medical","private-medical"],
-      "salary_inr": { "entry": 400000, "mid": 900000, "senior": 2200000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "dentist-bds",
+      "name": {
+        "en": "Dentist (BDS)"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "business"
+        ],
+        "strengths": [
+          "empathy",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "biology": 0.45,
+          "chemistry": 0.3,
+          "physics": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "neet-ug"
+      ],
+      "college_tags": [
+        "bds-college",
+        "govt-medical",
+        "private-medical"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 900000,
+        "senior": 2200000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.80, "tier2": 0.65, "rural": 0.40 },
+      "job_density": {
+        "metro": 0.8,
+        "tier2": 0.65,
+        "rural": 0.4
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Hyderabad","Chennai"]
-    },
-
-    { "id": "pharmacist", "name": { "en": "Pharmacist (B.Pharm)" },
-      "streams": ["BiPC","MPC","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","business"],
-        "strengths": ["analytical","technical","research"],
-        "subjects": { "chemistry": 0.40, "biology": 0.30, "physics": 0.15, "english": 0.15 }
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Hyderabad",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 2013,
+        "coverage": "ok",
+        "query": "Dentist",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["neet-ug","gpat","eamcet"],
-      "college_tags": ["pharm-college","govt-pharm","private-pharm"],
-      "salary_inr": { "entry": 350000, "mid": 700000, "senior": 1500000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "pharmacist",
+      "name": {
+        "en": "Pharmacist (B.Pharm)"
+      },
+      "streams": [
+        "BiPC",
+        "MPC",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "technical",
+          "research"
+        ],
+        "subjects": {
+          "chemistry": 0.4,
+          "biology": 0.3,
+          "physics": 0.15,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "gpat",
+        "eamcet"
+      ],
+      "college_tags": [
+        "pharm-college",
+        "govt-pharm",
+        "private-pharm"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 700000,
+        "senior": 1500000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.70, "tier2": 0.65, "rural": 0.50 },
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.65,
+        "rural": 0.5
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Hyderabad","Mumbai","Bengaluru","Ahmedabad","Vadodara"]
-    },
-
-    { "id": "veterinarian", "name": { "en": "Veterinary Doctor" },
-      "streams": ["BiPC","Science (PCMB)","Science (PCB)"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","agriculture","social-work"],
-        "strengths": ["empathy","technical","research"],
-        "subjects": { "biology": 0.50, "chemistry": 0.25, "physics": 0.10, "english": 0.15 }
+      "preferred_locations": [
+        "Hyderabad",
+        "Mumbai",
+        "Bengaluru",
+        "Ahmedabad",
+        "Vadodara"
+      ],
+      "adzuna_listings": {
+        "count": 2025,
+        "coverage": "ok",
+        "query": "Pharmacist",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["neet-ug","aimee","icar-aieea"],
-      "college_tags": ["vet-college","agri-univ","icar-affiliated"],
-      "salary_inr": { "entry": 400000, "mid": 800000, "senior": 1800000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "veterinarian",
+      "name": {
+        "en": "Veterinary Doctor"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "agriculture",
+          "social-work"
+        ],
+        "strengths": [
+          "empathy",
+          "technical",
+          "research"
+        ],
+        "subjects": {
+          "biology": 0.5,
+          "chemistry": 0.25,
+          "physics": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "aimee",
+        "icar-aieea"
+      ],
+      "college_tags": [
+        "vet-college",
+        "agri-univ",
+        "icar-affiliated"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 800000,
+        "senior": 1800000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.40, "tier2": 0.60, "rural": 0.75 },
+      "job_density": {
+        "metro": 0.4,
+        "tier2": 0.6,
+        "rural": 0.75
+      },
       "budget_tier": "low",
-      "preferred_locations": ["Hyderabad","Bengaluru","Pune","Tirupati","Hisar"]
-    },
-
-    { "id": "physiotherapist", "name": { "en": "Physiotherapist" },
-      "streams": ["BiPC","Science (PCMB)","Science (PCB)"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","sports","social-work"],
-        "strengths": ["empathy","technical","communication"],
-        "subjects": { "biology": 0.45, "chemistry": 0.20, "physics": 0.20, "english": 0.15 }
+      "preferred_locations": [
+        "Hyderabad",
+        "Bengaluru",
+        "Pune",
+        "Tirupati",
+        "Hisar"
+      ],
+      "adzuna_listings": {
+        "count": 27,
+        "coverage": "ok",
+        "query": "Veterinary Doctor",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["neet-ug","cuet"],
-      "college_tags": ["physio-college","govt-medical"],
-      "salary_inr": { "entry": 300000, "mid": 700000, "senior": 1500000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "physiotherapist",
+      "name": {
+        "en": "Physiotherapist"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "sports",
+          "social-work"
+        ],
+        "strengths": [
+          "empathy",
+          "technical",
+          "communication"
+        ],
+        "subjects": {
+          "biology": 0.45,
+          "chemistry": 0.2,
+          "physics": 0.2,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "cuet"
+      ],
+      "college_tags": [
+        "physio-college",
+        "govt-medical"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 700000,
+        "senior": 1500000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.75, "tier2": 0.60, "rural": 0.30 },
+      "job_density": {
+        "metro": 0.75,
+        "tier2": 0.6,
+        "rural": 0.3
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Chennai"]
-    },
-
-    { "id": "nurse", "name": { "en": "Nurse (B.Sc Nursing)" },
-      "streams": ["BiPC","Science (PCMB)","Science (PCB)"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["medicine","social-work","government-service"],
-        "strengths": ["empathy","communication","technical"],
-        "subjects": { "biology": 0.40, "chemistry": 0.25, "english": 0.20, "physics": 0.15 }
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 124,
+        "coverage": "ok",
+        "query": "Physiotherapist",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["neet-ug","aiims-nursing","jipmer-nursing"],
-      "college_tags": ["nursing-college","aiims","govt-medical"],
-      "salary_inr": { "entry": 300000, "mid": 600000, "senior": 1200000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "nurse",
+      "name": {
+        "en": "Nurse (B.Sc Nursing)"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "medicine",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "empathy",
+          "communication",
+          "technical"
+        ],
+        "subjects": {
+          "biology": 0.4,
+          "chemistry": 0.25,
+          "english": 0.2,
+          "physics": 0.15
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "aiims-nursing",
+        "jipmer-nursing"
+      ],
+      "college_tags": [
+        "nursing-college",
+        "aiims",
+        "govt-medical"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 600000,
+        "senior": 1200000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.85, "tier2": 0.80, "rural": 0.65 },
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.8,
+        "rural": 0.65
+      },
       "budget_tier": "low",
-      "preferred_locations": ["Delhi","Mumbai","Vellore","Chennai","Bengaluru"]
-    },
-
-    { "id": "chartered-accountant", "name": { "en": "Chartered Accountant (CA)" },
-      "streams": ["CEC","MEC","Commerce"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["finance","business"],
-        "strengths": ["analytical","logical-thinking","research"],
-        "subjects": { "commerce": 0.35, "economics": 0.25, "math": 0.20, "english": 0.20 }
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Vellore",
+        "Chennai",
+        "Bengaluru"
+      ],
+      "adzuna_listings": {
+        "count": 1616,
+        "coverage": "ok",
+        "query": "Nurse",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["ca-foundation","ca-intermediate","ca-final"],
-      "college_tags": ["icai-affiliated","govt-commerce-college"],
-      "salary_inr": { "entry": 700000, "mid": 1800000, "senior": 4500000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "chartered-accountant",
+      "name": {
+        "en": "Chartered Accountant (CA)"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "Commerce"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "finance",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "research"
+        ],
+        "subjects": {
+          "commerce": 0.35,
+          "economics": 0.25,
+          "math": 0.2,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "ca-foundation",
+        "ca-intermediate",
+        "ca-final"
+      ],
+      "college_tags": [
+        "icai-affiliated",
+        "govt-commerce-college"
+      ],
+      "salary_inr": {
+        "entry": 700000,
+        "mid": 1800000,
+        "senior": 4500000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.90, "tier2": 0.65, "rural": 0.20 },
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.65,
+        "rural": 0.2
+      },
       "budget_tier": "low",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Chennai","Kolkata","Pune"]
-    },
-
-    { "id": "investment-banker", "name": { "en": "Investment Banker" },
-      "streams": ["CEC","MEC","MPC","Commerce","Science"], "min_class": "graduate",
-      "vector": {
-        "interests": ["finance","business"],
-        "strengths": ["analytical","logical-thinking","communication","leadership"],
-        "subjects": { "math": 0.30, "economics": 0.30, "commerce": 0.20, "english": 0.20 }
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Chennai",
+        "Kolkata",
+        "Pune"
+      ],
+      "adzuna_listings": {
+        "count": 2240,
+        "coverage": "ok",
+        "query": "Chartered Accountant",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["cat","xat","gmat","cfa-l1"],
-      "college_tags": ["iim","tier1-mba","tier1-engg","srcc","stxaviers"],
-      "salary_inr": { "entry": 1200000, "mid": 3500000, "senior": 8000000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "investment-banker",
+      "name": {
+        "en": "Investment Banker"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "finance",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "communication",
+          "leadership"
+        ],
+        "subjects": {
+          "math": 0.3,
+          "economics": 0.3,
+          "commerce": 0.2,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "cat",
+        "xat",
+        "gmat",
+        "cfa-l1"
+      ],
+      "college_tags": [
+        "iim",
+        "tier1-mba",
+        "tier1-engg",
+        "srcc",
+        "stxaviers"
+      ],
+      "salary_inr": {
+        "entry": 1200000,
+        "mid": 3500000,
+        "senior": 8000000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.95, "tier2": 0.20, "rural": 0.02 },
+      "job_density": {
+        "metro": 0.95,
+        "tier2": 0.2,
+        "rural": 0.02
+      },
       "budget_tier": "high",
-      "preferred_locations": ["Mumbai","Gurgaon","Bengaluru","Delhi"]
-    },
-
-    { "id": "financial-analyst", "name": { "en": "Financial Analyst" },
-      "streams": ["CEC","MEC","MPC","Commerce","Science"], "min_class": "graduate",
-      "vector": {
-        "interests": ["finance","business"],
-        "strengths": ["analytical","logical-thinking","research"],
-        "subjects": { "math": 0.30, "economics": 0.30, "commerce": 0.20, "english": 0.20 }
+      "preferred_locations": [
+        "Mumbai",
+        "Gurgaon",
+        "Bengaluru",
+        "Delhi"
+      ],
+      "adzuna_listings": {
+        "count": 80,
+        "coverage": "ok",
+        "query": "Investment Banker",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["cat","xat","cfa-l1","frm"],
-      "college_tags": ["iim","tier1-mba","tier2-mba","srcc"],
-      "salary_inr": { "entry": 600000, "mid": 1400000, "senior": 3000000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "financial-analyst",
+      "name": {
+        "en": "Financial Analyst"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "finance",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.3,
+          "economics": 0.3,
+          "commerce": 0.2,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "cat",
+        "xat",
+        "cfa-l1",
+        "frm"
+      ],
+      "college_tags": [
+        "iim",
+        "tier1-mba",
+        "tier2-mba",
+        "srcc"
+      ],
+      "salary_inr": {
+        "entry": 600000,
+        "mid": 1400000,
+        "senior": 3000000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.85, "tier2": 0.40, "rural": 0.05 },
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.4,
+        "rural": 0.05
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Gurgaon","Bengaluru","Hyderabad","Pune"]
-    },
-
-    { "id": "company-secretary", "name": { "en": "Company Secretary (CS)" },
-      "streams": ["CEC","MEC","Commerce"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["finance","business","law"],
-        "strengths": ["analytical","communication","research"],
-        "subjects": { "commerce": 0.35, "economics": 0.25, "english": 0.25, "math": 0.15 }
+      "preferred_locations": [
+        "Mumbai",
+        "Gurgaon",
+        "Bengaluru",
+        "Hyderabad",
+        "Pune"
+      ],
+      "adzuna_listings": {
+        "count": 1519,
+        "coverage": "ok",
+        "query": "Financial Analyst",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["cs-foundation","cs-executive","cs-professional"],
-      "college_tags": ["icsi-affiliated","govt-commerce-college"],
-      "salary_inr": { "entry": 500000, "mid": 1200000, "senior": 2800000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "company-secretary",
+      "name": {
+        "en": "Company Secretary (CS)"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "Commerce"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "finance",
+          "business",
+          "law"
+        ],
+        "strengths": [
+          "analytical",
+          "communication",
+          "research"
+        ],
+        "subjects": {
+          "commerce": 0.35,
+          "economics": 0.25,
+          "english": 0.25,
+          "math": 0.15
+        }
+      },
+      "exams": [
+        "cs-foundation",
+        "cs-executive",
+        "cs-professional"
+      ],
+      "college_tags": [
+        "icsi-affiliated",
+        "govt-commerce-college"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1200000,
+        "senior": 2800000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.85, "tier2": 0.45, "rural": 0.10 },
-      "budget_tier": "low",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Chennai","Kolkata"]
-    },
-
-    { "id": "business-analyst", "name": { "en": "Business Analyst" },
-      "streams": ["CEC","MEC","MPC","Commerce","Science"], "min_class": "graduate",
-      "vector": {
-        "interests": ["business","finance","technology"],
-        "strengths": ["analytical","logical-thinking","communication"],
-        "subjects": { "math": 0.25, "economics": 0.25, "commerce": 0.20, "english": 0.20, "cs": 0.10 }
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.45,
+        "rural": 0.1
       },
-      "exams": ["cat","xat","gmat"],
-      "college_tags": ["iim","tier1-mba","tier1-engg","srcc"],
-      "salary_inr": { "entry": 600000, "mid": 1400000, "senior": 3000000 },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Chennai",
+        "Kolkata"
+      ],
+      "adzuna_listings": {
+        "count": 471,
+        "coverage": "ok",
+        "query": "Company Secretary",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "business-analyst",
+      "name": {
+        "en": "Business Analyst"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "business",
+          "finance",
+          "technology"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "communication"
+        ],
+        "subjects": {
+          "math": 0.25,
+          "economics": 0.25,
+          "commerce": 0.2,
+          "english": 0.2,
+          "cs": 0.1
+        }
+      },
+      "exams": [
+        "cat",
+        "xat",
+        "gmat"
+      ],
+      "college_tags": [
+        "iim",
+        "tier1-mba",
+        "tier1-engg",
+        "srcc"
+      ],
+      "salary_inr": {
+        "entry": 600000,
+        "mid": 1400000,
+        "senior": 3000000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.90, "tier2": 0.45, "rural": 0.05 },
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.45,
+        "rural": 0.05
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Mumbai","Gurgaon","Hyderabad","Pune"]
-    },
-
-    { "id": "lawyer", "name": { "en": "Lawyer / Advocate" },
-      "streams": ["HEC","CEC","MEC","Arts","Arts/Humanities","Humanities","Commerce","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["law","government-service","social-work"],
-        "strengths": ["communication","analytical","research","leadership"],
-        "subjects": { "english": 0.30, "civics": 0.20, "history": 0.15, "political-science": 0.20, "economics": 0.15 }
+      "preferred_locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Gurgaon",
+        "Hyderabad",
+        "Pune"
+      ],
+      "adzuna_listings": {
+        "count": 7049,
+        "coverage": "ok",
+        "query": "Business Analyst",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["clat","ailet","lsat-india","aibe"],
-      "college_tags": ["nlu","govt-law-college","private-law-college"],
-      "salary_inr": { "entry": 400000, "mid": 1500000, "senior": 5000000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "lawyer",
+      "name": {
+        "en": "Lawyer / Advocate"
+      },
+      "streams": [
+        "HEC",
+        "CEC",
+        "MEC",
+        "Arts",
+        "Arts/Humanities",
+        "Humanities",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "law",
+          "government-service",
+          "social-work"
+        ],
+        "strengths": [
+          "communication",
+          "analytical",
+          "research",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "civics": 0.2,
+          "history": 0.15,
+          "political-science": 0.2,
+          "economics": 0.15
+        }
+      },
+      "exams": [
+        "clat",
+        "ailet",
+        "lsat-india",
+        "aibe"
+      ],
+      "college_tags": [
+        "nlu",
+        "govt-law-college",
+        "private-law-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1500000,
+        "senior": 5000000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.90, "tier2": 0.60, "rural": 0.40 },
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.6,
+        "rural": 0.4
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Delhi","Mumbai","Bengaluru","Chennai","Kolkata","Hyderabad"]
-    },
-
-    { "id": "civil-servant", "name": { "en": "Civil Servant (IAS / IPS / IFS)" },
-      "streams": ["HEC","CEC","MEC","MPC","BiPC","Arts","Arts/Humanities","Commerce","Science"], "min_class": "graduate",
-      "vector": {
-        "interests": ["government-service","social-work","law"],
-        "strengths": ["leadership","analytical","communication","empathy"],
-        "subjects": { "english": 0.20, "history": 0.20, "political-science": 0.20, "economics": 0.20, "civics": 0.20 }
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Chennai",
+        "Kolkata",
+        "Hyderabad"
+      ],
+      "adzuna_listings": {
+        "count": 4,
+        "coverage": "low",
+        "query": "Lawyer / Advocate",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["upsc-cse","state-psc"],
-      "college_tags": ["any-graduate"],
-      "salary_inr": { "entry": 700000, "mid": 1500000, "senior": 3000000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "civil-servant",
+      "name": {
+        "en": "Civil Servant (IAS / IPS / IFS)"
+      },
+      "streams": [
+        "HEC",
+        "CEC",
+        "MEC",
+        "MPC",
+        "BiPC",
+        "Arts",
+        "Arts/Humanities",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "government-service",
+          "social-work",
+          "law"
+        ],
+        "strengths": [
+          "leadership",
+          "analytical",
+          "communication",
+          "empathy"
+        ],
+        "subjects": {
+          "english": 0.2,
+          "history": 0.2,
+          "political-science": 0.2,
+          "economics": 0.2,
+          "civics": 0.2
+        }
+      },
+      "exams": [
+        "upsc-cse",
+        "state-psc"
+      ],
+      "college_tags": [
+        "any-graduate"
+      ],
+      "salary_inr": {
+        "entry": 700000,
+        "mid": 1500000,
+        "senior": 3000000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.40, "tier2": 0.45, "rural": 0.55 },
-      "budget_tier": "low",
-      "preferred_locations": ["Delhi","Lucknow","Bhopal","Hyderabad","All-India-Posting"]
-    },
-
-    { "id": "journalist", "name": { "en": "Journalist / Reporter" },
-      "streams": ["HEC","CEC","MEC","Arts","Arts/Humanities","Humanities","Commerce","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["media-journalism","social-work","government-service"],
-        "strengths": ["communication","research","creativity"],
-        "subjects": { "english": 0.40, "history": 0.15, "political-science": 0.20, "economics": 0.15, "civics": 0.10 }
+      "job_density": {
+        "metro": 0.4,
+        "tier2": 0.45,
+        "rural": 0.55
       },
-      "exams": ["iimc-entrance","jamia-mc-entrance","cuet","xicpgdcj"],
-      "college_tags": ["iimc","jamia-mc","acj","tier1-arts-college"],
-      "salary_inr": { "entry": 350000, "mid": 800000, "senior": 2000000 },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Delhi",
+        "Lucknow",
+        "Bhopal",
+        "Hyderabad",
+        "All-India-Posting"
+      ],
+      "adzuna_listings": {
+        "count": 4,
+        "coverage": "low",
+        "query": "Civil Servant",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "journalist",
+      "name": {
+        "en": "Journalist / Reporter"
+      },
+      "streams": [
+        "HEC",
+        "CEC",
+        "MEC",
+        "Arts",
+        "Arts/Humanities",
+        "Humanities",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "media-journalism",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "communication",
+          "research",
+          "creativity"
+        ],
+        "subjects": {
+          "english": 0.4,
+          "history": 0.15,
+          "political-science": 0.2,
+          "economics": 0.15,
+          "civics": 0.1
+        }
+      },
+      "exams": [
+        "iimc-entrance",
+        "jamia-mc-entrance",
+        "cuet",
+        "xicpgdcj"
+      ],
+      "college_tags": [
+        "iimc",
+        "jamia-mc",
+        "acj",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 800000,
+        "senior": 2000000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.90, "tier2": 0.55, "rural": 0.30 },
-      "budget_tier": "low",
-      "preferred_locations": ["Delhi","Mumbai","Bengaluru","Chennai","Hyderabad"]
-    },
-
-    { "id": "psychologist", "name": { "en": "Psychologist / Counsellor" },
-      "streams": ["HEC","BiPC","Arts","Arts/Humanities","Humanities","Science","Science (PCB)"], "min_class": "graduate",
-      "vector": {
-        "interests": ["medicine","social-work","teaching"],
-        "strengths": ["empathy","communication","research","analytical"],
-        "subjects": { "biology": 0.20, "english": 0.25, "civics": 0.15, "history": 0.10, "political-science": 0.10 }
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.55,
+        "rural": 0.3
       },
-      "exams": ["cuet","du-msc-entrance","jamia-msc-entrance"],
-      "college_tags": ["du","jamia","tiss","tier1-arts-college"],
-      "salary_inr": { "entry": 400000, "mid": 1000000, "senior": 2500000 },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Chennai",
+        "Hyderabad"
+      ],
+      "adzuna_listings": {
+        "count": 272,
+        "coverage": "ok",
+        "query": "Journalist / Reporter",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "psychologist",
+      "name": {
+        "en": "Psychologist / Counsellor"
+      },
+      "streams": [
+        "HEC",
+        "BiPC",
+        "Arts",
+        "Arts/Humanities",
+        "Humanities",
+        "Science",
+        "Science (PCB)"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "medicine",
+          "social-work",
+          "teaching"
+        ],
+        "strengths": [
+          "empathy",
+          "communication",
+          "research",
+          "analytical"
+        ],
+        "subjects": {
+          "biology": 0.2,
+          "english": 0.25,
+          "civics": 0.15,
+          "history": 0.1,
+          "political-science": 0.1
+        }
+      },
+      "exams": [
+        "cuet",
+        "du-msc-entrance",
+        "jamia-msc-entrance"
+      ],
+      "college_tags": [
+        "du",
+        "jamia",
+        "tiss",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2500000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.80, "tier2": 0.50, "rural": 0.20 },
+      "job_density": {
+        "metro": 0.8,
+        "tier2": 0.5,
+        "rural": 0.2
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Delhi","Mumbai","Bengaluru","Hyderabad","Chennai"]
-    },
-
-    { "id": "teacher", "name": { "en": "Teacher (School)" },
-      "streams": ["HEC","CEC","MEC","MPC","BiPC","Arts","Arts/Humanities","Humanities","Commerce","Science","Science (PCM)","Science (PCB)","Science (PCMB)"], "min_class": "graduate",
-      "vector": {
-        "interests": ["teaching","social-work","government-service"],
-        "strengths": ["communication","empathy","leadership"],
-        "subjects": { "english": 0.25, "math": 0.15, "science": 0.15, "history": 0.15, "civics": 0.15, "economics": 0.15 }
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Hyderabad",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 129,
+        "coverage": "ok",
+        "query": "Psychologist / Counsellor",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["ctet","tet","b-ed-entrance"],
-      "college_tags": ["b-ed-college","govt-teacher-training"],
-      "salary_inr": { "entry": 300000, "mid": 700000, "senior": 1500000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "teacher",
+      "name": {
+        "en": "Teacher (School)"
+      },
+      "streams": [
+        "HEC",
+        "CEC",
+        "MEC",
+        "MPC",
+        "BiPC",
+        "Arts",
+        "Arts/Humanities",
+        "Humanities",
+        "Commerce",
+        "Science",
+        "Science (PCM)",
+        "Science (PCB)",
+        "Science (PCMB)"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "teaching",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "communication",
+          "empathy",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.25,
+          "math": 0.15,
+          "science": 0.15,
+          "history": 0.15,
+          "civics": 0.15,
+          "economics": 0.15
+        }
+      },
+      "exams": [
+        "ctet",
+        "tet",
+        "b-ed-entrance"
+      ],
+      "college_tags": [
+        "b-ed-college",
+        "govt-teacher-training"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 700000,
+        "senior": 1500000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.85, "tier2": 0.85, "rural": 0.85 },
-      "budget_tier": "low",
-      "preferred_locations": ["All-India","Hyderabad","Bengaluru","Delhi","Mumbai","Chennai"]
-    },
-
-    { "id": "graphic-designer", "name": { "en": "Graphic Designer / UI Designer" },
-      "streams": [], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["arts-design","digital-marketing","technology"],
-        "strengths": ["creativity","technical","communication"],
-        "subjects": { "english": 0.30, "cs": 0.20 }
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.85,
+        "rural": 0.85
       },
-      "exams": ["nift","nid","ceed","uceed"],
-      "college_tags": ["nift","nid","mit-id","tier1-design-college"],
-      "salary_inr": { "entry": 350000, "mid": 800000, "senior": 1800000 },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "All-India",
+        "Hyderabad",
+        "Bengaluru",
+        "Delhi",
+        "Mumbai",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 3599,
+        "coverage": "ok",
+        "query": "Teacher",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "graphic-designer",
+      "name": {
+        "en": "Graphic Designer / UI Designer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "arts-design",
+          "digital-marketing",
+          "technology"
+        ],
+        "strengths": [
+          "creativity",
+          "technical",
+          "communication"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "cs": 0.2
+        }
+      },
+      "exams": [
+        "nift",
+        "nid",
+        "ceed",
+        "uceed"
+      ],
+      "college_tags": [
+        "nift",
+        "nid",
+        "mit-id",
+        "tier1-design-college"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 800000,
+        "senior": 1800000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.90, "tier2": 0.45, "rural": 0.10 },
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.45,
+        "rural": 0.1
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Bengaluru","Mumbai","Delhi","Pune","Hyderabad"]
-    },
-
-    { "id": "digital-marketer", "name": { "en": "Digital Marketing Specialist" },
-      "streams": [], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["digital-marketing","business","media-journalism","arts-design"],
-        "strengths": ["creativity","communication","analytical"],
-        "subjects": { "english": 0.35, "commerce": 0.20, "economics": 0.15, "math": 0.15, "cs": 0.15 }
+      "preferred_locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Delhi",
+        "Pune",
+        "Hyderabad"
+      ],
+      "adzuna_listings": {
+        "count": 85,
+        "coverage": "ok",
+        "query": "Graphic Designer / UI Designer",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["cuet","cat","mat"],
-      "college_tags": ["tier1-mba","tier2-mba","tier1-arts-college"],
-      "salary_inr": { "entry": 400000, "mid": 1000000, "senior": 2500000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "digital-marketer",
+      "name": {
+        "en": "Digital Marketing Specialist"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "digital-marketing",
+          "business",
+          "media-journalism",
+          "arts-design"
+        ],
+        "strengths": [
+          "creativity",
+          "communication",
+          "analytical"
+        ],
+        "subjects": {
+          "english": 0.35,
+          "commerce": 0.2,
+          "economics": 0.15,
+          "math": 0.15,
+          "cs": 0.15
+        }
+      },
+      "exams": [
+        "cuet",
+        "cat",
+        "mat"
+      ],
+      "college_tags": [
+        "tier1-mba",
+        "tier2-mba",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2500000
+      },
       "growth": "high",
-      "job_density": { "metro": 0.90, "tier2": 0.55, "rural": 0.15 },
-      "budget_tier": "low",
-      "preferred_locations": ["Bengaluru","Mumbai","Gurgaon","Hyderabad","Pune"]
-    },
-
-    { "id": "fashion-designer", "name": { "en": "Fashion Designer" },
-      "streams": [], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["arts-design","performing-arts","business"],
-        "strengths": ["creativity","communication","leadership"],
-        "subjects": { "english": 0.30 }
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.55,
+        "rural": 0.15
       },
-      "exams": ["nift","nid","pearl-academy"],
-      "college_tags": ["nift","nid","pearl-academy","tier1-design-college"],
-      "salary_inr": { "entry": 300000, "mid": 800000, "senior": 2500000 },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Gurgaon",
+        "Hyderabad",
+        "Pune"
+      ],
+      "adzuna_listings": {
+        "count": 163,
+        "coverage": "ok",
+        "query": "Digital Marketing Specialist",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "fashion-designer",
+      "name": {
+        "en": "Fashion Designer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "arts-design",
+          "performing-arts",
+          "business"
+        ],
+        "strengths": [
+          "creativity",
+          "communication",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.3
+        }
+      },
+      "exams": [
+        "nift",
+        "nid",
+        "pearl-academy"
+      ],
+      "college_tags": [
+        "nift",
+        "nid",
+        "pearl-academy",
+        "tier1-design-college"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 2500000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.90, "tier2": 0.30, "rural": 0.05 },
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.3,
+        "rural": 0.05
+      },
       "budget_tier": "high",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Chennai"]
-    },
-
-    { "id": "hotel-management", "name": { "en": "Hotel Management / Chef" },
-      "streams": [], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["business","arts-design","performing-arts"],
-        "strengths": ["communication","leadership","creativity"],
-        "subjects": { "english": 0.40, "commerce": 0.15 }
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Chennai"
+      ],
+      "adzuna_listings": {
+        "count": 270,
+        "coverage": "ok",
+        "query": "Fashion Designer",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["nchmct-jee","ihm-entrance"],
-      "college_tags": ["ihm","iihm","tier1-hotel-mgmt"],
-      "salary_inr": { "entry": 300000, "mid": 700000, "senior": 1800000 },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "hotel-management",
+      "name": {
+        "en": "Hotel Management / Chef"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "business",
+          "arts-design",
+          "performing-arts"
+        ],
+        "strengths": [
+          "communication",
+          "leadership",
+          "creativity"
+        ],
+        "subjects": {
+          "english": 0.4,
+          "commerce": 0.15
+        }
+      },
+      "exams": [
+        "nchmct-jee",
+        "ihm-entrance"
+      ],
+      "college_tags": [
+        "ihm",
+        "iihm",
+        "tier1-hotel-mgmt"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 700000,
+        "senior": 1800000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.85, "tier2": 0.55, "rural": 0.20 },
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.55,
+        "rural": 0.2
+      },
       "budget_tier": "mid",
-      "preferred_locations": ["Mumbai","Delhi","Bengaluru","Goa","Jaipur"]
-    },
-
-    { "id": "defence-officer", "name": { "en": "Defence Officer (NDA / CDS)" },
-      "streams": ["MPC","BiPC","CEC","MEC","HEC","Science","Commerce","Arts"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["government-service","sports","social-work"],
-        "strengths": ["leadership","communication","analytical"],
-        "subjects": { "math": 0.25, "english": 0.25, "physics": 0.15, "history": 0.10, "civics": 0.10, "political-science": 0.15 }
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Goa",
+        "Jaipur"
+      ],
+      "adzuna_listings": {
+        "count": 4,
+        "coverage": "low",
+        "query": "Hotel Management / Chef",
+        "fetched_at": "2026-05-30"
       },
-      "exams": ["nda","cds","afcat","ssb"],
-      "college_tags": ["nda-academy","ima","afa","ota"],
-      "salary_inr": { "entry": 800000, "mid": 1500000, "senior": 2800000 },
-      "growth": "medium",
-      "job_density": { "metro": 0.30, "tier2": 0.40, "rural": 0.50 },
-      "budget_tier": "low",
-      "preferred_locations": ["All-India-Posting"]
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
     },
-
-    { "id": "agricultural-scientist", "name": { "en": "Agricultural Scientist" },
-      "streams": ["BiPC","MPC","Science (PCMB)","Science (PCB)","Science (PCM)","Science"], "min_class": "12th-passed",
-      "vector": {
-        "interests": ["agriculture","government-service","social-work"],
-        "strengths": ["research","analytical","technical"],
-        "subjects": { "biology": 0.35, "chemistry": 0.25, "physics": 0.15, "math": 0.15, "english": 0.10 }
+    {
+      "id": "defence-officer",
+      "name": {
+        "en": "Defence Officer (NDA / CDS)"
       },
-      "exams": ["icar-aieea","cuet","eamcet"],
-      "college_tags": ["agri-univ","icar-affiliated","iari"],
-      "salary_inr": { "entry": 400000, "mid": 900000, "senior": 2000000 },
+      "streams": [
+        "MPC",
+        "BiPC",
+        "CEC",
+        "MEC",
+        "HEC",
+        "Science",
+        "Commerce",
+        "Arts"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "government-service",
+          "sports",
+          "social-work"
+        ],
+        "strengths": [
+          "leadership",
+          "communication",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.25,
+          "english": 0.25,
+          "physics": 0.15,
+          "history": 0.1,
+          "civics": 0.1,
+          "political-science": 0.15
+        }
+      },
+      "exams": [
+        "nda",
+        "cds",
+        "afcat",
+        "ssb"
+      ],
+      "college_tags": [
+        "nda-academy",
+        "ima",
+        "afa",
+        "ota"
+      ],
+      "salary_inr": {
+        "entry": 800000,
+        "mid": 1500000,
+        "senior": 2800000
+      },
       "growth": "medium",
-      "job_density": { "metro": 0.30, "tier2": 0.55, "rural": 0.85 },
+      "job_density": {
+        "metro": 0.3,
+        "tier2": 0.4,
+        "rural": 0.5
+      },
       "budget_tier": "low",
-      "preferred_locations": ["Hyderabad","Bengaluru","Pune","Pantnagar","Coimbatore"]
+      "preferred_locations": [
+        "All-India-Posting"
+      ],
+      "adzuna_listings": {
+        "count": 30,
+        "coverage": "ok",
+        "query": "Defence Officer",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
+    },
+    {
+      "id": "agricultural-scientist",
+      "name": {
+        "en": "Agricultural Scientist"
+      },
+      "streams": [
+        "BiPC",
+        "MPC",
+        "Science (PCMB)",
+        "Science (PCB)",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "agriculture",
+          "government-service",
+          "social-work"
+        ],
+        "strengths": [
+          "research",
+          "analytical",
+          "technical"
+        ],
+        "subjects": {
+          "biology": 0.35,
+          "chemistry": 0.25,
+          "physics": 0.15,
+          "math": 0.15,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "icar-aieea",
+        "cuet",
+        "eamcet"
+      ],
+      "college_tags": [
+        "agri-univ",
+        "icar-affiliated",
+        "iari"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 900000,
+        "senior": 2000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.3,
+        "tier2": 0.55,
+        "rural": 0.85
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Hyderabad",
+        "Bengaluru",
+        "Pune",
+        "Pantnagar",
+        "Coimbatore"
+      ],
+      "adzuna_listings": {
+        "count": 62,
+        "coverage": "ok",
+        "query": "Agricultural Scientist",
+        "fetched_at": "2026-05-30"
+      },
+      "_market_meta": {
+        "listings_source": "Adzuna IN search count",
+        "salary_source": "hand-authored (estimate)",
+        "refreshed_at": "2026-05-30"
+      }
     }
-
   ]
 }

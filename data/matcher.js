@@ -194,9 +194,19 @@
     var wDensity = (career.job_density && typeof career.job_density[tier] === 'number')
                      ? career.job_density[tier] : 0.4;
 
-    var raw = 0.35 * wInterest
-            + 0.20 * wStrength
-            + 0.25 * wSubject
+    // When student has no marks (e.g. "10th studying" path zeroes them),
+    // the 0.25 subject term collapses to 0 for every career, forfeiting 25% of
+    // the score budget and starving most careers below the 0.18 floor. Shift
+    // that weight onto interest (+0.15) and strength (+0.10) so the formula
+    // still sums to 1.0 and the threshold stays comparable.
+    var hasNoMarks = !student.subjects || Object.keys(student.subjects).length === 0;
+    var wI = hasNoMarks ? 0.50 : 0.35;
+    var wS = hasNoMarks ? 0.30 : 0.20;
+    var wSub = hasNoMarks ? 0.00 : 0.25;
+
+    var raw = wI  * wInterest
+            + wS  * wStrength
+            + wSub * wSubject
             + 0.10 * wLocation
             + 0.10 * wDensity;
 
