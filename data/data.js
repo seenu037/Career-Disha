@@ -408,6 +408,456 @@
             10
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "IIT Mandi",
+          "nirf_rank": 26,
+          "city": "Mandi",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "IIT Jodhpur",
+          "nirf_rank": 27,
+          "city": "Jodhpur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "NIT Warangal",
+          "nirf_rank": 28,
+          "city": "Warangal",
+          "state": "Telangana"
+        },
+        {
+          "name": "Thapar Institute of Engineering and Technology",
+          "nirf_rank": 29,
+          "city": "Patiala",
+          "state": "Punjab"
+        },
+        {
+          "name": "Delhi Technological University",
+          "nirf_rank": 30,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Chandigarh University",
+          "nirf_rank": 31,
+          "city": "Mohali",
+          "state": "Punjab"
+        },
+        {
+          "name": "IIT Ropar",
+          "nirf_rank": 32,
+          "city": "Rupnagar",
+          "state": "Punjab"
+        },
+        {
+          "name": "Kalasalingam Academy of Research and Education",
+          "nirf_rank": 33,
+          "city": "Krishnankoil",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Aligarh Muslim University",
+          "nirf_rank": 34,
+          "city": "Aligarh",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Koneru Lakshmaiah Education Foundation",
+          "nirf_rank": 35,
+          "city": "Vaddeswaram",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Kalinga Institute of Industrial Technology (KIIT)",
+          "nirf_rank": 36,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Amity University",
+          "nirf_rank": 37,
+          "city": "Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "IIIT Hyderabad",
+          "nirf_rank": 38,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "IIT Bhubaneswar",
+          "nirf_rank": 39,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "SASTRA",
+          "nirf_rank": 40,
+          "city": "Thanjavur",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Institute of Chemical Technology",
+          "nirf_rank": 41,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "MNIT Jaipur",
+          "nirf_rank": 42,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "UPES",
+          "nirf_rank": 43,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "VNIT Nagpur",
+          "nirf_rank": 44,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Saveetha Institute of Medical and Technical Sciences",
+          "nirf_rank": 45,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Symbiosis International",
+          "nirf_rank": 46,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "SSN College of Engineering",
+          "nirf_rank": 47,
+          "city": "Kalavakkam",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 48,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "NIT Durgapur",
+          "nirf_rank": 49,
+          "city": "Durgapur",
+          "state": "West Bengal"
+        },
+        {
+          "name": "NIT Silchar",
+          "nirf_rank": 50,
+          "city": "Silchar",
+          "state": "Assam"
+        },
+        {
+          "name": "Birla Institute of Technology",
+          "nirf_rank": 51,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "Graphic Era University",
+          "nirf_rank": 52,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "NIT Patna",
+          "nirf_rank": 53,
+          "city": "Patna",
+          "state": "Bihar"
+        },
+        {
+          "name": "IIEST Shibpur",
+          "nirf_rank": 54,
+          "city": "Howrah",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Dr. B R Ambedkar NIT Jalandhar",
+          "nirf_rank": 55,
+          "city": "Jalandhar",
+          "state": "Punjab"
+        },
+        {
+          "name": "IIT Jammu",
+          "nirf_rank": 56,
+          "city": "Jammu",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "IIT Tirupati",
+          "nirf_rank": 57,
+          "city": "Tirupati",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Manipal University Jaipur",
+          "nirf_rank": 58,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Manipal Institute of Technology",
+          "nirf_rank": 59,
+          "city": "Manipal",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Madan Mohan Malaviya University of Technology",
+          "nirf_rank": 60,
+          "city": "Gorakhpur",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Indian Institute of Space Science and Technology",
+          "nirf_rank": 61,
+          "city": "Thiruvananthapuram",
+          "state": "Kerala"
+        },
+        {
+          "name": "MNNIT Allahabad",
+          "nirf_rank": 62,
+          "city": "Prayagraj",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "IIIT Delhi",
+          "nirf_rank": 63,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "IIT Palakkad",
+          "nirf_rank": 64,
+          "city": "Palakkad",
+          "state": "Kerala"
+        },
+        {
+          "name": "NIT Delhi",
+          "nirf_rank": 65,
+          "city": "Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "SVNIT Surat",
+          "nirf_rank": 66,
+          "city": "Surat",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Sathyabama Institute of Science and Technology",
+          "nirf_rank": 67,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "PSG College of Technology",
+          "nirf_rank": 68,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IIIT Bangalore",
+          "nirf_rank": 69,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "NSUT Delhi",
+          "nirf_rank": 70,
+          "city": "Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Banasthali Vidyapith",
+          "nirf_rank": 71,
+          "city": "Banasthali",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "IIT Bhilai",
+          "nirf_rank": 72,
+          "city": "Durg",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "NIT Srinagar",
+          "nirf_rank": 73,
+          "city": "Srinagar",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "University of Hyderabad",
+          "nirf_rank": 74,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "M. S. Ramaiah Institute of Technology",
+          "nirf_rank": 75,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Christ University",
+          "nirf_rank": 76,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "IIT Dharwad",
+          "nirf_rank": 77,
+          "city": "Dharwad",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Rajiv Gandhi Institute of Petroleum Technology",
+          "nirf_rank": 78,
+          "city": "Amethi",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "SLIET Longowal",
+          "nirf_rank": 79,
+          "city": "Longowal",
+          "state": "Punjab"
+        },
+        {
+          "name": "Vignan's Foundation",
+          "nirf_rank": 80,
+          "city": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "MANIT Bhopal",
+          "nirf_rank": 81,
+          "city": "Bhopal",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "NIT Jamshedpur",
+          "nirf_rank": 82,
+          "city": "Jamshedpur",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "NIT Meghalaya",
+          "nirf_rank": 83,
+          "city": "Shillong",
+          "state": "Meghalaya"
+        },
+        {
+          "name": "Jain University",
+          "nirf_rank": 84,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "NIT Kurukshetra",
+          "nirf_rank": 85,
+          "city": "Kurukshetra",
+          "state": "Haryana"
+        },
+        {
+          "name": "NIT Raipur",
+          "nirf_rank": 86,
+          "city": "Raipur",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "Vel Tech",
+          "nirf_rank": 87,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "AU College of Engineering",
+          "nirf_rank": 88,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Chitkara University",
+          "nirf_rank": 89,
+          "city": "Rajpura",
+          "state": "Punjab"
+        },
+        {
+          "name": "COEP Technological University",
+          "nirf_rank": 90,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "SR University",
+          "nirf_rank": 91,
+          "city": "Warangal",
+          "state": "Telangana"
+        },
+        {
+          "name": "Defence Institute of Advanced Technology",
+          "nirf_rank": 92,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Panjab University",
+          "nirf_rank": 93,
+          "city": "Chandigarh",
+          "state": "Chandigarh"
+        },
+        {
+          "name": "JNTU Hyderabad",
+          "nirf_rank": 94,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "C.V. Raman Global University",
+          "nirf_rank": 95,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "ABV-IIITM Gwalior",
+          "nirf_rank": 96,
+          "city": "Gwalior",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "NIT Hamirpur",
+          "nirf_rank": 97,
+          "city": "Hamirpur",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "Pandit Deendayal Energy University",
+          "nirf_rank": 98,
+          "city": "Gandhinagar",
+          "state": "Gujarat"
+        },
+        {
+          "name": "NIT Puducherry",
+          "nirf_rank": 99,
+          "city": "Karaikal",
+          "state": "Puducherry"
+        },
+        {
+          "name": "Sri Krishna College of Engineering and Technology",
+          "nirf_rank": 100,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
         }
       ],
       "Management": [
@@ -710,6 +1160,456 @@
             17
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Amrita Vishwa Vidyapeetham",
+          "nirf_rank": 26,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IIT Kanpur (Dept. of IME)",
+          "nirf_rank": 27,
+          "city": "Kanpur",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Jamia Millia Islamia",
+          "nirf_rank": 28,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "IIM Visakhapatnam",
+          "nirf_rank": 29,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Institute of Management Technology (IMT)",
+          "nirf_rank": 30,
+          "city": "Ghaziabad",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "IIM Bodh Gaya",
+          "nirf_rank": 31,
+          "city": "Gaya",
+          "state": "Bihar"
+        },
+        {
+          "name": "Chandigarh University",
+          "nirf_rank": 32,
+          "city": "Mohali",
+          "state": "Punjab"
+        },
+        {
+          "name": "MICA",
+          "nirf_rank": 33,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "IIM Sambalpur",
+          "nirf_rank": 34,
+          "city": "Sambalpur",
+          "state": "Odisha"
+        },
+        {
+          "name": "IIM Jammu",
+          "nirf_rank": 35,
+          "city": "Jammu",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "UPES",
+          "nirf_rank": 36,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "Great Lakes Institute of Management",
+          "nirf_rank": 37,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IIM Shillong",
+          "nirf_rank": 38,
+          "city": "Shillong",
+          "state": "Meghalaya"
+        },
+        {
+          "name": "T. A. Pai Management Institute",
+          "nirf_rank": 39,
+          "city": "Manipal",
+          "state": "Karnataka"
+        },
+        {
+          "name": "IMI Delhi",
+          "nirf_rank": 40,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Jaipuria Institute of Management",
+          "nirf_rank": 41,
+          "city": "Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "IMI Kolkata",
+          "nirf_rank": 42,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Goa Institute of Management",
+          "nirf_rank": 43,
+          "city": "Sanquelim",
+          "state": "Goa"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 44,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "XIM University",
+          "nirf_rank": 45,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Thapar Institute of Engineering and Technology",
+          "nirf_rank": 46,
+          "city": "Patiala",
+          "state": "Punjab"
+        },
+        {
+          "name": "ICFAI Foundation for Higher Education",
+          "nirf_rank": 47,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "IIT (ISM) Dhanbad",
+          "nirf_rank": 48,
+          "city": "Dhanbad",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "Amity University",
+          "nirf_rank": 49,
+          "city": "Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Great Lakes Institute of Management",
+          "nirf_rank": 50,
+          "city": "Gurgaon",
+          "state": "Haryana"
+        },
+        {
+          "name": "IIM Sirmaur",
+          "nirf_rank": 51,
+          "city": "Sirmaur",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "Graphic Era University",
+          "nirf_rank": 52,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "Nirma University",
+          "nirf_rank": 53,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Institute of Rural Management Anand",
+          "nirf_rank": 54,
+          "city": "Anand",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Loyola Institute of Business Administration",
+          "nirf_rank": 55,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "SRM Institute of Science and Technology",
+          "nirf_rank": 56,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "NIT Tiruchirappalli (DoMS)",
+          "nirf_rank": 57,
+          "city": "Tiruchirappalli",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Christ University",
+          "nirf_rank": 58,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "FORE School of Management",
+          "nirf_rank": 59,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Banaras Hindu University",
+          "nirf_rank": 60,
+          "city": "Varanasi",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Birla Institute of Management Technology",
+          "nirf_rank": 61,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "MNIT Jaipur",
+          "nirf_rank": 62,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Saveetha Institute",
+          "nirf_rank": 63,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IIM Amritsar",
+          "nirf_rank": 64,
+          "city": "Amritsar",
+          "state": "Punjab"
+        },
+        {
+          "name": "K. J. Somaiya Institute of Management",
+          "nirf_rank": 65,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Siksha O Anusandhan",
+          "nirf_rank": 66,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Jaipuria Institute of Management, Lucknow",
+          "nirf_rank": 67,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "KIIT",
+          "nirf_rank": 68,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Aligarh Muslim University",
+          "nirf_rank": 69,
+          "city": "Aligarh",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "KL Education Foundation",
+          "nirf_rank": 70,
+          "city": "Vaddeswaram",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Alliance University",
+          "nirf_rank": 71,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "IMT Hyderabad",
+          "nirf_rank": 72,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Jain University",
+          "nirf_rank": 73,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Jaipuria Institute of Management, Jaipur",
+          "nirf_rank": 74,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Welingkar Institute of Management",
+          "nirf_rank": 75,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "GGSIPU",
+          "nirf_rank": 76,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "BML Munjal University",
+          "nirf_rank": 77,
+          "city": "Gurugram",
+          "state": "Haryana"
+        },
+        {
+          "name": "Chitkara University",
+          "nirf_rank": 78,
+          "city": "Rajpura",
+          "state": "Punjab"
+        },
+        {
+          "name": "Babasaheb Bhimrao Ambedkar University",
+          "nirf_rank": 79,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Thiagarajar School of Management",
+          "nirf_rank": 80,
+          "city": "Madurai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Manipal University Jaipur",
+          "nirf_rank": 81,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Cochin University of Science and Technology",
+          "nirf_rank": 82,
+          "city": "Kochi",
+          "state": "Kerala"
+        },
+        {
+          "name": "MMM University of Technology",
+          "nirf_rank": 83,
+          "city": "Gorakhpur",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "PSG College of Technology",
+          "nirf_rank": 84,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "NIT Calicut",
+          "nirf_rank": 85,
+          "city": "Kozhikode",
+          "state": "Kerala"
+        },
+        {
+          "name": "New Delhi Institute of Management",
+          "nirf_rank": 86,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Jamia Hamdard",
+          "nirf_rank": 87,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Anna University",
+          "nirf_rank": 88,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Pandit Deendayal Energy University",
+          "nirf_rank": 89,
+          "city": "Gandhinagar",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Jagan Institute of Management Studies",
+          "nirf_rank": 90,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Rajagiri Business School",
+          "nirf_rank": 91,
+          "city": "Kochi",
+          "state": "Kerala"
+        },
+        {
+          "name": "Panjab University",
+          "nirf_rank": 92,
+          "city": "Chandigarh",
+          "state": "Chandigarh"
+        },
+        {
+          "name": "ABV-IIITM Gwalior",
+          "nirf_rank": 93,
+          "city": "Gwalior",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "IMI Bhubaneswar",
+          "nirf_rank": 94,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "National Institute of Agricultural Extension Management",
+          "nirf_rank": 95,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Bharathidasan Institute of Management",
+          "nirf_rank": 96,
+          "city": "Tiruchirappalli",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Birla Institute of Technology",
+          "nirf_rank": 97,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "IIT Jodhpur",
+          "nirf_rank": 98,
+          "city": "Jodhpur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "IMT Nagpur",
+          "nirf_rank": 99,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "University of Lucknow",
+          "nirf_rank": 100,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
         }
       ],
       "Medical": [
@@ -952,6 +1852,186 @@
             90
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Sri Ramachandra Institute of Higher Education",
+          "nirf_rank": 21,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Vardhman Mahavir Medical College (Safdarjung)",
+          "nirf_rank": 22,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "IPGMER Kolkata",
+          "nirf_rank": 23,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Kalinga Institute of Industrial Technology (KIIT)",
+          "nirf_rank": 24,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "AIIMS Bhopal",
+          "nirf_rank": 25,
+          "city": "Bhopal",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "Maulana Azad Medical College",
+          "nirf_rank": 26,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "AIIMS Patna",
+          "nirf_rank": 27,
+          "city": "Patna",
+          "state": "Bihar"
+        },
+        {
+          "name": "Institute of Liver and Biliary Sciences",
+          "nirf_rank": 28,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Aligarh Muslim University",
+          "nirf_rank": 29,
+          "city": "Aligarh",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "St. John's Medical College",
+          "nirf_rank": 30,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "AIIMS Raipur",
+          "nirf_rank": 31,
+          "city": "Raipur",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "Lady Hardinge Medical College",
+          "nirf_rank": 32,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Maharishi Markandeshwar",
+          "nirf_rank": 33,
+          "city": "Ambala",
+          "state": "Haryana"
+        },
+        {
+          "name": "Govt. Medical College & Hospital",
+          "nirf_rank": 34,
+          "city": "Chandigarh",
+          "state": "Chandigarh"
+        },
+        {
+          "name": "Kasturba Medical College, Mangalore",
+          "nirf_rank": 35,
+          "city": "Mangaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Dayanand Medical College",
+          "nirf_rank": 36,
+          "city": "Ludhiana",
+          "state": "Punjab"
+        },
+        {
+          "name": "JSS Medical College, Mysore",
+          "nirf_rank": 37,
+          "city": "Mysuru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "University College of Medical Sciences",
+          "nirf_rank": 38,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Sawai Man Singh Medical College",
+          "nirf_rank": 39,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Jamia Hamdard",
+          "nirf_rank": 40,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Medical College Kolkata",
+          "nirf_rank": 41,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Mahatma Gandhi Medical College and Research Institute",
+          "nirf_rank": 42,
+          "city": "Puducherry",
+          "state": "Puducherry"
+        },
+        {
+          "name": "PSG Institute of Medical Sciences and Research",
+          "nirf_rank": 43,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Gujarat Cancer & Research Institute",
+          "nirf_rank": 44,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "B. J. Medical College",
+          "nirf_rank": 45,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Jawaharlal Nehru Medical College",
+          "nirf_rank": 46,
+          "city": "Belagavi",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Christian Medical College, Ludhiana",
+          "nirf_rank": 47,
+          "city": "Ludhiana",
+          "state": "Punjab"
+        },
+        {
+          "name": "Osmania Medical College",
+          "nirf_rank": 48,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Chettinad Academy of Research and Education",
+          "nirf_rank": 49,
+          "city": "Chengalpattu",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "M. S. Ramaiah Medical College",
+          "nirf_rank": 50,
+          "city": "Bengaluru",
+          "state": "Karnataka"
         }
       ],
       "Law": [
@@ -1076,7 +2156,7 @@
           "fee_year": "AY 2025-26"
         },
         {
-          "name": "SASTRA (Shanmugha Arts, Science, Tech & Research)",
+          "name": "SASTRA",
           "nirf_rank": 11,
           "city": "Thanjavur",
           "state": "Tamil Nadu",
@@ -1164,6 +2244,138 @@
             16
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Saveetha Institute of Medical and Technical Sciences",
+          "nirf_rank": 19,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Alliance University",
+          "nirf_rank": 20,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Dr. Ram Manohar Lohiya National Law University",
+          "nirf_rank": 21,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Guru Gobind Singh Indraprastha University",
+          "nirf_rank": 22,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Central University of South Bihar",
+          "nirf_rank": 23,
+          "city": "Gaya",
+          "state": "Bihar"
+        },
+        {
+          "name": "Christ University",
+          "nirf_rank": 24,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "SRM Institute of Science and Technology",
+          "nirf_rank": 25,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 26,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "National Law Institute University, Bhopal",
+          "nirf_rank": 27,
+          "city": "Bhopal",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "Maharashtra National Law University, Nagpur",
+          "nirf_rank": 28,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "University of Lucknow",
+          "nirf_rank": 29,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "National University of Study & Research in Law",
+          "nirf_rank": 30,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "ICFAI Foundation for Higher Education",
+          "nirf_rank": 31,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Manipal University Jaipur",
+          "nirf_rank": 32,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Nirma University",
+          "nirf_rank": 33,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Himachal Pradesh National Law University",
+          "nirf_rank": 34,
+          "city": "Shimla",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "National Law University and Judicial Academy",
+          "nirf_rank": 35,
+          "city": "Guwahati",
+          "state": "Assam"
+        },
+        {
+          "name": "Galgotias University",
+          "nirf_rank": 36,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Army Institute of Law",
+          "nirf_rank": 37,
+          "city": "Mohali",
+          "state": "Punjab"
+        },
+        {
+          "name": "GITAM",
+          "nirf_rank": 38,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Amity University Haryana",
+          "nirf_rank": 39,
+          "city": "Gurugram",
+          "state": "Haryana"
+        },
+        {
+          "name": "Central University of Punjab",
+          "nirf_rank": 40,
+          "city": "Bathinda",
+          "state": "Punjab"
         }
       ],
       "Pharmacy": [
@@ -1382,6 +2594,498 @@
             9
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Delhi Pharmaceutical Sciences and Research University",
+          "nirf_rank": 19,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Central University of Punjab",
+          "nirf_rank": 20,
+          "city": "Bathinda",
+          "state": "Punjab"
+        },
+        {
+          "name": "NIPER Ahmedabad",
+          "nirf_rank": 21,
+          "city": "Gandhinagar",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Banasthali Vidyapith",
+          "nirf_rank": 22,
+          "city": "Banasthali",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Babasaheb Bhimrao Ambedkar University",
+          "nirf_rank": 23,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Jadavpur University",
+          "nirf_rank": 24,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "I.S.F. College of Pharmacy",
+          "nirf_rank": 25,
+          "city": "Moga",
+          "state": "Punjab"
+        },
+        {
+          "name": "Maharishi Markandeshwar",
+          "nirf_rank": 26,
+          "city": "Ambala",
+          "state": "Haryana"
+        },
+        {
+          "name": "Central University of Rajasthan",
+          "nirf_rank": 27,
+          "city": "Kishangarh",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Birla Institute of Technology",
+          "nirf_rank": 28,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "NIPER Kolkata",
+          "nirf_rank": 29,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "NIPER Hajipur",
+          "nirf_rank": 30,
+          "city": "Hajipur",
+          "state": "Bihar"
+        },
+        {
+          "name": "AU College of Pharmaceutical Sciences, Andhra University",
+          "nirf_rank": 31,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Nirma University",
+          "nirf_rank": 32,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "GITAM",
+          "nirf_rank": 33,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Poona College of Pharmacy",
+          "nirf_rank": 34,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Dr. D. Y. Patil Institute of Pharmaceutical Sciences",
+          "nirf_rank": 35,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Sri Ramachandra Institute of Higher Education",
+          "nirf_rank": 36,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Noida Institute of Engineering and Technology (Pharmacy)",
+          "nirf_rank": 37,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "SVKM's Dr. Bhanuben Nanavati College of Pharmacy",
+          "nirf_rank": 38,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Suresh Gyan Vihar University",
+          "nirf_rank": 39,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Integral University",
+          "nirf_rank": 40,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Parul University",
+          "nirf_rank": 41,
+          "city": "Vadodara",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Annamalai University",
+          "nirf_rank": 42,
+          "city": "Annamalainagar",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Maharshi Dayanand University",
+          "nirf_rank": 43,
+          "city": "Rohtak",
+          "state": "Haryana"
+        },
+        {
+          "name": "Shoolini University",
+          "nirf_rank": 44,
+          "city": "Solan",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "L. M. College of Pharmacy",
+          "nirf_rank": 45,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Maharaja Sayajirao University of Baroda",
+          "nirf_rank": 46,
+          "city": "Vadodara",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Guru Ghasidas Vishwavidyalaya",
+          "nirf_rank": 47,
+          "city": "Bilaspur",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "GLA University",
+          "nirf_rank": 48,
+          "city": "Mathura",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Guru Jambheshwar University of Science and Technology",
+          "nirf_rank": 49,
+          "city": "Hisar",
+          "state": "Haryana"
+        },
+        {
+          "name": "KLE College of Pharmacy, Belgaum",
+          "nirf_rank": 50,
+          "city": "Belgaum",
+          "state": "Karnataka"
+        },
+        {
+          "name": "NGSM Institute of Pharmaceutical Sciences",
+          "nirf_rank": 51,
+          "city": "Mangaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "R. C. Patel Institute of Pharmaceutical Education",
+          "nirf_rank": 52,
+          "city": "Shirpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Dibrugarh University",
+          "nirf_rank": 53,
+          "city": "Dibrugarh",
+          "state": "Assam"
+        },
+        {
+          "name": "RTM Nagpur University",
+          "nirf_rank": 54,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Galgotias University",
+          "nirf_rank": 55,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "M.S. Ramaiah University of Applied Sciences",
+          "nirf_rank": 56,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Sharda University",
+          "nirf_rank": 57,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Gujarat Technological University",
+          "nirf_rank": 58,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Punjabi University, Patiala",
+          "nirf_rank": 59,
+          "city": "Patiala",
+          "state": "Punjab"
+        },
+        {
+          "name": "Sri Padmavathi Mahila Visvavidyalayam",
+          "nirf_rank": 60,
+          "city": "Tirupati",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "VISTAS",
+          "nirf_rank": 61,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Amity University Haryana",
+          "nirf_rank": 62,
+          "city": "Gurugram",
+          "state": "Haryana"
+        },
+        {
+          "name": "Central University of South Bihar",
+          "nirf_rank": 63,
+          "city": "Gaya",
+          "state": "Bihar"
+        },
+        {
+          "name": "Mohan Lal Sukhadia University",
+          "nirf_rank": 64,
+          "city": "Udaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "PSG College of Pharmacy",
+          "nirf_rank": 65,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Smt. Kishoritai Bhoyar College of Pharmacy",
+          "nirf_rank": 66,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Acharya Nagarjuna University College of Pharmaceutical Sciences",
+          "nirf_rank": 67,
+          "city": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Bundelkhand University",
+          "nirf_rank": 68,
+          "city": "Jhansi",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Chandigarh College of Pharmacy, Landran",
+          "nirf_rank": 69,
+          "city": "Landran",
+          "state": "Punjab"
+        },
+        {
+          "name": "Dr. Vishwanath Karad MIT World Peace University",
+          "nirf_rank": 70,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "KIET Group of Institutions",
+          "nirf_rank": 71,
+          "city": "Ghaziabad",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Anurag University",
+          "nirf_rank": 72,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Kumaun University",
+          "nirf_rank": 73,
+          "city": "Nainital",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "Sri Venkateswara College of Pharmacy",
+          "nirf_rank": 74,
+          "city": "Chittoor",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Uttaranchal University",
+          "nirf_rank": 75,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "Assam University, Silchar",
+          "nirf_rank": 76,
+          "city": "Silchar",
+          "state": "Assam"
+        },
+        {
+          "name": "Nandha College of Pharmacy",
+          "nirf_rank": 77,
+          "city": "Erode",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Bharati Vidyapeeth College of Pharmacy",
+          "nirf_rank": 78,
+          "city": "Kolhapur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "NIMS University, Jaipur",
+          "nirf_rank": 79,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Sri Adichunchanagiri College of Pharmacy",
+          "nirf_rank": 80,
+          "city": "B G Nagar",
+          "state": "Karnataka"
+        },
+        {
+          "name": "ASBASJSM College of Pharmacy, Bela",
+          "nirf_rank": 81,
+          "city": "Bela",
+          "state": "Punjab"
+        },
+        {
+          "name": "Acharya & B M Reddy College of Pharmacy",
+          "nirf_rank": 82,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Maulana Abul Kalam Azad University of Technology",
+          "nirf_rank": 83,
+          "city": "Nadia",
+          "state": "West Bengal"
+        },
+        {
+          "name": "DIT University",
+          "nirf_rank": 84,
+          "city": "Dehradun",
+          "state": "Uttarakhand"
+        },
+        {
+          "name": "Guru Nanak Institute of Pharmaceutical Science & Technology",
+          "nirf_rank": 85,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "MJP Rohilkhand University",
+          "nirf_rank": 86,
+          "city": "Bareilly",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "SHUATS",
+          "nirf_rank": 87,
+          "city": "Prayagraj",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Y. B. Chavan College of Pharmacy",
+          "nirf_rank": 88,
+          "city": "Aurangabad",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Goa College of Pharmacy",
+          "nirf_rank": 89,
+          "city": "Panaji",
+          "state": "Goa"
+        },
+        {
+          "name": "G. D. Goenka University",
+          "nirf_rank": 90,
+          "city": "Gurugram",
+          "state": "Haryana"
+        },
+        {
+          "name": "Krupanidhi College of Pharmacy",
+          "nirf_rank": 91,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Modern College of Pharmacy",
+          "nirf_rank": 92,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "IFTM University",
+          "nirf_rank": 93,
+          "city": "Moradabad",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "College of Pharmacy, Madras Medical College",
+          "nirf_rank": 94,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IES Institute of Pharmacy",
+          "nirf_rank": 95,
+          "city": "Bhopal",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "Arulmigu Kalasalingam College of Pharmacy",
+          "nirf_rank": 96,
+          "city": "Srivilliputtur",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "JIS University",
+          "nirf_rank": 97,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Ramanbhai Patel College of Pharmacy",
+          "nirf_rank": 98,
+          "city": "Anand",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Vinayaka Mission's Research Foundation",
+          "nirf_rank": 99,
+          "city": "Salem",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Glocal University",
+          "nirf_rank": 100,
+          "city": "Saharanpur",
+          "state": "Uttar Pradesh"
         }
       ],
       "Architecture": [
@@ -1564,6 +3268,156 @@
             2
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Jadavpur University",
+          "nirf_rank": 16,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "MANIT Bhopal",
+          "nirf_rank": 17,
+          "city": "Bhopal",
+          "state": "Madhya Pradesh"
+        },
+        {
+          "name": "SRM Institute of Science and Technology",
+          "nirf_rank": 18,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "School of Planning & Architecture, Vijayawada",
+          "nirf_rank": 19,
+          "city": "Vijayawada",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "BMS College of Architecture",
+          "nirf_rank": 20,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Manipal University Jaipur",
+          "nirf_rank": 21,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Birla Institute of Technology",
+          "nirf_rank": 22,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "Shri Mata Vaishno Devi University",
+          "nirf_rank": 23,
+          "city": "Katra",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 24,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "Amity University",
+          "nirf_rank": 25,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Aligarh Muslim University",
+          "nirf_rank": 26,
+          "city": "Aligarh",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Manipal School of Architecture and Planning, MAHE",
+          "nirf_rank": 27,
+          "city": "Udupi",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Anna University",
+          "nirf_rank": 28,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Nirma University",
+          "nirf_rank": 29,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "NIT Hamirpur",
+          "nirf_rank": 30,
+          "city": "Hamirpur",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "M. S. Ramaiah Institute of Technology",
+          "nirf_rank": 31,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Dr. M.G.R. Educational and Research Institute",
+          "nirf_rank": 32,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Thiagarajar College of Engineering",
+          "nirf_rank": 33,
+          "city": "Madurai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Christ University",
+          "nirf_rank": 34,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "NIT Raipur",
+          "nirf_rank": 35,
+          "city": "Raipur",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "Guru Gobind Singh Indraprastha University",
+          "nirf_rank": 36,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "BMS School of Architecture",
+          "nirf_rank": 37,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Chitkara University",
+          "nirf_rank": 38,
+          "city": "Rajpura",
+          "state": "Punjab"
+        },
+        {
+          "name": "APJ Abdul Kalam Technical University (Architecture)",
+          "nirf_rank": 39,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Anant National University",
+          "nirf_rank": 40,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
         }
       ],
       "Dental": [
@@ -1710,6 +3564,138 @@
             3
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Sri Ramachandra Institute of Higher Education",
+          "nirf_rank": 13,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Amrita Vishwa Vidyapeetham",
+          "nirf_rank": 14,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Banaras Hindu University",
+          "nirf_rank": 15,
+          "city": "Varanasi",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Meenakshi Academy of Higher Education",
+          "nirf_rank": 16,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Jamia Millia Islamia",
+          "nirf_rank": 17,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Nair Hospital Dental College",
+          "nirf_rank": 19,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Govt. Dental College, Nagpur",
+          "nirf_rank": 20,
+          "city": "Nagpur",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Govt. Dental College, Mumbai",
+          "nirf_rank": 21,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "M.S. Ramaiah University of Applied Sciences",
+          "nirf_rank": 22,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Mahatma Gandhi P.G. Institute of Dental Sciences",
+          "nirf_rank": 23,
+          "city": "Puducherry",
+          "state": "Puducherry"
+        },
+        {
+          "name": "Christian Dental College",
+          "nirf_rank": 24,
+          "city": "Ludhiana",
+          "state": "Punjab"
+        },
+        {
+          "name": "SDM College of Dental Sciences & Hospital",
+          "nirf_rank": 25,
+          "city": "Dharwad",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Kalinga Institute of Industrial Technology (KIIT)",
+          "nirf_rank": 26,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Sree Balaji Dental College & Hospital",
+          "nirf_rank": 27,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Aligarh Muslim University",
+          "nirf_rank": 28,
+          "city": "Aligarh",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "KLE VK Institute of Dental Sciences",
+          "nirf_rank": 29,
+          "city": "Belagavi",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Dr. M.G.R. Educational and Research Institute",
+          "nirf_rank": 30,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Yenepoya Dental College",
+          "nirf_rank": 31,
+          "city": "Mangaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Chettinad Dental College and Research Institute",
+          "nirf_rank": 32,
+          "city": "Kelambakkam",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Manav Rachna International Institute",
+          "nirf_rank": 33,
+          "city": "Faridabad",
+          "state": "Haryana"
+        },
+        {
+          "name": "Government Dental College, Bangalore",
+          "nirf_rank": 34,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Government Dental College, Thiruvananthapuram",
+          "nirf_rank": 35,
+          "city": "Thiruvananthapuram",
+          "state": "Kerala"
         }
       ],
       "Agriculture": [
@@ -1892,6 +3878,114 @@
             9
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "Bidhan Chandra Krishi Vishwavidyalaya",
+          "nirf_rank": 16,
+          "city": "Nadia",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 17,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "Assam Agricultural University",
+          "nirf_rank": 18,
+          "city": "Jorhat",
+          "state": "Assam"
+        },
+        {
+          "name": "Odisha University of Agriculture and Technology",
+          "nirf_rank": 19,
+          "city": "Bhubaneswar",
+          "state": "Odisha"
+        },
+        {
+          "name": "Dr. Y.S. Parmar University of Horticulture and Forestry",
+          "nirf_rank": 20,
+          "city": "Solan",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "Babasaheb Bhimrao Ambedkar University",
+          "nirf_rank": 21,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "NIFTEM Sonipat",
+          "nirf_rank": 22,
+          "city": "Sonipat",
+          "state": "Haryana"
+        },
+        {
+          "name": "SKUAST Jammu",
+          "nirf_rank": 23,
+          "city": "Jammu",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "Professor Jayashankar Telangana Agricultural University",
+          "nirf_rank": 24,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Tamil Nadu Veterinary & Animal Sciences University",
+          "nirf_rank": 26,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Anand Agricultural University",
+          "nirf_rank": 27,
+          "city": "Anand",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Indira Gandhi Krishi Vishwavidyalaya",
+          "nirf_rank": 28,
+          "city": "Raipur",
+          "state": "Chhattisgarh"
+        },
+        {
+          "name": "Guru Angad Dev Veterinary & Animal Sciences University",
+          "nirf_rank": 30,
+          "city": "Ludhiana",
+          "state": "Punjab"
+        },
+        {
+          "name": "Acharya NG Ranga Agricultural University",
+          "nirf_rank": 31,
+          "city": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "University of Agricultural Sciences, Dharwad",
+          "nirf_rank": 35,
+          "city": "Dharwad",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Bihar Agriculture University",
+          "nirf_rank": 36,
+          "city": "Bhagalpur",
+          "state": "Bihar"
+        },
+        {
+          "name": "Navsari Agricultural University",
+          "nirf_rank": 34,
+          "city": "Navsari",
+          "state": "Gujarat"
+        },
+        {
+          "name": "Dr Y S R Horticulture University",
+          "nirf_rank": 40,
+          "city": "West Godavari",
+          "state": "Andhra Pradesh"
         }
       ],
       "University": [
@@ -2134,6 +4228,426 @@
             1.5
           ],
           "fee_year": "AY 2025-26"
+        },
+        {
+          "name": "JSS Academy of Higher Education and Research",
+          "nirf_rank": 21,
+          "city": "Mysuru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Amity University",
+          "nirf_rank": 22,
+          "city": "Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Andhra University",
+          "nirf_rank": 23,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Symbiosis International",
+          "nirf_rank": 24,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "University of Kerala",
+          "nirf_rank": 25,
+          "city": "Thiruvananthapuram",
+          "state": "Kerala"
+        },
+        {
+          "name": "Koneru Lakshmaiah Education Foundation",
+          "nirf_rank": 26,
+          "city": "Vaddeswaram",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Thapar Institute of Engineering and Technology",
+          "nirf_rank": 27,
+          "city": "Patiala",
+          "state": "Punjab"
+        },
+        {
+          "name": "Kalasalingam Academy of Research and Education",
+          "nirf_rank": 28,
+          "city": "Krishnankoil",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "SASTRA",
+          "nirf_rank": 29,
+          "city": "Thanjavur",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Osmania University",
+          "nirf_rank": 30,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Lovely Professional University",
+          "nirf_rank": 31,
+          "city": "Phagwara",
+          "state": "Punjab"
+        },
+        {
+          "name": "Cochin University of Science and Technology",
+          "nirf_rank": 32,
+          "city": "Kochi",
+          "state": "Kerala"
+        },
+        {
+          "name": "Gauhati University",
+          "nirf_rank": 33,
+          "city": "Guwahati",
+          "state": "Assam"
+        },
+        {
+          "name": "University of Kashmir",
+          "nirf_rank": 34,
+          "city": "Srinagar",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "Panjab University",
+          "nirf_rank": 35,
+          "city": "Chandigarh",
+          "state": "Chandigarh"
+        },
+        {
+          "name": "Bharathidasan University",
+          "nirf_rank": 36,
+          "city": "Tiruchirappalli",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Babasaheb Bhimrao Ambedkar University",
+          "nirf_rank": 37,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "University of Madras",
+          "nirf_rank": 38,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Calcutta University",
+          "nirf_rank": 39,
+          "city": "Kolkata",
+          "state": "West Bengal"
+        },
+        {
+          "name": "Institute of Chemical Technology",
+          "nirf_rank": 40,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "University of Jammu",
+          "nirf_rank": 51,
+          "city": "Jammu",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "NMIMS",
+          "nirf_rank": 52,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Sathyabama Institute",
+          "nirf_rank": 53,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "University of Mumbai",
+          "nirf_rank": 54,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "IIIT Hyderabad",
+          "nirf_rank": 55,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Savitribai Phule Pune University",
+          "nirf_rank": 56,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Shiv Nadar University",
+          "nirf_rank": 57,
+          "city": "Gautam Budh Nagar",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Manipal University Jaipur",
+          "nirf_rank": 58,
+          "city": "Jaipur",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Bharati Vidyapeeth",
+          "nirf_rank": 59,
+          "city": "Pune",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Sri Ramachandra Institute",
+          "nirf_rank": 60,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Chettinad Academy of Research and Education",
+          "nirf_rank": 61,
+          "city": "Chengalpattu",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Jain University",
+          "nirf_rank": 62,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Christ University",
+          "nirf_rank": 63,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Punjab Agricultural University",
+          "nirf_rank": 64,
+          "city": "Ludhiana",
+          "state": "Punjab"
+        },
+        {
+          "name": "Bangalore University",
+          "nirf_rank": 65,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Banasthali Vidyapith",
+          "nirf_rank": 66,
+          "city": "Banasthali",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "Sri Balaji Vidyapeeth",
+          "nirf_rank": 67,
+          "city": "Puducherry",
+          "state": "Puducherry"
+        },
+        {
+          "name": "MMM University of Technology",
+          "nirf_rank": 68,
+          "city": "Gorakhpur",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Shoolini University",
+          "nirf_rank": 69,
+          "city": "Solan",
+          "state": "Himachal Pradesh"
+        },
+        {
+          "name": "Vignan's Foundation",
+          "nirf_rank": 70,
+          "city": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "University of Mysore",
+          "nirf_rank": 71,
+          "city": "Mysuru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Tata Institute of Social Sciences",
+          "nirf_rank": 72,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Tamil Nadu Agricultural University",
+          "nirf_rank": 73,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Gujarat University",
+          "nirf_rank": 74,
+          "city": "Ahmedabad",
+          "state": "Gujarat"
+        },
+        {
+          "name": "SKUAST Kashmir",
+          "nirf_rank": 75,
+          "city": "Srinagar",
+          "state": "Jammu and Kashmir"
+        },
+        {
+          "name": "Bharath Institute of Higher Education",
+          "nirf_rank": 76,
+          "city": "Chennai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Central University of Punjab",
+          "nirf_rank": 77,
+          "city": "Bathinda",
+          "state": "Punjab"
+        },
+        {
+          "name": "Chitkara University",
+          "nirf_rank": 78,
+          "city": "Rajpura",
+          "state": "Punjab"
+        },
+        {
+          "name": "Tezpur University",
+          "nirf_rank": 79,
+          "city": "Tezpur",
+          "state": "Assam"
+        },
+        {
+          "name": "NITTE",
+          "nirf_rank": 80,
+          "city": "Mangaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "JNTU Hyderabad",
+          "nirf_rank": 81,
+          "city": "Hyderabad",
+          "state": "Telangana"
+        },
+        {
+          "name": "Mizoram University",
+          "nirf_rank": 82,
+          "city": "Aizawl",
+          "state": "Mizoram"
+        },
+        {
+          "name": "Central University of Tamil Nadu",
+          "nirf_rank": 83,
+          "city": "Tiruvarur",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Acharya Nagarjuna University",
+          "nirf_rank": 84,
+          "city": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Madurai Kamaraj University",
+          "nirf_rank": 85,
+          "city": "Madurai",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "Maharishi Markandeshwar",
+          "nirf_rank": 86,
+          "city": "Ambala",
+          "state": "Haryana"
+        },
+        {
+          "name": "Sharda University",
+          "nirf_rank": 87,
+          "city": "Greater Noida",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "GITAM",
+          "nirf_rank": 88,
+          "city": "Visakhapatnam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "name": "Central University of Rajasthan",
+          "nirf_rank": 89,
+          "city": "Kishangarh",
+          "state": "Rajasthan"
+        },
+        {
+          "name": "SLIET Longowal",
+          "nirf_rank": 90,
+          "city": "Longowal",
+          "state": "Punjab"
+        },
+        {
+          "name": "D. Y. Patil Vidyapeeth, Mumbai",
+          "nirf_rank": 91,
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        {
+          "name": "Birla Institute of Technology",
+          "nirf_rank": 92,
+          "city": "Ranchi",
+          "state": "Jharkhand"
+        },
+        {
+          "name": "GGSIPU",
+          "nirf_rank": 93,
+          "city": "New Delhi",
+          "state": "Delhi"
+        },
+        {
+          "name": "Periyar University",
+          "nirf_rank": 94,
+          "city": "Salem",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "University of Agricultural Sciences, Bangalore",
+          "nirf_rank": 95,
+          "city": "Bengaluru",
+          "state": "Karnataka"
+        },
+        {
+          "name": "Manav Rachna International Institute",
+          "nirf_rank": 96,
+          "city": "Faridabad",
+          "state": "Haryana"
+        },
+        {
+          "name": "Assam University, Silchar",
+          "nirf_rank": 97,
+          "city": "Silchar",
+          "state": "Assam"
+        },
+        {
+          "name": "University of Lucknow",
+          "nirf_rank": 98,
+          "city": "Lucknow",
+          "state": "Uttar Pradesh"
+        },
+        {
+          "name": "Avinashilingam Institute",
+          "nirf_rank": 99,
+          "city": "Coimbatore",
+          "state": "Tamil Nadu"
+        },
+        {
+          "name": "IIIT Delhi",
+          "nirf_rank": 100,
+          "city": "New Delhi",
+          "state": "Delhi"
         }
       ]
     },
