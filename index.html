@@ -418,7 +418,7 @@ textarea{resize:vertical;min-height:78px}
 
     <div class="form-group mt4">
       <label class="field-label">Career Interests <span class="tel" data-lkey="interests">ఆసక్తులు</span></label>
-      <div style="font-size:12px;color:var(--saffron);font-weight:600;margin-bottom:5px;">⭐ Your FIRST selection becomes your primary interest for alignment analysis</div>
+      <div id="interestHint" style="font-size:12px;color:var(--saffron);font-weight:600;margin-bottom:5px;">⭐ Your FIRST selection becomes your primary interest for alignment analysis</div>
       <div class="chips" id="interestChips"></div>
     </div>
     <div class="form-group mt4">
@@ -593,7 +593,7 @@ textarea{resize:vertical;min-height:78px}
       <table class="btable">
         <thead><tr>
           <th>Career Path</th><th>Duration</th><th>Estimated Cost</th>
-          <th>Your Budget</th><th>Feasibility</th><th>Scholarship Bridge</th>
+          <th>Your Budget</th><th>Feasibility</th><th>Scholarship Bridge</th><th>Eligible Amount (indicative)</th>
         </tr></thead>
         <tbody id="budgetBody"></tbody>
       </table>
@@ -1058,6 +1058,12 @@ function onClassChange() {
   var interSection = document.getElementById('interSection');
   if (interSection) interSection.style.display = is10th ? 'none' : (interSection.style.display || 'block');
   if (is10th) currentStream = '';
+  var hint = document.getElementById('interestHint');
+  if (hint) {
+    hint.innerHTML = isStudying10th
+      ? '⭐ Pick at least 2 — without marks, your interests are our strongest matching signal. Your FIRST pick is your primary interest.'
+      : '⭐ Your FIRST selection becomes your primary interest for alignment analysis';
+  }
 }
 
 function onBranchChange() {
@@ -1244,8 +1250,13 @@ function validateStep(n) {
     if (!document.getElementById('f_level').value) {
       alert('Please select your current class/year before continuing.'); return false;
     }
-    if (sel.interests.length === 0) {
-      alert('Please select at least one career interest before continuing.'); return false;
+    var levelV1 = document.getElementById('f_level').value;
+    var minInterests = (levelV1 === '10th studying') ? 2 : 1;
+    if (sel.interests.length < minInterests) {
+      alert(levelV1 === '10th studying'
+        ? 'Please select at least 2 career interests — without marks, your interests are our strongest matching signal.'
+        : 'Please select at least one career interest before continuing.');
+      return false;
     }
   }
   if (n === 2) {
@@ -1656,37 +1667,74 @@ function renderCards(paths) {
     // Colleges
     var collegesHtml = '';
     if (p.top_colleges_ranked && p.top_colleges_ranked.length) {
-      collegesHtml = '<div class="college-list">' + p.top_colleges_ranked.slice(0,4).map(function(c){
+      collegesHtml = '<div class="college-list">' + p.top_colleges_ranked.slice(0,5).map(function(c){
         return '<div class="college-row">' +
           '<span class="nirf-badge">NIRF #' + c.nirf_rank + '</span>' +
-          '<div><div class="college-name">' + c.name + '</div>' +
-          '<div class="college-meta">' + (c.type||'') + (c.state ? ' • '+c.state : '') + ' • NIRF ' + (c.nirf_year||'2024') + '</div></div>' +
+          '<div>' + (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="college-name" style="text-decoration:underline;cursor:pointer">'+c.name+'</a>' : '<div class="college-name">'+c.name+'</div>') +
+          '<div class="college-meta">' + (c.type||'') + (c.state ? ' • '+c.state : '') + ' • NIRF ' + (c.nirf_year||'2025') + (c.fee ? ' • Fee ' + c.fee : '') + '</div></div>' +
           '</div>';
       }).join('') + '</div>';
     } else if (p.top_colleges_ap_ts) {
       collegesHtml = (p.top_colleges_ap_ts||[]).slice(0,3).map(function(c){ return '<div class="fi">'+c+'</div>'; }).join('');
     }
 
+    // Collapsible: national NIRF top colleges (collapsed by default).
+    var nirfYr = (window.CAREER_DATA && window.CAREER_DATA.nirfYear) || '2025';
+    var nationalCollegesHtml = '';
+    if (collegesHtml) {
+      var natCount = (p.top_colleges_ranked && p.top_colleges_ranked.length) ? Math.min(5, p.top_colleges_ranked.length) : 0;
+      nationalCollegesHtml = '<details onclick="event.stopPropagation()" style="margin:8px 0;border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:6px 10px">' +
+        '<summary style="cursor:pointer;font-size:12px;font-weight:700;color:var(--deep-blue)">🏛️ Top Colleges — NIRF ' + nirfYr + ' (national' + (natCount ? ', ' + natCount : '') + ')</summary>' +
+        '<div style="margin-top:8px">' + collegesHtml + '</div></details>';
+    }
+
+    // Collapsible: NIRF colleges located in the student's home state (verified, may be few).
+    var homeStateHtml = '';
+    var hsc = p.home_state_colleges;
+    if (hsc && hsc.colleges && hsc.colleges.length) {
+      homeStateHtml = '<details onclick="event.stopPropagation()" style="margin:8px 0;border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:6px 10px">' +
+        '<summary style="cursor:pointer;font-size:12px;font-weight:700;color:var(--deep-blue)">🏠 Top NIRF colleges in ' + hsc.state + ' (' + hsc.colleges.length + ')</summary>' +
+        '<div class="college-list" style="margin-top:8px">' + hsc.colleges.map(function(c){
+          return '<div class="college-row">' +
+            '<span class="nirf-badge">NIRF #' + c.nirf_rank + '</span>' +
+            '<div>' + (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="college-name" style="text-decoration:underline;cursor:pointer">'+c.name+'</a>' : '<div class="college-name">'+c.name+'</div>') +
+            '<div class="college-meta">' + (c.city ? c.city+' • ' : '') + (c.state||'') + ' • NIRF ' + (c.nirf_year||'2025') + (c.fee ? ' • Fee ' + c.fee : '') + '</div></div>' +
+          '</div>';
+        }).join('') + '</div></details>';
+    }
+
     // Jobs market
     var jobsHtml = '';
     if (p.jobs_market) {
       var jm = p.jobs_market;
+      var sdm = p.supply_demand || {};
+      var liveVal = (jm.live_openings != null && jm.live_openings !== '')
+        ? (jm.live_openings + (jm.coverage_note ? ' (' + jm.coverage_note + ')' : ''))
+        : '—';
       jobsHtml = '<div class="jobs-banner">' +
         '<div class="jobs-stats-row">' +
-          '<div class="jobs-stat"><div class="jobs-stat-val">' + (jm.total_vacancies_ap_ts_annual||'—') + '</div><div class="jobs-stat-label">Annual Vacancies (AP/TS)</div></div>' +
-          '<div class="jobs-stat"><div class="jobs-stat-val">' + (jm.estimated_applicants||'—') + '</div><div class="jobs-stat-label">Total Applicants</div></div>' +
-          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (jm.competition_ratio||'—') + '</div><div class="jobs-stat-label">Competition</div></div>' +
+          '<div class="jobs-stat"><div class="jobs-stat-val">' + liveVal + '</div><div class="jobs-stat-label">Live Openings · Adzuna IN</div></div>' +
+          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (sdm.demand_level||'—') + '</div><div class="jobs-stat-label">Demand (est.)</div></div>' +
+          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (sdm.competition_index||'—') + '</div><div class="jobs-stat-label">Competition (est.)</div></div>' +
         '</div>' +
-        '<div class="jobs-source">Source: ' + (jm.data_source||'') + (jm.data_url ? ' <a href="'+jm.data_url+'" target="_blank" class="cite-link">[link]</a>' : '') + '</div>' +
+        '<div class="jobs-source">Live listings: ' + (jm.data_source||'estimate') + ' · demand/competition: estimate</div>' +
         '</div>';
     }
 
     // Job portals
     var portalsHtml = '';
     if (p.job_portals && p.job_portals.length) {
-      portalsHtml = '<div class="portals-grid">' + p.job_portals.map(function(jp){
-        return '<a href="' + jp.url + '" target="_blank" rel="noopener" class="portal-link">🔗 ' + jp.name + '</a>';
-      }).join('') + '</div>';
+      var pOrder = ['General','Central Govt','State Govt'];
+      var pByGroup = {};
+      p.job_portals.forEach(function(jp){ var g=jp.group||'Other'; (pByGroup[g]=pByGroup[g]||[]).push(jp); });
+      var pGroups = pOrder.filter(function(g){return pByGroup[g];})
+        .concat(Object.keys(pByGroup).filter(function(g){return pOrder.indexOf(g)===-1;}));
+      portalsHtml = pGroups.map(function(g){
+        return '<div style="font-size:10px;color:var(--gray-500);margin:6px 0 2px">'+g+'</div>' +
+          '<div class="portals-grid">' + pByGroup[g].map(function(jp){
+            return '<a href="' + jp.url + '" target="_blank" rel="noopener" class="portal-link">🔗 ' + jp.name + '</a>';
+          }).join('') + '</div>';
+      }).join('');
     }
 
     // Citations
@@ -1702,7 +1750,9 @@ function renderCards(paths) {
 
     var sd = p.supply_demand || {};
     var jobs = (p.job_locations||[]).join(', ');
-    var schls = (p.scholarship_options||[]).join(', ');
+    var schls = (p.scholarship_options||[]).map(function(s){
+      return s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener" style="color:var(--deep-blue);text-decoration:underline">'+s.name+'</a>' : s.name;
+    }).join(', ');
     var risks = (p.risk_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
     var ups = (p.upside_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
 
@@ -1730,6 +1780,7 @@ function renderCards(paths) {
         '<div class="sal-item"><span class="sal-label">5-Year</span><span class="sal-val">'+(p['5yr_salary_range']||'N/A')+'</span></div>' +
         '<div class="sal-item"><span class="sal-label">Duration</span><span class="sal-val">'+(p.duration_years||'?')+' yrs</span></div>' +
       '</div>' +
+      (p.salary_source ? '<div style="font-size:10px;color:#9CA3AF;margin:2px 0 0;text-align:right">Salary: '+p.salary_source+'</div>' : '') +
       '<div class="cc-expand">' +
         '<div class="drow"><span class="dlabel">Estimated Cost</span><span class="dval">'+(p.estimated_cost||'N/A')+'</span></div>' +
         '<div class="drow"><span class="dlabel">Job Locations</span><span class="dval">'+jobs+'</span></div>' +
@@ -1738,9 +1789,10 @@ function renderCards(paths) {
         '<div class="drow"><span class="dlabel">Competition Level</span><span class="dval">'+(sd.competition_index||'N/A')+'</span></div>' +
         '<div class="drow"><span class="dlabel">Growth Trend</span><span class="dval">'+(sd.growth_trend||'N/A')+'</span></div>' +
         (p.match_reason ? '<div style="font-size:12px;color:var(--green);font-style:italic;margin:8px 0">✓ '+p.match_reason+'</div>' : '') +
-        '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:12px 0 6px">🏛️ Top Colleges — NIRF 2024 Ranked</div>' +
-        collegesHtml +
-        '<div style="font-size:12px;font-weight:700;color:var(--purple);margin:12px 0 6px">📊 AP/TS Job Market Data</div>' +
+        '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:12px 0 2px">🏛️ Top Colleges (NIRF ' + nirfYr + ' — tap to expand)</div>' +
+        nationalCollegesHtml +
+        homeStateHtml +
+        '<div style="font-size:12px;font-weight:700;color:var(--purple);margin:12px 0 6px">📊 Job Market — Live Listings (Adzuna IN)</div>' +
         jobsHtml +
         (p.intermediate_stream_recommendation ? '<div class="drow"><span class="dlabel">Recommended Stream</span><span class="dval" style="color:var(--green)">'+p.intermediate_stream_recommendation+'</span></div>' : '') +
         (p.entrance_exam_links && p.entrance_exam_links.length ? '<div style="font-size:12px;font-weight:700;color:var(--green);margin:12px 0 6px">📝 Entrance Exams to Target</div><div class="portals-grid">'+p.entrance_exam_links.map(function(el){ return '<a href="'+el.url+'" target="_blank" rel="noopener" class="portal-link" style="border-color:var(--green);background:var(--green-light);color:var(--green)">🎓 '+el.exam+'</a>'; }).join('')+'</div>' : '') +
@@ -1857,10 +1909,25 @@ function renderBudget(paths, userBudget) {
     if(diff>=0){label='Feasible ✓';cls='f-green';}
     else if(diff===-1){label='Stretch (scholarship)';cls='f-yellow';}
     else{label='Out of range';cls='f-red';}
-    var schls=(p.scholarship_options||[]).slice(0,2).join(', ')||'—';
+    var schls=(p.scholarship_options||[]).slice(0,2).map(function(s){
+      return s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener" style="color:var(--deep-blue);text-decoration:underline">'+s.name+'</a>' : s.name;
+    }).join(', ')||'—';
+    var amts=(p.scholarship_options||[]).slice(0,2).map(function(s){
+      return s.amount ? (s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener" style="color:var(--gray-600)">'+s.amount+'</a>' : s.amount) : '—';
+    }).join('<br>')||'—';
+    var cb=p.cost_breakdown;
+    var costCell = cb
+      ? '<strong>'+cb.total_est+'</strong> total'
+        + '<div style="font-size:10px;color:var(--gray-600);margin-top:3px;line-height:1.5">'
+        + '• Tuition: '+cb.tuition+(cb.tuition_source?' <span style="color:var(--gray-500)">('+cb.tuition_source+')</span>':'')+'<br>'
+        + '• Boarding &amp; Lodging: '+cb.boarding_lodging+'<br>'
+        + '• Books &amp; Misc: '+cb.books_misc+'<br>'
+        + '<em style="color:var(--gray-500)">'+cb.living_tier+' · '+cb.note+'</em></div>'
+      : (cost||'—');
     return '<tr><td><strong>'+p.specific_career+'</strong><br><span style="font-size:11px;color:var(--gray-500)">'+p.domain+'</span></td>' +
-      '<td>'+(p.duration_years||'?')+' yrs</td><td>'+cost+'</td><td>'+(userBudget||'Not specified')+'</td>' +
-      '<td><span class="fbadge '+cls+'">'+label+'</span></td><td style="font-size:12px;color:var(--gray-600)">'+schls+'</td></tr>';
+      '<td>'+(p.duration_years||'?')+' yrs</td><td style="min-width:160px">'+costCell+'</td><td>'+(userBudget||'Not specified')+'</td>' +
+      '<td><span class="fbadge '+cls+'">'+label+'</span></td><td style="font-size:12px;color:var(--gray-600)">'+schls+'</td>' +
+      '<td style="font-size:11px;color:var(--gray-600)">'+amts+'</td></tr>';
   }).join('');
 }
 

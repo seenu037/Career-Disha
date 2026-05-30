@@ -1,0 +1,47 @@
+name: Refresh market data
+
+# Pulls fresh salary/vacancy numbers from Adzuna into data/careers.json,
+# regenerates data/data.js, and commits the result so the deployed site
+# always ships recently-refreshed market data.
+#
+# Setup (one time): add repo secrets ADZUNA_APP_ID and ADZUNA_APP_KEY
+#   Settings → Secrets and variables → Actions → New repository secret
+
+on:
+  schedule:
+    - cron: '0 3 1 * *'      # 03:00 UTC on the 1st of every month
+  workflow_dispatch: {}       # also runnable on-demand from the Actions tab
+
+permissions:
+  contents: write             # allow the job to commit refreshed data back
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh market data from Adzuna
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: node scripts/refresh-market-data.js
+
+      - name: Verify data integrity
+        run: node data/_test-matcher.js
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/careers.json data/data.js; then
+            echo "No data changes to commit."
+          else
+            git add data/careers.json data/data.js
+            git commit -m "chore: refresh market data from Adzuna [skip ci]"
+            git push
+          fi

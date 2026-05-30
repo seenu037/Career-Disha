@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "CareerDisha — AI career guidance for Indian students. Static HTML + Netlify serverless proxy with response caching.",
+  "scripts": {
+    "refresh-data": "node scripts/refresh-market-data.js",
+    "refresh-data:dry": "node scripts/refresh-market-data.js --dry-run",
+    "generate-data": "node scripts/generate-data-js.js",
+    "test:data": "node data/_test-matcher.js"
+  },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"
   }

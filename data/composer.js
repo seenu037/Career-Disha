@@ -121,6 +121,146 @@
 
   function durationYears(c) { return DURATION_YEARS[c.id] || 4; }
 
+  // Indicative cost split (RANGES, not single numbers) into Tuition / Boarding & Lodging /
+  // Books & Misc. Each component is a low–high band reflecting the govt-seat → private-college
+  // spread, scaled by program duration and the student's STATE living-cost level.
+  //
+  // BASIS — IMPORTANT: these are hand-set indicative bands, NOT live per-college fees. There is no
+  // authoritative fee API; real tuition varies ~10x between a govt seat and a private college and
+  // changes yearly. Treat as a planning estimate; for exact figures see AICTE / state fee-committee
+  // / NIRF institute disclosures. The budget table labels these as indicative.
+  var HIGH_COST_STATES = ['Maharashtra', 'Delhi', 'Karnataka', 'Tamil Nadu', 'Telangana', 'Gujarat'];
+
+  // Tuition range (₹ Lakh) anchored to the ACTUAL NIRF colleges shown for this career
+  // (national top 5 ∪ home-state), using their curated fee_total. Returns null when none of
+  // the shown colleges have a sourced fee (caller falls back to the indicative band).
+  function tuitionFromColleges(career, formData) {
+    var nat = nirfCollegesFor(career, formData) || [];
+    var hs = nirfCollegesInState(career, formData);
+    var all = nat.concat(hs ? hs.colleges : []);
+    var seen = {}, withFee = [];
+    all.forEach(function (c) { if (c.fee_total && !seen[c.name]) { seen[c.name] = 1; withFee.push(c); } });
+    if (!withFee.length) return null;
+    return {
+      min: Math.min.apply(null, withFee.map(function (c) { return c.fee_total[0]; })),
+      max: Math.max.apply(null, withFee.map(function (c) { return c.fee_total[1]; })),
+      count: withFee.length,
+      year: withFee[0].fee_year || ''
+    };
+  }
+
+  function costBreakdown(c, formData) {
+    var yrs = durationYears(c);
+    var tier = c.budget_tier || 'mid';
+    var livingHigh = HIGH_COST_STATES.indexOf(formData && formData.state) !== -1;
+    var hYr = livingHigh ? [90000, 150000] : [60000, 100000];   // hostel + mess /yr
+    var bYr = [10000, 25000];                                    // books / exam / misc /yr
+    // Prefer tuition from the real fees of the colleges shown; else indicative tier band.
+    var tc = tuitionFromColleges(c, formData);
+    var tu, tuition_source;
+    if (tc) {
+      tu = [tc.min * 100000, tc.max * 100000];
+      tuition_source = 'from ' + tc.count + ' NIRF-listed college fee' + (tc.count > 1 ? 's' : '') + (tc.year ? ' · ' + tc.year : '');
+    } else {
+      tu = tier === 'low' ? [10000, 200000] : tier === 'high' ? [300000, 6000000] : [50000, 800000];
+      tuition_source = 'indicative band (no listed-college fee)';
+    }
+    var hostel = [hYr[0] * yrs, hYr[1] * yrs];
+    var books = [bYr[0] * yrs, bYr[1] * yrs];
+    var total = [tu[0] + hostel[0] + books[0], tu[1] + hostel[1] + books[1]];
+    var L = function (n) { return (n / 100000).toFixed(1); };
+    var R = function (a) { return '₹' + L(a[0]) + '–' + L(a[1]) + 'L'; };
+    return {
+      tuition: R(tu),
+      tuition_source: tuition_source,
+      boarding_lodging: R(hostel) + ' (₹' + L(hYr[0]) + '–' + L(hYr[1]) + 'L/yr × ' + yrs + ' yrs)',
+      books_misc: R(books),
+      total_est: R(total),
+      living_tier: livingHigh ? 'metro / high cost-of-living' : 'standard cost-of-living',
+      note: tier === 'high'
+        ? 'low end = govt/merit seat · high end = private college'
+        : 'low end = govt seat · high end = private'
+    };
+  }
+
+  // Truthful salary provenance for a card footnote: real only when Adzuna actually
+  // produced the number (recorded in _market_meta by scripts/refresh-market-data.js).
+  function salarySource(c) {
+    var m = c._market_meta;
+    if (m && m.salary_source && m.salary_source.indexOf('Adzuna') === 0) {
+      return m.salary_source + (m.refreshed_at ? ', ' + m.refreshed_at : '');
+    }
+    return 'estimate';
+  }
+
+  // Career → NIRF ranking category (data/nirf-colleges.json). Careers absent here
+  // (graphic/fashion design, hotel mgmt, defence) have no official NIRF category and fall
+  // back to LLM-suggested colleges.
+  var CAREER_NIRF_CATEGORY = {
+    'software-engineer': 'Engineering', 'data-scientist': 'Engineering', 'cybersecurity-analyst': 'Engineering',
+    'mechanical-engineer': 'Engineering', 'civil-engineer': 'Engineering', 'electronics-engineer': 'Engineering',
+    'aerospace-engineer': 'Engineering',
+    'architect': 'Architecture',
+    'doctor-mbbs': 'Medical', 'physiotherapist': 'Medical', 'nurse': 'Medical',
+    'dentist-bds': 'Dental',
+    'pharmacist': 'Pharmacy',
+    'veterinarian': 'Agriculture', 'agricultural-scientist': 'Agriculture',
+    'chartered-accountant': 'Management', 'company-secretary': 'Management', 'investment-banker': 'Management',
+    'financial-analyst': 'Management', 'business-analyst': 'Management', 'digital-marketer': 'Management',
+    'lawyer': 'Law',
+    'civil-servant': 'University', 'teacher': 'University', 'psychologist': 'University', 'journalist': 'University'
+  };
+
+  // Display string for a college's curated total-program tuition (data/nirf-colleges.json).
+  function feeStr(col) {
+    if (!col.fee_total) return null;
+    var f = function (n) { return (Math.round(n * 10) / 10) + ''; };
+    return '₹' + f(col.fee_total[0]) + '–' + f(col.fee_total[1]) + 'L' + (col.fee_year ? ' (' + col.fee_year + ')' : '');
+  }
+  function mapCollege(col, cat, yr) {
+    return {
+      name: col.name, nirf_rank: String(col.nirf_rank), nirf_year: yr, type: cat,
+      city: col.city, state: col.state, url: col.url || null,
+      fee: feeStr(col), fee_total: col.fee_total || null, fee_year: col.fee_year || null
+    };
+  }
+
+  // Real NIRF colleges (year from CAREER_DATA.nirfYear) for a career's category, preferring
+  // the student's home state.
+  // Returns null when the career has no NIRF category (caller falls back to LLM colleges).
+  function nirfCollegesFor(career, formData) {
+    var cat = CAREER_NIRF_CATEGORY[career.id];
+    if (!cat) return null;
+    var list = (window.CAREER_DATA.nirfColleges && window.CAREER_DATA.nirfColleges[cat]) || [];
+    if (!list.length) return null;
+    // National top 5 by rank. Home-state colleges are surfaced separately by
+    // nirfCollegesInState(), so this list stays purely national to avoid duplication.
+    var sorted = list.slice().sort(function (a, b) { return (a.nirf_rank || 999) - (b.nirf_rank || 999); });
+    var yr = String(window.CAREER_DATA.nirfYear || '2025');
+    return sorted.slice(0, 5).map(function (col) { return mapCollege(col, cat, yr); });
+  }
+
+  // NIRF colleges (up to 5) for a career's category that are physically located in the
+  // student's home state, sorted by rank. Returns null when there's no home state, no NIRF
+  // category, or no in-state college in our dataset (the national top-N is intentionally
+  // small, so many state+field combinations legitimately have none).
+  function nirfCollegesInState(career, formData) {
+    var st = formData && formData.state;
+    if (!st) return null;
+    var cat = CAREER_NIRF_CATEGORY[career.id];
+    if (!cat) return null;
+    var list = (window.CAREER_DATA.nirfColleges && window.CAREER_DATA.nirfColleges[cat]) || [];
+    var inState = list.filter(function (c) { return c.state === st; })
+      .sort(function (a, b) { return (a.nirf_rank || 999) - (b.nirf_rank || 999); })
+      .slice(0, 5);
+    if (!inState.length) return null;
+    var yr = String(window.CAREER_DATA.nirfYear || '2025');
+    return {
+      state: st,
+      colleges: inState.map(function (col) { return mapCollege(col, cat, yr); })
+    };
+  }
+
   function buildEntryRoute(career, formData) {
     var stream = (formData.stream && formData.stream !== 'Not specified')
                    ? formData.stream
@@ -145,21 +285,23 @@
       competition_index: compMap[c.growth] || 'Medium',
       ap_ts_job_market_score: Math.round(avg * 100),
       growth_trend: trendMap[c.growth] || 'Stable',
-      data_source: 'NASSCOM / AICTE 2024 (estimates)'
+      data_source: 'CareerDisha estimate (growth heuristic)'
     };
   }
 
+  // Real live-listing count from Adzuna (set by scripts/refresh-market-data.js).
+  // No fabricated vacancy/applicant totals — Adzuna has no applicant data, and the
+  // raw count is shown as-is rather than re-derived from the job_density heuristic.
   function jobsMarket(c) {
-    var d = c.job_density || {};
-    var base = Math.round(((d.metro || 0.5) + (d.tier2 || 0.4)) * 25000);
-    var multiplier = c.growth === 'high' ? 7 : c.growth === 'medium' ? 5 : 3;
-    var applicants = base * multiplier;
-    return {
-      total_vacancies_ap_ts_annual: base.toLocaleString('en-IN') + '+',
-      estimated_applicants: applicants.toLocaleString('en-IN'),
-      competition_ratio: '1 job per ' + multiplier + ' applicants',
-      data_source: 'NASSCOM / AICTE / industry estimates 2024'
-    };
+    var al = c.adzuna_listings;
+    if (al && typeof al.count === 'number') {
+      return {
+        live_openings: al.count.toLocaleString('en-IN'),
+        coverage_note: al.coverage === 'low' ? 'limited Adzuna coverage' : '',
+        data_source: 'Adzuna IN' + (al.fetched_at ? ', ' + al.fetched_at : '')
+      };
+    }
+    return { live_openings: null, coverage_note: 'no live-listing data', data_source: 'estimate' };
   }
 
   // ── Deterministic fallback: decision tree (used when LLM omits it) ─────
@@ -257,13 +399,76 @@
     return lines.join(' ');
   }
 
-  var GENERIC_PORTALS = [
-    { name: 'Naukri.com',     url: 'https://naukri.com',         focus: 'General — all sectors' },
-    { name: 'LinkedIn Jobs',  url: 'https://linkedin.com/jobs',  focus: 'Professional network' },
-    { name: 'NCS Portal',     url: 'https://ncs.gov.in',         focus: 'Govt / PSU openings' }
+  // Central job portals — always shown. Grouped for the UI (General vs Central Govt).
+  var CENTRAL_PORTALS = [
+    { name: 'Naukri',   url: 'https://naukri.com',        group: 'General' },
+    { name: 'LinkedIn', url: 'https://linkedin.com/jobs', group: 'General' },
+    { name: 'NCS',      url: 'https://ncs.gov.in',        group: 'Central Govt' },
+    { name: 'UPSC',     url: 'https://upsc.gov.in',       group: 'Central Govt' },
+    { name: 'SSC',      url: 'https://ssc.nic.in',        group: 'Central Govt' }
   ];
 
-  function jobPortals() { return GENERIC_PORTALS; }
+  // State govt job / PSC portals, keyed by the app's state names. Short labels by design.
+  var STATE_JOB_PORTALS = {
+    'Andhra Pradesh': [{ name: 'APPSC', url: 'https://psc.ap.gov.in', group: 'State Govt' }],
+    'Telangana':      [{ name: 'TSPSC', url: 'https://www.tspsc.gov.in', group: 'State Govt' }],
+    'Karnataka':      [{ name: 'KPSC', url: 'https://kpsc.kar.nic.in', group: 'State Govt' }],
+    'Maharashtra':    [{ name: 'MPSC', url: 'https://mpsc.gov.in', group: 'State Govt' },
+                       { name: 'Maha Rojgar', url: 'https://rojgar.mahaswayam.gov.in', group: 'State Govt' }],
+    'Tamil Nadu':     [{ name: 'TNPSC', url: 'https://www.tnpsc.gov.in', group: 'State Govt' },
+                       { name: 'TN Velai', url: 'https://tnvelaivaaippu.gov.in', group: 'State Govt' }],
+    'Kerala':         [{ name: 'Kerala PSC', url: 'https://www.keralapsc.gov.in', group: 'State Govt' }],
+    'Gujarat':        [{ name: 'GPSC', url: 'https://gpsc.gujarat.gov.in', group: 'State Govt' }],
+    'West Bengal':    [{ name: 'WBPSC', url: 'https://wbpsc.gov.in', group: 'State Govt' }],
+    'Rajasthan':      [{ name: 'RPSC', url: 'https://rpsc.rajasthan.gov.in', group: 'State Govt' }],
+    'Uttar Pradesh':  [{ name: 'UPPSC', url: 'https://uppsc.up.nic.in', group: 'State Govt' },
+                       { name: 'Sewayojan', url: 'https://sewayojan.up.nic.in', group: 'State Govt' }],
+    'Madhya Pradesh': [{ name: 'MPPSC', url: 'https://mppsc.mp.gov.in', group: 'State Govt' }],
+    'Bihar':          [{ name: 'BPSC', url: 'https://www.bpsc.bih.nic.in', group: 'State Govt' }],
+    'Punjab':         [{ name: 'PPSC', url: 'https://ppsc.gov.in', group: 'State Govt' }],
+    'Haryana':        [{ name: 'HPSC', url: 'https://hpsc.gov.in', group: 'State Govt' },
+                       { name: 'HSSC', url: 'https://hssc.gov.in', group: 'State Govt' }],
+    'Odisha':         [{ name: 'OPSC', url: 'https://www.opsc.gov.in', group: 'State Govt' }],
+    'Assam':          [{ name: 'APSC', url: 'https://apsc.nic.in', group: 'State Govt' }],
+    'Delhi':          [{ name: 'DSSSB', url: 'https://dsssb.delhi.gov.in', group: 'State Govt' }]
+  };
+
+  function jobPortals(formData) {
+    var st = formData && formData.state;
+    return CENTRAL_PORTALS.concat(STATE_JOB_PORTALS[st] || []);
+  }
+
+  // Scholarship scheme → { url: deep link to the SPECIFIC scheme/guideline page, amount: the
+  // published indicative benefit }. Amounts are indicative figures from the official scheme
+  // guidelines (they vary by income / course group / hostel-vs-day-scholar / year) — the link
+  // goes to the authoritative page for the current exact amount. Verified against official
+  // sources on 2026-05-30; re-check before production as schemes are revised yearly.
+  var SCHOLARSHIP_INFO = {
+    'SC Post-Matric Scholarship':
+      { url: 'https://socialjustice.gov.in/schemes/25', amount: 'Full tuition + ₹550–1200/mo (indicative)' },
+    'ST Post-Matric Scholarship':
+      { url: 'https://tribal.nic.in/', amount: 'Full tuition + maintenance (indicative)' },
+    'OBC / BC Welfare Scheme':
+      { url: 'https://scholarships.gov.in/public/schemeGuidelines/POST_MATRIC_OBC_GUIDELINES.pdf', amount: 'Full tuition + ₹190–425/mo (indicative)' },
+    'EWS Reservation + PM Vidyalakshmi':
+      { url: 'https://www.vidyalakshmi.co.in/Students/', amount: 'Education loan + interest subsidy (income < ₹4.5L)' },
+    'Minority Scholarship (Maulana Azad)':
+      { url: 'https://www.minorityaffairs.gov.in/show_content.php?lang=1&level=1&ls_id=415&lid=283', amount: 'Post-matric minority benefit (indicative)' },
+    'PM Vidyalakshmi Education Loan':
+      { url: 'https://www.vidyalakshmi.co.in/Students/', amount: 'Need-based education loan' },
+    'AP Fee Reimbursement (Jagananna Vidya Deevena)':
+      { url: 'https://jnanabhumi.ap.gov.in/', amount: 'Full fee reimbursement (RTF) + MTF' },
+    'TS Fee Reimbursement / Vidya Deevena':
+      { url: 'https://telanganaepass.cgg.gov.in/', amount: 'Full fee reimbursement + maintenance' },
+    'Karnataka Fee Concession':
+      { url: 'https://ssp.postmatric.karnataka.gov.in/', amount: 'Category-based fee concession' },
+    'MAHADBT Scholarship':
+      { url: 'https://mahadbt.maharashtra.gov.in/SchemeData/SchemeData?str=E9DDFA703C38E51AC54E5F6E794BD5C1', amount: 'Tuition+exam fee + ₹190–425/mo' },
+    'TN First Graduate Scholarship':
+      { url: 'https://www.tn.gov.in/scheme/search?query=first+graduate', amount: 'Full tuition fee waiver (indicative)' },
+    'Kerala State Merit Scholarship':
+      { url: 'http://www.dcescholarship.kerala.gov.in/', amount: 'Category/merit-based (indicative)' }
+  };
 
   function scholarshipOptionsFor(formData, c) {
     var schl = (formData.scholarship || '').toLowerCase();
@@ -281,7 +486,10 @@
     else if (s === 'Maharashtra') out.push('MAHADBT Scholarship');
     else if (s === 'Tamil Nadu')  out.push('TN First Graduate Scholarship');
     else if (s === 'Kerala')      out.push('Kerala State Merit Scholarship');
-    return out.slice(0, 3);
+    return out.slice(0, 3).map(function (n) {
+      var info = SCHOLARSHIP_INFO[n] || {};
+      return { name: n, url: info.url || null, amount: info.amount || null };
+    });
   }
 
   // ── Slim prompt builder ────────────────────────────────────────────────
@@ -317,7 +525,7 @@
     var schema = '{\n' +
       '  "student_summary_local": "2-3 sentence profile in ' + lang + ' script (NOT English)",\n' +
       '  "narratives":     { "<career_id>": "1-2 sentence personalized why-this-fits-you", ... 5 entries },\n' +
-      '  "colleges":       { "<career_id>": [ {"name":"IIT Hyderabad","nirf_rank":"8","nirf_year":"2024","type":"IIT","state":"TS"}, ...3 each ] },\n' +
+      '  "colleges":       { "<career_id>": [ {"name":"IIT Hyderabad","nirf_rank":"7","nirf_year":"2025","type":"IIT","state":"TS"}, ...5 each ] },\n' +
       '  "exams":          { "<career_id>": [ {"exam":"JEE Main","url":"https://jeemain.nta.nic.in","eligibility":"After 12th MPC"}, ...3 each ] },\n' +
       '  "risk_factors":   { "<career_id>": ["risk1","risk2"], ... },\n' +
       '  "upside_factors": { "<career_id>": ["upside1","upside2"], ... },\n' +
@@ -348,7 +556,7 @@
       'INSTRUCTIONS:\n' +
       '- Use the exact career_id strings shown above as keys in narratives/colleges/exams/risk_factors/upside_factors\n' +
       '- "narratives": one short personalized paragraph per career_id explaining why it fits THIS student (reference their marks, interests, location, family situation)\n' +
-      '- "colleges": 3 NIRF-2024-ranked colleges per career; prefer institutions in/near the student\'s state\n' +
+      '- "colleges": 5 NIRF-2025-ranked colleges per career; prefer institutions in/near the student\'s state\n' +
       '- "exams": 3 entrance exams per career with official URLs; prefer state exams (e.g. EAMCET for AP/TS, KCET for KA, MHT-CET for MH)\n' +
       '- "risk_factors" / "upside_factors": 2 each per career\n' +
       '- "job_listings": 8 realistic openings (real Indian companies, realistic salary, real apply URLs like naukri.com/career/X or linkedin.com/jobs/X)\n' +
@@ -382,16 +590,19 @@
         entry_route: buildEntryRoute(c, formData),
         duration_years: durationYears(c),
         estimated_cost: estimatedCost(c),
+        cost_breakdown: costBreakdown(c, formData),
         starting_salary_range: formatSalary(c.salary_inr.entry),
         '5yr_salary_range':    formatSalary(c.salary_inr.mid),
+        salary_source:         salarySource(c),
         job_locations: c.preferred_locations.slice(0, 5),
         budget_tier: budgetTierLabel(c.budget_tier),
         scholarship_options: scholarshipOptionsFor(formData, c),
         supply_demand: supplyDemand(c),
-        top_colleges_ranked: col,
+        top_colleges_ranked: nirfCollegesFor(c, formData) || col,
+        home_state_colleges: nirfCollegesInState(c, formData),
         entrance_exam_links: exm,
         jobs_market: jobsMarket(c),
-        job_portals: jobPortals(),
+        job_portals: jobPortals(formData),
         risk_factors: rk,
         upside_factors: up,
         citations: []
