@@ -53,7 +53,17 @@
     'fashion-designer': 'Design & Creative',
     'hotel-management': 'Hospitality',
     'defence-officer': 'Defence',
-    'agricultural-scientist': 'Agriculture & Research'
+    'agricultural-scientist': 'Agriculture & Research',
+    'ai-ml-engineer': 'Engineering & IT', 'cloud-engineer': 'Engineering & IT', 'blockchain-developer': 'Engineering & IT',
+    'robotics-engineer': 'Engineering & Robotics', 'electrical-engineer': 'Engineering', 'biomedical-engineer': 'Engineering & Healthcare',
+    'environmental-scientist': 'Environment & Research', 'urban-planner': 'Planning & Architecture',
+    'game-developer': 'Design & Technology', 'ux-designer': 'Design & Technology', 'animator-vfx': 'Design & Creative',
+    'interior-designer': 'Design & Creative', 'photographer': 'Design & Creative', 'content-creator': 'Media & Creative',
+    'dietitian': 'Healthcare & Nutrition', 'public-health-specialist': 'Healthcare & Public Policy', 'forensic-scientist': 'Science & Law Enforcement',
+    'entrepreneur': 'Business & Strategy', 'supply-chain-manager': 'Business & Operations', 'hr-manager': 'Business & People',
+    'ecommerce-manager': 'Marketing & Business', 'real-estate-manager': 'Business & Real Estate', 'insurance-professional': 'Finance & Commerce',
+    'event-manager': 'Hospitality & Events', 'ir-specialist': 'Government & Diplomacy', 'nonprofit-manager': 'Social Impact',
+    'translator': 'Languages & Media', 'pr-specialist': 'Media & Communications', 'pilot': 'Aviation'
   };
 
   // ── Degree templates (used in entry_route) ─────────────────────────────
@@ -87,14 +97,29 @@
     'fashion-designer': 'B.Des Fashion',
     'hotel-management': 'BHM (4 yrs)',
     'defence-officer': 'NDA / Direct Entry → Service Academy',
-    'agricultural-scientist': 'B.Sc Agriculture'
+    'agricultural-scientist': 'B.Sc Agriculture',
+    'ai-ml-engineer': 'B.Tech CSE / AI-ML', 'cloud-engineer': 'B.Tech CSE + Cloud certs', 'blockchain-developer': 'B.Tech CSE + Blockchain',
+    'robotics-engineer': 'B.Tech Robotics / Mechatronics', 'electrical-engineer': 'B.Tech Electrical', 'biomedical-engineer': 'B.Tech Biomedical',
+    'environmental-scientist': 'B.Sc/M.Sc Environmental Science', 'urban-planner': 'B.Plan / B.Arch → M.Plan',
+    'game-developer': 'B.Des / B.Tech (Game Dev)', 'ux-designer': 'B.Des (UX/UI)', 'animator-vfx': 'B.Des / B.Sc Animation',
+    'interior-designer': 'B.Des Interior Design', 'photographer': 'B.A / Diploma Photography', 'content-creator': 'B.A Media / Mass Comm',
+    'dietitian': 'B.Sc Nutrition & Dietetics', 'public-health-specialist': "Bachelor's → MPH", 'forensic-scientist': 'B.Sc → M.Sc Forensic Science',
+    'entrepreneur': "Any degree → MBA (optional)", 'supply-chain-manager': 'BBA/B.Tech → MBA Operations', 'hr-manager': 'BBA → MBA HR',
+    'ecommerce-manager': 'BBA/B.Com → MBA', 'real-estate-manager': 'BBA → MBA / RICS', 'insurance-professional': 'B.Com → Actuarial (IAI)',
+    'event-manager': 'BBA Event Mgmt / B.Des', 'ir-specialist': 'BA → MA International Relations', 'nonprofit-manager': "Any degree → MA Social Work",
+    'translator': 'BA → MA Languages', 'pr-specialist': 'BA Mass Comm / PR', 'pilot': 'Commercial Pilot License (DGCA)'
   };
 
   var DURATION_YEARS = {
     'doctor-mbbs': 5.5, 'dentist-bds': 5,
     'lawyer': 5, 'architect': 5,
     'chartered-accountant': 4, 'company-secretary': 3,
-    'civil-servant': 4, 'defence-officer': 3
+    'civil-servant': 4, 'defence-officer': 3,
+    'environmental-scientist': 3, 'animator-vfx': 3, 'photographer': 3, 'content-creator': 3,
+    'dietitian': 3, 'public-health-specialist': 5, 'forensic-scientist': 5,
+    'entrepreneur': 3, 'supply-chain-manager': 5, 'hr-manager': 5, 'ecommerce-manager': 5,
+    'real-estate-manager': 5, 'event-manager': 3, 'ir-specialist': 5, 'nonprofit-manager': 5,
+    'translator': 5, 'pr-specialist': 3, 'pilot': 1.5
   };
 
   // ── Formatting helpers ─────────────────────────────────────────────────
@@ -153,7 +178,16 @@
     'psychologist': [0.5, 8], 'teacher': [0.5, 5],
     // Design / hospitality / defence / agri
     'graphic-designer': [2, 16], 'fashion-designer': [3, 18], 'hotel-management': [2, 12],
-    'defence-officer': [0.1, 1], 'agricultural-scientist': [0.5, 5]
+    'defence-officer': [0.1, 1], 'agricultural-scientist': [0.5, 5],
+    'ai-ml-engineer': [1, 18], 'cloud-engineer': [1, 16], 'blockchain-developer': [2, 16], 'robotics-engineer': [1, 14],
+    'electrical-engineer': [1, 14], 'biomedical-engineer': [2, 14], 'environmental-scientist': [0.5, 6], 'urban-planner': [2, 12],
+    'game-developer': [2, 16], 'ux-designer': [3, 15], 'animator-vfx': [2, 12], 'interior-designer': [3, 15],
+    'photographer': [1, 8], 'content-creator': [1, 6],
+    'dietitian': [1, 8], 'public-health-specialist': [2, 15], 'forensic-scientist': [1, 8],
+    'entrepreneur': [0.5, 25], 'supply-chain-manager': [2, 24], 'hr-manager': [2, 22], 'ecommerce-manager': [2, 20],
+    'real-estate-manager': [2, 18], 'insurance-professional': [0.5, 10], 'event-manager': [2, 12],
+    'ir-specialist': [1, 12], 'nonprofit-manager': [0.5, 8], 'translator': [0.5, 6], 'pr-specialist': [2, 12],
+    'pilot': [25, 60]
   };
 
   // A link to a page that ACTUALLY LISTS the fee (not a regulator homepage). Resolved by
@@ -176,7 +210,12 @@
     'software-engineer': 1, 'data-scientist': 1, 'cybersecurity-analyst': 1, 'mechanical-engineer': 1,
     'civil-engineer': 1, 'electronics-engineer': 1, 'aerospace-engineer': 1, 'architect': 1,
     'doctor-mbbs': 1, 'dentist-bds': 1, 'nurse': 1, 'physiotherapist': 1, 'veterinarian': 1, 'pharmacist': 1,
-    'investment-banker': 1, 'financial-analyst': 1, 'business-analyst': 1, 'digital-marketer': 1
+    'investment-banker': 1, 'financial-analyst': 1, 'business-analyst': 1, 'digital-marketer': 1,
+    'ai-ml-engineer': 1, 'cloud-engineer': 1, 'blockchain-developer': 1, 'robotics-engineer': 1,
+    'electrical-engineer': 1, 'biomedical-engineer': 1, 'urban-planner': 1,
+    'dietitian': 1, 'public-health-specialist': 1, 'forensic-scientist': 1,
+    'supply-chain-manager': 1, 'hr-manager': 1, 'ecommerce-manager': 1, 'real-estate-manager': 1,
+    'insurance-professional': 1, 'event-manager': 1
   };
   var MEDICAL_COUNSELLING = { 'doctor-mbbs': 1, 'dentist-bds': 1 };
   function feeRef(c, formData) {
@@ -217,6 +256,8 @@
       boarding_lodging: R(hostel) + ' (₹' + L(hYr[0]) + '–' + L(hYr[1]) + 'L/yr × ' + yrs + ' yrs)',
       books_misc: R(books),
       total_est: R(total),
+      total_min_l: Math.round(total[0] / 100000 * 10) / 10,  // ₹ Lakh, govt-route low end
+      total_max_l: Math.round(total[1] / 100000 * 10) / 10,  // ₹ Lakh, private high end
       living_tier: livingHigh ? 'metro / high cost-of-living' : 'standard cost-of-living',
       note: tier === 'high'
         ? 'low end = govt/merit seat · high end = private college'
@@ -249,7 +290,16 @@
     'chartered-accountant': 'Management', 'company-secretary': 'Management', 'investment-banker': 'Management',
     'financial-analyst': 'Management', 'business-analyst': 'Management', 'digital-marketer': 'Management',
     'lawyer': 'Law',
-    'civil-servant': 'University', 'teacher': 'University', 'psychologist': 'University', 'journalist': 'University'
+    'civil-servant': 'University', 'teacher': 'University', 'psychologist': 'University', 'journalist': 'University',
+    'ai-ml-engineer': 'Engineering', 'cloud-engineer': 'Engineering', 'blockchain-developer': 'Engineering',
+    'robotics-engineer': 'Engineering', 'electrical-engineer': 'Engineering', 'biomedical-engineer': 'Engineering',
+    'environmental-scientist': 'Engineering', 'urban-planner': 'Architecture',
+    'dietitian': 'Medical', 'public-health-specialist': 'Medical', 'forensic-scientist': 'Medical',
+    'entrepreneur': 'Management', 'supply-chain-manager': 'Management', 'hr-manager': 'Management',
+    'ecommerce-manager': 'Management', 'real-estate-manager': 'Management', 'insurance-professional': 'Management',
+    'event-manager': 'Management',
+    'ir-specialist': 'University', 'nonprofit-manager': 'University', 'translator': 'University', 'pr-specialist': 'University'
+    // no NIRF category (→ LLM colleges): game-developer, ux-designer, animator-vfx, interior-designer, photographer, content-creator, pilot
   };
 
   // Display string for a college's curated total-program tuition (data/nirf-colleges.json).
@@ -479,6 +529,58 @@
     return CENTRAL_PORTALS.concat(STATE_JOB_PORTALS[st] || []);
   }
 
+  // ── Government job targets (real roles routed to official recruiting bodies) ───────────
+  // Specific vacancies/exam dates aren't live — each row links to the official portal.
+  var CENTRAL_GOVT_JOBS = [
+    { role: 'IAS / IPS / IFS (Civil Services)', body: 'UPSC', exam: 'UPSC CSE', url: 'https://upsc.gov.in' },
+    { role: 'Indian Forest Service', body: 'UPSC', exam: 'UPSC IFoS', url: 'https://upsc.gov.in' },
+    { role: 'Inspector / Auditor / Assistant', body: 'SSC', exam: 'SSC CGL', url: 'https://ssc.gov.in' },
+    { role: 'Clerk / Data Entry Operator', body: 'SSC', exam: 'SSC CHSL', url: 'https://ssc.gov.in' },
+    { role: 'Railways (NTPC / Group D / JE)', body: 'RRB', exam: 'RRB exams', url: 'https://www.rrbcdg.gov.in' },
+    { role: 'Bank PO / Clerk', body: 'IBPS / SBI', exam: 'IBPS / SBI', url: 'https://www.ibps.in' },
+    { role: 'Agricultural Scientist (ARS)', body: 'ICAR / ASRB', exam: 'ICAR ARS-NET', url: 'https://www.asrb.org.in' },
+    { role: 'Ordnance Factory / Defence civilian', body: 'Dept. of Defence Production', exam: 'OFB / DDP', url: 'https://ddpdoo.gov.in' },
+    { role: 'Defence Officer (NDA / CDS)', body: 'UPSC', exam: 'NDA / CDS', url: 'https://upsc.gov.in' }
+  ];
+  // State Public Service Commission per state (verified portals; state roles route through these).
+  var STATE_PSC = {
+    'Andhra Pradesh': { psc: 'APPSC', url: 'https://psc.ap.gov.in' },
+    'Telangana': { psc: 'TSPSC', url: 'https://www.tspsc.gov.in' },
+    'Karnataka': { psc: 'KPSC', url: 'https://kpsc.kar.nic.in' },
+    'Maharashtra': { psc: 'MPSC', url: 'https://mpsc.gov.in' },
+    'Tamil Nadu': { psc: 'TNPSC', url: 'https://www.tnpsc.gov.in' },
+    'Kerala': { psc: 'Kerala PSC', url: 'https://www.keralapsc.gov.in' },
+    'Gujarat': { psc: 'GPSC', url: 'https://gpsc.gujarat.gov.in' },
+    'West Bengal': { psc: 'WBPSC', url: 'https://wbpsc.gov.in' },
+    'Rajasthan': { psc: 'RPSC', url: 'https://rpsc.rajasthan.gov.in' },
+    'Uttar Pradesh': { psc: 'UPPSC', url: 'https://uppsc.up.nic.in' },
+    'Madhya Pradesh': { psc: 'MPPSC', url: 'https://mppsc.mp.gov.in' },
+    'Bihar': { psc: 'BPSC', url: 'https://www.bpsc.bih.nic.in' },
+    'Punjab': { psc: 'PPSC', url: 'https://ppsc.gov.in' },
+    'Haryana': { psc: 'HPSC', url: 'https://hpsc.gov.in' },
+    'Odisha': { psc: 'OPSC', url: 'https://www.opsc.gov.in' },
+    'Assam': { psc: 'APSC', url: 'https://apsc.nic.in' },
+    'Delhi': { psc: 'DSSSB / UPSC', url: 'https://dsssb.delhi.gov.in' }
+  };
+  function govtJobTargets(formData) {
+    var st = formData && formData.state;
+    var p = STATE_PSC[st];
+    var state = [];
+    if (p) {
+      state = [
+        { role: 'Group 1 (Dy. Collector / DSP / Tahsildar-level)', body: p.psc, url: p.url },
+        { role: 'Group 2 (executive & non-executive posts)', body: p.psc, url: p.url },
+        { role: 'Group 3 / Group 4 (junior assistants, etc.)', body: p.psc, url: p.url },
+        { role: 'Government Teacher (TET / DSC)', body: st + ' School Education Dept / TET', url: p.url },
+        { role: 'Police SI / Constable', body: st + ' Police Recruitment Board', url: p.url },
+        { role: 'Agriculture Extension Officer', body: p.psc + ' / State Agriculture Dept', url: p.url },
+        { role: 'Sanitary Inspector / Municipal posts', body: st + ' Municipal Administration', url: p.url },
+        { role: 'Panchayat Secretary / Revenue (VRO / VAO)', body: p.psc, url: p.url }
+      ];
+    }
+    return { stateName: st || '', central: CENTRAL_GOVT_JOBS, state: state };
+  }
+
   // Scholarship scheme → { url: deep link to the SPECIFIC scheme/guideline page, amount: the
   // published indicative benefit }. Amounts are indicative figures from the official scheme
   // guidelines (they vary by income / course group / hostel-vs-day-scholar / year) — the link
@@ -670,7 +772,8 @@
       warning_flags:         llm.warning_flags         || [],
       counselor_note:        llm.counselor_note        || defaultCounselorNote(top1, formData),
       counselor_note_local:  llm.counselor_note_local  || '',
-      job_listings:          llm.job_listings          || []
+      job_listings:          llm.job_listings          || [],
+      govt_jobs:             govtJobTargets(formData)
     };
   }
 

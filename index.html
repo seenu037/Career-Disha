@@ -310,14 +310,16 @@ textarea{resize:vertical;min-height:78px}
   <span style="font-size:13px;font-weight:600;color:var(--gray-700)">🔒 Powered by Groq AI — API key secured server-side</span>
   <select id="demoSelect" style="font-size:13px;padding:7px 10px;border:1.5px solid var(--gray-300);border-radius:8px;max-width:320px;">
     <option value="">⚡ Select Demo Profile…</option>
-    <option value="1">1 · Arjun — 10th Studying, Technology (TS)</option>
-    <option value="2">2 · Priya — 10th Completed, Medicine aligned (AP)</option>
-    <option value="3">3 · Kiran — Inter MPC, Merit vs Govt Contrast (TS)</option>
-    <option value="4">4 · Ananya — PUC Science (PCMB), Medicine (Karnataka)</option>
-    <option value="5">5 · Suresh — HSC Commerce, Finance/CA (Maharashtra)</option>
-    <option value="6">6 · Deepa — Degree, Law &amp; Civil Services (AP)</option>
-    <option value="7">7 · Meera — Plus Two Science, Technology (Kerala)</option>
-    <option value="8">8 · Kavitha — HSC Science PCMB, Medicine (Tamil Nadu)</option>
+    <option value="1">1 · Arjun — 10th Studying, AI &amp; Game Design (Delhi)</option>
+    <option value="2">2 · Priya — 10th Completed, Medicine &amp; Public Health (Uttar Pradesh)</option>
+    <option value="3">3 · Kiran — Inter MPC, Govt vs Data Science (Telangana)</option>
+    <option value="4">4 · Ananya — PUC PCMB, Medicine &amp; Nutrition (Karnataka)</option>
+    <option value="5">5 · Suresh — HSC Commerce, Investment Banking (Maharashtra)</option>
+    <option value="6">6 · Deepa — Degree Arts, Intl Relations &amp; Civil Services (West Bengal)</option>
+    <option value="7">7 · Meera — HSC Science, UX/UI Design (Gujarat)</option>
+    <option value="8">8 · Kavitha — HSC PCMB, Medicine &amp; Forensic Science (Tamil Nadu)</option>
+    <option value="9">9 · Ravi — Inter BiPC, Veterinary &amp; Agriculture (Andhra Pradesh)</option>
+    <option value="10">10 · Biswajit — Inter Science, Robotics &amp; Electrical Engg (Odisha)</option>
   </select>
   <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;" onclick="loadDemo()">⚡ Load</button>
 </div>
@@ -442,7 +444,7 @@ textarea{resize:vertical;min-height:78px}
     <div class="card-sub" id="cardSub2">Enter subject-wise marks and exam scores • <span id="cardSub2Local">మీ మార్కులు నమోదు చేయండి</span></div>
 
     <div class="form-grid">
-      <div class="form-group">
+      <div class="form-group" id="boardSection">
         <label class="field-label" id="boardLabel">10th Board <span class="tel" data-lkey="board">బోర్డు</span></label>
         <select id="f_board">
           <option value="">Select Board</option>
@@ -464,8 +466,8 @@ textarea{resize:vertical;min-height:78px}
 
     <!-- 10th Subjects -->
     <div class="form-group full mt4" id="tenthSection">
-      <label class="field-label">10th Class — Subject-wise Marks <span class="tel" data-lkey="tenth_marks">10వ తరగతి మార్కులు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
+      <label class="field-label" id="tenthMarksLabel">10th Class — Subject-wise Marks <span class="tel" data-lkey="tenth_marks">10వ తరగతి మార్కులు</span></label>
+      <div id="tenthMarksHint" style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
       <table class="subj-table">
         <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
         <tbody id="tenthTbody"></tbody>
@@ -484,7 +486,7 @@ textarea{resize:vertical;min-height:78px}
     </div>
 
     <!-- Competitive Exams -->
-    <div class="form-group full mt4">
+    <div class="form-group full mt4" id="examsSection">
       <label class="field-label">Competitive Exams Appeared <span class="tel" data-lkey="exams">పోటీ పరీక్షలు</span></label>
       <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click the dropdown, tick the exams you appeared for, then enter your score/rank below</div>
       <div class="exam-md-wrap">
@@ -585,6 +587,18 @@ textarea{resize:vertical;min-height:78px}
         <tbody id="jobListingsBody"></tbody>
       </table>
     </div>
+  </div>
+
+  <div class="card" id="govtJobsCard" style="display:none">
+    <div class="section-title">🏛️ Government Jobs You Can Target <span id="govtJobsState" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;"></span></div>
+    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Real roles routed to their official recruiting bodies. Specific vacancies &amp; exam dates vary by year — check the official portal.</div>
+    <div id="govtJobsBody"></div>
+  </div>
+
+  <div class="card" id="privateJobsCard">
+    <div class="section-title">💼 Private Jobs — Where to Apply</div>
+    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Top private job &amp; internship portals in India. Create a profile and set alerts for your target roles.</div>
+    <div id="privateJobsBody"></div>
   </div>
 
   <div class="card">
@@ -692,7 +706,47 @@ var INTEREST_EXAM_MAP = {
   'Social Work':            ['Civil Services','Teaching & Education','SSC & Railway'],
   'Media & Journalism':     ['Civil Services','SSC & Railway'],
   'Digital Marketing':      ['Finance & Commerce','Banking & Insurance'],
-  'Finance':                ['Finance & Commerce','Banking & Insurance']
+  'Finance':                ['Finance & Commerce','Banking & Insurance'],
+  'AI & Machine Learning':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Data Science':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Cybersecurity':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Cloud Computing':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Blockchain':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Robotics':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Biomedical Engineering':['Engineering & Technology','Medical & Pharmacy'],
+  'Environmental Science':['Engineering & Technology','Agriculture'],
+  'Space & Aerospace':['Engineering & Technology','Defense & Police'],
+  'Psychology':['Medical & Pharmacy'],
+  'Nutrition & Dietetics':['Medical & Pharmacy'],
+  'Physiotherapy':['Medical & Pharmacy'],
+  'Public Health':['Medical & Pharmacy','Civil Services'],
+  'Veterinary Science':['Medical & Pharmacy','Agriculture'],
+  'Pharmacy':['Medical & Pharmacy'],
+  'Game Design':['Engineering & Technology','Architecture & Design'],
+  'Animation & VFX':['Architecture & Design'],
+  'Content Creation':['Architecture & Design'],
+  'UX/UI Design':['Architecture & Design','Engineering & Technology'],
+  'Fashion Design':['Architecture & Design'],
+  'Interior Design':['Architecture & Design'],
+  'Photography':['Architecture & Design'],
+  'Entrepreneurship':['Finance & Commerce','Banking & Insurance'],
+  'Investment Banking':['Finance & Commerce','Banking & Insurance'],
+  'Supply Chain':['Finance & Commerce','Polytechnic & PG Entry'],
+  'Human Resources':['Finance & Commerce','Banking & Insurance'],
+  'E-Commerce':['Finance & Commerce','Banking & Insurance'],
+  'Real Estate':['Finance & Commerce'],
+  'Insurance':['Banking & Insurance','Finance & Commerce'],
+  'Non-Profit Management':['Civil Services','Teaching & Education'],
+  'International Relations':['Civil Services'],
+  'Urban Planning':['Architecture & Design','Engineering & Technology'],
+  'Forensic Science':['Medical & Pharmacy','Civil Services'],
+  'Aviation':['Defense & Police','Engineering & Technology'],
+  'Culinary Arts':['Architecture & Design'],
+  'Event Management':['Finance & Commerce'],
+  'Civil Engineering':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Electrical Engineering':['Engineering & Technology','Polytechnic & PG Entry'],
+  'Translation & Interpretation':['Teaching & Education','Civil Services'],
+  'Public Relations':['Civil Services','Finance & Commerce']
 };
 
 var EXAM_CATEGORIES = [
@@ -741,7 +795,21 @@ var INTEREST_DOMAIN = {
   'Social Work':          ['Government','Teaching'],
   'Media & Journalism':   ['Journalism'],
   'Digital Marketing':    ['Business','Engineering'],
-  'Finance':              ['Finance','CA/CMA/CS']
+  'Finance':              ['Finance','CA/CMA/CS'],
+  'AI & Machine Learning':['Engineering','Data Science'], 'Data Science':['Data Science','Engineering'],
+  'Cybersecurity':['Engineering'], 'Cloud Computing':['Engineering'], 'Blockchain':['Engineering'],
+  'Robotics':['Engineering'], 'Biomedical Engineering':['Engineering','Medicine'],
+  'Environmental Science':['Research','Agriculture'], 'Space & Aerospace':['Engineering'],
+  'Psychology':['Medicine','Research'], 'Nutrition & Dietetics':['Medicine'], 'Physiotherapy':['Medicine'],
+  'Public Health':['Medicine','Government'], 'Veterinary Science':['Medicine','Agriculture'], 'Pharmacy':['Medicine','Pharmacy'],
+  'Game Design':['Design','Engineering'], 'Animation & VFX':['Design'], 'Content Creation':['Journalism','Business'],
+  'UX/UI Design':['Design','Engineering'], 'Fashion Design':['Design'], 'Interior Design':['Design'], 'Photography':['Design'],
+  'Entrepreneurship':['Business','Finance'], 'Investment Banking':['Finance','CA/CMA/CS'], 'Supply Chain':['Business'],
+  'Human Resources':['Business'], 'E-Commerce':['Business'], 'Real Estate':['Business'], 'Insurance':['Finance','Business'],
+  'Non-Profit Management':['Government'], 'International Relations':['Government','Law'], 'Urban Planning':['Architecture','Engineering'],
+  'Forensic Science':['Medicine','Government'], 'Aviation':['Engineering','Defense'], 'Culinary Arts':['Business'],
+  'Event Management':['Business'], 'Civil Engineering':['Engineering'], 'Electrical Engineering':['Engineering'],
+  'Translation & Interpretation':['Teaching','Journalism'], 'Public Relations':['Journalism','Business']
 };
 
 var STATE_BOARDS = {
@@ -791,7 +859,16 @@ var mChart = null;
   buildExamCategories();
   makeChips('interestChips',['Medicine','Law','Agriculture','Arts & Design',
     'Music & Performing Arts','Business','Teaching','Government Service','Technology','Sports',
-    'Social Work','Media & Journalism','Digital Marketing','Finance'], 'interests', false);
+    'Social Work','Media & Journalism','Digital Marketing','Finance',
+    'AI & Machine Learning','Data Science','Cybersecurity','Cloud Computing','Blockchain','Robotics',
+    'Biomedical Engineering','Environmental Science','Space & Aerospace','Psychology',
+    'Nutrition & Dietetics','Physiotherapy','Public Health','Veterinary Science','Pharmacy',
+    'Game Design','Animation & VFX','Content Creation','UX/UI Design','Fashion Design',
+    'Interior Design','Photography','Entrepreneurship','Investment Banking','Supply Chain',
+    'Human Resources','E-Commerce','Real Estate','Insurance','Non-Profit Management',
+    'International Relations','Urban Planning','Forensic Science','Aviation','Culinary Arts',
+    'Event Management','Civil Engineering','Electrical Engineering','Translation & Interpretation',
+    'Public Relations'], 'interests', false);
   makeChips('strengthChips',['Logical thinking','Creativity','Communication','Leadership',
     'Analytical','Empathy','Technical','Research'], 'strengths', false);
   makeChips('schlChips',['SC (Scheduled Caste)','ST (Scheduled Tribe)','OBC / BC','EWS',
@@ -1053,7 +1130,24 @@ function onClassChange() {
   var streamSection = document.getElementById('streamSection');
   if (streamSection) streamSection.style.display = is10th ? 'none' : 'block';
   var tenthSection = document.getElementById('tenthSection');
-  if (tenthSection) tenthSection.style.display = isStudying10th ? 'none' : 'block';
+  if (tenthSection) tenthSection.style.display = 'block'; // shown for all incl. 10th-studying (previous-class marks)
+  // For "10th Studying or Below", the marks form captures the PREVIOUS class's final exam,
+  // and the 10th board / competitive-exams blocks don't apply.
+  var tenthLbl = document.getElementById('tenthMarksLabel');
+  var tenthHint = document.getElementById('tenthMarksHint');
+  var boardSection = document.getElementById('boardSection');
+  var examsSection = document.getElementById('examsSection');
+  if (isStudying10th) {
+    if (tenthLbl) tenthLbl.innerHTML = 'Previous Class — Final Exam Marks';
+    if (tenthHint) tenthHint.textContent = 'Enter your previous class’s final-exam marks (out of 100). E.g., if you are in 9th, enter 8th-class marks; if in 7th, enter 6th-class marks.';
+    if (boardSection) boardSection.style.display = 'none';
+    if (examsSection) examsSection.style.display = 'none';
+  } else {
+    if (tenthLbl) tenthLbl.innerHTML = '10th Class — Subject-wise Marks <span class="tel" data-lkey="tenth_marks">10వ తరగతి మార్కులు</span>';
+    if (tenthHint) tenthHint.textContent = 'Enter marks out of 100 for each subject';
+    if (boardSection) boardSection.style.display = 'block';
+    if (examsSection) examsSection.style.display = 'block';
+  }
   if (!is10th) populateBranchOptions();
   var interSection = document.getElementById('interSection');
   if (interSection) interSection.style.display = is10th ? 'none' : (interSection.style.display || 'block');
@@ -1261,18 +1355,20 @@ function validateStep(n) {
   }
   if (n === 2) {
     // Step 2 = Academic Profile
+    var level = document.getElementById('f_level').value;
+    if (level === '10th studying') {
+      // Only the previous-class marks form is shown; board/exams/marks are all optional here.
+      return true;
+    }
     if (!document.getElementById('f_board').value) {
       alert('Please select your 10th class board before continuing.'); return false;
     }
-    var level = document.getElementById('f_level').value;
-    if (level !== '10th studying') {
-      var hasTenthMark = TENTH_SUBJECTS.some(function(s) {
-        var el = document.getElementById(subjKey('tenth', s));
-        return el && el.value;
-      });
-      if (!hasTenthMark) {
-        alert('Please enter at least one 10th class subject mark before continuing.'); return false;
-      }
+    var hasTenthMark = TENTH_SUBJECTS.some(function(s) {
+      var el = document.getElementById(subjKey('tenth', s));
+      return el && el.value;
+    });
+    if (!hasTenthMark) {
+      alert('Please enter at least one 10th class subject mark before continuing.'); return false;
     }
   }
   if (n === 3) {
@@ -1283,40 +1379,13 @@ function validateStep(n) {
 
 // ── STEP NAVIGATION ───────────────────────────────────────
 function nextFromStep1() {
-  var level = document.getElementById('f_level').value;
-  if (level === '10th studying') {
-    if (!validateStep(1)) return;
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('sc1').className = 'step-circle done'; document.getElementById('sc1').textContent = '✓';
-    document.getElementById('sl1').classList.add('done');
-    document.getElementById('sc2').className = 'step-circle done'; document.getElementById('sc2').textContent = '—';
-    document.getElementById('sl2').classList.add('done');
-    document.getElementById('sc3').className = 'step-circle active';
-    document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active', i+1===3); });
-    step = 3;
-    document.getElementById('step3').classList.remove('hidden');
-    window.scrollTo({ top:0, behavior:'smooth' });
-  } else {
-    gotoStep(2);
-  }
+  // All levels (incl. "10th Studying or Below") now go through Step 2. For 10th-studying,
+  // Step 2 shows only the previous-class marks form (board/stream/exams hidden by onClassChange).
+  gotoStep(2);
 }
 
 function backFromStep3() {
-  var level = document.getElementById('f_level').value;
-  if (level === '10th studying') {
-    document.getElementById('step3').classList.add('hidden');
-    document.getElementById('sc3').className = 'step-circle'; document.getElementById('sc3').textContent = '3';
-    document.getElementById('sl2').classList.remove('done');
-    document.getElementById('sc2').className = 'step-circle'; document.getElementById('sc2').textContent = '2';
-    document.getElementById('sl1').classList.remove('done');
-    document.getElementById('sc1').className = 'step-circle active'; document.getElementById('sc1').textContent = '1';
-    document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active', i+1===1); });
-    step = 1;
-    document.getElementById('step1').classList.remove('hidden');
-    window.scrollTo({ top:0, behavior:'smooth' });
-  } else {
-    gotoStep(2);
-  }
+  gotoStep(2);
 }
 
 function gotoStep(n) {
@@ -1385,24 +1454,21 @@ function submitForm() {
   if (!validateStep(3)) return;
   var data = collectData();
   var level = document.getElementById('f_level').value;
-  if (level === '10th studying') {
-    data.tenthMarks = {}; data.tenthAvg = 0;
-    data.interMarks = {}; data.interAvg = 0;
-    var topInterest = sel.interests[0] || '';
-    window._pendingData = data;
-    window._pendingTopSubj = { name: '', score: -1 };
-    window._pendingTopInterest = topInterest;
-    proceedWithAnalysis('interest');
-    return;
-  }
+  // 10th-studying students have no Intermediate marks yet (their previous-class marks are kept).
+  if (level === '10th studying') { data.interMarks = {}; data.interAvg = 'N/A'; }
   var topSubj = getTopMeritSubject();
   var topInterest = sel.interests[0] || '';
-  var meritDomains = SUBJECT_DOMAIN[topSubj.name] || [];
-  var interestDomains = INTEREST_DOMAIN[topInterest] || [];
-  var aligned = meritDomains.some(function(d){ return interestDomains.indexOf(d) !== -1; });
   window._pendingData = data;
   window._pendingTopSubj = topSubj;
   window._pendingTopInterest = topInterest;
+  // No marks at all (e.g. a 10th-studying student who skipped the optional marks form) →
+  // interests are the only signal, so go straight to the interest-led analysis (no modal).
+  if (!topSubj || topSubj.score < 0) { proceedWithAnalysis('interest'); return; }
+  // Marks present (INCLUDING a 10th-studying student who entered previous-class marks) →
+  // PROMPT merit-vs-interest like every other student, instead of silently following interest.
+  var meritDomains = SUBJECT_DOMAIN[topSubj.name] || [];
+  var interestDomains = INTEREST_DOMAIN[topInterest] || [];
+  var aligned = meritDomains.some(function(d){ return interestDomains.indexOf(d) !== -1; });
   showAlignModal(topSubj, topInterest, aligned);
 }
 
@@ -1611,8 +1677,73 @@ function renderAll(data, formData) {
   renderTree(data.top_paths && data.top_paths[0]);
   renderChart(data.domain_market_data || []);
   renderJobListings(data.job_listings || []);
-  renderBudget(data.top_paths || [], formData.budget);
+  renderGovtJobs(data.govt_jobs);
+  renderPrivateJobs();
+  renderBudget(data.top_paths || [], formData);
   window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── GOVERNMENT JOBS (deterministic; real roles → official recruiting bodies) ──
+function renderGovtJobs(gj) {
+  var card = document.getElementById('govtJobsCard');
+  var body = document.getElementById('govtJobsBody');
+  if (!card || !body) return;
+  var hasState = gj && gj.state && gj.state.length;
+  var hasCentral = gj && gj.central && gj.central.length;
+  if (!hasState && !hasCentral) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  document.getElementById('govtJobsState').textContent = (gj.stateName ? '· ' + gj.stateName : '');
+  function grp(title, rows) {
+    if (!rows || !rows.length) return '';
+    return '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:10px 0 6px">' + title + '</div>' +
+      '<div style="overflow-x:auto"><table class="btable"><thead><tr><th>Role</th><th>Recruiting Body</th><th>Exam / Apply</th></tr></thead><tbody>' +
+      rows.map(function(r){
+        var link = r.url ? '<a href="' + r.url + '" target="_blank" rel="noopener" style="color:var(--deep-blue);text-decoration:underline">' + (r.exam || 'official portal') + ' ↗</a>' : (r.exam || '—');
+        return '<tr><td>' + r.role + '</td><td style="font-size:12px">' + r.body + '</td><td>' + link + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+  body.innerHTML = grp('🇮🇳 Central Government', gj.central) + grp('📍 ' + (gj.stateName || 'State') + ' Government', gj.state);
+}
+
+// ── PRIVATE JOBS (static global list of major Indian private job/internship portals) ──
+var PRIVATE_JOB_PORTALS = {
+  'General job boards': [
+    { name: 'Naukri', url: 'https://www.naukri.com' },
+    { name: 'LinkedIn Jobs', url: 'https://www.linkedin.com/jobs' },
+    { name: 'Indeed', url: 'https://in.indeed.com' },
+    { name: 'Foundit (Monster)', url: 'https://www.foundit.in' },
+    { name: 'Shine', url: 'https://www.shine.com' },
+    { name: 'TimesJobs', url: 'https://www.timesjobs.com' },
+    { name: 'Glassdoor', url: 'https://www.glassdoor.co.in' }
+  ],
+  'Startup / Tech': [
+    { name: 'Wellfound (AngelList)', url: 'https://wellfound.com' },
+    { name: 'Instahyre', url: 'https://www.instahyre.com' },
+    { name: 'Cutshort', url: 'https://cutshort.io' },
+    { name: 'Hirist (Tech)', url: 'https://www.hirist.tech' },
+    { name: 'Hirect', url: 'https://www.hirect.in' }
+  ],
+  'Fresher / Internship': [
+    { name: 'Internshala', url: 'https://internshala.com' },
+    { name: 'Freshersworld', url: 'https://www.freshersworld.com' },
+    { name: 'Apna', url: 'https://apna.co' },
+    { name: 'LinkedIn (Students)', url: 'https://www.linkedin.com/jobs/student-jobs' }
+  ],
+  'Specialised': [
+    { name: 'iimjobs (Management)', url: 'https://www.iimjobs.com' },
+    { name: 'updazz (Sales/BD)', url: 'https://www.updazz.com' },
+    { name: 'naukrigulf (Abroad)', url: 'https://www.naukrigulf.com' }
+  ]
+};
+function renderPrivateJobs() {
+  var body = document.getElementById('privateJobsBody');
+  if (!body) return;
+  body.innerHTML = Object.keys(PRIVATE_JOB_PORTALS).map(function(group){
+    return '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:10px 0 6px">' + group + '</div>' +
+      '<div class="portals-grid">' + PRIVATE_JOB_PORTALS[group].map(function(jp){
+        return '<a href="' + jp.url + '" target="_blank" rel="noopener" class="portal-link">🔗 ' + jp.name + '</a>';
+      }).join('') + '</div>';
+  }).join('');
 }
 
 // ── INPUT SUMMARY (deterministic, no LLM) ─────────────────
@@ -1722,22 +1853,7 @@ function renderCards(paths) {
         '<div class="jobs-source">Live listings: ' + (jm.data_source||'estimate') + ' · demand/competition: estimate</div>' +
         '</div>';
     }
-
-    // Job portals
-    var portalsHtml = '';
-    if (p.job_portals && p.job_portals.length) {
-      var pOrder = ['General','Central Govt','State Govt'];
-      var pByGroup = {};
-      p.job_portals.forEach(function(jp){ var g=jp.group||'Other'; (pByGroup[g]=pByGroup[g]||[]).push(jp); });
-      var pGroups = pOrder.filter(function(g){return pByGroup[g];})
-        .concat(Object.keys(pByGroup).filter(function(g){return pOrder.indexOf(g)===-1;}));
-      portalsHtml = pGroups.map(function(g){
-        return '<div style="font-size:10px;color:var(--gray-500);margin:6px 0 2px">'+g+'</div>' +
-          '<div class="portals-grid">' + pByGroup[g].map(function(jp){
-            return '<a href="' + jp.url + '" target="_blank" rel="noopener" class="portal-link">🔗 ' + jp.name + '</a>';
-          }).join('') + '</div>';
-      }).join('');
-    }
+    // (Per-card job portals removed — see the standalone Private Jobs section below the cards.)
 
     // Citations
     var citeHtml = '';
@@ -1798,8 +1914,6 @@ function renderCards(paths) {
         jobsHtml +
         (p.intermediate_stream_recommendation ? '<div class="drow"><span class="dlabel">Recommended Stream</span><span class="dval" style="color:var(--green)">'+p.intermediate_stream_recommendation+'</span></div>' : '') +
         (p.entrance_exam_links && p.entrance_exam_links.length ? '<div style="font-size:12px;font-weight:700;color:var(--green);margin:12px 0 6px">📝 Entrance Exams to Target</div><div class="portals-grid">'+p.entrance_exam_links.map(function(el){ return '<a href="'+el.url+'" target="_blank" rel="noopener" class="portal-link" style="border-color:var(--green);background:var(--green-light);color:var(--green)">🎓 '+el.exam+'</a>'; }).join('')+'</div>' : '') +
-        '<div style="font-size:12px;font-weight:700;color:var(--blue);margin:12px 0 6px">🌐 Official Job Application Portals</div>' +
-        portalsHtml +
         (risks ? '<div class="risks"><h5>⚠️ Risk Factors</h5>'+risks+'</div>' : '') +
         (ups ? '<div class="upsides"><h5>✅ Upside Factors</h5>'+ups+'</div>' : '') +
         citeHtml +
@@ -1893,24 +2007,36 @@ function renderChart(domains) {
 }
 
 // ── BUDGET TABLE ──────────────────────────────────────────
-function renderBudget(paths, userBudget) {
-  var ranks={'Under ₹1 Lakh':1,'₹1–3 Lakh':2,'₹3–7 Lakh':3,'₹7–15 Lakh':4,'₹15–30 Lakh':5,'Above ₹30 Lakh':6};
-  var ur=ranks[userBudget]||3;
+function renderBudget(paths, formData) {
+  var userBudget = (formData && formData.budget) || 'Not specified';
+  // Upper bound of the student's budget bracket, in ₹ Lakh.
+  var CAP = {'Under ₹1 Lakh':1,'₹1–3 Lakh':3,'₹3–7 Lakh':7,'₹7–15 Lakh':15,'₹15–30 Lakh':30,'Above ₹30 Lakh':100};
+  var cap = CAP[userBudget] || 7;
+  // Student's reservation/scholarship category, for tailored funding advice.
+  var sc = (formData && formData.scholarship) || '';
+  var cat = (sc && sc !== 'None' && sc !== 'Not sure' && sc !== 'Not specified' && sc !== 'General / Open') ? sc : 'merit / EWS';
+  var stName = (formData && formData.state) || 'your state';
   var tbody=document.getElementById('budgetBody');
   tbody.innerHTML=paths.slice(0,5).map(function(p){
-    var cost=p.estimated_cost||'';
-    var cr=3;
-    if(/free|50,000|₹1\s*L/i.test(cost))cr=1;
-    else if(/1[-–]3|₹2\s*L/i.test(cost))cr=2;
-    else if(/3[-–][57]|₹[34]\s*L/i.test(cost))cr=3;
-    else if(/7[-–]15|₹[89]\s*L|₹10/i.test(cost))cr=4;
-    else if(/15[-–]30|₹2\d\s*L/i.test(cost))cr=5;
-    else if(/30\+|₹[3-9]\d\s*L/i.test(cost))cr=6;
-    var diff=ur-cr;
-    var label,cls;
-    if(diff>=0){label='Feasible ✓';cls='f-green';}
-    else if(diff===-1){label='Stretch (scholarship)';cls='f-yellow';}
-    else{label='Out of range';cls='f-red';}
+    var cb=p.cost_breakdown;
+    var tmin = cb ? cb.total_min_l : null, tmax = cb ? cb.total_max_l : null;
+    var label, cls, rec;
+    if (tmin == null) {
+      label='—'; cls='f-yellow'; rec='';
+    } else if (cap >= tmax) {
+      label='Feasible ✓'; cls='f-green';
+      rec='Within your budget across both govt and private colleges.';
+    } else if (cap >= tmin) {
+      label='Feasible via govt route ✓'; cls='f-green';
+      rec='Your budget covers the <b>govt / merit-seat</b> route (low end ₹'+tmin.toFixed(1)+'L). Aim for govt &amp; NIRF-ranked govt seats; a private seat (up to ₹'+tmax.toFixed(1)+'L) would need a scholarship or education loan.';
+    } else {
+      var gap = tmin - cap;
+      label='Needs a funding plan'; cls='f-red';
+      rec='Short by ~₹'+gap.toFixed(1)+'L vs the cheapest (govt) route. Recommended: '
+        + '(1) <b>target govt / NIRF-ranked govt seats</b> via your entrance rank (lowest fee ≈ ₹'+tmin.toFixed(1)+'L); '
+        + '(2) apply <b>'+cat+' scholarships</b> + '+stName+' fee reimbursement; '
+        + '(3) bridge the rest with a <b>PM Vidyalakshmi education loan</b> (central interest subsidy if family income &lt; ₹4.5L).';
+    }
     var schls=(p.scholarship_options||[]).slice(0,2).map(function(s){
       return s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener" style="color:var(--deep-blue);text-decoration:underline">'+s.name+'</a>' : s.name;
     }).join(', ')||'—';
@@ -1929,7 +2055,7 @@ function renderBudget(paths, userBudget) {
       : (cost||'—');
     return '<tr><td><strong>'+p.specific_career+'</strong><br><span style="font-size:11px;color:var(--gray-500)">'+p.domain+'</span></td>' +
       '<td>'+(p.duration_years||'?')+' yrs</td><td style="min-width:160px">'+costCell+'</td><td>'+(userBudget||'Not specified')+'</td>' +
-      '<td><span class="fbadge '+cls+'">'+label+'</span></td><td style="font-size:12px;color:var(--gray-600)">'+schls+'</td>' +
+      '<td style="min-width:210px"><span class="fbadge '+cls+'">'+label+'</span>'+(rec?'<div style="font-size:11px;color:var(--gray-600);margin-top:5px;line-height:1.45">'+rec+'</div>':'')+'</td><td style="font-size:12px;color:var(--gray-600)">'+schls+'</td>' +
       '<td style="font-size:11px;color:var(--gray-600)">'+amts+'</td></tr>';
   }).join('');
 }
@@ -1959,21 +2085,23 @@ function renderJobListings(listings) {
 
 // ── DEMO DATA ─────────────────────────────────────────────
 var _DEMO_NAMES = {
-  '1':'Arjun — 10th Studying or Below, Technology (TS)',
-  '2':'Priya — 10th Completed, Medicine aligned (AP)',
-  '3':'Kiran — Inter MPC, Merit vs Govt contrast (TS)',
-  '4':'Ananya — PUC Science PCMB, Medicine (Karnataka)',
-  '5':'Suresh — HSC Commerce, Finance/CA (Maharashtra)',
-  '6':'Deepa — Degree 2nd Year, Law & Civil Services (AP)',
-  '7':'Meera — Plus Two Science, Technology (Kerala)',
-  '8':'Kavitha — HSC Science PCMB, Medicine (Tamil Nadu)'
+  '1':'Arjun — 10th Studying (prev-class marks), AI & Game Design (Delhi)',
+  '2':'Priya — 10th Completed, Medicine & Public Health (Uttar Pradesh)',
+  '3':'Kiran — Inter MPC, Govt Service vs Data Science (Telangana)',
+  '4':'Ananya — PUC PCMB, Medicine & Nutrition (Karnataka)',
+  '5':'Suresh — HSC Commerce, Investment Banking & Entrepreneurship (Maharashtra)',
+  '6':'Deepa — Degree Arts, International Relations & Civil Services (West Bengal)',
+  '7':'Meera — HSC Science, UX/UI Design & Tech (Gujarat)',
+  '8':'Kavitha — HSC PCMB, Medicine & Forensic Science (Tamil Nadu)',
+  '9':'Ravi — Inter BiPC, Veterinary & Agriculture (Andhra Pradesh)',
+  '10':'Biswajit — Inter Science, Robotics & Electrical Engg (Odisha)'
 };
 
 function loadDemo() {
   var pid = document.getElementById('demoSelect').value;
   if (!pid) { alert('Please select a demo profile from the dropdown first.'); return; }
   _demoReset();
-  ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha})[pid]();
+  ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit})[pid]();
   var banner = document.createElement('div');
   banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
   banner.innerHTML = '⚡ Loaded: ' + _DEMO_NAMES[pid] + ' — complete Step 3 then click "Get AI Career Guidance"';
@@ -2055,29 +2183,32 @@ function _demoBudget(val) {
   document.querySelectorAll('.budget-opt').forEach(function(b){ b.classList.toggle('on', b.textContent===val); });
 }
 
-// 1 — Arjun: 10th Studying or Below → skips Step 2, pure interest-based
+// 1 — Arjun: Delhi, 10th Studying or Below → enters PREVIOUS-class marks; AI & Game Design
 function _demoArjun() {
-  document.getElementById('f_state').value='Telangana'; onStateChange();
+  document.getElementById('f_state').value='Delhi'; onStateChange();
   document.getElementById('f_age').value='15';
   document.getElementById('f_level').value='10th studying'; onClassChange();
-  document.getElementById('f_passion').value='Want to become a software developer and build mobile apps for farmers'; updateCC();
-  _demoChips('interestChips','interests',['Technology','Sports']);
-  _demoChips('strengthChips','strengths',['Logical thinking','Technical']);
-  _demoBudget('Under ₹1 Lakh');
-  _demoLoc('Stay in Telangana only');
+  document.getElementById('f_passion').value='Want to build AI-powered games and apps';
+  updateCC();
+  // previous class (e.g. 9th) final-exam marks — shown now for 10th-studying students
+  _demoMarks('tenth',{English:85,SecondLanguage:80,Mathematics:94,Science:88,SocialStudies:78});
+  _demoChips('interestChips','interests',['AI & Machine Learning','Game Design']);
+  _demoChips('strengthChips','strengths',['Logical thinking','Technical','Creativity']);
+  _demoBudget('₹1–3 Lakh');
+  _demoLoc('Open to other states');
   _demoChips('schlChips','scholarships',['OBC / BC']);
   _demoSingle('famChips','family','First-generation graduate');
 }
 
-// 2 — Priya: 10th Completed, high Science → Medicine interest (aligned)
+// 2 — Priya: Uttar Pradesh, 10th Completed, high Science → Medicine & Public Health
 function _demoPriya() {
-  document.getElementById('f_state').value='Andhra Pradesh'; onStateChange();
+  document.getElementById('f_state').value='Uttar Pradesh'; onStateChange();
   document.getElementById('f_age').value='16';
   document.getElementById('f_level').value='10th completed'; onClassChange();
-  document.getElementById('f_passion').value='Want to become a doctor and serve rural communities in Andhra Pradesh'; updateCC();
-  document.getElementById('f_board').value='AP State Board (SSC)';
+  document.getElementById('f_passion').value='Want to become a doctor and improve rural healthcare in Uttar Pradesh'; updateCC();
+  document.getElementById('f_board').value='UP Board (High School)';
   _demoMarks('tenth',{English:80,SecondLanguage:72,Mathematics:78,Science:92,SocialStudies:75});
-  _demoChips('interestChips','interests',['Medicine','Agriculture']);
+  _demoChips('interestChips','interests',['Medicine','Public Health']);
   _demoChips('strengthChips','strengths',['Empathy','Analytical','Research']);
   _demoBudget('₹3–7 Lakh');
   _demoLoc('Open to other states');
@@ -2098,7 +2229,7 @@ function _demoKiran() {
   _demoMarks('tenth',{English:72,SecondLanguage:65,Mathematics:95,Science:90,SocialStudies:68});
   _demoMarks('inter',{Mathematics:88,Physics:82,Chemistry:76,English:70,SecondLanguage:65});
   _demoExam('EAMCET TS (Engg)','12000 rank');
-  _demoChips('interestChips','interests',['Government Service','Technology']);
+  _demoChips('interestChips','interests',['Government Service','Data Science']);
   _demoChips('strengthChips','strengths',['Analytical','Leadership','Communication']);
   _demoBudget('₹1–3 Lakh');
   _demoLoc('Open to other states');
@@ -2120,7 +2251,7 @@ function _demoAnanya() {
   _demoMarks('inter',{Botany:90,Zoology:88,Physics:82,Chemistry:85,English:78,SecondLanguage:72});
   _demoExam('NEET UG','580/720');
   _demoExam('KCET Medical','1200 rank');
-  _demoChips('interestChips','interests',['Medicine','Social Work']);
+  _demoChips('interestChips','interests',['Medicine','Nutrition & Dietetics']);
   _demoChips('strengthChips','strengths',['Empathy','Analytical','Research']);
   _demoBudget('₹7–15 Lakh');
   _demoLoc('Open to other states');
@@ -2141,7 +2272,7 @@ function _demoSuresh() {
   _demoMarks('tenth',{English:78,SecondLanguage:70,Mathematics:72,Science:65,SocialStudies:75});
   _demoMarks('inter',{Commerce:88,Economics:82,BusinessStudies:78,English:75,SecondLanguage:68});
   _demoExam('CA Foundation','Cleared Nov 2023');
-  _demoChips('interestChips','interests',['Finance','Business']);
+  _demoChips('interestChips','interests',['Investment Banking','Entrepreneurship']);
   _demoChips('strengthChips','strengths',['Analytical','Logical thinking','Leadership']);
   _demoBudget('₹3–7 Lakh');
   _demoLoc('Open to other states');
@@ -2149,20 +2280,20 @@ function _demoSuresh() {
   _demoSingle('famChips','family','Business family');
 }
 
-// 6 — Deepa: AP Degree 2nd Year, HEC background, Law & Civil Services (CONTRAST: weak Maths, top SocialStudies but interest=Law)
+// 6 — Deepa: West Bengal, Degree 2nd Year (Arts/Humanities) — International Relations & Civil Services
 function _demoDeepa() {
-  document.getElementById('f_state').value='Andhra Pradesh'; onStateChange();
+  document.getElementById('f_state').value='West Bengal'; onStateChange();
   document.getElementById('f_age').value='20';
   document.getElementById('f_level').value='Degree 2nd year'; onClassChange();
   var br=document.getElementById('f_branch');
-  if(br){ br.value='Arts'; currentBranch='Arts'; onBranchChange(); }
-  document.getElementById('f_passion').value='Want to become an IAS officer or advocate to fight for social justice in AP'; updateCC();
-  document.getElementById('f_board').value='AP State Board (SSC)';
-  document.getElementById('f_stream').value='HEC'; currentStream='HEC'; updateInterSubjects();
-  _demoMarks('tenth',{English:82,SecondLanguage:78,Mathematics:58,Science:65,SocialStudies:88});
-  _demoMarks('inter',{History:85,Economics:80,Civics:78,English:82,SecondLanguage:75});
-  _demoExam('APPSC Group 2','Appeared - awaiting results');
-  _demoChips('interestChips','interests',['Law','Government Service','Social Work']);
+  if(br){ br.value='Arts/Humanities'; currentBranch='Arts/Humanities'; onBranchChange(); }
+  document.getElementById('f_passion').value='Want to join the Foreign Service or crack UPSC and work in international diplomacy'; updateCC();
+  document.getElementById('f_board').value='WBBSE (Madhyamik)';
+  document.getElementById('f_stream').value='Arts/Humanities'; currentStream='Arts/Humanities'; updateInterSubjects();
+  _demoMarks('tenth',{English:86,SecondLanguage:80,Mathematics:60,Science:66,SocialStudies:90});
+  _demoMarks('inter',{History:88,PoliticalScience:85,Economics:80,English:84,SecondLanguage:76});
+  _demoExam('UPSC Civil Services Prelims','Preparing');
+  _demoChips('interestChips','interests',['International Relations','Government Service','Law']);
   _demoChips('strengthChips','strengths',['Communication','Leadership','Analytical']);
   _demoBudget('₹1–3 Lakh');
   _demoLoc('Open to abroad');
@@ -2170,24 +2301,24 @@ function _demoDeepa() {
   _demoSingle('famChips','family','First-generation graduate');
 }
 
-// 7 — Meera: Kerala Plus Two Science, Technology + Digital Marketing (open to abroad — very Kerala)
+// 7 — Meera: Gujarat HSC Science, UX/UI Design + Technology
 function _demoMeera() {
-  document.getElementById('f_state').value='Kerala'; onStateChange();
+  document.getElementById('f_state').value='Gujarat'; onStateChange();
   document.getElementById('f_age').value='17';
   document.getElementById('f_level').value='Inter 2nd year'; onClassChange();
   var br=document.getElementById('f_branch');
-  if(br){ br.value='Science'; currentBranch='Science'; onBranchChange(); }
-  document.getElementById('f_passion').value='Want to become a software engineer and work abroad or in Kerala IT parks like Technopark'; updateCC();
-  document.getElementById('f_board').value='Kerala SSLC Board';
-  document.getElementById('f_stream').value='Science'; currentStream='Science'; updateInterSubjects();
-  _demoMarks('tenth',{English:85,SecondLanguage:78,Mathematics:90,Science:88,SocialStudies:80});
-  _demoMarks('inter',{Mathematics:88,Physics:85,Chemistry:82,English:80,SecondLanguage:76});
-  _demoExam('JEE Mains','87 percentile');
-  _demoChips('interestChips','interests',['Technology','Digital Marketing']);
-  _demoChips('strengthChips','strengths',['Logical thinking','Analytical','Technical']);
+  if(br){ br.value='Science (PCM)'; currentBranch='Science (PCM)'; onBranchChange(); }
+  document.getElementById('f_passion').value='Want to design beautiful, usable apps as a UX/UI designer at a product company'; updateCC();
+  document.getElementById('f_board').value='GSEB (SSC)';
+  document.getElementById('f_stream').value='Science (PCM)'; currentStream='Science (PCM)'; updateInterSubjects();
+  _demoMarks('tenth',{English:85,SecondLanguage:78,Mathematics:90,Science:88,SocialStudies:82});
+  _demoMarks('inter',{Mathematics:86,Physics:82,Chemistry:80,English:84,SecondLanguage:76});
+  _demoExam('JEE Mains','85 percentile');
+  _demoChips('interestChips','interests',['UX/UI Design','Technology']);
+  _demoChips('strengthChips','strengths',['Creativity','Analytical','Technical']);
   _demoBudget('₹3–7 Lakh');
-  _demoLoc('Open to abroad');
-  _demoChips('schlChips','scholarships',['OBC / BC']);
+  _demoLoc('Open to other states');
+  _demoChips('schlChips','scholarships',['General / Open']);
   _demoSingle('famChips','family','Parents in private sector');
 }
 
@@ -2204,11 +2335,53 @@ function _demoKavitha() {
   _demoMarks('tenth',{English:88,SecondLanguage:82,Mathematics:85,Science:93,SocialStudies:80});
   _demoMarks('inter',{Botany:92,Zoology:90,Physics:85,Chemistry:88,English:82,SecondLanguage:78});
   _demoExam('NEET UG','640/720');
-  _demoChips('interestChips','interests',['Medicine','Teaching']);
+  _demoChips('interestChips','interests',['Medicine','Forensic Science']);
   _demoChips('strengthChips','strengths',['Empathy','Research','Analytical']);
   _demoBudget('₹7–15 Lakh');
   _demoLoc('Open to other states');
   _demoChips('schlChips','scholarships',['OBC / BC']);
+  _demoSingle('famChips','family','Parents in government');
+}
+
+// 9 — Ravi: Andhra Pradesh, Inter BiPC — Veterinary Science & Agriculture
+function _demoRavi() {
+  document.getElementById('f_state').value='Andhra Pradesh'; onStateChange();
+  document.getElementById('f_age').value='18';
+  document.getElementById('f_level').value='Inter 2nd year'; onClassChange();
+  var br=document.getElementById('f_branch');
+  if(br){ br.value='BiPC'; currentBranch='BiPC'; onBranchChange(); }
+  document.getElementById('f_passion').value='Want to become a veterinary doctor and support farmers and livestock in rural Andhra Pradesh'; updateCC();
+  document.getElementById('f_board').value='AP State Board (SSC)';
+  document.getElementById('f_stream').value='BiPC'; currentStream='BiPC'; updateInterSubjects();
+  _demoMarks('tenth',{English:78,SecondLanguage:74,Mathematics:75,Science:90,SocialStudies:80});
+  _demoMarks('inter',{Botany:88,Zoology:90,Physics:76,Chemistry:82,English:74,SecondLanguage:70});
+  _demoExam('ICAR AIEEA','Appeared');
+  _demoChips('interestChips','interests',['Veterinary Science','Agriculture']);
+  _demoChips('strengthChips','strengths',['Empathy','Research','Technical']);
+  _demoBudget('₹1–3 Lakh');
+  _demoLoc('Stay in Andhra Pradesh only');
+  _demoChips('schlChips','scholarships',['OBC / BC']);
+  _demoSingle('famChips','family','Business family');
+}
+
+// 10 — Biswajit: Odisha, Inter Science (PCM) — Robotics & Electrical Engineering
+function _demoBiswajit() {
+  document.getElementById('f_state').value='Odisha'; onStateChange();
+  document.getElementById('f_age').value='17';
+  document.getElementById('f_level').value='Inter 2nd year'; onClassChange();
+  var br=document.getElementById('f_branch');
+  if(br){ br.value='Science (PCM)'; currentBranch='Science (PCM)'; onBranchChange(); }
+  document.getElementById('f_passion').value='Want to build robots and smart power systems as a robotics / electrical engineer'; updateCC();
+  document.getElementById('f_board').value='BSE Odisha';
+  document.getElementById('f_stream').value='Science (PCM)'; currentStream='Science (PCM)'; updateInterSubjects();
+  _demoMarks('tenth',{English:82,SecondLanguage:78,Mathematics:92,Science:89,SocialStudies:76});
+  _demoMarks('inter',{Mathematics:88,Physics:86,Chemistry:80,English:78,SecondLanguage:74});
+  _demoExam('JEE Mains','90 percentile');
+  _demoChips('interestChips','interests',['Robotics','Electrical Engineering']);
+  _demoChips('strengthChips','strengths',['Logical thinking','Technical','Analytical']);
+  _demoBudget('₹3–7 Lakh');
+  _demoLoc('Open to other states');
+  _demoChips('schlChips','scholarships',['ST (Scheduled Tribe)']);
   _demoSingle('famChips','family','Parents in government');
 }
 

@@ -1,10 +1,35 @@
-# CareerDisha — Architecture
+# CareerDisha — Architecture, Tech Stack & Flow
 
-Single-file HTML app for Indian student career guidance. Deterministic match engine picks careers; LLM writes narrative + decision tree + counselor note. The split is the cost lever — the LLM no longer has to invent careers from scratch with full schemas.
+CareerDisha is a single-page career-guidance web app for Indian students. A 3-step form feeds a
+**deterministic match engine** that ranks careers locally; an LLM then writes only the narrative
+content. Real reference data (NIRF college rankings, Adzuna job listings, scholarship/fee sources)
+is curated offline and shipped as static JS so the app stays fast and cheap. It deploys to **both
+Netlify and Vercel** from the same repo.
 
 ---
 
-## 1 · Component layout (what files load what)
+## 1 · Tech stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | Vanilla HTML/CSS/JS in a single `index.html` (no framework, no build step) |
+| **Charts** | Chart.js (CDN) |
+| **Client data** | `data/data.js` (generated) → `window.CAREER_DATA`; `matcher.js`, `composer.js` as `<script src>` |
+| **Serverless proxy** | Dual: `netlify/functions/chat.js` (Netlify) **and** `api/chat.js` (Vercel) — same Groq proxy contract |
+| **LLM** | Groq API — `llama-3.3-70b-versatile` (OpenAI-compatible) |
+| **Response cache** | Netlify Blobs (Netlify) / Vercel KV (Vercel), keyed by a canonical profile hash; best-effort |
+| **Offline data** | Node scripts (`scripts/`) — Adzuna API for live job counts, NIRF 2025 for colleges |
+| **Automation** | GitHub Actions (scheduled market-data refresh) |
+| **Hosting** | Netlify and/or Vercel (static site + serverless function), auto-deploy from GitHub `main` |
+| **Secrets** | `GROQ_API_KEY`, `ADZUNA_APP_ID/KEY`, KV/Blobs tokens — env vars only, never committed |
+
+**Runtime principle:** anything formulaic (match scores, salaries, fees, colleges, portals, cost
+split) is computed deterministically from static data; the LLM only writes prose (narratives,
+counsellor note, decision tree, college/exam suggestions for non-NIRF fields).
+
+---
+
+## 2 · Component architecture
 
 ```mermaid
 flowchart TB
@@ -13,164 +38,165 @@ flowchart TB
   classDef data fill:#D1FAE5,stroke:#059669,color:#000
   classDef remote fill:#EDE9FE,stroke:#7C3AED,color:#000
 
-  Browser["Browser<br/>(opens index.html)"]:::proj
+  Browser["Browser — index.html<br/>(form, render, orchestration)"]:::proj
 
-  Browser -->|loads via &lt;script src&gt;| ChartCDN["Chart.js CDN"]:::ext
-  Browser -->|loads via &lt;script src&gt;| DataJS["data/data.js<br/>CAREER_DATA<br/>(30 careers + taxonomies)"]:::data
-  Browser -->|loads via &lt;script src&gt;| MatcherJS["data/matcher.js<br/>CareerMatcher<br/>(scoreCareer, topCareers)"]:::data
-  Browser -->|loads via &lt;script src&gt;| ComposerJS["data/composer.js<br/>CareerComposer<br/>(buildSlimPrompt, mergeLLMResponse)"]:::data
+  Browser -->|&lt;script src&gt;| ChartCDN["Chart.js (CDN)"]:::ext
+  Browser -->|&lt;script src&gt;| DataJS["data/data.js (GENERATED)<br/>window.CAREER_DATA:<br/>careers · taxonomies · nirfColleges · nirfYear"]:::data
+  Browser -->|&lt;script src&gt;| MatcherJS["data/matcher.js<br/>CareerMatcher.run()"]:::data
+  Browser -->|&lt;script src&gt;| ComposerJS["data/composer.js<br/>buildSlimPrompt · mergeLLMResponse<br/>NIRF colleges · fees · scholarships · portals · cost split"]:::data
 
-  Browser -->|prod: POST /.netlify/functions/chat| Netlify["netlify/functions/chat.js<br/>(serverless proxy,<br/>injects GROQ_API_KEY)"]:::proj
-  Browser -->|local file:// dev: POST direct + BYOK| GroqDirect["Groq API<br/>(direct)"]:::remote
-  Netlify -->|POST| GroqAPI["Groq API<br/>llama-3.3-70b-versatile"]:::remote
-  GroqDirect -.->|same endpoint| GroqAPI
+  Browser -->|POST /api/chat| Proxy{{"Serverless proxy"}}:::proj
+  Proxy -->|Netlify| NF["netlify/functions/chat.js<br/>+ Netlify Blobs cache"]:::proj
+  Proxy -->|Vercel| VF["api/chat.js<br/>+ Vercel KV cache"]:::proj
+  NF -->|Bearer GROQ_API_KEY| Groq["Groq API<br/>llama-3.3-70b"]:::remote
+  VF -->|Bearer GROQ_API_KEY| Groq
+  Browser -. "file:// dev (BYOK)" .-> Groq
 
-  subgraph Sources["Canonical source files (not loaded at runtime)"]
+  subgraph Sources["Canonical sources (build-time, not loaded at runtime)"]
     direction LR
     CareersJSON["data/careers.json"]:::data
-    InterestJSON["data/taxonomy/interests.json"]:::data
-    StrengthJSON["data/taxonomy/strengths.json"]:::data
-    SubjectsJSON["data/taxonomy/subjects.json"]:::data
+    NIRFJSON["data/nirf-colleges.json<br/>(NIRF 2025 + fees)"]:::data
+    Tax["data/taxonomy/*.json"]:::data
   end
-  Sources -.->|hand-mirrored into| DataJS
+  Sources -. "scripts/generate-data-js.js" .-> DataJS
 ```
-
-**Why `.js` not `.json` at runtime:** opening `index.html` from `file://` blocks `fetch()` of local JSON. The `.json` files are kept as canonical, human-readable sources; `data/data.js` mirrors them and assigns `window.CAREER_DATA` so the app works from `file://` and from Netlify equally.
 
 ---
 
-## 2 · Request flow (one form submission)
+## 3 · Request flow (one form submission)
 
 ```mermaid
 sequenceDiagram
   autonumber
   participant U as Student
-  participant F as index.html<br/>(form + submit logic)
+  participant F as index.html
   participant M as CareerMatcher
   participant Cm as CareerComposer
-  participant N as Netlify proxy<br/>(or direct Groq in dev)
-  participant L as Groq LLM<br/>llama-3.3-70b
+  participant P as /api/chat proxy
+  participant L as Groq LLM
   participant R as renderAll()
 
-  U->>F: Step 1 / 2 / 3 + Submit
+  U->>F: Step 1/2/3 + Submit
   F->>F: collectData() → formData
-  F->>F: getTopMeritSubject()<br/>showAlignModal() → user picks merit/interest/both
-  F->>F: callAPI(formData) starts
+  F->>F: alignment modal (merit vs interest)
   F->>M: CareerMatcher.run(formData)
-  M-->>F: { profile, matches[5..6] }<br/>(deterministic scores)
-
+  M-->>F: { profile, matches[top 6] } (deterministic scores)
   F->>Cm: buildSlimPrompt(formData, matches)
-  Cm-->>F: { sys, prompt }<br/>(~1100 input tokens)
-
-  F->>N: POST chat completion (slim payload)
-  N->>L: forwards with GROQ_API_KEY
-  L-->>N: narratives + colleges + decision tree<br/>+ counselor note + market chart + 8 jobs<br/>(~1500 output tokens)
-  N-->>F: JSON
-
+  Cm-->>F: { sys, prompt } (~900-1100 input tokens)
+  F->>P: POST /api/chat (slim payload + x-cache-key)
+  Note over P,L: cache HIT → return stored body (0 tokens)
+  P->>L: cache MISS → forward to Groq
+  L-->>P: narratives + colleges/exams + decision tree + counsellor note + jobs
+  P-->>F: JSON (x-cache: HIT/MISS)
   F->>Cm: mergeLLMResponse(llm, formData, matches)
-  Cm-->>F: data object<br/>(LLM narrative + deterministic salary/route/portals/...)
-
+  Note over Cm: deterministic overlay → NIRF colleges (national + home-state),<br/>per-college fees, cost split, scholarships+links, salary, Adzuna live openings, portals
+  Cm-->>F: full data object
   F->>R: renderAll(data, formData)
-  R-->>U: Career cards · Decision tree · Market chart · Jobs table
+  R-->>U: Cards · Budget/feasibility · Colleges · Job market · Chart · Listings
 ```
 
 ---
 
-## 3 · Deterministic / LLM split (the cost lever)
-
-The architectural move that drove this refactor: **decide who computes what.** Anything formulaic comes from `data/data.js`; only narrative-style content goes to the LLM.
+## 4 · Offline data pipeline (how the static data is produced)
 
 ```mermaid
 flowchart LR
-  classDef det fill:#D1FAE5,stroke:#059669,color:#000
-  classDef llm fill:#FEF3C7,stroke:#D97706,color:#000
-  classDef ui fill:#E8EAF6,stroke:#1A237E,color:#000
+  classDef data fill:#D1FAE5,stroke:#059669,color:#000
+  classDef remote fill:#EDE9FE,stroke:#7C3AED,color:#000
+  classDef proj fill:#E8EAF6,stroke:#1A237E,color:#000
 
-  Form[("formData<br/>(state, class, marks,<br/>chips, budget, scholarship)")]:::ui
+  Adzuna["Adzuna API (IN)<br/>live listing counts (+ opt. salary)"]:::remote
+  NIRF["nirfindia.org 2025<br/>(curated by hand → fees/URLs)"]:::remote
 
-  subgraph Deterministic["DETERMINISTIC LAYER · 0 API calls"]
-    direction TB
-    Matcher["CareerMatcher.run<br/>· canonicalize chips/marks<br/>· score 30 careers<br/>· return top 5"]:::det
-    DetFields["Per-career deterministic fields:<br/>· match_score · domain · salary range<br/>· entry_route · degree · duration<br/>· estimated_cost · supply/demand<br/>· jobs_market estimates · job_portals<br/>· scholarship_options · job_locations"]:::det
-  end
+  Refresh["scripts/refresh-market-data.js"]:::proj
+  Careers["data/careers.json<br/>(salary · adzuna_listings · _market_meta)"]:::data
+  NIRFJSON["data/nirf-colleges.json"]:::data
+  Gen["scripts/generate-data-js.js"]:::proj
+  DataJS["data/data.js (generated)"]:::data
+  Test["data/_test-matcher.js<br/>(integrity + smoke)"]:::proj
 
-  subgraph LLMLayer["LLM LAYER · 1 API call, ~1500 output tokens"]
-    direction TB
-    SlimPrompt["buildSlimPrompt:<br/>profile + pre-ranked careers<br/>'do not reshuffle'"]:::llm
-    Output["LLM returns:<br/>· narratives × 5<br/>· colleges × 5 (with NIRF)<br/>· entrance_exams × 5 (with URLs)<br/>· decision_tree (top career only)<br/>· risk_factors / upside_factors<br/>· counselor_note (EN + local lang)<br/>· scholarship_alert · warning_flags<br/>· domain_market_data (chart)<br/>· 8 job_listings"]:::llm
-  end
+  Adzuna --> Refresh --> Careers
+  NIRF -.->|manual curation| NIRFJSON
+  Careers --> Gen
+  NIRFJSON --> Gen
+  Tax["data/taxonomy/*.json"]:::data --> Gen
+  Gen --> DataJS --> Test
 
-  Merge["mergeLLMResponse<br/>(deterministic ∪ LLM)"]:::det
-  RenderAll[("renderAll(data)<br/>· cards · tree<br/>· chart · jobs table")]:::ui
-
-  Form --> Matcher
-  Matcher --> DetFields
-  Matcher --> SlimPrompt
-  Form --> SlimPrompt
-  SlimPrompt --> Output
-  DetFields --> Merge
-  Output --> Merge
-  Merge --> RenderAll
+  GHA["GitHub Action (cron, monthly)<br/>refresh-market-data.yml"]:::proj -.->|runs| Refresh
 ```
 
-### Token impact
-
-| | Before refactor | After refactor |
-|---|---|---|
-| System + user prompt input | ~1700 tokens | ~1170 tokens |
-| LLM output (max_tokens) | 4000 | 2500 |
-| Realistic output | 3000–4000 tokens | 1200–1500 tokens |
-| **Per request total** | ~5000–5500 tokens | ~2400–2700 tokens |
-| Capacity on same Groq free tier | baseline | **~2× more requests** |
+- **`refresh-market-data.js`** — pulls Adzuna IN live-listing counts into `careers.json`
+  (`job_density`/`growth` stay hand-authored; salary opt-in via `--with-salary`). Best-effort,
+  rate-limited, `--dry-run` supported.
+- **`nirf-colleges.json`** — NIRF 2025 rankings (full national lists, ~587 colleges) with curated
+  official URLs + indicative total-program fee ranges on prominent institutes.
+- **`generate-data-js.js`** — deterministically builds `data/data.js` from `careers.json` +
+  `nirf-colleges.json` + `taxonomy/*.json`. `data.js` is generated; never hand-edited.
 
 ---
 
-## 4 · Form-flow nuances (worth knowing)
+## 5 · Deployment
 
 ```mermaid
-stateDiagram-v2
-  [*] --> Step1
-  Step1 --> Step2: class ≠ '10th studying'
-  Step1 --> Step3: class = '10th studying'<br/>(skip Step 2 entirely;<br/>step circle shows '—')
-  Step2 --> Step3
-  Step3 --> AlignmentModal: submitForm()
-  AlignmentModal --> CallAPI: pathChoice<br/>(merit / interest / both)
-  CallAPI --> Render: success
-  CallAPI --> Error: failure<br/>(alert + stays on form)
-  Render --> Step1: startOver()<br/>(restores form snapshot)
+flowchart TB
+  classDef proj fill:#E8EAF6,stroke:#1A237E,color:#000
+  classDef remote fill:#EDE9FE,stroke:#7C3AED,color:#000
+
+  GH["GitHub: seenu037/Career-Disha (main)"]:::proj
+  GH -->|auto-deploy| Netlify["Netlify<br/>static + netlify/functions/chat.js<br/>Blobs cache · GROQ_API_KEY<br/>rewrite /api/chat → function"]:::remote
+  GH -->|auto-deploy| Vercel["Vercel<br/>static + api/chat.js<br/>KV cache · GROQ_API_KEY"]:::remote
+  Netlify --> Groq["Groq API"]:::remote
+  Vercel --> Groq
 ```
 
-State-driven dynamics happen on every state change in Step 1: `onStateChange()` cascades into board dropdown · branch labels · location chips · exam categories · bilingual labels (`updateFormLanguage(state)` reads `STATE_LANGUAGE[state]` → `LANG_LABELS[lang]`).
+The browser always calls **`/api/chat`**. On Vercel that's `api/chat.js`; on Netlify a rewrite in
+`netlify.toml` maps it to `netlify/functions/chat.js`. Local `file://` falls back to calling Groq
+directly with a user-supplied key (BYOK). Deployment Protection must be **off** on Vercel for a
+public site.
 
 ---
 
-## 5 · Where the cost wins live now (and don't yet)
+## 6 · Data provenance (real vs indicative — the honesty map)
 
-Already shipped in this refactor:
-- **Deterministic match scores + career picks** — LLM no longer reasons about which careers to suggest
-- **Static-data fields** — salary, growth, supply/demand, portals, scholarships, entry route all generated from `data/data.js`, not the model
-- **Slim prompt + slim schema** — input and output cut roughly in half
-
-Not yet shipped (next architectural moves, in order of impact):
-1. **Cache by canonical profile hash** — `Netlify Blobs` keyed on a hash of `{state, class, stream, top-3 interests, top-3 strengths, marks bucket, budget, location tier}`. Realistic 60–80 % hit rate after warmup. **Biggest remaining win.**
-2. **Multi-provider fallback** — Groq → Gemini 2.0 Flash → Cerebras → Together. 4× capacity on free tiers stacked.
-3. **BYOK power-user mode** — let users paste their own Groq key for unlimited self-funded results.
-4. **Pre-generate top-N profiles offline** — bake the top ~500 profile combos into static JSON so common students never hit the LLM at all.
+| Field | Source | Status |
+|---|---|---|
+| Match score, decision logic | `matcher.js` over hand-authored career vectors | computed |
+| **Colleges (top-5 national + home-state)** | **NIRF 2025** (official) | **real**, state-filtered |
+| College official website | curated per institute | real (prominent only) |
+| **Live job openings** | **Adzuna IN** search count | **real**, dated; "limited" when sparse |
+| Salary (entry/mid) | hand-authored bands (Adzuna IN too sparse) | indicative, labelled |
+| **Education cost split** (tuition/board/books) | per-**course** ranges, govt→private | indicative, state-adjusted |
+| Tuition "verify" link | state FRA / ICAI / MCC fee pages | real fee-listing page where available |
+| Scholarships + amounts | NSP / state portals (deep links) | indicative amounts, real links |
+| `job_density`, `growth`, demand/competition | hand-authored heuristics | indicative ("est.") |
+| Narratives, counsellor note, decision tree | Groq LLM | generated |
 
 ---
 
-## 6 · File reference
+## 7 · File reference
 
 | Path | Role |
 |---|---|
-| [index.html](index.html) | The app — HTML, CSS, all form/render JS, `callAPI` orchestration |
-| [data/data.js](data/data.js) | Runtime data: 30 careers + 3 taxonomies → `window.CAREER_DATA` |
-| [data/matcher.js](data/matcher.js) | Pure-JS scoring engine → `window.CareerMatcher` |
-| [data/composer.js](data/composer.js) | LLM prompt builder + response merger → `window.CareerComposer` |
-| [data/_test-matcher.js](data/_test-matcher.js) | Node smoke test: matcher across 8 demos + composer shape check |
-| [data/careers.json](data/careers.json) | Canonical career dataset (mirrored into data.js) |
-| [data/taxonomy/interests.json](data/taxonomy/interests.json) | Chip label → canonical ID map (interests) |
-| [data/taxonomy/strengths.json](data/taxonomy/strengths.json) | Chip label → canonical ID map (strengths) |
-| [data/taxonomy/subjects.json](data/taxonomy/subjects.json) | Subject label → canonical ID + 10th→12th expand rules |
-| [netlify/functions/chat.js](netlify/functions/chat.js) | Serverless proxy that injects `GROQ_API_KEY` and forwards to Groq |
-| [netlify.toml](netlify.toml) | Netlify build/redirect config |
+| [index.html](index.html) | The app — markup, CSS, form/render JS, `callAPI` orchestration |
+| [data/matcher.js](data/matcher.js) | Deterministic scoring engine → `window.CareerMatcher` |
+| [data/composer.js](data/composer.js) | Slim prompt + merge; NIRF colleges, fees, cost split, scholarships, portals |
+| [data/data.js](data/data.js) | **Generated** runtime data → `window.CAREER_DATA` |
+| [data/careers.json](data/careers.json) | Canonical careers (+ Adzuna listings, salary, `_market_meta`) |
+| [data/nirf-colleges.json](data/nirf-colleges.json) | NIRF 2025 colleges per category (+ fees/URLs) |
+| [data/taxonomy/](data/taxonomy/) | interest/strength/subject label → canonical-ID maps |
+| [data/_test-matcher.js](data/_test-matcher.js) | Headless smoke + data-integrity test (`node data/_test-matcher.js`) |
+| [scripts/refresh-market-data.js](scripts/refresh-market-data.js) | Adzuna refresh → careers.json + regen data.js |
+| [scripts/generate-data-js.js](scripts/generate-data-js.js) | careers.json + taxonomy + NIRF → data.js |
+| [scripts/refresh-data.ps1](scripts/refresh-data.ps1) | Windows one-command refresh wrapper |
+| [api/chat.js](api/chat.js) | Vercel Groq proxy + KV cache |
+| [netlify/functions/chat.js](netlify/functions/chat.js) | Netlify Groq proxy + Blobs cache |
+| [netlify.toml](netlify.toml) | Netlify config + `/api/chat` rewrite |
+| [.github/workflows/refresh-market-data.yml](.github/workflows/refresh-market-data.yml) | Scheduled data refresh |
+
+---
+
+## 8 · Run / test
+
+- **Local:** open `index.html` (BYOK Groq key) or `netlify dev` (uses the function + env key).
+- **Refresh data:** `npm run refresh-data` (or `refresh-data:dry`); `npm run generate-data`.
+- **Test:** `npm run test:data` → matcher across 8 demo profiles + integrity checks.

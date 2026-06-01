@@ -151,9 +151,14 @@
   function scoreCareer(student, career) {
     var blockers = [];
 
-    // Hard filter: stream gate (only when career declares streams AND student has one).
-    if (career.streams && career.streams.length && student.stream) {
-      if (career.streams.indexOf(student.stream) === -1) {
+    // Hard filter: stream gate — only when the career declares streams AND the student has a
+    // REAL chosen stream. "Not specified"/"Not yet completed"/empty (e.g. 10th studying or 10th
+    // completed students who have no stream yet) must NOT trip the gate, or every stream-declaring
+    // career (all engineering/medical/commerce/law) gets zeroed and only streamless careers survive.
+    var sStream = student.stream;
+    var hasRealStream = sStream && sStream !== 'Not specified' && sStream !== 'Not yet completed';
+    if (career.streams && career.streams.length && hasRealStream) {
+      if (career.streams.indexOf(sStream) === -1) {
         return { score: 0, breakdown: {}, blockers: ['stream-mismatch'] };
       }
     }
@@ -185,14 +190,21 @@
     var wStrength = strengthCoverage(student.strengths, v.strengths || []);
     var wSubject  = weightedSubjectDot(student.subjects, v.subjects || {});
 
-    // Location signals.
+    // Location signals. A student who is "open to other states / abroad" is FLEXIBLE — they can
+    // relocate to where the career's jobs are, so they should NOT be penalised like a student
+    // locked to a low-opportunity home location.
+    var loc = student.location || '';
+    var flexible = /open to other states|open to abroad/i.test(loc);
     var prefList = career.preferred_locations || [];
-    var wLocation = (prefList.length === 0 || prefList.indexOf('All-India') !== -1
-                       || prefList.indexOf('All-India-Posting') !== -1) ? 0.7
-                  : (prefList.some(function (p) { return (student.location || '').indexOf(p) !== -1; }) ? 1.0 : 0.4);
-    var tier = locationTier(student.location);
-    var wDensity = (career.job_density && typeof career.job_density[tier] === 'number')
-                     ? career.job_density[tier] : 0.4;
+    var allIndia = prefList.length === 0 || prefList.indexOf('All-India') !== -1 || prefList.indexOf('All-India-Posting') !== -1;
+    var wLocation = allIndia ? 0.85
+                  : flexible ? 0.9
+                  : (prefList.some(function (p) { return loc.indexOf(p) !== -1; }) ? 1.0 : 0.45);
+    // Flexible students get the career's best (metro) job density, since they can move to it.
+    var tier = locationTier(loc);
+    var wDensity = flexible
+                     ? Math.max((career.job_density && career.job_density.metro) || 0.4, (career.job_density && career.job_density[tier]) || 0)
+                     : (career.job_density && typeof career.job_density[tier] === 'number' ? career.job_density[tier] : 0.4);
 
     // When student has no marks (e.g. "10th studying" path zeroes them),
     // the 0.25 subject term collapses to 0 for every career, forfeiting 25% of

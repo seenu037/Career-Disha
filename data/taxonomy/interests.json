@@ -15,22 +15,160 @@
     "Social Work": "social-work",
     "Media & Journalism": "media-journalism",
     "Digital Marketing": "digital-marketing",
-    "Finance": "finance"
+    "Finance": "finance",
+    "AI & Machine Learning": "ai-ml",
+    "Data Science": "data-science",
+    "Cybersecurity": "cybersecurity",
+    "Cloud Computing": "cloud-computing",
+    "Blockchain": "blockchain",
+    "Robotics": "robotics",
+    "Biomedical Engineering": "biomedical",
+    "Environmental Science": "environmental-science",
+    "Space & Aerospace": "space-aerospace",
+    "Psychology": "psychology",
+    "Nutrition & Dietetics": "nutrition",
+    "Physiotherapy": "physiotherapy",
+    "Public Health": "public-health",
+    "Veterinary Science": "veterinary",
+    "Pharmacy": "pharmacy",
+    "Game Design": "game-design",
+    "Animation & VFX": "animation-vfx",
+    "Content Creation": "content-creation",
+    "UX/UI Design": "ux-ui-design",
+    "Fashion Design": "fashion-design",
+    "Interior Design": "interior-design",
+    "Photography": "photography",
+    "Entrepreneurship": "entrepreneurship",
+    "Investment Banking": "investment-banking",
+    "Supply Chain": "supply-chain",
+    "Human Resources": "human-resources",
+    "E-Commerce": "e-commerce",
+    "Real Estate": "real-estate",
+    "Insurance": "insurance",
+    "Non-Profit Management": "non-profit",
+    "International Relations": "international-relations",
+    "Urban Planning": "urban-planning",
+    "Forensic Science": "forensic-science",
+    "Aviation": "aviation",
+    "Culinary Arts": "culinary",
+    "Event Management": "event-management",
+    "Civil Engineering": "civil-engineering",
+    "Electrical Engineering": "electrical-engineering",
+    "Translation & Interpretation": "translation",
+    "Public Relations": "public-relations"
   },
   "canonical": {
-    "medicine":          { "label_en": "Medicine",            "related": ["biology","healthcare","empathy"] },
-    "law":               { "label_en": "Law",                 "related": ["legal","reasoning","communication"] },
-    "agriculture":       { "label_en": "Agriculture",         "related": ["biology","outdoors","applied-science"] },
-    "arts-design":       { "label_en": "Arts & Design",       "related": ["creativity","visual","aesthetics"] },
-    "performing-arts":   { "label_en": "Music & Performing Arts", "related": ["creativity","stage","expression"] },
-    "business":          { "label_en": "Business",            "related": ["entrepreneurship","commerce","strategy"] },
-    "teaching":          { "label_en": "Teaching",            "related": ["communication","empathy","knowledge-sharing"] },
-    "government-service":{ "label_en": "Government Service",  "related": ["civics","public-service","stability"] },
-    "technology":        { "label_en": "Technology",          "related": ["coding","engineering","problem-solving"] },
-    "sports":            { "label_en": "Sports",              "related": ["physical","competition","discipline"] },
-    "social-work":       { "label_en": "Social Work",         "related": ["empathy","community","public-service"] },
-    "media-journalism":  { "label_en": "Media & Journalism",  "related": ["communication","writing","current-affairs"] },
-    "digital-marketing": { "label_en": "Digital Marketing",   "related": ["creativity","analytics","communication"] },
-    "finance":           { "label_en": "Finance",             "related": ["math","analytical","commerce"] }
+    "medicine": {
+      "label_en": "Medicine",
+      "related": [
+        "biology",
+        "healthcare",
+        "empathy"
+      ]
+    },
+    "law": {
+      "label_en": "Law",
+      "related": [
+        "legal",
+        "reasoning",
+        "communication"
+      ]
+    },
+    "agriculture": {
+      "label_en": "Agriculture",
+      "related": [
+        "biology",
+        "outdoors",
+        "applied-science"
+      ]
+    },
+    "arts-design": {
+      "label_en": "Arts & Design",
+      "related": [
+        "creativity",
+        "visual",
+        "aesthetics"
+      ]
+    },
+    "performing-arts": {
+      "label_en": "Music & Performing Arts",
+      "related": [
+        "creativity",
+        "stage",
+        "expression"
+      ]
+    },
+    "business": {
+      "label_en": "Business",
+      "related": [
+        "entrepreneurship",
+        "commerce",
+        "strategy"
+      ]
+    },
+    "teaching": {
+      "label_en": "Teaching",
+      "related": [
+        "communication",
+        "empathy",
+        "knowledge-sharing"
+      ]
+    },
+    "government-service": {
+      "label_en": "Government Service",
+      "related": [
+        "civics",
+        "public-service",
+        "stability"
+      ]
+    },
+    "technology": {
+      "label_en": "Technology",
+      "related": [
+        "coding",
+        "engineering",
+        "problem-solving"
+      ]
+    },
+    "sports": {
+      "label_en": "Sports",
+      "related": [
+        "physical",
+        "competition",
+        "discipline"
+      ]
+    },
+    "social-work": {
+      "label_en": "Social Work",
+      "related": [
+        "empathy",
+        "community",
+        "public-service"
+      ]
+    },
+    "media-journalism": {
+      "label_en": "Media & Journalism",
+      "related": [
+        "communication",
+        "writing",
+        "current-affairs"
+      ]
+    },
+    "digital-marketing": {
+      "label_en": "Digital Marketing",
+      "related": [
+        "creativity",
+        "analytics",
+        "communication"
+      ]
+    },
+    "finance": {
+      "label_en": "Finance",
+      "related": [
+        "math",
+        "analytical",
+        "commerce"
+      ]
+    }
   }
 }

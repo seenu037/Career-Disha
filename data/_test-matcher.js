@@ -263,11 +263,28 @@ Object.keys(nirfCats).forEach(function (cat) {
     }
   });
 });
+// No "dead" interest chip: every canonical interest id must back >= 1 career.
+var careerInterestIds = {};
+sandbox.window.CAREER_DATA.careers.forEach(function (c) {
+  (c.vector.interests || []).forEach(function (i) { careerInterestIds[i] = 1; });
+});
+var labels = sandbox.window.CAREER_DATA.interestLabels || {};
+Object.keys(labels).forEach(function (label) {
+  if (!careerInterestIds[labels[label]]) {
+    integrityErrors.push('interest "' + label + '" (' + labels[label] + ') maps to NO career');
+  }
+});
 if (integrityErrors.length) {
   console.log('  FAILED ✗');
   integrityErrors.forEach((e) => console.log('    - ' + e));
   process.exitCode = 1;
 } else {
-  console.log('  All careers have valid salary_inr / job_density / growth  OK ✓');
+  console.log('  ' + sandbox.window.CAREER_DATA.careers.length + ' careers valid · ' +
+    Object.keys(labels).length + ' interests all map to a career  OK ✓');
 }
+// Govt-jobs presence (Ananya = Karnataka → central + state lists populated)
+var gj = merged.govt_jobs;
+console.log('  Govt jobs: central=' + (gj && gj.central ? gj.central.length : 0) +
+  ', ' + (gj ? gj.stateName : '?') + '=' + (gj && gj.state ? gj.state.length : 0) +
+  ((gj && gj.central && gj.central.length && gj.state && gj.state.length) ? '  OK ✓' : '  ⚠'));
 console.log('');

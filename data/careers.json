@@ -92,6 +92,7 @@
       "min_class": "graduate",
       "vector": {
         "interests": [
+          "data-science",
           "technology",
           "finance",
           "digital-marketing"
@@ -162,6 +163,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "cybersecurity",
           "technology",
           "government-service"
         ],
@@ -308,6 +310,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "civil-engineering",
           "technology",
           "government-service",
           "business"
@@ -454,6 +457,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "space-aerospace",
           "technology",
           "government-service"
         ],
@@ -731,6 +735,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "pharmacy",
           "medicine",
           "business"
         ],
@@ -800,6 +805,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "veterinary",
           "medicine",
           "agriculture",
           "social-work"
@@ -870,6 +876,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "physiotherapy",
           "medicine",
           "sports",
           "social-work"
@@ -1078,6 +1085,7 @@
       "min_class": "graduate",
       "vector": {
         "interests": [
+          "investment-banking",
           "finance",
           "business"
         ],
@@ -1602,6 +1610,7 @@
       "min_class": "graduate",
       "vector": {
         "interests": [
+          "psychology",
           "medicine",
           "social-work",
           "teaching"
@@ -1887,6 +1896,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "fashion-design",
           "arts-design",
           "performing-arts",
           "business"
@@ -1950,6 +1960,7 @@
       "min_class": "12th-passed",
       "vector": {
         "interests": [
+          "culinary",
           "business",
           "arts-design",
           "performing-arts"
@@ -2152,6 +2163,1647 @@
         "salary_source": "hand-authored (estimate)",
         "refreshed_at": "2026-05-30"
       }
+    },
+    {
+      "id": "ai-ml-engineer",
+      "name": {
+        "en": "AI / Machine Learning Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "ai-ml",
+          "technology"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "analytical",
+          "technical"
+        ],
+        "subjects": {
+          "math": 0.4,
+          "cs": 0.3,
+          "physics": 0.15,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "bitsat",
+        "gate"
+      ],
+      "college_tags": [
+        "iit",
+        "iiit",
+        "nit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 1200000,
+        "mid": 2800000,
+        "senior": 5500000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.95,
+        "tier2": 0.45,
+        "rural": 0.05
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Gurgaon",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "cloud-engineer",
+      "name": {
+        "en": "Cloud Computing Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "cloud-computing",
+          "technology"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "cs": 0.35,
+          "physics": 0.15,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "bitsat",
+        "viteee",
+        "eamcet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 700000,
+        "mid": 1800000,
+        "senior": 3800000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.45,
+        "rural": 0.05
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Gurgaon",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "blockchain-developer",
+      "name": {
+        "en": "Blockchain Developer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "blockchain",
+          "technology",
+          "finance"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.4,
+          "cs": 0.35,
+          "physics": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "bitsat",
+        "gate"
+      ],
+      "college_tags": [
+        "iit",
+        "iiit",
+        "nit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 800000,
+        "mid": 2000000,
+        "senior": 4000000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.25,
+        "rural": 0.03
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Gurgaon",
+        "Mumbai"
+      ]
+    },
+    {
+      "id": "robotics-engineer",
+      "name": {
+        "en": "Robotics Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "robotics",
+          "technology"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "physics": 0.3,
+          "cs": 0.2,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "gate"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "bits",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 600000,
+        "mid": 1500000,
+        "senior": 3200000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.65,
+        "tier2": 0.35,
+        "rural": 0.1
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Gurgaon",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "electrical-engineer",
+      "name": {
+        "en": "Electrical Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "electrical-engineering",
+          "technology",
+          "government-service"
+        ],
+        "strengths": [
+          "logical-thinking",
+          "technical",
+          "analytical"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "physics": 0.4,
+          "chemistry": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "jee-main",
+        "jee-advanced",
+        "eamcet",
+        "mht-cet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "bits",
+        "govt-engg-college",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2400000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.6,
+        "rural": 0.3
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Pune",
+        "Chennai",
+        "Hyderabad",
+        "Vadodara"
+      ]
+    },
+    {
+      "id": "biomedical-engineer",
+      "name": {
+        "en": "Biomedical Engineer"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "biomedical",
+          "technology",
+          "medicine"
+        ],
+        "strengths": [
+          "analytical",
+          "technical",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.3,
+          "physics": 0.25,
+          "biology": 0.25,
+          "chemistry": 0.1,
+          "english": 0.1
+        }
+      },
+      "exams": [
+        "jee-main",
+        "bitsat",
+        "eamcet"
+      ],
+      "college_tags": [
+        "iit",
+        "nit",
+        "iiit",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2200000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.6,
+        "tier2": 0.35,
+        "rural": 0.1
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "environmental-scientist",
+      "name": {
+        "en": "Environmental Scientist"
+      },
+      "streams": [
+        "MPC",
+        "BiPC",
+        "Science",
+        "Science (PCM)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "environmental-science",
+          "agriculture",
+          "social-work"
+        ],
+        "strengths": [
+          "research",
+          "analytical",
+          "technical"
+        ],
+        "subjects": {
+          "biology": 0.3,
+          "chemistry": 0.3,
+          "physics": 0.15,
+          "math": 0.1,
+          "english": 0.15
+        }
+      },
+      "exams": [
+        "cuet",
+        "iit-jam",
+        "gate"
+      ],
+      "college_tags": [
+        "iit",
+        "central-univ",
+        "tier1-science"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 800000,
+        "senior": 1800000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.5,
+        "tier2": 0.45,
+        "rural": 0.4
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Bengaluru",
+        "Delhi",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "urban-planner",
+      "name": {
+        "en": "Urban Planner"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "urban-planning",
+          "government-service",
+          "technology"
+        ],
+        "strengths": [
+          "analytical",
+          "technical",
+          "creativity"
+        ],
+        "subjects": {
+          "math": 0.3,
+          "social-studies": 0.2,
+          "geography": 0.2,
+          "english": 0.15,
+          "physics": 0.15
+        }
+      },
+      "exams": [
+        "nata",
+        "jee-arch",
+        "cuet",
+        "gate"
+      ],
+      "college_tags": [
+        "spa-tier1",
+        "iit",
+        "nit"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1000000,
+        "senior": 2200000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.5,
+        "rural": 0.3
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Ahmedabad"
+      ]
+    },
+    {
+      "id": "game-developer",
+      "name": {
+        "en": "Game Developer / Designer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "game-design",
+          "technology",
+          "arts-design"
+        ],
+        "strengths": [
+          "creativity",
+          "technical",
+          "logical-thinking"
+        ],
+        "subjects": {
+          "cs": 0.35,
+          "math": 0.25,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "jee-main",
+        "uceed",
+        "nift"
+      ],
+      "college_tags": [
+        "tier1-design-college",
+        "iiit",
+        "private-engg-college"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1200000,
+        "senior": 2800000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.3,
+        "rural": 0.05
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Mumbai"
+      ]
+    },
+    {
+      "id": "ux-designer",
+      "name": {
+        "en": "UX / UI Designer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "ux-ui-design",
+          "arts-design",
+          "technology"
+        ],
+        "strengths": [
+          "creativity",
+          "analytical",
+          "communication"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "cs": 0.2
+        }
+      },
+      "exams": [
+        "uceed",
+        "nid",
+        "ceed"
+      ],
+      "college_tags": [
+        "nid",
+        "mit-id",
+        "tier1-design-college"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1200000,
+        "senior": 2800000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.4,
+        "rural": 0.05
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Gurgaon",
+        "Mumbai",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "animator-vfx",
+      "name": {
+        "en": "Animation & VFX Artist"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "animation-vfx",
+          "arts-design",
+          "performing-arts"
+        ],
+        "strengths": [
+          "creativity",
+          "technical",
+          "communication"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "cs": 0.15
+        }
+      },
+      "exams": [
+        "nid",
+        "nift",
+        "ceed"
+      ],
+      "college_tags": [
+        "nid",
+        "tier1-design-college"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 2000000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.35,
+        "rural": 0.05
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Bengaluru",
+        "Hyderabad",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "interior-designer",
+      "name": {
+        "en": "Interior Designer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "interior-design",
+          "arts-design",
+          "business"
+        ],
+        "strengths": [
+          "creativity",
+          "communication",
+          "technical"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "math": 0.15
+        }
+      },
+      "exams": [
+        "nid",
+        "nata",
+        "ceed"
+      ],
+      "college_tags": [
+        "nid",
+        "arch-tier1",
+        "tier1-design-college"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 2000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.8,
+        "tier2": 0.5,
+        "rural": 0.15
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Pune"
+      ]
+    },
+    {
+      "id": "photographer",
+      "name": {
+        "en": "Photographer"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "photography",
+          "arts-design",
+          "media-journalism"
+        ],
+        "strengths": [
+          "creativity",
+          "communication"
+        ],
+        "subjects": {
+          "english": 0.3
+        }
+      },
+      "exams": [
+        "nid",
+        "jamia-mc-entrance"
+      ],
+      "college_tags": [
+        "nid",
+        "tier1-design-college",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 250000,
+        "mid": 600000,
+        "senior": 1600000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.8,
+        "tier2": 0.5,
+        "rural": 0.2
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Goa"
+      ]
+    },
+    {
+      "id": "content-creator",
+      "name": {
+        "en": "Content Creator / Digital Media"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "content-creation",
+          "media-journalism",
+          "digital-marketing"
+        ],
+        "strengths": [
+          "creativity",
+          "communication",
+          "analytical"
+        ],
+        "subjects": {
+          "english": 0.4,
+          "cs": 0.1
+        }
+      },
+      "exams": [
+        "cuet",
+        "iimc-entrance"
+      ],
+      "college_tags": [
+        "iimc",
+        "tier1-arts-college",
+        "jamia-mc"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 2500000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.55,
+        "rural": 0.25
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "dietitian",
+      "name": {
+        "en": "Nutritionist / Dietitian"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "nutrition",
+          "medicine",
+          "social-work"
+        ],
+        "strengths": [
+          "empathy",
+          "research",
+          "analytical"
+        ],
+        "subjects": {
+          "biology": 0.4,
+          "chemistry": 0.3,
+          "english": 0.2,
+          "physics": 0.1
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "cuet"
+      ],
+      "college_tags": [
+        "nutrition-college",
+        "govt-medical",
+        "tier1-science"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 700000,
+        "senior": 1600000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.75,
+        "tier2": 0.55,
+        "rural": 0.3
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "public-health-specialist",
+      "name": {
+        "en": "Public Health Specialist"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "public-health",
+          "medicine",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "research",
+          "analytical",
+          "communication",
+          "empathy"
+        ],
+        "subjects": {
+          "biology": 0.3,
+          "english": 0.25,
+          "civics": 0.15,
+          "chemistry": 0.1
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "cuet",
+        "gpat"
+      ],
+      "college_tags": [
+        "tiss",
+        "govt-medical",
+        "iihmr"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1200000,
+        "senior": 2500000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.5,
+        "rural": 0.35
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "forensic-scientist",
+      "name": {
+        "en": "Forensic Scientist"
+      },
+      "streams": [
+        "BiPC",
+        "Science (PCMB)",
+        "Science (PCB)"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "forensic-science",
+          "medicine",
+          "government-service"
+        ],
+        "strengths": [
+          "analytical",
+          "research",
+          "technical"
+        ],
+        "subjects": {
+          "chemistry": 0.3,
+          "biology": 0.3,
+          "physics": 0.2,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "neet-ug",
+        "cuet"
+      ],
+      "college_tags": [
+        "govt-forensic",
+        "lnjn-nicfs",
+        "tier1-science"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 900000,
+        "senior": 2000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.5,
+        "tier2": 0.45,
+        "rural": 0.3
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Delhi",
+        "Hyderabad",
+        "Gandhinagar",
+        "Chandigarh"
+      ]
+    },
+    {
+      "id": "entrepreneur",
+      "name": {
+        "en": "Entrepreneur / Startup Founder"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "entrepreneurship",
+          "business",
+          "technology"
+        ],
+        "strengths": [
+          "leadership",
+          "creativity",
+          "analytical",
+          "communication"
+        ],
+        "subjects": {
+          "commerce": 0.25,
+          "economics": 0.2,
+          "english": 0.25,
+          "math": 0.2
+        }
+      },
+      "exams": [
+        "cat",
+        "cuet"
+      ],
+      "college_tags": [
+        "iim",
+        "tier1-mba",
+        "any-graduate"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 1500000,
+        "senior": 6000000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.55,
+        "rural": 0.3
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Delhi",
+        "Hyderabad",
+        "Pune"
+      ]
+    },
+    {
+      "id": "supply-chain-manager",
+      "name": {
+        "en": "Supply Chain Manager"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "supply-chain",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "leadership"
+        ],
+        "subjects": {
+          "math": 0.25,
+          "economics": 0.25,
+          "commerce": 0.25,
+          "english": 0.25
+        }
+      },
+      "exams": [
+        "cat",
+        "xat",
+        "gate"
+      ],
+      "college_tags": [
+        "iim",
+        "tier1-mba",
+        "tier1-engg"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1300000,
+        "senior": 2800000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.5,
+        "rural": 0.15
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Bengaluru",
+        "Gurgaon",
+        "Pune",
+        "Chennai"
+      ]
+    },
+    {
+      "id": "hr-manager",
+      "name": {
+        "en": "Human Resources Manager"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "human-resources",
+          "business"
+        ],
+        "strengths": [
+          "communication",
+          "empathy",
+          "leadership",
+          "analytical"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "economics": 0.2,
+          "commerce": 0.2,
+          "civics": 0.15,
+          "math": 0.15
+        }
+      },
+      "exams": [
+        "cat",
+        "xat",
+        "tissnet"
+      ],
+      "college_tags": [
+        "xlri",
+        "tiss",
+        "iim",
+        "tier1-mba"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1200000,
+        "senior": 2600000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.5,
+        "rural": 0.15
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Bengaluru",
+        "Gurgaon",
+        "Hyderabad",
+        "Pune"
+      ]
+    },
+    {
+      "id": "ecommerce-manager",
+      "name": {
+        "en": "E-Commerce Manager"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "e-commerce",
+          "business",
+          "digital-marketing"
+        ],
+        "strengths": [
+          "analytical",
+          "communication",
+          "creativity"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "commerce": 0.2,
+          "economics": 0.2,
+          "math": 0.15,
+          "cs": 0.15
+        }
+      },
+      "exams": [
+        "cat",
+        "mat",
+        "cuet"
+      ],
+      "college_tags": [
+        "tier1-mba",
+        "tier2-mba"
+      ],
+      "salary_inr": {
+        "entry": 500000,
+        "mid": 1300000,
+        "senior": 3000000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.5,
+        "rural": 0.1
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Bengaluru",
+        "Gurgaon",
+        "Mumbai",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "real-estate-manager",
+      "name": {
+        "en": "Real Estate Manager"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "real-estate",
+          "business"
+        ],
+        "strengths": [
+          "communication",
+          "leadership",
+          "analytical"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "commerce": 0.25,
+          "economics": 0.25,
+          "math": 0.2
+        }
+      },
+      "exams": [
+        "cat",
+        "mat"
+      ],
+      "college_tags": [
+        "tier1-mba",
+        "rics-sbe"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1100000,
+        "senior": 3000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.6,
+        "rural": 0.25
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Gurgaon",
+        "Bengaluru",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "insurance-professional",
+      "name": {
+        "en": "Insurance Professional / Actuary"
+      },
+      "streams": [
+        "CEC",
+        "MEC",
+        "MPC",
+        "Commerce",
+        "Science"
+      ],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "insurance",
+          "finance",
+          "business"
+        ],
+        "strengths": [
+          "analytical",
+          "logical-thinking",
+          "research"
+        ],
+        "subjects": {
+          "math": 0.35,
+          "economics": 0.25,
+          "commerce": 0.2,
+          "english": 0.2
+        }
+      },
+      "exams": [
+        "iai-actuarial",
+        "cat",
+        "iii-licentiate"
+      ],
+      "college_tags": [
+        "iai",
+        "tier1-mba"
+      ],
+      "salary_inr": {
+        "entry": 400000,
+        "mid": 1200000,
+        "senior": 3500000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.45,
+        "rural": 0.1
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Mumbai",
+        "Gurgaon",
+        "Bengaluru",
+        "Pune"
+      ]
+    },
+    {
+      "id": "event-manager",
+      "name": {
+        "en": "Event Manager"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "event-management",
+          "business",
+          "performing-arts"
+        ],
+        "strengths": [
+          "communication",
+          "leadership",
+          "creativity"
+        ],
+        "subjects": {
+          "english": 0.35,
+          "commerce": 0.15
+        }
+      },
+      "exams": [
+        "nift",
+        "cuet"
+      ],
+      "college_tags": [
+        "nift",
+        "tier1-mba",
+        "event-mgmt-college"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 2000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.85,
+        "tier2": 0.5,
+        "rural": 0.2
+      },
+      "budget_tier": "mid",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Goa",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "ir-specialist",
+      "name": {
+        "en": "International Relations / Diplomat"
+      },
+      "streams": [],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "international-relations",
+          "government-service",
+          "law"
+        ],
+        "strengths": [
+          "communication",
+          "analytical",
+          "research",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "political-science": 0.25,
+          "history": 0.2,
+          "economics": 0.15,
+          "civics": 0.1
+        }
+      },
+      "exams": [
+        "upsc-cse",
+        "cuet",
+        "jnu-entrance"
+      ],
+      "college_tags": [
+        "jnu",
+        "du",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 700000,
+        "mid": 1500000,
+        "senior": 3000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.5,
+        "tier2": 0.3,
+        "rural": 0.2
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Delhi",
+        "All-India-Posting"
+      ]
+    },
+    {
+      "id": "nonprofit-manager",
+      "name": {
+        "en": "Non-Profit / NGO Manager"
+      },
+      "streams": [],
+      "min_class": "graduate",
+      "vector": {
+        "interests": [
+          "non-profit",
+          "social-work",
+          "government-service"
+        ],
+        "strengths": [
+          "empathy",
+          "communication",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.3,
+          "civics": 0.2,
+          "economics": 0.15,
+          "history": 0.1
+        }
+      },
+      "exams": [
+        "tissnet",
+        "cuet"
+      ],
+      "college_tags": [
+        "tiss",
+        "azim-premji",
+        "tier1-arts-college"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 800000,
+        "senior": 1800000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.55,
+        "rural": 0.45
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "translator",
+      "name": {
+        "en": "Translator / Interpreter"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "translation",
+          "media-journalism",
+          "teaching"
+        ],
+        "strengths": [
+          "communication",
+          "research",
+          "creativity"
+        ],
+        "subjects": {
+          "english": 0.4,
+          "second-language": 0.3
+        }
+      },
+      "exams": [
+        "cuet",
+        "jnu-entrance"
+      ],
+      "college_tags": [
+        "jnu",
+        "efl-university",
+        "du"
+      ],
+      "salary_inr": {
+        "entry": 300000,
+        "mid": 700000,
+        "senior": 1600000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.7,
+        "tier2": 0.45,
+        "rural": 0.25
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Delhi",
+        "Mumbai",
+        "Bengaluru",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "pr-specialist",
+      "name": {
+        "en": "Public Relations Specialist"
+      },
+      "streams": [],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "public-relations",
+          "media-journalism",
+          "business"
+        ],
+        "strengths": [
+          "communication",
+          "creativity",
+          "leadership"
+        ],
+        "subjects": {
+          "english": 0.4,
+          "political-science": 0.1
+        }
+      },
+      "exams": [
+        "iimc-entrance",
+        "cuet",
+        "xicpgdcj"
+      ],
+      "college_tags": [
+        "iimc",
+        "tier1-arts-college",
+        "tier1-mba"
+      ],
+      "salary_inr": {
+        "entry": 350000,
+        "mid": 900000,
+        "senior": 2200000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.5,
+        "rural": 0.15
+      },
+      "budget_tier": "low",
+      "preferred_locations": [
+        "Mumbai",
+        "Delhi",
+        "Bengaluru",
+        "Gurgaon"
+      ]
+    },
+    {
+      "id": "pilot",
+      "name": {
+        "en": "Commercial Pilot"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "aviation",
+          "technology",
+          "government-service"
+        ],
+        "strengths": [
+          "technical",
+          "analytical",
+          "logical-thinking"
+        ],
+        "subjects": {
+          "physics": 0.35,
+          "math": 0.35,
+          "english": 0.3
+        }
+      },
+      "exams": [
+        "dgca-cpl",
+        "nda",
+        "afcat"
+      ],
+      "college_tags": [
+        "flying-school",
+        "igrua"
+      ],
+      "salary_inr": {
+        "entry": 1500000,
+        "mid": 4000000,
+        "senior": 8000000
+      },
+      "growth": "medium",
+      "job_density": {
+        "metro": 0.6,
+        "tier2": 0.3,
+        "rural": 0.1
+      },
+      "budget_tier": "high",
+      "preferred_locations": [
+        "All-India",
+        "Delhi",
+        "Mumbai",
+        "Hyderabad"
+      ]
     }
   ]
 }
