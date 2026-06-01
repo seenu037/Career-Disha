@@ -787,7 +787,7 @@
       '- "colleges": 5 NIRF-2025-ranked colleges per career; prefer institutions in/near the student\'s state\n' +
       '- "exams": 3 entrance exams per career with official URLs; prefer state exams (e.g. EAMCET for AP/TS, KCET for KA, MHT-CET for MH)\n' +
       '- "risk_factors" / "upside_factors": 2 each per career\n' +
-      '- "job_listings": 8 realistic openings (real Indian companies, realistic salary, real apply URLs like naukri.com/career/X or linkedin.com/jobs/X)\n' +
+      '- "job_listings": 8 realistic openings for the #1 career (real Indian companies/recruiters; salary_range MUST be consistent with that career\'s entry/mid band shown above — do NOT understate govt/officer roles; real apply URLs like naukri.com/career/X or linkedin.com/jobs/X)\n' +
       '- "*_local" fields MUST be in ' + lang + ' script (not English transliteration)\n' +
       '- DO NOT generate student_summary, counselor_note, decision_tree, or domain_market_data — the host app builds those deterministically.\n\n' +
       'Return ONLY this JSON:\n' + schema;

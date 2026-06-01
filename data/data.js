@@ -5316,8 +5316,8 @@
         ],
         "salary_inr": {
           "entry": 800000,
-          "mid": 2000000,
-          "senior": 5000000
+          "mid": 2400000,
+          "senior": 5500000
         },
         "growth": "high",
         "job_density": {
@@ -5342,7 +5342,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
@@ -5662,9 +5662,9 @@
           "govt-medical"
         ],
         "salary_inr": {
-          "entry": 300000,
-          "mid": 600000,
-          "senior": 1200000
+          "entry": 400000,
+          "mid": 800000,
+          "senior": 1400000
         },
         "growth": "high",
         "job_density": {
@@ -5688,7 +5688,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
@@ -6176,9 +6176,9 @@
           "any-graduate"
         ],
         "salary_inr": {
-          "entry": 700000,
-          "mid": 1500000,
-          "senior": 3000000
+          "entry": 1000000,
+          "mid": 2000000,
+          "senior": 4000000
         },
         "growth": "medium",
         "job_density": {
@@ -6202,7 +6202,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
@@ -6413,9 +6413,9 @@
           "govt-teacher-training"
         ],
         "salary_inr": {
-          "entry": 300000,
-          "mid": 700000,
-          "senior": 1500000
+          "entry": 400000,
+          "mid": 900000,
+          "senior": 1600000
         },
         "growth": "medium",
         "job_density": {
@@ -6440,7 +6440,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
@@ -6755,9 +6755,9 @@
           "ota"
         ],
         "salary_inr": {
-          "entry": 800000,
-          "mid": 1500000,
-          "senior": 2800000
+          "entry": 900000,
+          "mid": 1800000,
+          "senior": 3500000
         },
         "growth": "medium",
         "job_density": {
@@ -6777,7 +6777,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
@@ -6825,9 +6825,9 @@
           "iari"
         ],
         "salary_inr": {
-          "entry": 400000,
-          "mid": 900000,
-          "senior": 2000000
+          "entry": 600000,
+          "mid": 1200000,
+          "senior": 2500000
         },
         "growth": "medium",
         "job_density": {
@@ -6851,7 +6851,7 @@
         },
         "_market_meta": {
           "listings_source": "Adzuna IN search count",
-          "salary_source": "hand-authored (estimate)",
+          "salary_source": "hand-authored (estimate, calibrated 2026-06)",
           "refreshed_at": "2026-05-30"
         }
       },
