@@ -312,7 +312,7 @@ textarea{resize:vertical;min-height:78px}
   <span style="font-size:13px;font-weight:600;color:var(--gray-700)">🔒 Powered by Groq AI — API key secured server-side</span>
   <select id="demoSelect" style="font-size:13px;padding:7px 10px;border:1.5px solid var(--gray-300);border-radius:8px;max-width:320px;">
     <option value="">⚡ Select Demo Profile…</option>
-    <option value="1">1 · Arjun — 10th Studying, AI &amp; Game Design (Delhi)</option>
+    <option value="1">1 · Arjun — 8th Studying, AI &amp; Game Design (Delhi)</option>
     <option value="2">2 · Priya — 10th Completed, Medicine &amp; Public Health (Uttar Pradesh)</option>
     <option value="3">3 · Kiran — Inter MPC, Govt vs Data Science (Telangana)</option>
     <option value="4">4 · Ananya — PUC PCMB, Medicine &amp; Nutrition (Karnataka)</option>
@@ -2096,7 +2096,7 @@ function renderJobListings(listings) {
 
 // ── DEMO DATA ─────────────────────────────────────────────
 var _DEMO_NAMES = {
-  '1':'Arjun — 10th Studying (prev-class marks), AI & Game Design (Delhi)',
+  '1':'Arjun — 8th Studying (prev-class marks), AI & Game Design (Delhi)',
   '2':'Priya — 10th Completed, Medicine & Public Health (Uttar Pradesh)',
   '3':'Kiran — Inter MPC, Govt Service vs Data Science (Telangana)',
   '4':'Ananya — PUC PCMB, Medicine & Nutrition (Karnataka)',
@@ -2195,14 +2195,14 @@ function _demoBudget(val) {
   document.querySelectorAll('.budget-opt').forEach(function(b){ b.classList.toggle('on', b.textContent===val); });
 }
 
-// 1 — Arjun: Delhi, 10th Studying or Below → enters PREVIOUS-class marks; AI & Game Design
+// 1 — Arjun: Delhi, 8th class studying (10th-or-below bucket) → enters PREVIOUS-class (7th) marks; AI & Game Design
 function _demoArjun() {
   document.getElementById('f_state').value='Delhi'; onStateChange();
-  document.getElementById('f_age').value='15';
-  document.getElementById('f_level').value='10th studying'; onClassChange();
-  document.getElementById('f_passion').value='Want to build AI-powered games and apps';
+  document.getElementById('f_age').value='13';
+  document.getElementById('f_level').value='10th studying'; onClassChange(); // "10th Studying or Below" covers 8th
+  document.getElementById('f_passion').value='In 8th class — love building games and want to make AI apps';
   updateCC();
-  // previous class (e.g. 9th) final-exam marks — shown now for 10th-studying students
+  // previous class (7th) final-exam marks — the marks form is shown for 10th-or-below students
   _demoMarks('tenth',{English:85,SecondLanguage:80,Mathematics:94,Science:88,SocialStudies:78});
   _demoChips('interestChips','interests',['AI & Machine Learning','Game Design']);
   _demoChips('strengthChips','strengths',['Logical thinking','Technical','Creativity']);

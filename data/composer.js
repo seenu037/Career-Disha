@@ -599,9 +599,9 @@
       { url: 'https://www.minorityaffairs.gov.in/show_content.php?lang=1&level=1&ls_id=415&lid=283', amount: 'Post-matric minority benefit (indicative)' },
     'PM Vidyalakshmi Education Loan':
       { url: 'https://www.vidyalakshmi.co.in/Students/', amount: 'Need-based education loan' },
-    'AP Fee Reimbursement (Jagananna Vidya Deevena)':
-      { url: 'https://jnanabhumi.ap.gov.in/', amount: 'Full fee reimbursement (RTF) + MTF' },
-    'TS Fee Reimbursement / Vidya Deevena':
+    'AP Fee Reimbursement (RTF + MTF)':
+      { url: 'https://jnanabhumi.ap.gov.in/', amount: 'Tuition reimbursement (RTF) + maintenance (MTF)' },
+    'TS Fee Reimbursement (ePASS)':
       { url: 'https://telanganaepass.cgg.gov.in/', amount: 'Full fee reimbursement + maintenance' },
     'Karnataka Fee Concession':
       { url: 'https://ssp.postmatric.karnataka.gov.in/', amount: 'Category-based fee concession' },
@@ -623,8 +623,8 @@
     if (schl.indexOf('minority') !== -1) out.push('Minority Scholarship (Maulana Azad)');
     if (out.length === 0) out.push('PM Vidyalakshmi Education Loan');
     var s = formData.state;
-    if (s === 'Andhra Pradesh') out.push('AP Fee Reimbursement (Jagananna Vidya Deevena)');
-    else if (s === 'Telangana') out.push('TS Fee Reimbursement / Vidya Deevena');
+    if (s === 'Andhra Pradesh') out.push('AP Fee Reimbursement (RTF + MTF)');
+    else if (s === 'Telangana') out.push('TS Fee Reimbursement (ePASS)');
     else if (s === 'Karnataka') out.push('Karnataka Fee Concession');
     else if (s === 'Maharashtra') out.push('MAHADBT Scholarship');
     else if (s === 'Tamil Nadu')  out.push('TN First Graduate Scholarship');
