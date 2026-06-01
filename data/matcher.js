@@ -102,19 +102,29 @@
     return inter / studentStrengths.length;
   }
 
+  // Subjects a pre-10th student can plausibly have a mark in (10th-level + their expansions).
+  // Used to keep specialized career subjects (CS, Commerce, Economics, Botany…) out of the
+  // denominator for below-10th students, so they aren't penalised for marks they can't have yet.
+  var FOUNDATIONAL = {
+    math: 1, physics: 1, chemistry: 1, biology: 1, science: 1, english: 1, 'second-language': 1,
+    'social-studies': 1, history: 1, civics: 1, 'political-science': 1, geography: 1
+  };
+
   // Weighted dot product on a sparse subject map; weights need not sum to 1.
-  // Returns 0..1 if all student marks are 0..1.
-  function weightedSubjectDot(studentSubjects, careerWeights) {
+  // Returns 0..1 if all student marks are 0..1. When `foundationalOnly` is set (below-10th),
+  // specialized career subjects are excluded from both numerator and denominator.
+  function weightedSubjectDot(studentSubjects, careerWeights, foundationalOnly) {
     var sum = 0, totalW = 0;
     var keys = Object.keys(careerWeights);
     if (!keys.length) return 0.5; // neutral when career has no subject preference
     keys.forEach(function (k) {
+      if (foundationalOnly && !FOUNDATIONAL[k]) return; // skip subjects a pre-10th student can't have
       var w = careerWeights[k];
       var s = studentSubjects[k] || 0;
       sum += w * s;
       totalW += w;
     });
-    if (!totalW) return 0;
+    if (!totalW) return 0.5; // career had only specialized subjects → neutral, don't penalise
     return sum / totalW;
   }
 
@@ -185,10 +195,20 @@
       blockers.push(career.min_class === 'graduate' ? 'needs-graduation' : 'needs-12th');
     }
 
+    // "10th Studying or Below": interest + aptitude are the meaningful signals at this age, and the
+    // student can't have specialized (stream/CS) marks yet — so we lead with interest, score subjects
+    // on foundational subjects only, and let the primary interest dominate (see below).
+    var belowTenth = student.class === '10th studying';
+
     var v = career.vector || {};
     var wInterest = interestCoverage(student.interests, v.interests || []);
+    // Below-10th: the declared #1 interest dominates — if this career covers it, floor the interest
+    // signal high so a complementary 2nd pick can't cap the career matching their primary passion.
+    if (belowTenth && student.interests.length && (v.interests || []).indexOf(student.interests[0]) !== -1) {
+      wInterest = Math.max(wInterest, 0.8);
+    }
     var wStrength = strengthCoverage(student.strengths, v.strengths || []);
-    var wSubject  = weightedSubjectDot(student.subjects, v.subjects || {});
+    var wSubject  = weightedSubjectDot(student.subjects, v.subjects || {}, belowTenth);
 
     // Location signals. A student who is "open to other states / abroad" is FLEXIBLE — they can
     // relocate to where the career's jobs are, so they should NOT be penalised like a student
@@ -212,9 +232,14 @@
     // that weight onto interest (+0.15) and strength (+0.10) so the formula
     // still sums to 1.0 and the threshold stays comparable.
     var hasNoMarks = !student.subjects || Object.keys(student.subjects).length === 0;
-    var wI = hasNoMarks ? 0.50 : 0.35;
-    var wS = hasNoMarks ? 0.30 : 0.20;
-    var wSub = hasNoMarks ? 0.00 : 0.25;
+    var wI, wS, wSub;
+    if (belowTenth && !hasNoMarks) {        // pre-10th WITH foundational marks → interest/aptitude-led
+      wI = 0.45; wS = 0.25; wSub = 0.10;
+    } else if (hasNoMarks) {                // no marks at all → interests are the only signal
+      wI = 0.50; wS = 0.30; wSub = 0.00;
+    } else {                                // 10th+/Inter/Degree with marks → standard balance
+      wI = 0.35; wS = 0.20; wSub = 0.25;
+    }
 
     var raw = wI  * wInterest
             + wS  * wStrength
