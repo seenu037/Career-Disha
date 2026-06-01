@@ -532,15 +532,24 @@
   // ── Government job targets (real roles routed to official recruiting bodies) ───────────
   // Specific vacancies/exam dates aren't live — each row links to the official portal.
   var CENTRAL_GOVT_JOBS = [
+    { role: 'All govt / PSU vacancies (aggregator)', body: 'National Career Service', exam: 'NCS portal', url: 'https://www.ncs.gov.in' },
     { role: 'IAS / IPS / IFS (Civil Services)', body: 'UPSC', exam: 'UPSC CSE', url: 'https://upsc.gov.in' },
     { role: 'Indian Forest Service', body: 'UPSC', exam: 'UPSC IFoS', url: 'https://upsc.gov.in' },
     { role: 'Inspector / Auditor / Assistant', body: 'SSC', exam: 'SSC CGL', url: 'https://ssc.gov.in' },
-    { role: 'Clerk / Data Entry Operator', body: 'SSC', exam: 'SSC CHSL', url: 'https://ssc.gov.in' },
-    { role: 'Railways (NTPC / Group D / JE)', body: 'RRB', exam: 'RRB exams', url: 'https://www.rrbcdg.gov.in' },
-    { role: 'Bank PO / Clerk', body: 'IBPS / SBI', exam: 'IBPS / SBI', url: 'https://www.ibps.in' },
+    { role: 'Clerk / DEO / MTS', body: 'SSC', exam: 'SSC CHSL / MTS', url: 'https://ssc.gov.in' },
+    { role: 'Railways (NTPC / Group D / JE / ALP)', body: 'RRB', exam: 'RRB exams', url: 'https://www.rrbcdg.gov.in' },
+    { role: 'Bank PO / Clerk / SO', body: 'IBPS / SBI', exam: 'IBPS / SBI', url: 'https://www.ibps.in' },
+    { role: 'RBI Grade B / Assistant', body: 'Reserve Bank of India', exam: 'RBI exams', url: 'https://opportunities.rbi.org.in' },
     { role: 'Agricultural Scientist (ARS)', body: 'ICAR / ASRB', exam: 'ICAR ARS-NET', url: 'https://www.asrb.org.in' },
-    { role: 'Ordnance Factory / Defence civilian', body: 'Dept. of Defence Production', exam: 'OFB / DDP', url: 'https://ddpdoo.gov.in' },
-    { role: 'Defence Officer (NDA / CDS)', body: 'UPSC', exam: 'NDA / CDS', url: 'https://upsc.gov.in' }
+    { role: 'Defence Officer (NDA / CDS)', body: 'UPSC', exam: 'NDA / CDS', url: 'https://upsc.gov.in' },
+    { role: 'Army (Agniveer / Officer)', body: 'Indian Army', exam: 'Agnipath / NDA', url: 'https://joinindianarmy.nic.in' },
+    { role: 'Navy (Agniveer / Officer)', body: 'Indian Navy', exam: 'Agnipath / INET', url: 'https://www.joinindiannavy.gov.in' },
+    { role: 'Air Force (Agniveer / AFCAT)', body: 'Indian Air Force', exam: 'Agnipath / AFCAT', url: 'https://careerindianairforce.cdac.in' },
+    { role: 'Scientist / Engineer (Space)', body: 'ISRO', exam: 'ICRB', url: 'https://www.isro.gov.in/Careers.html' },
+    { role: 'Scientist (Defence R&D)', body: 'DRDO / RAC', exam: 'GATE / RAC', url: 'https://rac.gov.in' },
+    { role: 'PSU Engineer (NTPC/ONGC/BHEL/SAIL)', body: 'PSUs via GATE score', exam: 'GATE', url: 'https://www.ncs.gov.in' },
+    { role: 'Postal Assistant / GDS / MTS', body: 'India Post', exam: 'GDS / Postal', url: 'https://www.indiapostgdsonline.gov.in' },
+    { role: 'Ordnance Factory / Defence civilian', body: 'Dept. of Defence Production', exam: 'OFB / DDP', url: 'https://ddpdoo.gov.in' }
   ];
   // State Public Service Commission per state (verified portals; state roles route through these).
   var STATE_PSC = {
@@ -562,6 +571,75 @@
     'Assam': { psc: 'APSC', url: 'https://apsc.nic.in' },
     'Delhi': { psc: 'DSSSB / UPSC', url: 'https://dsssb.delhi.gov.in' }
   };
+  // Additional official state recruitment portals beyond the PSC (police boards, staff-selection /
+  // subordinate-service boards, state employment / apply portals). Best-effort official links —
+  // exact vacancies & current domains vary by year, so always confirm on the linked portal.
+  var STATE_GOVT_EXTRA = {
+    'Andhra Pradesh': [
+      { role: 'Police SI / Constable', body: 'AP SLPRB', url: 'https://slprb.ap.gov.in' },
+      { role: 'Village / Ward Secretariat', body: 'AP Grama-Ward Sachivalayam', url: 'https://gramawardsachivalayam.ap.gov.in' }
+    ],
+    'Telangana': [
+      { role: 'Police SI / Constable', body: 'TSLPRB', url: 'https://www.tslprb.in' }
+    ],
+    'Karnataka': [
+      { role: 'Police recruitment', body: 'Karnataka State Police', url: 'https://ksp.karnataka.gov.in' },
+      { role: 'Entrance / seat allotment', body: 'KEA', url: 'https://cetonline.karnataka.gov.in/kea' }
+    ],
+    'Maharashtra': [
+      { role: 'Subordinate exams', body: 'Maharashtra Pariksha (Maha-IT)', url: 'https://mahapariksha.gov.in' },
+      { role: 'Employment / apply portal', body: 'Maha Rojgar (Mahaswayam)', url: 'https://rojgar.mahaswayam.gov.in' }
+    ],
+    'Tamil Nadu': [
+      { role: 'Police SI / Constable', body: 'TNUSRB', url: 'https://www.tnusrb.tn.gov.in' },
+      { role: 'Teacher recruitment', body: 'TN TRB', url: 'https://trb.tn.gov.in' },
+      { role: 'Employment portal', body: 'TN Velai Vaaippu', url: 'https://www.tnvelaivaaippu.gov.in' }
+    ],
+    'Kerala': [
+      { role: 'Employment / apply portal', body: 'Kerala Employment Dept', url: 'https://www.employment.kerala.gov.in' }
+    ],
+    'Gujarat': [
+      { role: 'Govt jobs apply portal', body: 'OJAS', url: 'https://ojas.gujarat.gov.in' },
+      { role: 'Subordinate posts', body: 'GSSSB', url: 'https://gsssb.gujarat.gov.in' }
+    ],
+    'West Bengal': [
+      { role: 'Staff selection (Group C / D)', body: 'WBSSC', url: 'https://www.wbssc.gov.in' },
+      { role: 'Police recruitment', body: 'WB Police PRB', url: 'https://prb.wb.gov.in' }
+    ],
+    'Rajasthan': [
+      { role: 'Subordinate posts', body: 'RSMSSB (RSSB)', url: 'https://rsmssb.rajasthan.gov.in' },
+      { role: 'Single sign-on (apply)', body: 'SSO Rajasthan', url: 'https://sso.rajasthan.gov.in' }
+    ],
+    'Uttar Pradesh': [
+      { role: 'Subordinate posts', body: 'UPSSSC', url: 'https://upsssc.gov.in' },
+      { role: 'Police recruitment', body: 'UP PRPB', url: 'https://uppbpb.gov.in' },
+      { role: 'Employment portal', body: 'UP Sewayojan', url: 'https://sewayojan.up.nic.in' }
+    ],
+    'Madhya Pradesh': [
+      { role: 'Selection board (Vyapam)', body: 'MP ESB', url: 'https://esb.mp.gov.in' },
+      { role: 'Apply portal', body: 'MP Online', url: 'https://www.mponline.gov.in' }
+    ],
+    'Bihar': [
+      { role: 'Staff selection (10+2 / inter)', body: 'BSSC', url: 'https://bssc.bihar.gov.in' },
+      { role: 'Police recruitment', body: 'CSBC', url: 'https://csbc.bih.nic.in' }
+    ],
+    'Punjab': [
+      { role: 'Subordinate posts', body: 'PSSSB', url: 'https://sssb.punjab.gov.in' }
+    ],
+    'Haryana': [
+      { role: 'Staff selection (Group C / D)', body: 'HSSC', url: 'https://hssc.gov.in' }
+    ],
+    'Odisha': [
+      { role: 'Staff selection', body: 'OSSC', url: 'https://www.ossc.gov.in' },
+      { role: 'Subordinate posts', body: 'OSSSC', url: 'https://www.osssc.gov.in' }
+    ],
+    'Assam': [
+      { role: 'Police recruitment', body: 'SLPRB Assam', url: 'https://slprbassam.gov.in' }
+    ],
+    'Delhi': [
+      { role: 'Staff selection', body: 'DSSSB', url: 'https://dsssb.delhi.gov.in' }
+    ]
+  };
   function govtJobTargets(formData) {
     var st = formData && formData.state;
     var p = STATE_PSC[st];
@@ -569,14 +647,11 @@
     if (p) {
       state = [
         { role: 'Group 1 (Dy. Collector / DSP / Tahsildar-level)', body: p.psc, url: p.url },
-        { role: 'Group 2 (executive & non-executive posts)', body: p.psc, url: p.url },
-        { role: 'Group 3 / Group 4 (junior assistants, etc.)', body: p.psc, url: p.url },
-        { role: 'Government Teacher (TET / DSC)', body: st + ' School Education Dept / TET', url: p.url },
-        { role: 'Police SI / Constable', body: st + ' Police Recruitment Board', url: p.url },
+        { role: 'Group 2 / 3 / 4 (executive & subordinate posts)', body: p.psc, url: p.url },
+        { role: 'Government Teacher (TET / DSC / TRB)', body: st + ' School Education Dept', url: p.url },
         { role: 'Agriculture Extension Officer', body: p.psc + ' / State Agriculture Dept', url: p.url },
-        { role: 'Sanitary Inspector / Municipal posts', body: st + ' Municipal Administration', url: p.url },
         { role: 'Panchayat Secretary / Revenue (VRO / VAO)', body: p.psc, url: p.url }
-      ];
+      ].concat(STATE_GOVT_EXTRA[st] || []);
     }
     return { stateName: st || '', central: CENTRAL_GOVT_JOBS, state: state };
   }
