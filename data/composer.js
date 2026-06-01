@@ -196,13 +196,23 @@
   // Course-level fee pages (single-body courses that publish their own fee):
   var COURSE_FEE_PAGE = {
     'chartered-accountant': { label: 'ICAI — scheme & fees', url: 'https://www.icai.org/post/scheme-of-education-and-training' },
-    'company-secretary': { label: 'ICSI — student services & fees', url: 'https://www.icsi.edu/student/' }
+    'company-secretary': { label: 'ICSI — student services & fees', url: 'https://www.icsi.edu/student/' },
+    // National course-specific official fee bodies (verified, June 2026)
+    'pilot': { label: 'IGRUA (Govt of India) — pilot training fee', url: 'https://igrua.gov.in' },
+    'hotel-management': { label: 'NCHMCT — fee structure (all courses)', url: 'https://nchm.gov.in/circular-notices/fee-structure-all-courses' },
+    'fashion-designer': { label: 'NIFT — official fee circulars', url: 'https://nift.ac.in' },
+    'lawyer': { label: 'CLAT Consortium — NLU fee (info brochure)', url: 'https://consortiumofnlus.ac.in' }
   };
   // State Fee Regulating Authority pages that publish APPROVED per-college fees (verified).
   var STATE_FEE_PAGE = {
     'Maharashtra': { label: 'Maharashtra FRA — approved fees', url: 'https://mahafra.org/feesInformation' },
     'Karnataka': { label: 'Karnataka KEA — fee structure', url: 'https://cetonline.karnataka.gov.in/kea/' },
-    'Andhra Pradesh': { label: 'AP AFRC — fee orders', url: 'https://afrc.ap.gov.in/' }
+    'Andhra Pradesh': { label: 'AP AFRC — fee orders', url: 'https://afrc.ap.gov.in/' },
+    'Telangana': { label: 'Telangana TAFRC — approved fees', url: 'https://tafrc.telangana.gov.in' },
+    'Tamil Nadu': { label: 'Tamil Nadu — TNEA approved fee', url: 'https://www.tneaonline.org' },
+    'Kerala': { label: 'Kerala CEE — fee notifications', url: 'https://cee.kerala.gov.in' },
+    'Madhya Pradesh': { label: 'MP AFRC — fee orders', url: 'https://www.afrcmp.org' },
+    'Uttar Pradesh': { label: 'UP AFRC — fee order', url: 'http://afrcup2018.in/fee-order.aspx' }
   };
   var MCC_FEE_REF = { label: 'MCC — MBBS/BDS fee & seat matrix', url: 'https://mcc.nic.in/' };
   // Courses whose fees are set by state FRAs (private professional colleges).
