@@ -355,6 +355,7 @@ textarea{resize:vertical;min-height:78px}
 .rescore-btn{display:none;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-pale);border:1.5px solid var(--blue-light);border-radius:20px;padding:5px 12px;cursor:pointer;margin-top:10px;transition:all .2s}
 .rescore-btn:hover{background:var(--blue);color:#fff}
 .rescore-btn.visible{display:inline-flex}
+.rescore-btn.pending{background:var(--saffron);color:#fff;border-color:var(--saffron-dark);animation:fabPulse 1.4s ease-in-out infinite}
 .rescore-flash{font-size:11px;color:var(--green);font-weight:600;margin-left:8px;opacity:0;transition:opacity .4s}
 .rescore-flash.show{opacity:1}
 
@@ -457,7 +458,7 @@ textarea{resize:vertical;min-height:78px}
       <span class="panel-title">📋 Your Profile</span>
       <span class="panel-sub">Fill in 3 steps</span>
     </div>
-    <button class="rescore-btn" id="rescoreBtn" onclick="quickRescore()" title="Re-run match scores from current inputs (fast — no AI call)">⚡ Refresh Scores</button>
+    <button class="rescore-btn" id="rescoreBtn" onclick="liveUpdate()" title="Apply input changes to output (no AI call needed)">⚡ Refresh Scores</button>
     <span class="rescore-flash" id="rescoreFlash">✓ Updated</span>
   </div>
 
@@ -1752,26 +1753,25 @@ function showTab(tab) {
   }
 }
 // ── LIVE INTERACTIVE UPDATE (no LLM call — instant re-match + re-render) ────
-var _liveTimer = null;
 function scheduleUpdate() {
   if (!_analysisReady || !window._rawLLM) return;
-  clearTimeout(_liveTimer);
-  _liveTimer = setTimeout(liveUpdate, 350);
-  // Show "updating…" pulse on output panel heading
-  var ph = document.querySelector('.output-heading .panel-sub');
-  if (ph) ph.textContent = '⟳ Updating…';
+  // Mark changes pending — user clicks Apply to update output
+  var rb = document.getElementById('rescoreBtn');
+  if (rb) { rb.textContent = '🔄 Apply Changes'; rb.classList.add('visible','pending'); }
 }
 function liveUpdate() {
   if (!_analysisReady || !window._rawLLM || !window.CareerMatcher || !window.CareerComposer) return;
   var fd = collectData();
-  if (!fd.state || !fd.level) return; // not enough data yet
+  if (!fd.state || !fd.level) return;
   var det = window.CareerMatcher.run(fd);
   if (!det || !det.matches.length) return;
   fd.pathChoice = window._lastPathChoice || 'both';
   var merged = window.CareerComposer.mergeLLMResponse(window._rawLLM, fd, det.matches);
   renderAll(merged, fd);
-  var ph = document.querySelector('.output-heading .panel-sub');
-  if (ph) ph.textContent = 'AI-generated results based on your profile';
+  // Reset button back to idle state
+  var rb = document.getElementById('rescoreBtn');
+  if (rb) { rb.textContent = '⚡ Refresh Scores'; rb.classList.remove('pending'); }
+  if (window.innerWidth <= 860) showTab('results');
 }
 
 function renderAll(data, formData) {
