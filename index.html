@@ -1772,6 +1772,9 @@ function renderAll(data, formData) {
   renderGovtJobs(data.govt_jobs);
   renderPrivateJobs();
   renderBudget(data.top_paths || [], formData);
+  // Force-close sections that must always start collapsed after render
+  var _isc = document.getElementById('inputSummaryCard'); if (_isc) _isc.open = false;
+  var _gjc = document.getElementById('govtJobsCard');     if (_gjc) _gjc.open = false;
   // Chart resize when user opens the chart details section
   var chartDet = document.getElementById('chartSection');
   if (chartDet) chartDet.addEventListener('toggle', function onChartToggle() {
