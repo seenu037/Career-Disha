@@ -276,6 +276,10 @@ textarea{resize:vertical;min-height:78px}
 .mt4{margin-top:16px}
 @media print{.header,.api-bar,.form-panel,.form-actions,.debug-section{display:none}.results-panel{display:block!important;height:auto!important}}
 
+/* ── SINGLE-PAGE FORM SECTION HEADINGS ──────────────────────── */
+.fsec-head{font-size:13px;font-weight:700;color:var(--deep-blue);letter-spacing:.3px;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+.fsec-divider{height:1px;background:var(--gray-200);margin:16px 0}
+
 /* ── PANEL HEADINGS ─────────────────────────────────────────── */
 .panel-heading{display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:10px;border-radius:10px;flex-wrap:wrap}
 .panel-tag{font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;flex-shrink:0}
@@ -457,25 +461,14 @@ textarea{resize:vertical;min-height:78px}
     <span class="rescore-flash" id="rescoreFlash">✓ Updated</span>
   </div>
 
-  <div class="progress-wrap">
-    <div class="progress-steps">
-      <div class="step-circle active" id="sc1">1</div>
-      <div class="step-line" id="sl1"></div>
-      <div class="step-circle" id="sc2">2</div>
-      <div class="step-line" id="sl2"></div>
-      <div class="step-circle" id="sc3">3</div>
-    </div>
-    <div class="step-labels">
-      <div class="step-label active" id="lbl1">Personal Profile</div>
-      <div class="step-label" id="lbl2">Academic Profile</div>
-      <div class="step-label" id="lbl3">Constraints</div>
-    </div>
-  </div>
+  <!-- Single-page form — all sections visible, scroll to fill -->
+  <div class="card" style="padding:16px 14px">
 
-  <!-- STEP 1: Personal Profile -->
-  <div id="step1" class="card">
-    <div class="card-title">👤 Step 1: Personal Profile</div>
-    <div class="card-sub" id="cardSub1">Your background and interests • <span id="cardSub1Local">మీ నేపథ్యం మరియు ఆసక్తులు</span></div>
+  <!-- hidden step refs kept for JS compat -->
+  <div id="step1">
+  <div class="card-sub" id="cardSub1" style="margin-bottom:14px">Your background and interests • <span id="cardSub1Local">మీ నేపథ్యం మరియు ఆసక్తులు</span></div>
+
+  <div class="fsec-head">👤 Personal Profile</div>
 
     <div class="form-group">
       <label class="field-label">State <span class="tel" data-lkey="state">రాష్ట్రం</span></label>
@@ -562,108 +555,97 @@ textarea{resize:vertical;min-height:78px}
       <label class="field-label">Strength Areas <span class="tel" data-lkey="strengths">బలమైన అంశాలు</span></label>
       <div class="chips" id="strengthChips"></div>
     </div>
-    <div class="form-actions">
-      <button class="btn btn-outline" onclick="loadDemo()" title="Load selected demo from top bar">⚡ Load Demo</button>
-      <button class="btn btn-primary" onclick="nextFromStep1()">Next →</button>
+  </div><!-- /step1 -->
+
+  <div class="fsec-divider"></div>
+
+  <!-- Academic section (shown/hidden per class by onClassChange) -->
+  <div id="step2">
+  <div class="fsec-head">📚 Academic Profile</div>
+  <div class="card-sub" id="cardSub2" style="margin-bottom:12px">Enter subject-wise marks and exam scores • <span id="cardSub2Local">మీ మార్కులు నమోదు చేయండి</span></div>
+
+  <div class="form-grid">
+    <div class="form-group" id="boardSection">
+      <label class="field-label" id="boardLabel">10th Board <span class="tel" data-lkey="board">బోర్డు</span></label>
+      <select id="f_board"><option value="">Select Board</option></select>
+    </div>
+    <div class="form-group" id="streamSection">
+      <label class="field-label" id="streamLabel">Intermediate Stream <span class="tel">గ్రూపు</span></label>
+      <select id="f_stream" onchange="updateInterSubjects()">
+        <option value="">Select Stream</option>
+        <option value="MPC">MPC (Maths, Physics, Chemistry)</option>
+        <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
+        <option value="CEC">CEC (Civics, Economics, Commerce)</option>
+        <option value="MEC">MEC (Maths, Economics, Commerce)</option>
+        <option value="HEC">HEC (History, Economics, Civics)</option>
+        <option value="Not yet completed">Not yet completed</option>
+      </select>
     </div>
   </div>
 
-  <!-- STEP 2: Academic Profile -->
-  <div id="step2" class="card hidden">
-    <div class="card-title">📚 Step 2: Academic Profile</div>
-    <div class="card-sub" id="cardSub2">Enter subject-wise marks and exam scores • <span id="cardSub2Local">మీ మార్కులు నమోదు చేయండి</span></div>
-
-    <div class="form-grid">
-      <div class="form-group" id="boardSection">
-        <label class="field-label" id="boardLabel">10th Board <span class="tel" data-lkey="board">బోర్డు</span></label>
-        <select id="f_board">
-          <option value="">Select Board</option>
-        </select>
-      </div>
-      <div class="form-group" id="streamSection">
-        <label class="field-label" id="streamLabel">Intermediate Stream <span class="tel">గ్రూపు</span></label>
-        <select id="f_stream" onchange="updateInterSubjects()">
-          <option value="">Select Stream</option>
-          <option value="MPC">MPC (Maths, Physics, Chemistry)</option>
-          <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
-          <option value="CEC">CEC (Civics, Economics, Commerce)</option>
-          <option value="MEC">MEC (Maths, Economics, Commerce)</option>
-          <option value="HEC">HEC (History, Economics, Civics)</option>
-          <option value="Not yet completed">Not yet completed</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- 10th Subjects -->
-    <div class="form-group full mt4" id="tenthSection">
-      <label class="field-label" id="tenthMarksLabel">10th Class — Subject-wise Marks <span class="tel" data-lkey="tenth_marks">10వ తరగతి మార్కులు</span></label>
-      <div id="tenthMarksHint" style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
-      <table class="subj-table">
-        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
-        <tbody id="tenthTbody"></tbody>
-      </table>
-      <div id="topSubjDisplay" style="margin-top:8px;min-height:24px"></div>
-    </div>
-
-    <!-- Inter Subjects (dynamic) -->
-    <div class="form-group full mt4" id="interSection" style="display:none">
-      <label class="field-label" id="interLabel">Intermediate — Subject-wise Marks <span class="tel" data-lkey="inter_marks">ఇంటర్ మార్కులు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
-      <table class="subj-table">
-        <thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead>
-        <tbody id="interTbody"></tbody>
-      </table>
-    </div>
-
-    <!-- Competitive Exams -->
-    <div class="form-group full mt4" id="examsSection">
-      <label class="field-label">Competitive Exams Appeared <span class="tel" data-lkey="exams">పోటీ పరీక్షలు</span></label>
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Click the dropdown, tick the exams you appeared for, then enter your score/rank below</div>
-      <div class="exam-md-wrap">
-        <div class="exam-md-trigger" id="examMdTrigger" onclick="toggleExamDD(event)">
-          <span id="examMdLabel">Select Competitive Exams</span>
-          <span class="exam-md-arrow" id="examMdArrow">▼</span>
-        </div>
-        <div class="exam-md-panel" id="examMdPanel">
-          <input type="text" id="examMdSearch" placeholder="🔍 Search exams..." oninput="filterExamMd()" onclick="event.stopPropagation()">
-          <div id="examCategories"></div>
-        </div>
-        <div id="examMdChips" class="exam-md-chips"></div>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn btn-outline" onclick="gotoStep(1)">← Back</button>
-      <button class="btn btn-primary" onclick="gotoStep(3)">Next: Constraints →</button>
-    </div>
+  <div class="form-group full mt4" id="tenthSection">
+    <label class="field-label" id="tenthMarksLabel">10th Class — Subject-wise Marks <span class="tel" data-lkey="tenth_marks">10వ తరగతి మార్కులు</span></label>
+    <div id="tenthMarksHint" style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
+    <table class="subj-table"><thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead><tbody id="tenthTbody"></tbody></table>
+    <div id="topSubjDisplay" style="margin-top:8px;min-height:24px"></div>
   </div>
 
-  <!-- STEP 3 -->
-  <div id="step3" class="card hidden">
-    <div class="card-title">⚖️ Step 3: Practical Constraints</div>
-    <div class="card-sub" id="cardSub3">Help us find realistic options • <span id="cardSub3Local">మీ పరిస్థితికి అనుకూలమైన మార్గాలు</span></div>
-    <div style="font-size:12px;background:var(--blue-pale);border-radius:8px;padding:8px 12px;margin-bottom:14px;color:var(--deep-blue)">ℹ️ Location options and scholarship information are tailored to your selected state.</div>
-    <div class="form-group">
-      <label class="field-label">Education Budget <span class="tel" data-lkey="budget">విద్యకు బడ్జెట్</span></label>
-      <div class="budget-grid" id="budgetGrid"></div>
-    </div>
-    <div class="form-group mt4">
-      <label class="field-label">Location Preference <span class="tel" data-lkey="location">స్థాన ప్రాధాన్యత</span></label>
-      <div class="chips" id="locChips"></div>
-    </div>
-    <div class="form-group mt4">
-      <label class="field-label">Family Background <span class="tel" data-lkey="family">కుటుంబ నేపథ్యం</span></label>
-      <div class="chips" id="famChips"></div>
-    </div>
-    <div class="form-group mt4">
-      <label class="field-label">Scholarship Eligibility <span class="tel" data-lkey="scholarship">స్కాలర్‌షిప్ అర్హత</span></label>
-      <div class="chips" id="schlChips"></div>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-outline" onclick="backFromStep3()">← Back</button>
-      <button class="btn btn-submit" onclick="submitForm()">🚀 Get AI Career Guidance</button>
+  <div class="form-group full mt4" id="interSection" style="display:none">
+    <label class="field-label" id="interLabel">Intermediate — Subject-wise Marks <span class="tel" data-lkey="inter_marks">ఇంటర్ మార్కులు</span></label>
+    <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px;">Enter marks out of 100 for each subject</div>
+    <table class="subj-table"><thead><tr><th>Subject</th><th style="width:120px">Marks (/100)</th><th>Visual</th></tr></thead><tbody id="interTbody"></tbody></table>
+  </div>
+
+  <div class="form-group full mt4" id="examsSection">
+    <label class="field-label">Competitive Exams Appeared <span class="tel" data-lkey="exams">పోటీ పరీక్షలు</span></label>
+    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Tick exams you appeared for and enter your score/rank</div>
+    <div class="exam-md-wrap">
+      <div class="exam-md-trigger" id="examMdTrigger" onclick="toggleExamDD(event)">
+        <span id="examMdLabel">Select Competitive Exams</span>
+        <span class="exam-md-arrow" id="examMdArrow">▼</span>
+      </div>
+      <div class="exam-md-panel" id="examMdPanel">
+        <input type="text" id="examMdSearch" placeholder="🔍 Search exams..." oninput="filterExamMd()" onclick="event.stopPropagation()">
+        <div id="examCategories"></div>
+      </div>
+      <div id="examMdChips" class="exam-md-chips"></div>
     </div>
   </div>
+  </div><!-- /step2 -->
+
+  <div class="fsec-divider"></div>
+
+  <!-- Constraints section -->
+  <div id="step3">
+  <div class="fsec-head">⚖️ Preferences &amp; Constraints</div>
+  <div class="card-sub" id="cardSub3" style="margin-bottom:12px">Help us find realistic options • <span id="cardSub3Local">మీ పరిస్థితికి అనుకూలమైన మార్గాలు</span></div>
+  <div style="font-size:12px;background:var(--blue-pale);border-radius:8px;padding:8px 12px;margin-bottom:14px;color:var(--deep-blue)">ℹ️ Location &amp; scholarship options are tailored to your selected state.</div>
+
+  <div class="form-group">
+    <label class="field-label">Education Budget <span class="tel" data-lkey="budget">విద్యకు బడ్జెట్</span></label>
+    <div class="budget-grid" id="budgetGrid"></div>
+  </div>
+  <div class="form-group mt4">
+    <label class="field-label">Location Preference <span class="tel" data-lkey="location">స్థాన ప్రాధాన్యత</span></label>
+    <div class="chips" id="locChips"></div>
+  </div>
+  <div class="form-group mt4">
+    <label class="field-label">Family Background <span class="tel" data-lkey="family">కుటుంబ నేపథ్యం</span></label>
+    <div class="chips" id="famChips"></div>
+  </div>
+  <div class="form-group mt4">
+    <label class="field-label">Scholarship Eligibility <span class="tel" data-lkey="scholarship">స్కాలర్‌షిప్ అర్హత</span></label>
+    <div class="chips" id="schlChips"></div>
+  </div>
+  </div><!-- /step3 -->
+
+  <!-- Single submit bar -->
+  <div class="form-actions" style="margin-top:20px;border-top:1px solid var(--gray-200);padding-top:14px">
+    <button class="btn btn-outline" onclick="loadDemo()" title="Load demo from top bar">⚡ Demo</button>
+    <button class="btn btn-submit" onclick="submitForm()">🚀 Get AI Career Guidance</button>
+  </div>
+
+  </div><!-- /single card -->
 
 </div><!-- /formSection -->
 
@@ -1520,36 +1502,10 @@ function validateStep(n) {
   return true;
 }
 
-// ── STEP NAVIGATION ───────────────────────────────────────
-function nextFromStep1() {
-  // All levels (incl. "10th Studying or Below") now go through Step 2. For 10th-studying,
-  // Step 2 shows only the previous-class marks form (board/stream/exams hidden by onClassChange).
-  gotoStep(2);
-}
-
-function backFromStep3() {
-  gotoStep(2);
-}
-
-function gotoStep(n) {
-  if (n > step && !validateStep(step)) return;
-  document.getElementById('step' + step).classList.add('hidden');
-  var oldCircle = document.getElementById('sc' + step);
-  var newCircle = document.getElementById('sc' + n);
-  if (n > step) {
-    oldCircle.className = 'step-circle done'; oldCircle.textContent = '✓';
-    if (step < 3) document.getElementById('sl' + step).classList.add('done');
-  } else {
-    oldCircle.className = 'step-circle'; oldCircle.textContent = step;
-    newCircle.className = 'step-circle active'; newCircle.textContent = n;
-    if (n < 3) document.getElementById('sl' + n).classList.remove('done');
-  }
-  if (!newCircle.classList.contains('done')) newCircle.className = 'step-circle active';
-  document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active', i+1===n); });
-  step = n;
-  document.getElementById('step' + step).classList.remove('hidden');
-  window.scrollTo({ top:0, behavior:'smooth' });
-}
+// ── STEP NAVIGATION (no-ops — single-page form, all sections always visible) ──
+function nextFromStep1() {}
+function backFromStep3()  {}
+function gotoStep(n)      { step = n; } // keep step var for validateStep compat
 
 // ── COLLECT DATA ──────────────────────────────────────────
 function collectData() {
@@ -1594,6 +1550,9 @@ function collectData() {
 
 // ── SUBMIT → ALIGNMENT CHECK ──────────────────────────────
 function submitForm() {
+  // Single-page form: validate all sections at once
+  if (!validateStep(1)) return;
+  if (!validateStep(2)) return;
   if (!validateStep(3)) return;
   var data = collectData();
   var level = document.getElementById('f_level').value;
@@ -2731,11 +2690,7 @@ function startOver() {
   document.getElementById('debugJson').textContent = '';
   document.getElementById('debugJson').style.display = 'none';
   if (mChart) { mChart.destroy(); mChart=null; }
-  step=1;
-  ['step1','step2','step3'].forEach(function(id,i){ document.getElementById(id).classList.toggle('hidden',i!==0); });
-  ['sc1','sc2','sc3'].forEach(function(id,i){ var c=document.getElementById(id); c.className='step-circle'+(i===0?' active':''); c.textContent=i+1; });
-  ['sl1','sl2'].forEach(function(id){ document.getElementById(id).classList.remove('done'); });
-  document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
+  step=1; // reset step tracker (used by validateStep)
   if (window._savedFormSnapshot) restoreFormSnapshot(window._savedFormSnapshot);
   // Reset interactive state
   _analysisReady = false;
