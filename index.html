@@ -606,6 +606,15 @@ textarea{resize:vertical;min-height:78px}
   <div class="alert-green hidden" id="rScholarship"></div>
   <div class="alert-yellow hidden" id="rWarning"></div>
 
+  <!-- Profile inputs — at the top, hidden by default; JS opens it -->
+  <details class="r-section" id="inputSummaryCard">
+    <summary>📋 Your Profile Inputs</summary>
+    <div class="r-body" style="overflow-x:auto">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this drove your match results</div>
+      <table class="btable"><tbody id="inputSummaryBody"></tbody></table>
+    </div>
+  </details>
+
   <!-- Career recommendations — always open, no collapse chrome -->
   <details class="r-section r-cards" open>
     <summary></summary>
@@ -615,33 +624,18 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
-  <!-- Decision Tree — open by default -->
-  <details class="r-section" open>
+  <!-- All remaining sections — closed by default, click header to expand -->
+
+  <details class="r-section">
     <summary>🗺️ Career Roadmap Decision Tree <span id="resTreeTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">మీ కెరీర్ పథం</span></summary>
     <div class="r-body"><div class="tree-wrap" id="treeWrap"></div></div>
   </details>
 
-  <!-- Job Market chart — closed by default; JS fires resize on open -->
   <details class="r-section" id="chartSection">
     <summary>📊 Job Market Analysis <span id="resMarketTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">ఉద్యోగ అవకాశాలు</span></summary>
     <div class="r-body"><div class="chart-wrap"><canvas id="mChart"></canvas></div></div>
   </details>
 
-  <!-- Job Listings — shown/hidden + opened by JS -->
-  <details class="r-section" id="jobListingsCard">
-    <summary>💼 Current Job Openings <span id="resJobsTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">ఉద్యోగ జాబితా</span></summary>
-    <div class="r-body" style="overflow-x:auto">
-      <table class="btable" id="jobListingsTable">
-        <thead><tr>
-          <th>Job Title</th><th>Company / Sector</th><th>Salary</th>
-          <th>Experience</th><th>Location</th><th>Key Skills</th><th>Apply</th>
-        </tr></thead>
-        <tbody id="jobListingsBody"></tbody>
-      </table>
-    </div>
-  </details>
-
-  <!-- Govt Jobs — opened by JS when data is ready -->
   <details class="r-section" id="govtJobsCard">
     <summary>🏛️ Government Jobs <span id="govtJobsState" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;"></span></summary>
     <div class="r-body">
@@ -650,7 +644,6 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
-  <!-- Private Jobs — closed by default -->
   <details class="r-section" id="privateJobsCard">
     <summary>💼 Private Jobs — Where to Apply</summary>
     <div class="r-body">
@@ -659,8 +652,7 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
-  <!-- Budget — open by default -->
-  <details class="r-section" open>
+  <details class="r-section">
     <summary>💰 Budget vs Path Feasibility <span id="resBudgetTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">బడ్జెట్ అనుకూలత</span></summary>
     <div class="r-body" style="overflow-x:auto">
       <table class="btable">
@@ -673,20 +665,13 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
-  <!-- Counsellor note -->
-  <div class="counselor-note results-footer" id="rNote"></div>
-
-  <!-- Profile inputs — opened by JS -->
-  <details class="r-section results-footer" id="inputSummaryCard">
-    <summary>📋 Your Profile Inputs</summary>
-    <div class="r-body" style="overflow-x:auto">
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this is what drove your match results</div>
-      <table class="btable"><tbody id="inputSummaryBody"></tbody></table>
-    </div>
+  <details class="r-section">
+    <summary>🎓 Counsellor's Note</summary>
+    <div class="r-body"><div class="counselor-note" id="rNote" style="margin:0"></div></div>
   </details>
 
   <!-- Footer actions -->
-  <div class="results-footer" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
     <button class="btn btn-primary" onclick="window.print()">🖨️ Print Report</button>
     <button class="btn btn-secondary" onclick="startOver()">🔄 New Analysis</button>
     <div class="debug-section" style="margin-left:auto">
@@ -2164,6 +2149,7 @@ function renderBudget(paths, formData) {
 function renderJobListings(listings) {
   var card = document.getElementById('jobListingsCard');
   var tbody = document.getElementById('jobListingsBody');
+  if (!card || !tbody) return; // section removed
   if (!listings || !listings.length) { card.open = false; return; }
   card.open = true;
   tbody.innerHTML = listings.map(function(j, idx) {
@@ -2598,7 +2584,7 @@ function startOver() {
   document.getElementById('cardsGrid').innerHTML = '';
   document.getElementById('treeWrap').innerHTML = '';
   document.getElementById('budgetBody').innerHTML = '';
-  document.getElementById('jobListingsBody').innerHTML = '';
+  var jlb = document.getElementById('jobListingsBody'); if (jlb) jlb.innerHTML = '';
   var jlc = document.getElementById('jobListingsCard'); if (jlc) jlc.open = false;
   document.getElementById('rSummaryLocal').style.display = 'none';
   var ic = document.getElementById('inputSummaryCard'); if (ic) ic.open = false;
