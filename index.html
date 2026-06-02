@@ -1205,9 +1205,9 @@ document.addEventListener('click', function(e) {
 function updateFormLanguage(state) {
   var lang = STATE_LANGUAGE[state] || 'Hindi';
   var t = LANG_LABELS[lang] || LANG_LABELS['Hindi'];
-  document.getElementById('lbl1').innerHTML = 'Personal Profile<br><small style="font-size:9px;opacity:0.75">' + t.step1 + '</small>';
-  document.getElementById('lbl2').innerHTML = 'Academic Profile<br><small style="font-size:9px;opacity:0.75">' + t.step2 + '</small>';
-  document.getElementById('lbl3').innerHTML = 'Constraints<br><small style="font-size:9px;opacity:0.75">' + t.step3 + '</small>';
+  var lb1=document.getElementById('lbl1'); if(lb1) lb1.innerHTML='Personal Profile<br><small style="font-size:9px;opacity:0.75">'+t.step1+'</small>';
+  var lb2=document.getElementById('lbl2'); if(lb2) lb2.innerHTML='Academic Profile<br><small style="font-size:9px;opacity:0.75">'+t.step2+'</small>';
+  var lb3=document.getElementById('lbl3'); if(lb3) lb3.innerHTML='Constraints<br><small style="font-size:9px;opacity:0.75">'+t.step3+'</small>';
   document.querySelectorAll('.tel[data-lkey]').forEach(function(el){
     var k = el.getAttribute('data-lkey');
     if (t[k]) el.textContent = t[k];
