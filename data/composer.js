@@ -309,7 +309,76 @@
     'ecommerce-manager': 'Management', 'real-estate-manager': 'Management', 'insurance-professional': 'Management',
     'event-manager': 'Management',
     'ir-specialist': 'University', 'nonprofit-manager': 'University', 'translator': 'University', 'pr-specialist': 'University'
-    // no NIRF category (→ LLM colleges): game-developer, ux-designer, animator-vfx, interior-designer, photographer, content-creator, pilot
+    // no NIRF category: game-developer, ux-designer, animator-vfx, interior-designer, photographer,
+    // content-creator, pilot, performing-artist, sports-manager → use FALLBACK_COLLEGES below
+  };
+
+  // Known / popular institutions for careers not covered by NIRF rankings.
+  // Displayed when nirfCollegesFor returns null. Format matches mapCollege output.
+  var FALLBACK_COLLEGES = {
+    'performing-artist': [
+      {name:'National School of Drama',nirf_rank:'—',nirf_year:'—',type:'Performing Arts',city:'New Delhi',state:'Delhi',url:'https://nsd.gov.in',fee:null,fee_total:null,fee_year:null},
+      {name:'FTII (Film & TV Institute)',nirf_rank:'—',nirf_year:'—',type:'Film & Media',city:'Pune',state:'Maharashtra',url:'https://ftiindia.gov.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Kalakshetra Foundation',nirf_rank:'—',nirf_year:'—',type:'Classical Arts',city:'Chennai',state:'Tamil Nadu',url:'https://kalakshetra.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Bhatkhande Music Inst. Univ.',nirf_rank:'—',nirf_year:'—',type:'Music',city:'Lucknow',state:'Uttar Pradesh',url:'https://bhatkhandemusic.edu.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Indira Kala Sangeet Vishwavidyalaya',nirf_rank:'—',nirf_year:'—',type:'Music & Dance',city:'Khairagarh',state:'Chhattisgarh',url:'https://iksv.ac.in',fee:null,fee_total:null,fee_year:null}
+    ],
+    'sports-manager': [
+      {name:'NSNIS Patiala',nirf_rank:'—',nirf_year:'—',type:'Sports Sciences',city:'Patiala',state:'Punjab',url:'https://nsnis.org',fee:null,fee_total:null,fee_year:null},
+      {name:'LNIPE Gwalior',nirf_rank:'—',nirf_year:'—',type:'Physical Education',city:'Gwalior',state:'Madhya Pradesh',url:'https://lnipe.edu.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Tamil Nadu Physical Edu. & Sports Univ.',nirf_rank:'—',nirf_year:'—',type:'Physical Education',city:'Chennai',state:'Tamil Nadu',url:'https://tnspu.ac.in',fee:null,fee_total:null,fee_year:null},
+      {name:'SVYASA University',nirf_rank:'—',nirf_year:'—',type:'Yoga & Sports Science',city:'Bangalore',state:'Karnataka',url:'https://svyasa.edu.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Amity School of Physical Education',nirf_rank:'—',nirf_year:'—',type:'Sports Management',city:'Noida',state:'Uttar Pradesh',url:'https://amity.edu',fee:null,fee_total:null,fee_year:null}
+    ],
+    'game-developer': [
+      {name:'Whistling Woods International',nirf_rank:'—',nirf_year:'—',type:'Media & Design',city:'Mumbai',state:'Maharashtra',url:'https://whistlingwoods.net',fee:null,fee_total:null,fee_year:null},
+      {name:'Arena Animation (franchise)',nirf_rank:'—',nirf_year:'—',type:'Animation & Game',city:'Pan-India',state:'—',url:'https://arena-multimedia.com',fee:null,fee_total:null,fee_year:null},
+      {name:'MAAC (Maya Academy)',nirf_rank:'—',nirf_year:'—',type:'Animation & VFX',city:'Pan-India',state:'—',url:'https://maacindia.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Frameboxx Animation & VFX',nirf_rank:'—',nirf_year:'—',type:'Game Design',city:'Pan-India',state:'—',url:'https://frameboxx.in',fee:null,fee_total:null,fee_year:null},
+      {name:'MIT Institute of Design, Pune',nirf_rank:'—',nirf_year:'—',type:'Design',city:'Pune',state:'Maharashtra',url:'https://mitid.edu.in',fee:null,fee_total:null,fee_year:null}
+    ],
+    'animator-vfx': [
+      {name:'FTII (Film & TV Institute)',nirf_rank:'—',nirf_year:'—',type:'Film & Media',city:'Pune',state:'Maharashtra',url:'https://ftiindia.gov.in',fee:null,fee_total:null,fee_year:null},
+      {name:'MAAC (Maya Academy)',nirf_rank:'—',nirf_year:'—',type:'Animation & VFX',city:'Pan-India',state:'—',url:'https://maacindia.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Arena Animation',nirf_rank:'—',nirf_year:'—',type:'Animation',city:'Pan-India',state:'—',url:'https://arena-multimedia.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Whistling Woods International',nirf_rank:'—',nirf_year:'—',type:'Media & Design',city:'Mumbai',state:'Maharashtra',url:'https://whistlingwoods.net',fee:null,fee_total:null,fee_year:null},
+      {name:'National Institute of Design',nirf_rank:'—',nirf_year:'—',type:'Design (NID)',city:'Ahmedabad',state:'Gujarat',url:'https://nid.edu',fee:null,fee_total:null,fee_year:null}
+    ],
+    'ux-designer': [
+      {name:'National Institute of Design (NID)',nirf_rank:'—',nirf_year:'—',type:'Design',city:'Ahmedabad',state:'Gujarat',url:'https://nid.edu',fee:null,fee_total:null,fee_year:null},
+      {name:'NIFT New Delhi',nirf_rank:'—',nirf_year:'—',type:'Fashion & Design',city:'New Delhi',state:'Delhi',url:'https://nift.ac.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Srishti Manipal Inst. of Art',nirf_rank:'—',nirf_year:'—',type:'Design & Arts',city:'Bangalore',state:'Karnataka',url:'https://srishtimanipalinstitute.in',fee:null,fee_total:null,fee_year:null},
+      {name:'MIT Institute of Design',nirf_rank:'—',nirf_year:'—',type:'UX / Product Design',city:'Pune',state:'Maharashtra',url:'https://mitid.edu.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Pearl Academy',nirf_rank:'—',nirf_year:'—',type:'Design',city:'New Delhi',state:'Delhi',url:'https://pearlacademy.com',fee:null,fee_total:null,fee_year:null}
+    ],
+    'interior-designer': [
+      {name:'National Institute of Design (NID)',nirf_rank:'—',nirf_year:'—',type:'Design',city:'Ahmedabad',state:'Gujarat',url:'https://nid.edu',fee:null,fee_total:null,fee_year:null},
+      {name:'Pearl Academy',nirf_rank:'—',nirf_year:'—',type:'Interior Design',city:'New Delhi',state:'Delhi',url:'https://pearlacademy.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Srishti Manipal Inst. of Art',nirf_rank:'—',nirf_year:'—',type:'Design',city:'Bangalore',state:'Karnataka',url:'https://srishtimanipalinstitute.in',fee:null,fee_total:null,fee_year:null},
+      {name:'MIT Institute of Design',nirf_rank:'—',nirf_year:'—',type:'Interior Design',city:'Pune',state:'Maharashtra',url:'https://mitid.edu.in',fee:null,fee_total:null,fee_year:null},
+      {name:'JD Institute of Fashion Technology',nirf_rank:'—',nirf_year:'—',type:'Design',city:'Mumbai',state:'Maharashtra',url:'https://jdbangalore.com',fee:null,fee_total:null,fee_year:null}
+    ],
+    'photographer': [
+      {name:'National Institute of Design (NID)',nirf_rank:'—',nirf_year:'—',type:'Visual Communication',city:'Ahmedabad',state:'Gujarat',url:'https://nid.edu',fee:null,fee_total:null,fee_year:null},
+      {name:'FTII (Film & TV Institute)',nirf_rank:'—',nirf_year:'—',type:'Film & Photography',city:'Pune',state:'Maharashtra',url:'https://ftiindia.gov.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Srishti Manipal Inst. of Art',nirf_rank:'—',nirf_year:'—',type:'Photography & Arts',city:'Bangalore',state:'Karnataka',url:'https://srishtimanipalinstitute.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Light & Life Academy',nirf_rank:'—',nirf_year:'—',type:'Photography',city:'Ooty',state:'Tamil Nadu',url:'https://lightandlifeacademy.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Whistling Woods International',nirf_rank:'—',nirf_year:'—',type:'Media & Photography',city:'Mumbai',state:'Maharashtra',url:'https://whistlingwoods.net',fee:null,fee_total:null,fee_year:null}
+    ],
+    'content-creator': [
+      {name:'FTII (Film & TV Institute)',nirf_rank:'—',nirf_year:'—',type:'Film & Media',city:'Pune',state:'Maharashtra',url:'https://ftiindia.gov.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Whistling Woods International',nirf_rank:'—',nirf_year:'—',type:'Media Production',city:'Mumbai',state:'Maharashtra',url:'https://whistlingwoods.net',fee:null,fee_total:null,fee_year:null},
+      {name:'Asian College of Journalism',nirf_rank:'—',nirf_year:'—',type:'Journalism & Media',city:'Chennai',state:'Tamil Nadu',url:'https://asianmedia.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Times School of Media',nirf_rank:'—',nirf_year:'—',type:'Media',city:'New Delhi',state:'Delhi',url:'https://timesschoolofmedia.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Xavier Institute of Communications',nirf_rank:'—',nirf_year:'—',type:'Communications',city:'Mumbai',state:'Maharashtra',url:'https://xaviercomm.com',fee:null,fee_total:null,fee_year:null}
+    ],
+    'pilot': [
+      {name:'IGRUA (Govt of India)',nirf_rank:'—',nirf_year:'—',type:'Commercial Pilot Training',city:'Rae Bareli',state:'Uttar Pradesh',url:'https://igrua.gov.in',fee:'₹45L (approx.)',fee_total:[43,50],fee_year:'2025'},
+      {name:'National Flying Training Institute',nirf_rank:'—',nirf_year:'—',type:'Pilot Training',city:'Gondia',state:'Maharashtra',url:'https://nfti.in',fee:null,fee_total:null,fee_year:null},
+      {name:'Bombay Flying Club',nirf_rank:'—',nirf_year:'—',type:'CPL Training',city:'Mumbai',state:'Maharashtra',url:'https://bombayaviation.com',fee:null,fee_total:null,fee_year:null},
+      {name:'CAE Oxford Aviation Academy',nirf_rank:'—',nirf_year:'—',type:'International CPL',city:'Hyderabad',state:'Telangana',url:'https://cae.com',fee:null,fee_total:null,fee_year:null},
+      {name:'Indira Gandhi Rashtriya Uran Akademi',nirf_rank:'—',nirf_year:'—',type:'Ab-initio Training',city:'Rae Bareli',state:'Uttar Pradesh',url:'https://igrua.gov.in',fee:'₹45L+',fee_total:[43,50],fee_year:'2025'}
+    ]
   };
 
   // Display string for a college's curated total-program tuition (data/nirf-colleges.json).
@@ -331,11 +400,12 @@
   // Returns null when the career has no NIRF category (caller falls back to LLM colleges).
   function nirfCollegesFor(career, formData) {
     var cat = CAREER_NIRF_CATEGORY[career.id];
-    if (!cat) return null;
+    if (!cat) {
+      // No NIRF category — return known popular institutions if available
+      return FALLBACK_COLLEGES[career.id] || null;
+    }
     var list = (window.CAREER_DATA.nirfColleges && window.CAREER_DATA.nirfColleges[cat]) || [];
-    if (!list.length) return null;
-    // National top 5 by rank. Home-state colleges are surfaced separately by
-    // nirfCollegesInState(), so this list stays purely national to avoid duplication.
+    if (!list.length) return FALLBACK_COLLEGES[career.id] || null;
     var sorted = list.slice().sort(function (a, b) { return (a.nirf_rank || 999) - (b.nirf_rank || 999); });
     var yr = String(window.CAREER_DATA.nirfYear || '2025');
     return sorted.slice(0, 5).map(function (col) { return mapCollege(col, cat, yr); });

@@ -2441,38 +2441,122 @@ function showCareerDetail(idx) {
     h += '<div style="margin-top:4px;font-size:11px;color:var(--gray-600)">📍 Top cities: ' + p.job_locations.slice(0,5).map(escHtml).join(' · ') + '</div>';
   h += '</div>';
 
-  // ── Job portals — full lists from Private Jobs + Govt Jobs sections ─────
-  h += '<div class="rm-msec"><h4>🔗 Where to Apply</h4>';
+  // ── Job portals — RELEVANT portals only based on career type ─────────────
+  // Career → which PRIVATE_JOB_PORTALS categories to show
+  var CAREER_PORTAL_CATS = {
+    // Tech / Digital
+    'software-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'ai-ml-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'data-scientist':['General job boards','Startup / Tech','Fresher / Internship'],
+    'cybersecurity-analyst':['General job boards','Startup / Tech','Fresher / Internship'],
+    'cloud-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'blockchain-developer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'robotics-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'game-developer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'ux-designer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'digital-marketer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'ecommerce-manager':['General job boards','Startup / Tech','Fresher / Internship'],
+    // Finance / Business
+    'investment-banker':['General job boards','Specialised / niche','Fresher / Internship'],
+    'financial-analyst':['General job boards','Specialised / niche','Fresher / Internship'],
+    'chartered-accountant':['General job boards','Specialised / niche','Fresher / Internship'],
+    'company-secretary':['General job boards','Specialised / niche','Fresher / Internship'],
+    'business-analyst':['General job boards','Specialised / niche','Fresher / Internship'],
+    'insurance-professional':['General job boards','Specialised / niche'],
+    'real-estate-manager':['General job boards','Specialised / niche'],
+    'supply-chain-manager':['General job boards','Fresher / Internship'],
+    'hr-manager':['General job boards','Specialised / niche','Fresher / Internship'],
+    'entrepreneur':['General job boards','Startup / Tech','Fresher / Internship'],
+    // Creative / Media
+    'graphic-designer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'animator-vfx':['General job boards','Startup / Tech','Fresher / Internship'],
+    'photographer':['General job boards','Fresher / Internship'],
+    'content-creator':['General job boards','Fresher / Internship','Entry / Local / Blue-collar'],
+    'journalist':['General job boards','Fresher / Internship'],
+    'pr-specialist':['General job boards','Specialised / niche','Fresher / Internship'],
+    'fashion-designer':['General job boards','Fresher / Internship'],
+    'interior-designer':['General job boards','Fresher / Internship'],
+    'translator':['General job boards','Specialised / niche','Fresher / Internship'],
+    'performing-artist':['General job boards','Fresher / Internship'],
+    // Healthcare
+    'doctor-mbbs':['General job boards','Fresher / Internship'],
+    'nurse':['General job boards','Fresher / Internship','Entry / Local / Blue-collar'],
+    'pharmacist':['General job boards','Fresher / Internship'],
+    'physiotherapist':['General job boards','Fresher / Internship'],
+    'dietitian':['General job boards','Fresher / Internship'],
+    'public-health-specialist':['General job boards','Fresher / Internship'],
+    'psychologist':['General job boards','Fresher / Internship'],
+    'dentist-bds':['General job boards','Fresher / Internship'],
+    'veterinarian':['General job boards','Fresher / Internship'],
+    // Govt / Defence / Civil — only govt portals, no private boards
+    'civil-servant':[], 'defence-officer':[], 'teacher':['General job boards','Fresher / Internship'],
+    'lawyer':['General job boards','Specialised / niche','Fresher / Internship'],
+    // Abroad-heavy
+    'pilot':['General job boards','Abroad / Gulf'],
+    'hotel-management':['General job boards','Fresher / Internship','Abroad / Gulf'],
+    // Sports / Wellness
+    'sports-manager':['General job boards','Entry / Local / Blue-collar','Fresher / Internship'],
+    // Misc
+    'architect':['General job boards','Fresher / Internship'],
+    'civil-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'electrical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'mechanical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'aerospace-engineer':['General job boards','Startup / Tech'],
+    'electronics-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'biomedical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'event-manager':['General job boards','Fresher / Internship'],
+    'urban-planner':['General job boards','Fresher / Internship'],
+    'nonprofit-manager':['General job boards','Fresher / Internship'],
+    'ir-specialist':['General job boards','Specialised / niche'],
+    'forensic-scientist':['General job boards','Fresher / Internship'],
+    'environmental-scientist':['General job boards','Fresher / Internship'],
+    'agricultural-scientist':['General job boards','Fresher / Internship']
+  };
+  var careerPortalCats = CAREER_PORTAL_CATS[p.career_id] !== undefined
+    ? CAREER_PORTAL_CATS[p.career_id]
+    : ['General job boards','Fresher / Internship'];
+  var isGovtOnly = careerPortalCats.length === 0;
 
-  // Private job portals (all categories from the global PRIVATE_JOB_PORTALS const)
-  if (typeof PRIVATE_JOB_PORTALS !== 'undefined') {
-    Object.keys(PRIVATE_JOB_PORTALS).forEach(function(cat) {
-      h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">💼 ' + escHtml(cat) + '</div>';
-      h += '<div class="rm-portal-wrap">';
-      PRIVATE_JOB_PORTALS[cat].forEach(function(jp) {
-        h += '<a href="' + jp.url + '" target="_blank" rel="noopener" class="rm-portal-a">' + escHtml(jp.name) + ' ↗</a>';
-      });
-      h += '</div>';
-    });
-  }
+  var hasPortals = careerPortalCats.length > 0 || window._lastGovtJobs;
+  if (hasPortals) {
+    h += '<div class="rm-msec"><h4>🔗 Where to Apply</h4>';
 
-  // Government job portals (central + state from the last rendered Govt Jobs data)
-  var gj = window._lastGovtJobs;
-  if (gj) {
-    function gjRow(rows, label) {
-      if (!rows || !rows.length) return;
-      h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px">🏛 ' + escHtml(label) + '</div>';
-      h += '<div class="rm-portal-wrap">';
-      rows.forEach(function(r) {
-        if (r.url) h += '<a href="' + r.url + '" target="_blank" rel="noopener" class="rm-portal-a" style="border-color:var(--deep-blue);color:var(--deep-blue);background:var(--blue-pale)">' + escHtml(r.body || r.role) + ' ↗</a>';
+    // Relevant private portals only
+    if (careerPortalCats.length && typeof PRIVATE_JOB_PORTALS !== 'undefined') {
+      careerPortalCats.forEach(function(cat) {
+        if (!PRIVATE_JOB_PORTALS[cat]) return;
+        h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">💼 ' + escHtml(cat) + '</div>';
+        h += '<div class="rm-portal-wrap">';
+        PRIVATE_JOB_PORTALS[cat].forEach(function(jp) {
+          h += '<a href="' + jp.url + '" target="_blank" rel="noopener" class="rm-portal-a">' + escHtml(jp.name) + ' ↗</a>';
+        });
+        h += '</div>';
       });
-      h += '</div>';
     }
-    gjRow(gj.central, 'Central Govt Recruiters');
-    if (gj.state && gj.state.length) gjRow(gj.state, (gj.stateName || 'State') + ' Govt Portals');
-  }
 
-  h += '</div>';
+    // Relevant govt portals
+    var gj = window._lastGovtJobs;
+    if (gj) {
+      // For govt careers show all; for others just show key recruiters matching the domain
+      var showCentral = gj.central || [];
+      // Filter central portals: govt careers → all; others → just NCS aggregator
+      if (!isGovtOnly) showCentral = showCentral.filter(function(r){ return r.role && r.role.indexOf('all govt')!==-1; });
+      if (showCentral.length) {
+        h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px">🏛 Govt / PSU</div>';
+        h += '<div class="rm-portal-wrap">';
+        showCentral.forEach(function(r){ if(r.url) h += '<a href="'+r.url+'" target="_blank" rel="noopener" class="rm-portal-a" style="border-color:var(--deep-blue);color:var(--deep-blue);background:var(--blue-pale)">'+escHtml(r.body||r.role)+' ↗</a>'; });
+        h += '</div>';
+      }
+      if (isGovtOnly && gj.state && gj.state.length) {
+        h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px">🏛 '+ escHtml((gj.stateName||'State')+' Portals')+'</div>';
+        h += '<div class="rm-portal-wrap">';
+        gj.state.forEach(function(r){ if(r.url) h += '<a href="'+r.url+'" target="_blank" rel="noopener" class="rm-portal-a" style="border-color:var(--deep-blue);color:var(--deep-blue);background:var(--blue-pale)">'+escHtml(r.body||r.role)+' ↗</a>'; });
+        h += '</div>';
+      }
+    }
+
+    h += '</div>';
+  }
 
   // ── Entrance exams ──────────────────────────────────────────────────────
   if (p.entrance_exam_links && p.entrance_exam_links.length) {
