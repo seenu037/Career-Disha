@@ -673,10 +673,30 @@ textarea{resize:vertical;min-height:78px}
     <div class="r-body"><div class="counselor-note" id="rNote" style="margin:0"></div></div>
   </details>
 
-  <!-- Stub containers kept for JS compat (sections hidden from UI) -->
-  <div style="display:none" id="inputSummaryCard"><tbody id="inputSummaryBody"></tbody></div>
-  <div style="display:none" id="govtJobsCard"><div id="govtJobsBody"></div><span id="govtJobsState"></span></div>
-  <div style="display:none" id="privateJobsCard"><div id="privateJobsBody"></div></div>
+  <!-- Collapsed by default — click to expand -->
+  <details class="r-section" id="inputSummaryCard">
+    <summary>📋 Your Profile Inputs</summary>
+    <div class="r-body" style="overflow-x:auto">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this drove your match results</div>
+      <table class="btable"><tbody id="inputSummaryBody"></tbody></table>
+    </div>
+  </details>
+
+  <details class="r-section" id="govtJobsCard">
+    <summary>🏛️ Government Jobs <span id="govtJobsState" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;"></span></summary>
+    <div class="r-body">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Real roles routed to their official recruiting bodies. Specific vacancies &amp; exam dates vary by year — check the official portal.</div>
+      <div id="govtJobsBody"></div>
+    </div>
+  </details>
+
+  <details class="r-section" id="privateJobsCard">
+    <summary>💼 Private Jobs — Where to Apply</summary>
+    <div class="r-body">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Top private job &amp; internship portals in India. Create a profile and set alerts for your target roles.</div>
+      <div id="privateJobsBody"></div>
+    </div>
+  </details>
 
   <!-- Footer actions -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
