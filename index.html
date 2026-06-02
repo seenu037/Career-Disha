@@ -43,7 +43,7 @@ body{font-family:'Inter','Noto Sans Telugu',sans-serif;background:var(--gray-50)
 .logo-text h1{font-size:21px;font-weight:700;letter-spacing:-.5px}
 .logo-text p{font-size:11px;opacity:.8;font-family:'Noto Sans Telugu','Inter',sans-serif}
 
-.api-bar{background:#fff;border-bottom:2px solid var(--saffron);padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.api-bar{background:#fff;border-bottom:2px solid var(--saffron);padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:72px;z-index:90}
 .api-bar label{font-size:13px;font-weight:600;color:var(--gray-700);white-space:nowrap}
 .api-key-input{flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);font-size:13px;font-family:monospace;transition:border-color .2s}
 .api-key-input:focus{outline:none;border-color:var(--blue)}
@@ -174,9 +174,8 @@ textarea{resize:vertical;min-height:78px}
 .tag-match{background:var(--green-light);color:var(--green)}
 .tag-miss{background:var(--red-light);color:var(--red)}
 
-/* RESULTS */
-.results{display:none}
-.results.on{display:block}
+/* RESULTS — always visible as right panel; .on kept for JS compat */
+.results{display:block}
 .results-header{background:linear-gradient(135deg,var(--deep-blue),var(--blue));border-radius:var(--radius-lg);padding:22px 26px;color:#fff;margin-bottom:20px}
 .results-header h2{font-size:21px;font-weight:700;margin-bottom:6px}
 .student-summary{font-size:14px;line-height:1.6;opacity:.93}
@@ -275,7 +274,60 @@ textarea{resize:vertical;min-height:78px}
 .debug-json{display:none;background:var(--gray-900);color:#4ADE80;padding:14px;border-radius:var(--radius-sm);font-family:monospace;font-size:12px;overflow:auto;max-height:380px;white-space:pre-wrap;margin-top:8px}
 .hidden{display:none!important}
 .mt4{margin-top:16px}
-@media print{.header,.api-bar,.form-section,.form-actions,.debug-section{display:none}.results{display:block}}
+@media print{.header,.api-bar,.form-panel,.form-actions,.debug-section{display:none}.results-panel{display:block!important;height:auto!important}}
+
+/* ── SPLIT-PANEL SHELL ───────────────────────────────────────── */
+/* header ≈72px + api-bar ≈46px = ~118px combined sticky bars */
+.app-shell{display:flex;align-items:flex-start;height:calc(100vh - 118px)}
+
+/* LEFT — sticky scrollable form */
+.form-panel{width:390px;min-width:300px;flex-shrink:0;height:calc(100vh - 118px);overflow-y:auto;position:sticky;top:118px;padding:14px 12px;border-right:2px solid var(--gray-200);background:#f8fafc;scrollbar-width:thin}
+.form-panel .card{padding:16px 14px;margin-bottom:12px;border-radius:12px}
+.form-panel .card-title{font-size:15px}
+.form-panel .card-sub{font-size:12px;margin-bottom:14px}
+.form-panel .section-title{font-size:14px;margin-bottom:10px;padding-bottom:7px}
+.form-panel .field-label{font-size:12.5px}
+.form-panel .chip{font-size:12px;padding:5px 10px}
+.form-panel select,.form-panel input[type=number],.form-panel input[type=text]{font-size:13px;padding:7px 10px}
+.form-panel textarea{min-height:58px;font-size:13px}
+.form-panel .progress-wrap{margin-bottom:14px}
+.form-panel .step-line{width:60px}
+.form-panel .form-actions{margin-top:16px}
+
+/* RIGHT — scrollable results */
+.results-panel{flex:1;min-width:0;height:calc(100vh - 118px);overflow-y:auto;padding:14px 16px;background:var(--gray-50)}
+.results-panel .container{max-width:100%;padding:0}
+
+/* Empty-state placeholder before first submit */
+.results-panel.empty-state .results-header,.results-panel.empty-state .r-section,.results-panel.empty-state .counselor-note,.results-panel.empty-state .results-footer{display:none}
+.results-panel.empty-state::after{content:'← Complete the form and click  "Get AI Career Guidance"  to see your personalized roadmap';display:flex;align-items:center;justify-content:center;min-height:60vh;font-size:15px;color:var(--gray-400);text-align:center;padding:24px;line-height:1.7;white-space:pre-wrap}
+
+/* Collapsible result sections */
+.r-section{border:1px solid var(--gray-200);border-radius:12px;margin-bottom:12px;background:#fff;overflow:hidden}
+.r-section>summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:14px;font-weight:700;color:var(--deep-blue);display:flex;align-items:center;justify-content:space-between;user-select:none;gap:8px}
+.r-section>summary::-webkit-details-marker{display:none}
+.r-section>summary::after{content:'▾';font-size:12px;flex-shrink:0;color:var(--gray-400)}
+.r-section[open]>summary::after{content:'▴'}
+.r-section>summary:hover{background:var(--blue-pale)}
+.r-section>.r-body{padding:0 16px 14px}
+.r-section .section-title{border:none;margin:8px 0 10px;padding:0;font-size:14px}
+
+/* Career cards section — always open, no toggle chrome */
+.r-cards{border:none;background:transparent;margin-bottom:14px}
+.r-cards>summary{display:none}
+.r-cards>.r-body{padding:0}
+.results-panel .cards-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.results-panel .cc{padding:14px 12px}
+
+/* compact results-header in right panel */
+.results-panel .results-header{margin-bottom:12px}
+
+/* ── MOBILE: stack vertically ────────────────────────────────── */
+@media(max-width:860px){
+  .app-shell{flex-direction:column}
+  .form-panel{width:100%;height:auto;position:static;border-right:none;border-bottom:2px solid var(--gray-200)}
+  .results-panel{height:auto;padding:10px 12px}
+}
 </style>
 </head>
 <body>
@@ -326,8 +378,8 @@ textarea{resize:vertical;min-height:78px}
   <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;" onclick="loadDemo()">⚡ Load</button>
 </div>
 
-<div class="container">
-<div id="formSection" class="form-section">
+<div class="app-shell">
+<div id="formSection" class="form-panel form-section">
 
   <!-- Progress -->
   <div class="progress-wrap">
@@ -540,8 +592,8 @@ textarea{resize:vertical;min-height:78px}
 
 </div><!-- /formSection -->
 
-<!-- RESULTS -->
-<div class="results" id="results">
+<!-- RESULTS — right panel, always visible; empty-state removed on first renderAll() -->
+<div class="results results-panel empty-state" id="results">
   <div class="results-header">
     <div style="font-size:12px;opacity:.8;margin-bottom:4px;">🎯 AI Career Analysis Complete • <span id="resComplete">AI విశ్లేషణ పూర్తైంది</span></div>
     <h2>Your Personalized Career Roadmap</h2>
@@ -554,34 +606,31 @@ textarea{resize:vertical;min-height:78px}
   <div class="alert-green hidden" id="rScholarship"></div>
   <div class="alert-yellow hidden" id="rWarning"></div>
 
-  <div class="card" id="inputSummaryCard" style="display:none">
-    <div class="section-title">📋 Your Profile Inputs</div>
-    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this is what drove your match results</div>
-    <div style="overflow-x:auto">
-      <table class="btable">
-        <tbody id="inputSummaryBody"></tbody>
-      </table>
+  <!-- Career recommendations — always open, no collapse chrome -->
+  <details class="r-section r-cards" open>
+    <summary></summary>
+    <div class="r-body">
+      <div class="section-title" style="font-size:15px;border-bottom:2px solid var(--blue-pale);padding-bottom:8px;margin-bottom:12px">🏆 Top Career Recommendations <span id="resCareerTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:6px;">సిఫార్సు చేసిన కెరీర్లు</span></div>
+      <div class="cards-grid" id="cardsGrid"></div>
     </div>
-  </div>
+  </details>
 
-  <div class="card">
-    <div class="section-title">🏆 Top Career Recommendations <span id="resCareerTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">సిఫార్సు చేసిన కెరీర్లు</span></div>
-    <div class="cards-grid" id="cardsGrid"></div>
-  </div>
+  <!-- Decision Tree — open by default -->
+  <details class="r-section" open>
+    <summary>🗺️ Career Roadmap Decision Tree <span id="resTreeTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">మీ కెరీర్ పథం</span></summary>
+    <div class="r-body"><div class="tree-wrap" id="treeWrap"></div></div>
+  </details>
 
-  <div class="card">
-    <div class="section-title">🗺️ Career Roadmap Decision Tree <span id="resTreeTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">మీ కెరీర్ పథం</span></div>
-    <div class="tree-wrap" id="treeWrap"></div>
-  </div>
+  <!-- Job Market chart — closed by default; JS fires resize on open -->
+  <details class="r-section" id="chartSection">
+    <summary>📊 Job Market Analysis <span id="resMarketTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">ఉద్యోగ అవకాశాలు</span></summary>
+    <div class="r-body"><div class="chart-wrap"><canvas id="mChart"></canvas></div></div>
+  </details>
 
-  <div class="card">
-    <div class="section-title">📊 Job Market Analysis <span id="resMarketTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">ఉద్యోగ అవకాశాలు</span></div>
-    <div class="chart-wrap"><canvas id="mChart"></canvas></div>
-  </div>
-
-  <div class="card" id="jobListingsCard" style="display:none">
-    <div class="section-title">💼 Current Job Openings <span id="resJobsTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">ఉద్యోగ జాబితా</span></div>
-    <div style="overflow-x:auto">
+  <!-- Job Listings — shown/hidden + opened by JS -->
+  <details class="r-section" id="jobListingsCard">
+    <summary>💼 Current Job Openings <span id="resJobsTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">ఉద్యోగ జాబితా</span></summary>
+    <div class="r-body" style="overflow-x:auto">
       <table class="btable" id="jobListingsTable">
         <thead><tr>
           <th>Job Title</th><th>Company / Sector</th><th>Salary</th>
@@ -590,23 +639,30 @@ textarea{resize:vertical;min-height:78px}
         <tbody id="jobListingsBody"></tbody>
       </table>
     </div>
-  </div>
+  </details>
 
-  <div class="card" id="govtJobsCard" style="display:none">
-    <div class="section-title">🏛️ Government Jobs You Can Target <span id="govtJobsState" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;"></span></div>
-    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Real roles routed to their official recruiting bodies. Specific vacancies &amp; exam dates vary by year — check the official portal.</div>
-    <div id="govtJobsBody"></div>
-  </div>
+  <!-- Govt Jobs — opened by JS when data is ready -->
+  <details class="r-section" id="govtJobsCard">
+    <summary>🏛️ Government Jobs <span id="govtJobsState" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;"></span></summary>
+    <div class="r-body">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Real roles routed to their official recruiting bodies. Specific vacancies &amp; exam dates vary by year — check the official portal.</div>
+      <div id="govtJobsBody"></div>
+    </div>
+  </details>
 
-  <div class="card" id="privateJobsCard">
-    <div class="section-title">💼 Private Jobs — Where to Apply</div>
-    <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Top private job &amp; internship portals in India. Create a profile and set alerts for your target roles.</div>
-    <div id="privateJobsBody"></div>
-  </div>
+  <!-- Private Jobs — closed by default -->
+  <details class="r-section" id="privateJobsCard">
+    <summary>💼 Private Jobs — Where to Apply</summary>
+    <div class="r-body">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Top private job &amp; internship portals in India. Create a profile and set alerts for your target roles.</div>
+      <div id="privateJobsBody"></div>
+    </div>
+  </details>
 
-  <div class="card">
-    <div class="section-title">💰 Budget vs Path Feasibility <span id="resBudgetTitle" style="font-size:13px;color:var(--gray-400);font-weight:400;margin-left:6px;">బడ్జెట్ అనుకూలత</span></div>
-    <div style="overflow-x:auto">
+  <!-- Budget — open by default -->
+  <details class="r-section" open>
+    <summary>💰 Budget vs Path Feasibility <span id="resBudgetTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">బడ్జెట్ అనుకూలత</span></summary>
+    <div class="r-body" style="overflow-x:auto">
       <table class="btable">
         <thead><tr>
           <th>Career Path</th><th>Duration</th><th>Estimated Cost</th>
@@ -615,23 +671,32 @@ textarea{resize:vertical;min-height:78px}
         <tbody id="budgetBody"></tbody>
       </table>
     </div>
-  </div>
+  </details>
 
-  <div class="counselor-note" id="rNote"></div>
+  <!-- Counsellor note -->
+  <div class="counselor-note results-footer" id="rNote"></div>
 
-  <div class="card" style="padding:14px">
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <button class="btn btn-primary" onclick="window.print()">🖨️ Print Report</button>
-      <button class="btn btn-secondary" onclick="startOver()">🔄 New Analysis</button>
-      <div class="debug-section" style="margin-left:auto">
-        <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="toggleDebug()">{} Raw JSON</button>
-        <div class="debug-json" id="debugJson"></div>
-      </div>
+  <!-- Profile inputs — opened by JS -->
+  <details class="r-section results-footer" id="inputSummaryCard">
+    <summary>📋 Your Profile Inputs</summary>
+    <div class="r-body" style="overflow-x:auto">
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this is what drove your match results</div>
+      <table class="btable"><tbody id="inputSummaryBody"></tbody></table>
+    </div>
+  </details>
+
+  <!-- Footer actions -->
+  <div class="results-footer" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Print Report</button>
+    <button class="btn btn-secondary" onclick="startOver()">🔄 New Analysis</button>
+    <div class="debug-section" style="margin-left:auto">
+      <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="toggleDebug()">{} Raw JSON</button>
+      <div class="debug-json" id="debugJson"></div>
     </div>
   </div>
 </div><!-- /results -->
 
-</div><!-- /container -->
+</div><!-- /app-shell -->
 
 <script>
 // ── CONSTANTS ─────────────────────────────────────────────
@@ -1634,9 +1699,12 @@ async function callAPI(d) {
 
 // ── RENDER ALL ────────────────────────────────────────────
 function renderAll(data, formData) {
-  document.getElementById('formSection').classList.add('hidden');
+  // Split-panel: form stays visible on left; reveal results right panel
   var r = document.getElementById('results');
+  r.classList.remove('empty-state');
   r.classList.add('on');
+  // On mobile, scroll results into view
+  if (window.innerWidth <= 860) r.scrollIntoView({behavior:'smooth', block:'start'});
 
   updateFormLanguage(formData.state || document.getElementById('f_state').value);
 
@@ -1691,7 +1759,11 @@ function renderAll(data, formData) {
   renderGovtJobs(data.govt_jobs);
   renderPrivateJobs();
   renderBudget(data.top_paths || [], formData);
-  window.scrollTo({ top:0, behavior:'smooth' });
+  // Chart resize when user opens the chart details section
+  var chartDet = document.getElementById('chartSection');
+  if (chartDet) chartDet.addEventListener('toggle', function onChartToggle() {
+    if (chartDet.open) window.dispatchEvent(new Event('resize'));
+  }, {once: false});
 }
 
 // ── GOVERNMENT JOBS (deterministic; real roles → official recruiting bodies) ──
@@ -1701,8 +1773,8 @@ function renderGovtJobs(gj) {
   if (!card || !body) return;
   var hasState = gj && gj.state && gj.state.length;
   var hasCentral = gj && gj.central && gj.central.length;
-  if (!hasState && !hasCentral) { card.style.display = 'none'; return; }
-  card.style.display = 'block';
+  if (!hasState && !hasCentral) { card.open = false; return; }
+  card.open = true;
   document.getElementById('govtJobsState').textContent = (gj.stateName ? '· ' + gj.stateName : '');
   function grp(title, rows) {
     if (!rows || !rows.length) return '';
@@ -1811,7 +1883,7 @@ function renderInputSummary(formData) {
       '<td style="color:var(--gray-900)">' + escHtml(fmt(r[1])) + '</td>' +
     '</tr>';
   }).join('');
-  card.style.display = 'block';
+  card.open = true;
 }
 
 // ── CARDS (enhanced with NIRF, portals, citations) ────────
@@ -2092,8 +2164,8 @@ function renderBudget(paths, formData) {
 function renderJobListings(listings) {
   var card = document.getElementById('jobListingsCard');
   var tbody = document.getElementById('jobListingsBody');
-  if (!listings || !listings.length) { card.style.display = 'none'; return; }
-  card.style.display = 'block';
+  if (!listings || !listings.length) { card.open = false; return; }
+  card.open = true;
   tbody.innerHTML = listings.map(function(j, idx) {
     var skills = (j.skills || []).slice(0,4).join(', ');
     var applyBtn = j.apply_url
@@ -2516,7 +2588,9 @@ function restoreFormSnapshot(snap) {
 
 // ── UTILITIES ─────────────────────────────────────────────
 function startOver() {
-  document.getElementById('results').classList.remove('on');
+  var r = document.getElementById('results');
+  r.classList.add('empty-state');
+  r.classList.remove('on');
   ['rScholarship','rWarning','rAlignSummary','rPathBanner'].forEach(function(id){
     var el = document.getElementById(id);
     if (el) { el.classList.add('hidden'); el.innerHTML=''; }
@@ -2525,21 +2599,22 @@ function startOver() {
   document.getElementById('treeWrap').innerHTML = '';
   document.getElementById('budgetBody').innerHTML = '';
   document.getElementById('jobListingsBody').innerHTML = '';
-  document.getElementById('jobListingsCard').style.display = 'none';
+  var jlc = document.getElementById('jobListingsCard'); if (jlc) jlc.open = false;
   document.getElementById('rSummaryLocal').style.display = 'none';
-  var ic = document.getElementById('inputSummaryCard'); if (ic) ic.style.display = 'none';
+  var ic = document.getElementById('inputSummaryCard'); if (ic) ic.open = false;
+  var gc = document.getElementById('govtJobsCard'); if (gc) gc.open = false;
   document.getElementById('rNote').innerHTML = '';
   document.getElementById('debugJson').textContent = '';
   document.getElementById('debugJson').style.display = 'none';
   if (mChart) { mChart.destroy(); mChart=null; }
-  document.getElementById('formSection').classList.remove('hidden');
   step=1;
   ['step1','step2','step3'].forEach(function(id,i){ document.getElementById(id).classList.toggle('hidden',i!==0); });
   ['sc1','sc2','sc3'].forEach(function(id,i){ var c=document.getElementById(id); c.className='step-circle'+(i===0?' active':''); c.textContent=i+1; });
   ['sl1','sl2'].forEach(function(id){ document.getElementById(id).classList.remove('done'); });
   document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
   if (window._savedFormSnapshot) restoreFormSnapshot(window._savedFormSnapshot);
-  window.scrollTo({top:0,behavior:'smooth'});
+  // On mobile, scroll back to form
+  if (window.innerWidth <= 860) document.getElementById('formSection').scrollIntoView({behavior:'smooth'});
 }
 
 function toggleDebug() {
