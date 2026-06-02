@@ -381,6 +381,111 @@
     ]
   };
 
+  // State-specific known colleges for non-NIRF careers (performing-artist, sports-manager, etc.)
+  // keyed: career_id → state_name → [{name, city, state, url, type}]
+  var FALLBACK_STATE_COLLEGES = {
+    'performing-artist': {
+      'Andhra Pradesh': [
+        {name:'Andhra University — Dept of Music',city:'Visakhapatnam',url:'https://andhrauniversity.edu.in',type:'Music & Fine Arts'},
+        {name:'Potti Sriramulu Telugu University',city:'Amaravati',url:'https://teluguvishvam.in',type:'Telugu Arts & Culture'},
+        {name:'Dr. B.R. Ambedkar Open University — Arts',city:'Hyderabad',url:'https://braou.ac.in',type:'Distance Arts'},
+        {name:'Sri Krishna Devaraya Univ — Fine Arts',city:'Anantapur',url:'https://skduniversity.ac.in',type:'Fine Arts & Music'},
+        {name:'Sri Padmavati Mahila Visvavidyalayam',city:'Tirupati',url:'https://spmvv.ac.in',type:'Fine Arts (Women\'s Univ)'}
+      ],
+      'Telangana': [
+        {name:'Potti Sriramulu Telugu University',city:'Hyderabad',url:'https://teluguvishvam.in',type:'Telugu Arts & Culture'},
+        {name:'Osmania University — Dept of Music',city:'Hyderabad',url:'https://osmania.ac.in',type:'Music & Fine Arts'},
+        {name:'Hyderabad Central University — Arts',city:'Hyderabad',url:'https://uohyd.ac.in',type:'Fine Arts'},
+        {name:'Kakatiya University — Fine Arts',city:'Warangal',url:'https://kuwarangal.ac.in',type:'Fine Arts & Music'},
+        {name:'JNTU Hyderabad — Architecture & FA',city:'Hyderabad',url:'https://jntuh.ac.in',type:'Fine Arts'}
+      ],
+      'Karnataka': [
+        {name:'Karnatak University — Dept of Music',city:'Dharwad',url:'https://kud.ac.in',type:'Hindustani Music'},
+        {name:'Bangalore University — Fine Arts',city:'Bangalore',url:'https://bangaloreuniversity.ac.in',type:'Fine Arts & Music'},
+        {name:'Karnataka Sangit Nruthya Academy',city:'Bangalore',url:'https://ksna.karnataka.gov.in',type:'Classical Dance & Music (Govt)'},
+        {name:'Mysore University — Dept of Music',city:'Mysore',url:'https://uni-mysore.ac.in',type:'Carnatic & Hindustani Music'},
+        {name:'Jain University — School of Fine Arts',city:'Bangalore',url:'https://jainuniversity.ac.in',type:'Fine Arts & Performance'}
+      ],
+      'Tamil Nadu': [
+        {name:'Tamil Nadu Music & Fine Arts Univ',city:'Chennai',url:'https://tnmfau.ac.in',type:'Classical Music & Fine Arts (State Univ)'},
+        {name:'University of Madras — Fine Arts',city:'Chennai',url:'https://unom.ac.in',type:'Fine Arts & Music'},
+        {name:'Bharathidasan University — Fine Arts',city:'Tiruchirappalli',url:'https://bdu.ac.in',type:'Music & Fine Arts'},
+        {name:'Bharathiar University — Music',city:'Coimbatore',url:'https://b-u.ac.in',type:'Music & Performing Arts'},
+        {name:'Government Music College Chennai',city:'Chennai',url:'https://govtmusiccollege.tn.gov.in',type:'Carnatic Music (Govt)'}
+      ],
+      'Kerala': [
+        {name:'Kerala Kalamandalam (Deemed Univ)',city:'Thrissur',url:'https://kalamandalam.ac.in',type:'Classical Dance & Music'},
+        {name:'University of Kerala — Music Dept',city:'Thiruvananthapuram',url:'https://keralauniversity.ac.in',type:'Carnatic Music'},
+        {name:'Calicut University — Fine Arts',city:'Kozhikode',url:'https://uoc.ac.in',type:'Fine Arts & Music'},
+        {name:'Sree Sankaracharya Univ of Sanskrit',city:'Kalady',url:'https://ssus.ac.in',type:'Classical Arts & Sanskrit'},
+        {name:'Kerala Lalithakala Akademi',city:'Thrissur',url:'https://keralalalitkala.com',type:'Fine Arts (State Body)'}
+      ],
+      'Maharashtra': [
+        {name:'Gandharva Mahavidyalaya, Pune',city:'Pune',url:'https://gandharvamaha.com',type:'Hindustani Music'},
+        {name:'Akhil Bharatiya Gandharva Mahavidyalaya',city:'Mumbai',url:'https://gbmvmumbai.org',type:'Classical Music'},
+        {name:'Savitribai Phule Pune Univ — Music',city:'Pune',url:'https://unipune.ac.in',type:'Music & Performing Arts'},
+        {name:'SNDT Women\'s University — Arts',city:'Mumbai',url:'https://sndt.ac.in',type:'Fine Arts & Music'},
+        {name:'Dr. Babasaheb Marathwada Univ — Fine Arts',city:'Aurangabad',url:'https://bamu.ac.in',type:'Fine Arts'}
+      ],
+      'West Bengal': [
+        {name:'Rabindra Bharati University',city:'Kolkata',url:'https://rbu.ac.in',type:'Music, Dance & Fine Arts'},
+        {name:'Visva-Bharati (Shantiniketan) — Sangit',city:'Bolpur',url:'https://visvabharati.ac.in',type:'Rabindra Sangit & Dance'},
+        {name:'Calcutta University — Music',city:'Kolkata',url:'https://caluniv.ac.in',type:'Music & Fine Arts'},
+        {name:'West Bengal State Music Academy',city:'Kolkata',url:'https://wb.gov.in',type:'Classical Music (Govt)'},
+        {name:'Jadavpur University — Comparative Literature & Arts',city:'Kolkata',url:'https://jaduniv.edu.in',type:'Arts & Culture'}
+      ],
+      'Delhi': [
+        {name:'Delhi School of Music (Govt)',city:'New Delhi',url:'https://delhimusicschool.com',type:'Hindustani & Western Music'},
+        {name:'Gandharva Mahavidyalaya New Delhi',city:'New Delhi',url:'https://gandharvamaha.com',type:'Hindustani Music'},
+        {name:'Delhi University — Dept of Music',city:'New Delhi',url:'https://du.ac.in',type:'Music & Performing Arts'},
+        {name:'Indira Gandhi National Centre for Arts',city:'New Delhi',url:'https://ignca.gov.in',type:'Indian Arts (Central Govt)'},
+        {name:'Triveni Kala Sangam',city:'New Delhi',url:'https://triveniarts.in',type:'Classical Dance & Music'}
+      ],
+      'Uttar Pradesh': [
+        {name:'Banaras Hindu University — Sangit Faculty',city:'Varanasi',url:'https://bhu.ac.in',type:'Hindustani Classical Music & Dance'},
+        {name:'Prayag Sangeet Samiti',city:'Prayagraj',url:'https://prayagsangeetsamiti.org',type:'Classical Music Exams & Training'},
+        {name:'Lucknow University — Fine Arts',city:'Lucknow',url:'https://lkouniv.ac.in',type:'Fine Arts & Music'},
+        {name:'Kathak Kendra (Sangeet Natak Akademi)',city:'New Delhi',url:'https://kathakkendra.in',type:'Kathak Dance'},
+        {name:'Bhatkhande Music Inst. Deemed Univ',city:'Lucknow',url:'https://bhatkhandemusic.edu.in',type:'Hindustani Music'}
+      ],
+      'Gujarat': [
+        {name:'M.S. University of Baroda — Music',city:'Vadodara',url:'https://msubaroda.ac.in',type:'Hindustani Music & Fine Arts'},
+        {name:'Gujarat University — Fine Arts',city:'Ahmedabad',url:'https://gujaratuniversity.ac.in',type:'Fine Arts & Music'},
+        {name:'Saurashtra University — Fine Arts',city:'Rajkot',url:'https://saurashtrauniversity.edu',type:'Fine Arts'},
+        {name:'Gujarat Sangeet Natak Akademi',city:'Gandhinagar',url:'https://gujarat.gov.in',type:'Classical Arts (State Body)'},
+        {name:'CEPT University — Arts & Design',city:'Ahmedabad',url:'https://cept.ac.in',type:'Arts, Design & Culture'}
+      ]
+    },
+    'sports-manager': {
+      'Andhra Pradesh': [
+        {name:'Acharya Nagarjuna University — PE Dept',city:'Guntur',url:'https://nagarjunauniversity.ac.in',type:'Physical Education'},
+        {name:'Andhra University — Physical Education',city:'Visakhapatnam',url:'https://andhrauniversity.edu.in',type:'Sports Science & PE'},
+        {name:'KL University — Sports Sciences',city:'Vijayawada',url:'https://kluniversity.in',type:'Sports Management'}
+      ],
+      'Telangana': [
+        {name:'Osmania University — Physical Education',city:'Hyderabad',url:'https://osmania.ac.in',type:'Physical Education'},
+        {name:'JNTU Hyderabad — Sports Science',city:'Hyderabad',url:'https://jntuh.ac.in',type:'Sports Science'},
+        {name:'Telangana Sports Authority',city:'Hyderabad',url:'https://tsports.telangana.gov.in',type:'Sports Training (Govt)'}
+      ],
+      'Tamil Nadu': [
+        {name:'Tamil Nadu Physical Edu. & Sports Univ.',city:'Chennai',url:'https://tnspu.ac.in',type:'Physical Education & Sports (State Univ)'},
+        {name:'Annamalai University — Physical Education',city:'Chidambaram',url:'https://annamalaiuniversity.ac.in',type:'Physical Education'}
+      ],
+      'Karnataka': [
+        {name:'SVYASA University',city:'Bangalore',url:'https://svyasa.edu.in',type:'Yoga & Sports Science'},
+        {name:'Bangalore University — PE Dept',city:'Bangalore',url:'https://bangaloreuniversity.ac.in',type:'Physical Education'}
+      ],
+      'Kerala': [
+        {name:'University of Kerala — PE Dept',city:'Thiruvananthapuram',url:'https://keralauniversity.ac.in',type:'Physical Education'},
+        {name:'Calicut University — Sports Science',city:'Kozhikode',url:'https://uoc.ac.in',type:'Sports Science & PE'}
+      ],
+      'West Bengal': [
+        {name:'Rabindra Bharati University — PE',city:'Kolkata',url:'https://rbu.ac.in',type:'Physical Education'},
+        {name:'Netaji Subhas Open University — PE',city:'Kolkata',url:'https://wbnsou.ac.in',type:'Physical Education'}
+      ]
+    }
+  };
+
   // Display string for a college's curated total-program tuition (data/nirf-colleges.json).
   function feeStr(col) {
     if (!col.fee_total) return null;
@@ -419,7 +524,24 @@
     var st = formData && formData.state;
     if (!st) return null;
     var cat = CAREER_NIRF_CATEGORY[career.id];
-    if (!cat) return null;
+
+    // No NIRF category → try state-specific fallback colleges
+    if (!cat) {
+      var stateMap = FALLBACK_STATE_COLLEGES[career.id];
+      if (!stateMap) return null;
+      var stCols = stateMap[st];
+      if (!stCols || !stCols.length) return null;
+      return {
+        state: st,
+        colleges: stCols.map(function(c) {
+          return { name:c.name, nirf_rank:'—', nirf_year:'—', type:c.type||'',
+                   city:c.city||'', state:st, url:c.url||null,
+                   fee:null, fee_total:null, fee_year:null };
+        })
+      };
+    }
+
+    // NIRF category exists → use NIRF data
     var list = (window.CAREER_DATA.nirfColleges && window.CAREER_DATA.nirfColleges[cat]) || [];
     var inState = list.filter(function (c) { return c.state === st; })
       .sort(function (a, b) { return (a.nirf_rank || 999) - (b.nirf_rank || 999); })
