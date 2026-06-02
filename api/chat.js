@@ -99,13 +99,17 @@ module.exports = async function handler(req, res) {
           body: swapModel(payload, 'gpt-oss-120b')
         });
         var cbText = await cbRes.text();
-        if (cbRes.ok && cacheKey && !bypass && kv) {
+        if (!cbRes.ok) {
+          console.warn('[chat] Cerebras returned', cbRes.status, cbText.slice(0, 200));
+          throw new Error('Cerebras error ' + cbRes.status);
+        }
+        if (cacheKey && !bypass && kv) {
           try { await kv.set(cacheKey, { body: cbText }, { ex: 60 * 60 * 24 * 30 }); } catch (_) {}
         }
         res.setHeader('x-cache', cacheKey ? 'MISS' : 'OFF');
         res.setHeader('x-cache-key', cacheKey || '');
         res.setHeader('x-provider', 'cerebras');
-        res.status(cbRes.status).send(cbText);
+        res.status(200).send(cbText);
         return;
       } catch (cbErr) {
         console.warn('[chat] Cerebras fallback failed:', cbErr && cbErr.message);

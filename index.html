@@ -1749,7 +1749,17 @@ async function callAPI(d) {
   }
 
   var body = await res.json();
-  var raw = body.choices[0].message.content.trim();
+  // Guard against null/undefined content (some models return content:null for tool calls etc.)
+  if (!body.choices || !body.choices[0] || !body.choices[0].message) {
+    var bodySnip = JSON.stringify(body).slice(0, 300);
+    throw new Error('Unexpected LLM response shape — no choices[0].message: ' + bodySnip);
+  }
+  var content = body.choices[0].message.content;
+  if (content == null || content === '') {
+    // Some models put the text in reasoning_content instead (e.g. thinking models)
+    content = body.choices[0].message.reasoning_content || '';
+  }
+  var raw = content.trim();
   raw = raw.replace(/^```[a-zA-Z]*\s*/m,'').replace(/\s*```\s*$/m,'').trim();
   var jsonMatch = raw.match(/\{[\s\S]*\}/);
   if (jsonMatch) raw = jsonMatch[0];

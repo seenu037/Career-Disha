@@ -97,11 +97,15 @@ exports.handler = async function (event) {
           body:    swapModel(event.body, 'gpt-oss-120b')
         });
         const cbText = await cbRes.text();
-        if (cbRes.ok && cacheKey && !bypass && store) {
+        if (!cbRes.ok) {
+          console.warn('[chat] Cerebras returned', cbRes.status, cbText.slice(0, 200));
+          throw new Error('Cerebras error ' + cbRes.status);
+        }
+        if (cacheKey && !bypass && store) {
           try { await store.set(cacheKey, cbText); } catch (_) {}
         }
         return {
-          statusCode: cbRes.status,
+          statusCode: 200,
           headers: Object.assign({ 'content-type': 'application/json' }, CORS_HEADERS,
             { 'x-cache': cacheKey ? 'MISS' : 'OFF', 'x-cache-key': cacheKey || '', 'x-provider': 'cerebras' }),
           body: cbText
