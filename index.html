@@ -1002,6 +1002,7 @@ var mChart = null;
     d.addEventListener('click', function() {
       document.querySelectorAll('.budget-opt').forEach(function(x){ x.classList.remove('on'); });
       this.classList.add('on'); sel.budget = b;
+      scheduleUpdate();
     });
     bg.appendChild(d);
   });
@@ -1030,6 +1031,7 @@ function onSubjInput(inp) {
   var bar = document.getElementById('bar_' + inp.id);
   if (bar) bar.style.width = val + '%';
   refreshTopSubjDisplay();
+  scheduleUpdate();
 }
 
 function updateInterSubjects() {
@@ -1237,6 +1239,7 @@ function onStateChange() {
   rebuildLocChips(currentState);
   buildExamCategories();
   updateFormLanguage(currentState);
+  scheduleUpdate();
 }
 
 function onClassChange() {
@@ -1275,6 +1278,7 @@ function onClassChange() {
       ? '⭐ Pick at least 2 — without marks, your interests are our strongest matching signal. Your FIRST pick is your primary interest.'
       : '⭐ Your FIRST selection becomes your primary interest for alignment analysis';
   }
+  scheduleUpdate();
 }
 
 function onBranchChange() {
@@ -1447,6 +1451,7 @@ function makeChips(containerId, items, key, single) {
           buildExamCategories();
         }
       }
+      scheduleUpdate();
     });
     c.appendChild(d);
   });
@@ -1720,6 +1725,8 @@ async function callAPI(d) {
     llm = {};
   }
 
+  window._rawLLM = llm;           // cache for instant re-merge on input change
+  window._lastPathChoice = d.pathChoice;
   return window.CareerComposer.mergeLLMResponse(llm, d, det.matches);
 }
 
@@ -1744,27 +1751,27 @@ function showTab(tab) {
     if (fab && _analysisReady) fab.style.display = 'flex';
   }
 }
-// Re-run only the deterministic matcher on current inputs (no LLM call)
-function quickRescore() {
-  if (!_analysisReady) return;
+// ── LIVE INTERACTIVE UPDATE (no LLM call — instant re-match + re-render) ────
+var _liveTimer = null;
+function scheduleUpdate() {
+  if (!_analysisReady || !window._rawLLM) return;
+  clearTimeout(_liveTimer);
+  _liveTimer = setTimeout(liveUpdate, 350);
+  // Show "updating…" pulse on output panel heading
+  var ph = document.querySelector('.output-heading .panel-sub');
+  if (ph) ph.textContent = '⟳ Updating…';
+}
+function liveUpdate() {
+  if (!_analysisReady || !window._rawLLM || !window.CareerMatcher || !window.CareerComposer) return;
   var fd = collectData();
-  var result = window.CareerMatcher && window.CareerMatcher.run(fd);
-  if (!result || !result.matches) return;
-  result.matches.forEach(function(m) {
-    var pct = Math.round(m.score * 100);
-    var card = document.querySelector('.cc[data-id="' + m.career.id + '"]');
-    if (!card) return;
-    var gauge = card.querySelector('.match-pct');
-    var circle = card.querySelector('circle:last-child');
-    if (gauge) gauge.textContent = pct + '%';
-    if (circle) {
-      var r = 26, circ = 2 * Math.PI * r;
-      circle.setAttribute('stroke-dasharray', (pct/100*circ).toFixed(1) + ' ' + circ.toFixed(1));
-    }
-  });
-  var flash = document.getElementById('rescoreFlash');
-  if (flash) { flash.classList.add('show'); setTimeout(function(){ flash.classList.remove('show'); }, 1800); }
-  if (window.innerWidth <= 860) showTab('results');
+  if (!fd.state || !fd.level) return; // not enough data yet
+  var det = window.CareerMatcher.run(fd);
+  if (!det || !det.matches.length) return;
+  fd.pathChoice = window._lastPathChoice || 'both';
+  var merged = window.CareerComposer.mergeLLMResponse(window._rawLLM, fd, det.matches);
+  renderAll(merged, fd);
+  var ph = document.querySelector('.output-heading .panel-sub');
+  if (ph) ph.textContent = 'AI-generated results based on your profile';
 }
 
 function renderAll(data, formData) {
