@@ -1787,7 +1787,7 @@ function renderGovtJobs(gj) {
   var hasState = gj && gj.state && gj.state.length;
   var hasCentral = gj && gj.central && gj.central.length;
   if (!hasState && !hasCentral) { card.open = false; return; }
-  card.open = true;
+  // keep collapsed — user clicks to expand
   document.getElementById('govtJobsState').textContent = (gj.stateName ? '· ' + gj.stateName : '');
   function grp(title, rows) {
     if (!rows || !rows.length) return '';
@@ -1896,7 +1896,7 @@ function renderInputSummary(formData) {
       '<td style="color:var(--gray-900)">' + escHtml(fmt(r[1])) + '</td>' +
     '</tr>';
   }).join('');
-  card.open = true;
+  // keep collapsed — user clicks to expand
 }
 
 // ── CARDS (enhanced with NIRF, portals, citations) ────────
