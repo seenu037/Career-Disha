@@ -274,7 +274,28 @@ textarea{resize:vertical;min-height:78px}
 .debug-json{display:none;background:var(--gray-900);color:#4ADE80;padding:14px;border-radius:var(--radius-sm);font-family:monospace;font-size:12px;overflow:auto;max-height:380px;white-space:pre-wrap;margin-top:8px}
 .hidden{display:none!important}
 .mt4{margin-top:16px}
-@media print{.header,.api-bar,.form-panel,.form-actions,.debug-section{display:none}.results-panel{display:block!important;height:auto!important}}
+@media print{
+  .header,.api-bar,.form-panel,.form-actions,.debug-section,
+  .mobile-tabbar,.results-fab,.rescore-btn,.output-heading,
+  .rm-view-btn,.expand-btn,#rmModal,.r-section>summary::after,
+  button{display:none!important}
+  .app-shell,.results-panel{display:block!important;height:auto!important;width:100%!important;overflow:visible!important}
+  .results-panel{padding:0!important}
+  .r-section{border:1px solid #ddd!important;break-inside:avoid;margin-bottom:12px}
+  .r-section>.r-body{display:block!important;padding:8px 14px 10px!important}
+  .r-cards>.r-body{padding:0!important}
+  .rm-card{break-inside:avoid;border:1.5px solid #ccc!important;margin-bottom:8px}
+  #printExpanded{display:block!important}
+  .print-career-block{break-inside:avoid;border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:14px}
+  .print-career-block h3{font-size:14px;font-weight:800;color:#1A237E;margin-bottom:8px}
+  .print-two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .print-label{font-size:9px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+  .print-val{font-size:11px;font-weight:600;color:#111}
+  .print-cell{background:#f9fafb;border-radius:6px;padding:6px 8px}
+  .print-college-row{display:flex;gap:6px;align-items:flex-start;padding:3px 0;border-bottom:1px solid #f3f4f6;font-size:11px}
+  .print-nirf{background:#1A237E;color:#fff;border-radius:4px;padding:1px 5px;font-size:9px;font-weight:700;white-space:nowrap;flex-shrink:0}
+  a[href]{color:#1A237E!important}
+}
 
 /* ── INTERACTIVE CAREER ROADMAP ─────────────────────────────── */
 .roadmap-wrap{display:flex;flex-direction:column;gap:12px}
@@ -491,7 +512,7 @@ textarea{resize:vertical;min-height:78px}
       <p>AI-Powered Career Guidance • For Students Across India</p>
     </div>
   </div>
-  <button class="btn btn-outline" onclick="window.print()" style="color:#fff;border-color:rgba(255,255,255,.4);font-size:13px;padding:8px 16px;">🖨️ Print</button>
+  <button class="btn btn-outline" onclick="printReport()" style="color:#fff;border-color:rgba(255,255,255,.4);font-size:13px;padding:8px 16px;">🖨️ Print</button>
 </header>
 
 <div class="api-bar">
@@ -824,9 +845,12 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
+  <!-- Inline career details injected by printReport() — hidden on screen, shown only in print -->
+  <div id="printExpanded" style="display:none"></div>
+
   <!-- Footer actions -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
-    <button class="btn btn-primary" onclick="window.print()">🖨️ Print Report</button>
+    <button class="btn btn-primary" onclick="printReport()">🖨️ Print Report</button>
     <button class="btn btn-secondary" onclick="startOver()">🔄 New Analysis</button>
     <div class="debug-section" style="margin-left:auto">
       <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="toggleDebug()">{} Raw JSON</button>
@@ -3234,6 +3258,143 @@ function startOver() {
     var tr = document.getElementById('mtabResults'); if (tr) { tr.classList.remove('active'); tr.classList.remove('has-results'); }
     var fab = document.getElementById('resultsFab'); if (fab) fab.style.display = 'none';
   }
+}
+
+// ── PRINT REPORT — expand all sections + inject inline career details ─────
+function printReport() {
+  // 1. Open every <details> in the results panel
+  var allDetails = Array.from(document.querySelectorAll('#results details'));
+  var origOpen   = allDetails.map(function(d){ return d.open; });
+  allDetails.forEach(function(d){ d.open = true; });
+
+  // 2. Inject full career details inline (modal content → print section)
+  var printEl = document.getElementById('printExpanded');
+  if (printEl && window._roadmapPaths && window._roadmapPaths.length) {
+    var html = '<div style="page-break-before:always;padding-top:8px">';
+    html += '<h2 style="font-size:15px;font-weight:800;color:#1A237E;margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid #E8EAF6">📋 Full Career Details</h2>';
+    window._roadmapPaths.forEach(function(p, i) {
+      html += _buildPrintBlock(p, i, window._roadmapFD || {});
+    });
+    html += '</div>';
+    printEl.innerHTML = html;
+    printEl.style.display = 'block'; // will be overridden to block by @media print
+  }
+
+  // 3. Print
+  window.print();
+
+  // 4. Cleanup after dialog closes (afterprint fires on most browsers)
+  function cleanup() {
+    allDetails.forEach(function(d, i){ d.open = origOpen[i]; });
+    if (printEl) { printEl.innerHTML = ''; printEl.style.display = 'none'; }
+    window.removeEventListener('afterprint', cleanup);
+  }
+  window.addEventListener('afterprint', cleanup);
+  setTimeout(cleanup, 8000); // fallback if afterprint doesn't fire
+}
+
+function _buildPrintBlock(p, idx, fd) {
+  var CLRS = ['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#6B7280'];
+  var clr  = CLRS[Math.min(idx, CLRS.length-1)];
+  var pct  = typeof p.match_score==='number' ? p.match_score : Math.round((p.score||0)*100);
+  var h    = '<div class="print-career-block">';
+
+  // Header
+  h += '<h3 style="color:'+clr+'">#'+(idx+1)+' '+escHtml(p.specific_career||'')
+      +' <span style="font-size:11px;font-weight:600;color:#6B7280">'+pct+'% match'
+      +(p.domain?' · '+escHtml(p.domain):'')+'</span></h3>';
+
+  if (p.match_reason) {
+    h += '<p style="font-size:11px;font-style:italic;color:#374151;margin-bottom:8px;padding:6px 10px;background:'+clr+'11;border-left:3px solid '+clr+'">'+escHtml(p.match_reason)+'</p>';
+  }
+
+  // Entry route
+  if (p.entry_route) {
+    h += '<div style="margin-bottom:8px"><span class="print-label">Entry Route</span>';
+    h += '<div style="font-size:11px;font-weight:600;color:#1A237E">'+escHtml(p.entry_route)+'</div></div>';
+  }
+
+  // Salary + duration
+  h += '<div class="print-two-col" style="margin-bottom:8px">';
+  if (p.starting_salary_range) h += '<div class="print-cell"><div class="print-label">Starting Salary</div><div class="print-val">'+escHtml(p.starting_salary_range)+'</div></div>';
+  if (p['5yr_salary_range'])   h += '<div class="print-cell"><div class="print-label">5-Year Salary</div><div class="print-val">'+escHtml(p['5yr_salary_range'])+'</div></div>';
+  if (p.duration_years)        h += '<div class="print-cell"><div class="print-label">Duration</div><div class="print-val">'+p.duration_years+' yrs</div></div>';
+  if (p.cost_breakdown&&p.cost_breakdown.total_est) h += '<div class="print-cell"><div class="print-label">Total Cost (est.)</div><div class="print-val" style="color:'+clr+'">'+escHtml(p.cost_breakdown.total_est)+'</div></div>';
+  h += '</div>';
+
+  // Cost breakdown
+  if (p.cost_breakdown) {
+    var cb = p.cost_breakdown;
+    h += '<div class="print-two-col" style="margin-bottom:8px">';
+    if (cb.tuition)          h += '<div class="print-cell"><div class="print-label">Tuition</div><div class="print-val">'+escHtml(cb.tuition)+'</div></div>';
+    if (cb.boarding_lodging) h += '<div class="print-cell"><div class="print-label">Boarding & Lodging</div><div class="print-val">'+escHtml(cb.boarding_lodging.split('(')[0].trim())+'</div></div>';
+    if (cb.books_misc)       h += '<div class="print-cell"><div class="print-label">Books & Misc</div><div class="print-val">'+escHtml(cb.books_misc)+'</div></div>';
+    if (cb.note)             h += '<div class="print-cell"><div class="print-label">Note</div><div class="print-val" style="color:#6B7280">'+escHtml(cb.note)+'</div></div>';
+    h += '</div>';
+  }
+
+  // Colleges — national + home state
+  var colleges = [];
+  if (p.top_colleges_ranked&&p.top_colleges_ranked.length) {
+    p.top_colleges_ranked.forEach(function(c){ colleges.push({c:c,tag:'National'}); });
+  }
+  if (p.home_state_colleges&&p.home_state_colleges.colleges&&p.home_state_colleges.colleges.length) {
+    p.home_state_colleges.colleges.forEach(function(c){ colleges.push({c:c,tag:(p.home_state_colleges.state||'State')}); });
+  }
+  if (colleges.length) {
+    h += '<div style="margin-bottom:8px"><div class="print-label" style="margin-bottom:4px">🏛 Colleges (NIRF 2025 / Known Institutions)</div>';
+    colleges.slice(0,8).forEach(function(item){
+      var c=item.c;
+      h += '<div class="print-college-row">';
+      h += '<span class="print-nirf">'+escHtml(c.nirf_rank||'—')+'</span>';
+      h += '<span style="flex:1;font-weight:600">'+(c.url?'<a href="'+c.url+'">'+escHtml(c.name)+'</a>':escHtml(c.name))+'</span>';
+      h += '<span style="color:#9CA3AF;font-size:10px">'+escHtml(c.city||'')+(c.city&&c.state?' · ':'')+escHtml(c.state||'')+(c.fee?' · '+escHtml(c.fee):'')+'</span>';
+      h += '<span style="margin-left:6px;color:#6B7280;font-size:10px">'+escHtml(item.tag)+'</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // Scholarships
+  if (p.scholarship_options&&p.scholarship_options.length) {
+    h += '<div style="margin-bottom:8px"><div class="print-label" style="margin-bottom:4px">🎓 Scholarships</div>';
+    p.scholarship_options.slice(0,4).forEach(function(s){
+      h += '<div style="font-size:11px;display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f3f4f6">';
+      h += '<span>'+(s.url?'<a href="'+s.url+'">'+escHtml(s.name)+'</a>':escHtml(s.name))+'</span>';
+      if(s.amount) h += '<span style="font-weight:700;color:#059669">'+escHtml(s.amount)+'</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // Job market
+  var sd = p.supply_demand||{};
+  var jm = p.jobs_market||{};
+  h += '<div class="print-two-col" style="margin-bottom:8px">';
+  if (sd.demand_level)  h += '<div class="print-cell"><div class="print-label">Demand</div><div class="print-val">'+escHtml(sd.demand_level)+'</div></div>';
+  if (sd.growth_trend)  h += '<div class="print-cell"><div class="print-label">Growth</div><div class="print-val" style="color:#059669">'+escHtml(sd.growth_trend)+'</div></div>';
+  if (jm.live_openings) h += '<div class="print-cell"><div class="print-label">Live Openings (Adzuna)</div><div class="print-val">'+escHtml(jm.live_openings)+'</div></div>';
+  if (p.job_locations&&p.job_locations.length) h += '<div class="print-cell"><div class="print-label">Top Cities</div><div class="print-val">'+p.job_locations.slice(0,4).map(escHtml).join(', ')+'</div></div>';
+  h += '</div>';
+
+  // Risks & upsides
+  if ((p.risk_factors&&p.risk_factors.length)||(p.upside_factors&&p.upside_factors.length)) {
+    h += '<div class="print-two-col">';
+    if (p.risk_factors&&p.risk_factors.length) {
+      h += '<div style="background:#FEE2E2;border-radius:6px;padding:6px 8px"><div class="print-label" style="color:#DC2626">Risks</div>';
+      p.risk_factors.forEach(function(r){ h += '<div style="font-size:10px;color:#374151;padding:1px 0">• '+escHtml(r)+'</div>'; });
+      h += '</div>';
+    }
+    if (p.upside_factors&&p.upside_factors.length) {
+      h += '<div style="background:#D1FAE5;border-radius:6px;padding:6px 8px"><div class="print-label" style="color:#059669">Upsides</div>';
+      p.upside_factors.forEach(function(u){ h += '<div style="font-size:10px;color:#374151;padding:1px 0">• '+escHtml(u)+'</div>'; });
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+
+  h += '</div>'; // print-career-block
+  return h;
 }
 
 function toggleDebug() {
