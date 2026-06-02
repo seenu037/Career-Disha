@@ -2190,19 +2190,23 @@ function renderTree(paths, formData) {
   var wrap = document.getElementById('treeWrap');
   if (!paths || !paths.length) return;
 
-  var n     = Math.min(paths.length, 6);
-  var row1  = paths.slice(0, Math.min(3, n));
-  var row2  = paths.slice(3, n);
-  var W=720, CX=W/2, NW=165, NH=78;
+  var n  = Math.min(paths.length, 6);
+  // Width scales with career count so all nodes fit in one row
+  var W  = Math.max(720, n * 190 + 80);
+  var CX = W/2, NW=165, NH=78;
   var BGCLRS=['#F0FDF4','#E0F2FE','#EDE9FE','#FFFBEB','#FDF2F8','#F9FAFB'];
   var BDCLRS=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#9CA3AF'];
   var TXCLRS=['#065F46','#0369A1','#4C1D95','#92400E','#831843','#374151'];
-  var R0Y=52, R1Y=152, R2Y=278, R3Y=398;
-  var hasRow2 = row2.length > 0;
-  var viewH   = (hasRow2 ? R3Y : R2Y) + NH/2 + 28;
+  var R0Y=52, R1Y=152, R2Y=278;
+  var viewH = R2Y + NH/2 + 28;
 
+  // All careers in a single row, evenly spaced
   function getXs(cnt) {
-    return cnt===1?[CX]:cnt===2?[CX-195,CX+195]:[100,CX,W-100];
+    if(cnt===1) return [CX];
+    var gap = (W-80) / (cnt-1);
+    var xs=[];
+    for(var k=0;k<cnt;k++) xs.push(Math.round(40 + k*gap));
+    return xs;
   }
   function arw(x1,y1,x2,y2,c) {
     var my=(y1+y2)/2;
@@ -2248,27 +2252,16 @@ function renderTree(paths, formData) {
   svg+='<text x="'+CX+'" y="'+(R1Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">🔀 Choose Your Career Path</text>';
   svg+='<text x="'+CX+'" y="'+(R1Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.85)" font-family="Inter,sans-serif">Click any node below for colleges, budget, jobs &amp; more</text>';
 
-  // Row 1 career nodes
-  var xs1=getXs(row1.length);
-  row1.forEach(function(p,i){
-    svg+=arw(CX,R1Y+24,xs1[i],R2Y-NH/2,BDCLRS[i]);
-    svg+=careerNode(p,i,xs1[i],R2Y);
+  // All career nodes in a single row
+  var xs=getXs(n);
+  paths.slice(0,n).forEach(function(p,i){
+    svg+=arw(CX,R1Y+24,xs[i],R2Y-NH/2,BDCLRS[i]);
+    svg+=careerNode(p,i,xs[i],R2Y);
   });
 
-  // Row 2 career nodes (if any)
-  if(hasRow2){
-    var xs2=getXs(row2.length);
-    row2.forEach(function(p,i){
-      var gi=i+3;
-      var above=i<row1.length?xs1[i]:CX;
-      svg+=arw(above,R2Y+NH/2,xs2[i],R3Y-NH/2,BDCLRS[gi]+'99');
-      svg+=careerNode(p,gi,xs2[i],R3Y);
-    });
-  }
-
-  wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+viewH+'" style="max-width:'+W+'px;min-width:280px">'+svg+'</svg>';
+  wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+viewH+'" style="max-width:'+W+'px;min-width:340px;overflow:visible">'+svg+'</svg>';
 }
-
+
 
 // ── CAREER DETAIL POPUP ───────────────────────────────────────
 function showCareerDetail(idx) {
