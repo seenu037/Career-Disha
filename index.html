@@ -349,6 +349,9 @@ textarea{resize:vertical;min-height:78px}
 .rm-ru-box h5{font-size:11px;font-weight:700;margin-bottom:5px}
 .rm-ru-box.risk h5{color:var(--red)}.rm-ru-box.upside h5{color:var(--green)}
 .rm-ru-item{font-size:11px;color:var(--gray-700);padding:2px 0;line-height:1.5}
+/* SVG decision tree node hover */
+#treeWrap svg g[onclick]:hover rect{opacity:.82;transition:opacity .15s}
+#treeWrap svg g[onclick]{cursor:pointer}
 
 /* ── SINGLE-PAGE FORM SECTION HEADINGS ──────────────────────── */
 .fsec-head{font-size:13px;font-weight:700;color:var(--deep-blue);letter-spacing:.3px;margin:0 0 10px;display:flex;align-items:center;gap:6px}
@@ -1956,7 +1959,7 @@ function renderAll(data, formData) {
   document.getElementById('debugJson').textContent = JSON.stringify(data, null, 2);
 
   renderInputSummary(formData);
-  renderCards(data.top_paths || []);
+  renderCards(data.top_paths || [], formData);
   renderTree(data.top_paths || [], formData);
   renderChart(data.domain_market_data || []);
   renderJobListings(data.job_listings || []);
@@ -2100,147 +2103,71 @@ function renderInputSummary(formData) {
 }
 
 // ── CARDS (enhanced with NIRF, portals, citations) ────────
-function renderCards(paths) {
+// ── TOP RECOMMENDATIONS — rich roadmap cards (click for full detail popup) ──
+function renderCards(paths, formData) {
   var g = document.getElementById('cardsGrid');
-  var cols = ['#059669','#0891B2','#D97706'];
-  var tracks = ['#D1FAE5','#E0F2FE','#FEF3C7'];
-  var budgetTierColors = {'Free/Govt':'#059669','Low (Under ₹3L)':'#0891B2','Medium (₹3-7L)':'#D97706','High (₹7-15L)':'#7C3AED','Premium (₹15L+)':'#DC2626'};
-  g.innerHTML = paths.slice(0,5).map(function(p, i) {
-    var s = p.match_score || 75;
-    var r = 26, circ = 2*Math.PI*r, dash = (s/100)*circ;
-    var rc = 'r'+(i < 3 ? i+1 : (i===3 ? 2 : 3));
+  if (!paths || !paths.length) return;
+  _roadmapPaths = paths;
+  _roadmapFD    = formData;
 
-    // Colleges
-    var collegesHtml = '';
-    if (p.top_colleges_ranked && p.top_colleges_ranked.length) {
-      collegesHtml = '<div class="college-list">' + p.top_colleges_ranked.slice(0,5).map(function(c){
-        return '<div class="college-row">' +
-          '<span class="nirf-badge">NIRF #' + c.nirf_rank + '</span>' +
-          '<div>' + (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="college-name" style="text-decoration:underline;cursor:pointer">'+c.name+'</a>' : '<div class="college-name">'+c.name+'</div>') +
-          '<div class="college-meta">' + (c.type||'') + (c.state ? ' • '+c.state : '') + ' • NIRF ' + (c.nirf_year||'2025') + (c.fee ? ' • Fee ' + c.fee : '') + '</div></div>' +
-          '</div>';
-      }).join('') + '</div>';
-    } else if (p.top_colleges_ap_ts) {
-      collegesHtml = (p.top_colleges_ap_ts||[]).slice(0,3).map(function(c){ return '<div class="fi">'+c+'</div>'; }).join('');
+  var CC = ['c1','c2','c3','c4','c5','c6'];
+  var budgetCap = parseBudgetCap(formData && formData.budget || '');
+  var html = '';
+
+  paths.forEach(function(p, i) {
+    var cc  = CC[Math.min(i, CC.length - 1)];
+    var pct = typeof p.match_score === 'number' ? p.match_score : Math.round((p.score || 0) * 100);
+
+    // Budget feasibility
+    var costMin = p.cost_breakdown && p.cost_breakdown.total_min_l;
+    var feasCls = 'gray', feasTxt = 'Budget ?';
+    if (costMin !== undefined && budgetCap !== null) {
+      if (costMin <= budgetCap)           { feasCls = 'g'; feasTxt = '✓ Budget Feasible'; }
+      else if (costMin <= budgetCap * 2)  { feasCls = 'y'; feasTxt = '~ Stretch Budget'; }
+      else                                { feasCls = 'r'; feasTxt = '⚠ Needs Funding'; }
     }
 
-    // Collapsible: national NIRF top colleges (collapsed by default).
-    var nirfYr = (window.CAREER_DATA && window.CAREER_DATA.nirfYear) || '2025';
-    var nationalCollegesHtml = '';
-    if (collegesHtml) {
-      var natCount = (p.top_colleges_ranked && p.top_colleges_ranked.length) ? Math.min(5, p.top_colleges_ranked.length) : 0;
-      nationalCollegesHtml = '<details onclick="event.stopPropagation()" style="margin:8px 0;border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:6px 10px">' +
-        '<summary style="cursor:pointer;font-size:12px;font-weight:700;color:var(--deep-blue)">🏛️ Top Colleges — NIRF ' + nirfYr + ' (national' + (natCount ? ', ' + natCount : '') + ')</summary>' +
-        '<div style="margin-top:8px">' + collegesHtml + '</div></details>';
+    var tc      = p.top_colleges_ranked && p.top_colleges_ranked[0];
+    var tcTxt   = tc ? '#' + tc.nirf_rank + ' ' + tc.name.split(',')[0].split('(')[0].trim().split(' ').slice(0,4).join(' ') : '';
+    var demand  = p.supply_demand && p.supply_demand.demand_level || '';
+    var growth  = p.supply_demand && p.supply_demand.growth_trend || '';
+    var liveJobs = p.jobs_market && p.jobs_market.live_openings ? p.jobs_market.live_openings + ' live jobs' : '';
+    var sal5    = p['5yr_salary_range'] || '';
+    var costEst = p.cost_breakdown && p.cost_breakdown.total_est || p.estimated_cost || '';
+
+    html += '<div class="rm-card ' + cc + '" onclick="showCareerDetail(' + i + ')">';
+    html += '<div class="rm-card-top">';
+    html += '<div class="rm-rank-num">' + (i + 1) + '</div>';
+    html += '<div class="rm-career-block">';
+    html += '<div class="rm-career-name">' + escHtml(p.specific_career || p.career_name || 'Career') + '</div>';
+    if (p.domain) html += '<div class="rm-career-domain">' + escHtml(p.domain) + '</div>';
+    html += '<div class="rm-score-badge">' + pct + '% match</div>';
+    html += '</div></div>';
+    html += '<div class="rm-chips-row">';
+    html += '<span class="rm-chip ' + feasCls + '">' + feasTxt + '</span>';
+    if (demand)   html += '<span class="rm-chip b">📈 ' + escHtml(demand) + '</span>';
+    if (liveJobs) html += '<span class="rm-chip p">💼 ' + escHtml(liveJobs) + '</span>';
+    if (tcTxt)    html += '<span class="rm-chip gray">🏛 ' + escHtml(tcTxt) + '</span>';
+    if (growth)   html += '<span class="rm-chip g">↑ ' + escHtml(growth) + '</span>';
+    html += '</div>';
+    html += '<div class="rm-salary">₹ ' + escHtml(p.starting_salary_range || '—') + (sal5 ? ' → ' + escHtml(sal5) + ' (5yr)' : '') + '</div>';
+    if (p.duration_years || costEst) {
+      html += '<div style="font-size:10px;color:var(--gray-500);margin-top:3px">';
+      if (p.duration_years) html += '⏱ ' + p.duration_years + ' yrs';
+      if (p.duration_years && costEst) html += '  ·  ';
+      if (costEst) html += '💰 ' + escHtml(costEst);
+      html += '</div>';
     }
+    html += '<button class="rm-view-btn" onclick="event.stopPropagation();showCareerDetail(' + i + ')">🔍 Full Details — Colleges, Jobs, Budget →</button>';
+    html += '</div>';
+  });
 
-    // Collapsible: NIRF colleges located in the student's home state (verified, may be few).
-    var homeStateHtml = '';
-    var hsc = p.home_state_colleges;
-    if (hsc && hsc.colleges && hsc.colleges.length) {
-      homeStateHtml = '<details onclick="event.stopPropagation()" style="margin:8px 0;border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:6px 10px">' +
-        '<summary style="cursor:pointer;font-size:12px;font-weight:700;color:var(--deep-blue)">🏠 Top NIRF colleges in ' + hsc.state + ' (' + hsc.colleges.length + ')</summary>' +
-        '<div class="college-list" style="margin-top:8px">' + hsc.colleges.map(function(c){
-          return '<div class="college-row">' +
-            '<span class="nirf-badge">NIRF #' + c.nirf_rank + '</span>' +
-            '<div>' + (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="college-name" style="text-decoration:underline;cursor:pointer">'+c.name+'</a>' : '<div class="college-name">'+c.name+'</div>') +
-            '<div class="college-meta">' + (c.city ? c.city+' • ' : '') + (c.state||'') + ' • NIRF ' + (c.nirf_year||'2025') + (c.fee ? ' • Fee ' + c.fee : '') + '</div></div>' +
-          '</div>';
-        }).join('') + '</div></details>';
-    }
-
-    // Jobs market
-    var jobsHtml = '';
-    if (p.jobs_market) {
-      var jm = p.jobs_market;
-      var sdm = p.supply_demand || {};
-      var liveVal = (jm.live_openings != null && jm.live_openings !== '')
-        ? (jm.live_openings + (jm.coverage_note ? ' (' + jm.coverage_note + ')' : ''))
-        : '—';
-      jobsHtml = '<div class="jobs-banner">' +
-        '<div class="jobs-stats-row">' +
-          '<div class="jobs-stat"><div class="jobs-stat-val">' + liveVal + '</div><div class="jobs-stat-label">Live Openings · Adzuna IN</div></div>' +
-          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (sdm.demand_level||'—') + '</div><div class="jobs-stat-label">Demand (est.)</div></div>' +
-          '<div class="jobs-stat"><div class="jobs-stat-val" style="font-size:13px">' + (sdm.competition_index||'—') + '</div><div class="jobs-stat-label">Competition (est.)</div></div>' +
-        '</div>' +
-        '<div class="jobs-source">Live listings: ' + (jm.data_source||'estimate') + ' · demand/competition: estimate</div>' +
-        '</div>';
-    }
-    // (Per-card job portals removed — see the standalone Private Jobs section below the cards.)
-
-    // Citations
-    var citeHtml = '';
-    if (p.citations && p.citations.length) {
-      citeHtml = '<div class="citations-box">' +
-        '<div class="citations-title">📚 Data Sources & Citations</div>' +
-        p.citations.map(function(c){
-          return '<div class="cite-row">"' + c.fact + '" — <span class="cite-source">' + c.source + '</span>' +
-            (c.url ? '<a href="'+c.url+'" target="_blank" rel="noopener" class="cite-link">[official link]</a>' : '') + '</div>';
-        }).join('') + '</div>';
-    }
-
-    var sd = p.supply_demand || {};
-    var jobs = (p.job_locations||[]).join(', ');
-    var schls = (p.scholarship_options||[]).map(function(s){
-      return s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener" style="color:var(--deep-blue);text-decoration:underline">'+s.name+'</a>' : s.name;
-    }).join(', ');
-    var risks = (p.risk_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
-    var ups = (p.upside_factors||[]).map(function(x){ return '<div class="fi">'+x+'</div>'; }).join('');
-
-    return '<div class="cc ' + rc + '" onclick="toggleCard(this)">' +
-      '<div class="cc-header">' +
-        '<div>' +
-          '<div class="cc-domain">' + (p.domain||'') + '</div>' +
-          '<div class="cc-title">' + (p.specific_career||'') + '</div>' +
-          '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">' +
-            '<span class="rank-badge">#' + (p.rank||i+1) + ' Recommended</span>' +
-            (p.budget_tier ? '<span style="font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;color:#fff;background:' + (budgetTierColors[p.budget_tier]||'#6B7280') + '">💰 ' + p.budget_tier + '</span>' : '') +
-          '</div>' +
-        '</div>' +
-        '<div class="match-gauge">' +
-          '<svg width="58" height="58" viewBox="0 0 58 58">' +
-            '<circle cx="29" cy="29" r="'+r+'" fill="none" stroke="'+tracks[i]+'" stroke-width="5"/>' +
-            '<circle cx="29" cy="29" r="'+r+'" fill="none" stroke="'+cols[i]+'" stroke-width="5" stroke-dasharray="'+dash.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/>' +
-          '</svg>' +
-          '<div class="match-pct">'+s+'%</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="cc-route">📍 ' + (p.entry_route||'') + '</div>' +
-      '<div class="cc-salary">' +
-        '<div class="sal-item"><span class="sal-label">Starting</span><span class="sal-val">'+(p.starting_salary_range||'N/A')+'</span></div>' +
-        '<div class="sal-item"><span class="sal-label">5-Year</span><span class="sal-val">'+(p['5yr_salary_range']||'N/A')+'</span></div>' +
-        '<div class="sal-item"><span class="sal-label">Duration</span><span class="sal-val">'+(p.duration_years||'?')+' yrs</span></div>' +
-      '</div>' +
-      (p.salary_source ? '<div style="font-size:10px;color:#9CA3AF;margin:2px 0 0;text-align:right">Salary: '+p.salary_source+'</div>' : '') +
-      '<div class="cc-expand">' +
-        '<div class="drow"><span class="dlabel">Estimated Cost</span><span class="dval">'+(p.estimated_cost||'N/A')+'</span></div>' +
-        '<div class="drow"><span class="dlabel">Job Locations</span><span class="dval">'+jobs+'</span></div>' +
-        '<div class="drow"><span class="dlabel">Scholarships</span><span class="dval">'+schls+'</span></div>' +
-        '<div class="drow"><span class="dlabel">Market Demand</span><span class="dval">'+(sd.demand_level||'N/A')+'</span></div>' +
-        '<div class="drow"><span class="dlabel">Competition Level</span><span class="dval">'+(sd.competition_index||'N/A')+'</span></div>' +
-        '<div class="drow"><span class="dlabel">Growth Trend</span><span class="dval">'+(sd.growth_trend||'N/A')+'</span></div>' +
-        (p.match_reason ? '<div style="font-size:12px;color:var(--green);font-style:italic;margin:8px 0">✓ '+p.match_reason+'</div>' : '') +
-        '<div style="font-size:12px;font-weight:700;color:var(--deep-blue);margin:12px 0 2px">🏛️ Top Colleges (NIRF ' + nirfYr + ' — tap to expand)</div>' +
-        nationalCollegesHtml +
-        homeStateHtml +
-        '<div style="font-size:12px;font-weight:700;color:var(--purple);margin:12px 0 6px">📊 Job Market — Live Listings (Adzuna IN)</div>' +
-        jobsHtml +
-        (p.intermediate_stream_recommendation ? '<div class="drow"><span class="dlabel">Recommended Stream</span><span class="dval" style="color:var(--green)">'+p.intermediate_stream_recommendation+'</span></div>' : '') +
-        (p.entrance_exam_links && p.entrance_exam_links.length ? '<div style="font-size:12px;font-weight:700;color:var(--green);margin:12px 0 6px">📝 Entrance Exams to Target</div><div class="portals-grid">'+p.entrance_exam_links.map(function(el){ return '<a href="'+el.url+'" target="_blank" rel="noopener" class="portal-link" style="border-color:var(--green);background:var(--green-light);color:var(--green)">🎓 '+el.exam+'</a>'; }).join('')+'</div>' : '') +
-        (risks ? '<div class="risks"><h5>⚠️ Risk Factors</h5>'+risks+'</div>' : '') +
-        (ups ? '<div class="upsides"><h5>✅ Upside Factors</h5>'+ups+'</div>' : '') +
-        citeHtml +
-      '</div>' +
-      '<div class="expand-btn"><span class="etxt">▼ Details, Rankings & Citations</span></div>' +
-    '</div>';
-  }).join('');
+  g.innerHTML = html;
 }
 
-function toggleCard(el) {
-  el.classList.toggle('open');
-  var t = el.querySelector('.etxt');
-  if (t) t.textContent = el.classList.contains('open') ? '▲ Hide details' : '▼ Details, Rankings & Citations';
-}
+// kept for compat — no longer used
+function toggleCard(el) {} // stub — old expand behavior removed
+
 
 // ── INTERACTIVE CAREER ROADMAP ────────────────────────────────
 var _roadmapPaths = [];
@@ -2258,101 +2185,90 @@ function parseBudgetCap(label) {
   return null;
 }
 
-function renderTree(paths, formData) {   // alias kept so live-update still calls this
-  renderRoadmap(paths, formData);
-}
-
-function renderRoadmap(paths, formData) {
+// ── SVG DECISION TREE (Career Roadmap section) — clickable nodes pop up full detail ──
+function renderTree(paths, formData) {
   var wrap = document.getElementById('treeWrap');
   if (!paths || !paths.length) return;
-  _roadmapPaths = paths;
-  _roadmapFD    = formData;
 
-  var CC = ['c1','c2','c3','c4','c5','c6'];
-  var level  = (formData && formData.level)  || '';
-  var stream = (formData && formData.stream && formData.stream !== 'Not specified' && formData.stream !== 'Not yet completed') ? formData.stream : '';
-  var state  = (formData && formData.state)  || '';
-  var budget = (formData && formData.budget) || '';
-  var budgetCap = parseBudgetCap(budget);
+  var n     = Math.min(paths.length, 6);
+  var row1  = paths.slice(0, Math.min(3, n));
+  var row2  = paths.slice(3, n);
+  var W=720, CX=W/2, NW=165, NH=78;
+  var BGCLRS=['#F0FDF4','#E0F2FE','#EDE9FE','#FFFBEB','#FDF2F8','#F9FAFB'];
+  var BDCLRS=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#9CA3AF'];
+  var TXCLRS=['#065F46','#0369A1','#4C1D95','#92400E','#831843','#374151'];
+  var R0Y=52, R1Y=152, R2Y=278, R3Y=398;
+  var hasRow2 = row2.length > 0;
+  var viewH   = (hasRow2 ? R3Y : R2Y) + NH/2 + 28;
 
-  var tags = [level, stream, state, budget].filter(Boolean).map(function(t){
-    return '<span class="rm-otag">' + escHtml(t) + '</span>';
-  }).join('');
-
-  var html = '<div class="roadmap-wrap">';
-
-  // ── Origin card ───────────────────────────────────────────────────────────
-  html += '<div class="rm-origin">';
-  html += '<h3>🎯 Your Starting Point</h3>';
-  html += '<div class="rm-origin-tags">' + tags + '</div>';
-  html += '</div>';
-  html += '<div class="rm-fork-label">▼ &nbsp; Your Career Paths Matched &nbsp; ▼</div>';
-
-  // ── Career cards grid ─────────────────────────────────────────────────────
-  html += '<div class="rm-paths-grid">';
-
-  paths.forEach(function(p, i) {
-    var cc  = CC[Math.min(i, CC.length - 1)];
-    var pct = typeof p.match_score === 'number' ? p.match_score : Math.round((p.score || 0) * 100);
-
-    // Budget feasibility chip
-    var costMin = p.cost_breakdown && p.cost_breakdown.total_min_l;
-    var feasCls = 'gray', feasTxt = 'Budget ?';
-    if (costMin !== undefined && budgetCap !== null) {
-      if (costMin <= budgetCap)           { feasCls = 'g'; feasTxt = '✓ Budget Feasible'; }
-      else if (costMin <= budgetCap * 2)  { feasCls = 'y'; feasTxt = '~ Stretch Budget'; }
-      else                                { feasCls = 'r'; feasTxt = '⚠ Needs Funding Plan'; }
+  function getXs(cnt) {
+    return cnt===1?[CX]:cnt===2?[CX-195,CX+195]:[100,CX,W-100];
+  }
+  function arw(x1,y1,x2,y2,c) {
+    var my=(y1+y2)/2;
+    return '<path d="M'+x1+','+y1+' C'+x1+','+my+' '+x2+','+my+' '+x2+','+y2+'" fill="none" stroke="'+(c||'#CBD5E1')+'" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr3)"/>';
+  }
+  function careerNode(p, idx, cx, cy) {
+    var pct   = typeof p.match_score==='number' ? p.match_score : Math.round((p.score||0)*100);
+    var bg=BGCLRS[idx], bd=BDCLRS[idx], tx=TXCLRS[idx];
+    var cb=p.cost_breakdown, bCap=parseBudgetCap(formData&&formData.budget||'');
+    var feas='?', feasC='#9CA3AF';
+    if(cb&&cb.total_min_l!==undefined&&bCap!==null){
+      if(cb.total_min_l<=bCap){feas='✓ Feasible';feasC='#059669';}
+      else if(cb.total_min_l<=bCap*2){feas='~ Stretch';feasC='#D97706';}
+      else{feas='⚠ Needs Plan';feasC='#DC2626';}
     }
+    var name=(p.specific_career||'Career').slice(0,22)+(p.specific_career&&p.specific_career.length>22?'…':'');
+    var s='<g onclick="showCareerDetail('+idx+')" style="cursor:pointer">';
+    s+='<rect x="'+(cx-NW/2)+'" y="'+(cy-NH/2)+'" width="'+NW+'" height="'+NH+'" rx="12" fill="'+bg+'" stroke="'+bd+'" stroke-width="2.5" filter="url(#ds3)" opacity=".97"/>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+19)+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+tx+'" font-family="Inter,sans-serif">'+escHtml(name)+'</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+37)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+bd+'" font-family="Inter,sans-serif">'+pct+'%</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+55)+'" text-anchor="middle" font-size="10" font-weight="600" fill="'+feasC+'" font-family="Inter,sans-serif">'+escHtml(feas)+'</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+70)+'" text-anchor="middle" font-size="10" fill="#9CA3AF" font-family="Inter,sans-serif">↗ tap for details</text>';
+    s+='</g>';
+    return s;
+  }
 
-    // Top college chip
-    var tc   = p.top_colleges_ranked && p.top_colleges_ranked[0];
-    var tcTxt = tc ? '#' + tc.nirf_rank + ' ' + tc.name.split(',')[0].split('(')[0].trim().split(' ').slice(0,4).join(' ') : '';
+  var svg='<defs>'
+    +'<filter id="ds3"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".12"/></filter>'
+    +'<marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#CBD5E1"/></marker>'
+    +'</defs>';
 
-    // Live jobs chip
-    var liveJobs = p.jobs_market && p.jobs_market.live_openings ? p.jobs_market.live_openings + ' live jobs' : '';
+  // Current position
+  var level=(formData&&formData.level)||'Current Level';
+  var stream=(formData&&formData.stream&&formData.stream!=='Not specified'&&formData.stream!=='Not yet completed')?(' — '+formData.stream):'';
+  var cur=level+stream; if(cur.length>32)cur=cur.slice(0,30)+'…';
+  svg+='<rect x="'+(CX-115)+'" y="'+(R0Y-24)+'" width="230" height="48" rx="12" fill="#1A237E" filter="url(#ds3)"/>';
+  svg+='<text x="'+CX+'" y="'+(R0Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">📍 '+escHtml(cur)+'</text>';
+  svg+='<text x="'+CX+'" y="'+(R0Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.7)" font-family="Inter,sans-serif">Your starting point</text>';
 
-    // Demand
-    var demand = p.supply_demand && p.supply_demand.demand_level || '';
-    var growth = p.supply_demand && p.supply_demand.growth_trend || '';
+  // Decision fork
+  svg+=arw(CX,R0Y+24,CX,R1Y-24,'#CBD5E1');
+  svg+='<rect x="'+(CX-120)+'" y="'+(R1Y-24)+'" width="240" height="48" rx="12" fill="#FF6B00" filter="url(#ds3)"/>';
+  svg+='<text x="'+CX+'" y="'+(R1Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">🔀 Choose Your Career Path</text>';
+  svg+='<text x="'+CX+'" y="'+(R1Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.85)" font-family="Inter,sans-serif">Click any node below for colleges, budget, jobs &amp; more</text>';
 
-    html += '<div class="rm-card ' + cc + '" onclick="showCareerDetail(' + i + ')">';
-    html += '<div class="rm-card-top">';
-    html += '<div class="rm-rank-num">' + (i + 1) + '</div>';
-    html += '<div class="rm-career-block">';
-    html += '<div class="rm-career-name">' + escHtml(p.specific_career || p.career_name || 'Career') + '</div>';
-    if (p.domain) html += '<div class="rm-career-domain">' + escHtml(p.domain) + '</div>';
-    html += '<div class="rm-score-badge">' + pct + '% match</div>';
-    html += '</div></div>'; // card-top
-
-    html += '<div class="rm-chips-row">';
-    html += '<span class="rm-chip ' + feasCls + '">' + feasTxt + '</span>';
-    if (demand)   html += '<span class="rm-chip b">📈 ' + escHtml(demand) + '</span>';
-    if (liveJobs) html += '<span class="rm-chip p">💼 ' + escHtml(liveJobs) + '</span>';
-    if (tcTxt)    html += '<span class="rm-chip gray">🏛 ' + escHtml(tcTxt) + '</span>';
-    if (growth)   html += '<span class="rm-chip g">↑ ' + escHtml(growth) + '</span>';
-    html += '</div>'; // chips-row
-
-    // Salary
-    var sal5 = p['5yr_salary_range'] || p['5yr_salary'] || '';
-    html += '<div class="rm-salary">₹ ' + escHtml(p.starting_salary_range || '—') + (sal5 ? ' → ' + escHtml(sal5) + ' (5yr)' : '') + '</div>';
-
-    // Duration + cost summary
-    if (p.duration_years || (p.cost_breakdown && p.cost_breakdown.total_est)) {
-      var costEst = p.cost_breakdown && p.cost_breakdown.total_est || p.estimated_cost || '';
-      html += '<div style="font-size:10px;color:var(--gray-500);margin-top:3px">';
-      if (p.duration_years) html += '⏱ ' + p.duration_years + ' yrs program';
-      if (p.duration_years && costEst) html += '  ·  ';
-      if (costEst) html += '💰 ' + escHtml(costEst);
-      html += '</div>';
-    }
-
-    html += '<button class="rm-view-btn" onclick="event.stopPropagation();showCareerDetail(' + i + ')">🔍 Full Details — Colleges, Jobs, Budget →</button>';
-    html += '</div>'; // rm-card
+  // Row 1 career nodes
+  var xs1=getXs(row1.length);
+  row1.forEach(function(p,i){
+    svg+=arw(CX,R1Y+24,xs1[i],R2Y-NH/2,BDCLRS[i]);
+    svg+=careerNode(p,i,xs1[i],R2Y);
   });
 
-  html += '</div></div>'; // paths-grid, roadmap-wrap
-  wrap.innerHTML = html;
+  // Row 2 career nodes (if any)
+  if(hasRow2){
+    var xs2=getXs(row2.length);
+    row2.forEach(function(p,i){
+      var gi=i+3;
+      var above=i<row1.length?xs1[i]:CX;
+      svg+=arw(above,R2Y+NH/2,xs2[i],R3Y-NH/2,BDCLRS[gi]+'99');
+      svg+=careerNode(p,gi,xs2[i],R3Y);
+    });
+  }
+
+  wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+viewH+'" style="max-width:'+W+'px;min-width:280px">'+svg+'</svg>';
 }
+
 
 // ── CAREER DETAIL POPUP ───────────────────────────────────────
 function showCareerDetail(idx) {
