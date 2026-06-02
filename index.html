@@ -2287,21 +2287,12 @@ function loadDemo() {
   ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit})[pid]();
   var banner = document.createElement('div');
   banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
-  banner.innerHTML = '⚡ Loaded: ' + _DEMO_NAMES[pid] + ' — complete Step 3 then click "Get AI Career Guidance"';
+  banner.innerHTML = '⚡ Loaded: ' + _DEMO_NAMES[pid] + ' — review the form then click "Get AI Career Guidance"';
   document.querySelector('.api-bar').insertAdjacentElement('afterend', banner);
   setTimeout(function(){ if(banner.parentNode) banner.remove(); }, 5000);
 }
 
 function _demoReset() {
-  ['step1','step2','step3'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
-  document.getElementById('step1').classList.remove('hidden');
-  for (var i=1;i<=3;i++){
-    var sc=document.getElementById('sc'+i); sc.className='step-circle'; sc.textContent=i;
-  }
-  document.getElementById('sc1').className='step-circle active';
-  document.getElementById('sl1').classList.remove('done');
-  document.getElementById('sl2').classList.remove('done');
-  document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
   step=1;
   sel.interests=[]; sel.strengths=[]; sel.scholarships=[]; sel.budget=''; sel.location=''; sel.family='';
   currentBranch=''; currentStream='';
