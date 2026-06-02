@@ -2655,7 +2655,13 @@ function loadDemo() {
   var pid = document.getElementById('demoSelect').value;
   if (!pid) { alert('Please select a demo profile from the dropdown first.'); return; }
   _demoReset();
-  ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit,11:_demoRohit,12:_demoShreya})[pid]();
+  try {
+    ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit,11:_demoRohit,12:_demoShreya})[pid]();
+  } catch(e) {
+    console.error('[CareerDisha] Demo load error for profile', pid, ':', e);
+    alert('Demo failed to load: ' + e.message);
+    return;
+  }
   var banner = document.createElement('div');
   banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
   banner.innerHTML = '⚡ Loaded: ' + _DEMO_NAMES[pid] + ' — review the form then click "Get AI Career Guidance"';
@@ -2941,7 +2947,7 @@ function _demoRohit() {
   document.getElementById('f_age').value='16';
   document.getElementById('f_level').value='10th completed'; onClassChange();
   document.getElementById('f_passion').value='Passionate about cricket — want to turn sport into a career in sports management or sports journalism'; updateCC();
-  document.getElementById('f_board').value='PSEB (Punjab)';
+  document.getElementById('f_board').value='PSEB';
   _demoMarks('tenth',{English:80,SecondLanguage:74,Mathematics:72,Science:78,SocialStudies:84});
   _demoChips('interestChips','interests',['Cricket','Sports','Media & Journalism']);
   _demoChips('strengthChips','strengths',['Leadership','Communication','Analytical']);
@@ -2959,7 +2965,7 @@ function _demoShreya() {
   var br=document.getElementById('f_branch');
   if(br){ br.value='Commerce'; currentBranch='Commerce'; onBranchChange(); }
   document.getElementById('f_passion').value='Fascinated by stock markets and FinTech — want to build wealth through smart investing and financial advisory'; updateCC();
-  document.getElementById('f_board').value='RBSE (Rajasthan)';
+  document.getElementById('f_board').value='RBSE';
   document.getElementById('f_stream').value='Commerce'; currentStream='Commerce'; updateInterSubjects();
   _demoMarks('tenth',{English:82,SecondLanguage:76,Mathematics:90,Science:78,SocialStudies:80});
   _demoMarks('inter',{Commerce:92,Economics:88,BusinessStudies:84,English:80,SecondLanguage:72});
