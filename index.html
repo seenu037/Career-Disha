@@ -336,11 +336,46 @@ textarea{resize:vertical;min-height:78px}
 /* compact results-header in right panel */
 .results-panel .results-header{margin-bottom:12px}
 
-/* ── MOBILE: stack vertically ────────────────────────────────── */
+/* ── MOBILE: tab-based interactive layout ────────────────────── */
+.mobile-tabbar{display:none;position:sticky;top:118px;z-index:85;background:#fff;border-bottom:2px solid var(--gray-200);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.mtab{flex:1;padding:11px 8px;border:none;border-bottom:3px solid transparent;background:transparent;font-size:13px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mtab.active{color:var(--saffron);border-bottom-color:var(--saffron);background:#FFF8F3}
+.mtab .mtab-badge{background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;display:none}
+.mtab.has-results .mtab-badge{display:inline}
+
+/* Floating "View Results" button on mobile */
+.results-fab{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:600;background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));color:#fff;border:none;border-radius:50px;padding:14px 28px;font-size:14px;font-weight:700;box-shadow:0 4px 16px rgba(255,107,0,.45);cursor:pointer;gap:8px;align-items:center;animation:fabPulse 2s ease-in-out infinite}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 16px rgba(255,107,0,.45)}50%{box-shadow:0 6px 24px rgba(255,107,0,.7)}}
+
+/* Interactive re-score button */
+.rescore-btn{display:none;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-pale);border:1.5px solid var(--blue-light);border-radius:20px;padding:5px 12px;cursor:pointer;margin-top:10px;transition:all .2s}
+.rescore-btn:hover{background:var(--blue);color:#fff}
+.rescore-btn.visible{display:inline-flex}
+.rescore-flash{font-size:11px;color:var(--green);font-weight:600;margin-left:8px;opacity:0;transition:opacity .4s}
+.rescore-flash.show{opacity:1}
+
 @media(max-width:860px){
-  .app-shell{flex-direction:column}
-  .form-panel{width:100%;height:auto;position:static;border-right:none;border-bottom:2px solid var(--gray-200)}
-  .results-panel{height:auto;padding:10px 12px}
+  .mobile-tabbar{display:flex}
+  .app-shell{display:block;height:auto}
+  /* Each panel fills viewport below header+api-bar+tabbar (~164px) */
+  .form-panel{
+    width:100%;height:calc(100vh - 164px);overflow-y:auto;
+    position:static;border-right:none;border-bottom:none;
+    display:block;
+  }
+  .results-panel{
+    position:fixed;inset:0;top:164px;
+    height:calc(100vh - 164px);
+    overflow-y:auto;padding:12px 14px;
+    background:var(--gray-50);
+    transform:translateX(100%);
+    transition:transform .32s cubic-bezier(.4,0,.2,1);
+    z-index:80;
+  }
+  .results-panel.mobile-visible{transform:translateX(0)}
+  .results-fab.visible{display:flex}
+  /* hide desktop empty-state placeholder on mobile */
+  .results-panel.empty-state::after{display:none}
 }
 </style>
 </head>
@@ -392,15 +427,34 @@ textarea{resize:vertical;min-height:78px}
   <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;" onclick="loadDemo()">⚡ Load</button>
 </div>
 
+<!-- Mobile tab bar — only visible on small screens -->
+<div class="mobile-tabbar" id="mobileTabbar">
+  <button class="mtab active" id="mtabInput" onclick="showTab('input')">
+    📋 Input
+  </button>
+  <button class="mtab" id="mtabResults" onclick="showTab('results')">
+    🎯 Results <span class="mtab-badge" id="mtabBadge">●</span>
+  </button>
+</div>
+
+<!-- Floating "View Results" button — mobile only, appears after first analysis -->
+<button class="results-fab" id="resultsFab" onclick="showTab('results')">
+  🎯 View Results ↗
+</button>
+
 <div class="app-shell">
 <div id="formSection" class="form-panel form-section">
 
   <!-- Progress -->
   <!-- INPUT panel heading -->
-  <div class="panel-heading input-heading">
-    <span class="panel-tag">INPUT</span>
-    <span class="panel-title">📋 Your Profile</span>
-    <span class="panel-sub">Fill in 3 steps • results update instantly</span>
+  <div class="panel-heading input-heading" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="panel-tag">INPUT</span>
+      <span class="panel-title">📋 Your Profile</span>
+      <span class="panel-sub">Fill in 3 steps</span>
+    </div>
+    <button class="rescore-btn" id="rescoreBtn" onclick="quickRescore()" title="Re-run match scores from current inputs (fast — no AI call)">⚡ Refresh Scores</button>
+    <span class="rescore-flash" id="rescoreFlash">✓ Updated</span>
   </div>
 
   <div class="progress-wrap">
@@ -1711,13 +1765,60 @@ async function callAPI(d) {
 }
 
 // ── RENDER ALL ────────────────────────────────────────────
+// ── MOBILE TAB + INTERACTIVE ─────────────────────────────────
+var _analysisReady = false;
+function showTab(tab) {
+  if (window.innerWidth > 860) return;
+  var form = document.getElementById('formSection');
+  var res  = document.getElementById('results');
+  var ti   = document.getElementById('mtabInput');
+  var tr   = document.getElementById('mtabResults');
+  var fab  = document.getElementById('resultsFab');
+  if (tab === 'results') {
+    res.classList.add('mobile-visible');
+    res.scrollTop = 0;
+    ti.classList.remove('active'); tr.classList.add('active');
+    if (fab) fab.style.display = 'none';
+  } else {
+    res.classList.remove('mobile-visible');
+    ti.classList.add('active'); tr.classList.remove('active');
+    if (fab && _analysisReady) fab.style.display = 'flex';
+  }
+}
+// Re-run only the deterministic matcher on current inputs (no LLM call)
+function quickRescore() {
+  if (!_analysisReady) return;
+  var fd = collectData();
+  var result = window.CareerMatcher && window.CareerMatcher.run(fd);
+  if (!result || !result.matches) return;
+  result.matches.forEach(function(m) {
+    var pct = Math.round(m.score * 100);
+    var card = document.querySelector('.cc[data-id="' + m.career.id + '"]');
+    if (!card) return;
+    var gauge = card.querySelector('.match-pct');
+    var circle = card.querySelector('circle:last-child');
+    if (gauge) gauge.textContent = pct + '%';
+    if (circle) {
+      var r = 26, circ = 2 * Math.PI * r;
+      circle.setAttribute('stroke-dasharray', (pct/100*circ).toFixed(1) + ' ' + circ.toFixed(1));
+    }
+  });
+  var flash = document.getElementById('rescoreFlash');
+  if (flash) { flash.classList.add('show'); setTimeout(function(){ flash.classList.remove('show'); }, 1800); }
+  if (window.innerWidth <= 860) showTab('results');
+}
+
 function renderAll(data, formData) {
   // Split-panel: form stays visible on left; reveal results right panel
   var r = document.getElementById('results');
   r.classList.remove('empty-state');
   r.classList.add('on');
-  // On mobile, scroll results into view
-  if (window.innerWidth <= 860) r.scrollIntoView({behavior:'smooth', block:'start'});
+  // Mobile: slide results panel in and activate Results tab
+  if (window.innerWidth <= 860) {
+    r.classList.add('mobile-visible');
+    var ti = document.getElementById('mtabInput');   if (ti) ti.classList.remove('active');
+    var tr = document.getElementById('mtabResults'); if (tr) { tr.classList.add('active'); tr.classList.add('has-results'); }
+  }
 
   updateFormLanguage(formData.state || document.getElementById('f_state').value);
 
@@ -1780,6 +1881,12 @@ function renderAll(data, formData) {
   if (chartDet) chartDet.addEventListener('toggle', function onChartToggle() {
     if (chartDet.open) window.dispatchEvent(new Event('resize'));
   }, {once: false});
+  // Mark analysis ready → show interactive re-score button + mobile FAB
+  _analysisReady = true;
+  var rb = document.getElementById('rescoreBtn'); if (rb) rb.classList.add('visible');
+  if (window.innerWidth <= 860) {
+    var fab = document.getElementById('resultsFab'); if (fab) fab.style.display = 'none'; // hidden while on results tab
+  }
 }
 
 // ── GOVERNMENT JOBS (deterministic; real roles → official recruiting bodies) ──
@@ -2630,8 +2737,16 @@ function startOver() {
   ['sl1','sl2'].forEach(function(id){ document.getElementById(id).classList.remove('done'); });
   document.querySelectorAll('.step-label').forEach(function(l,i){ l.classList.toggle('active',i===0); });
   if (window._savedFormSnapshot) restoreFormSnapshot(window._savedFormSnapshot);
-  // On mobile, scroll back to form
-  if (window.innerWidth <= 860) document.getElementById('formSection').scrollIntoView({behavior:'smooth'});
+  // Reset interactive state
+  _analysisReady = false;
+  var rb = document.getElementById('rescoreBtn'); if (rb) rb.classList.remove('visible');
+  // Mobile: slide results away, switch to Input tab
+  if (window.innerWidth <= 860) {
+    document.getElementById('results').classList.remove('mobile-visible');
+    var ti = document.getElementById('mtabInput');   if (ti) ti.classList.add('active');
+    var tr = document.getElementById('mtabResults'); if (tr) { tr.classList.remove('active'); tr.classList.remove('has-results'); }
+    var fab = document.getElementById('resultsFab'); if (fab) fab.style.display = 'none';
+  }
 }
 
 function toggleDebug() {
