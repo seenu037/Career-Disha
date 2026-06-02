@@ -55,7 +55,22 @@
     "Civil Engineering": "civil-engineering",
     "Electrical Engineering": "electrical-engineering",
     "Translation & Interpretation": "translation",
-    "Public Relations": "public-relations"
+    "Public Relations": "public-relations",
+    "Cricket": "cricket",
+    "Football": "football",
+    "Chess": "chess",
+    "Badminton": "badminton",
+    "Mobile Gaming": "mobile-gaming",
+    "Bollywood & Cinema": "bollywood-cinema",
+    "Podcasting": "podcasting",
+    "Indian Classical Music": "classical-music",
+    "Classical Dance": "classical-dance",
+    "Painting & Fine Arts": "painting-arts",
+    "Yoga & Wellness": "yoga-wellness",
+    "Ayurveda & Wellness": "ayurveda-wellness",
+    "Travel & Tourism": "travel-tourism",
+    "Stock Trading": "stock-trading",
+    "Cryptocurrency & Web3": "crypto-web3"
   },
   "canonical": {
     "medicine": {

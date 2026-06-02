@@ -62,7 +62,22 @@
       "Civil Engineering": "civil-engineering",
       "Electrical Engineering": "electrical-engineering",
       "Translation & Interpretation": "translation",
-      "Public Relations": "public-relations"
+      "Public Relations": "public-relations",
+      "Cricket": "cricket",
+      "Football": "football",
+      "Chess": "chess",
+      "Badminton": "badminton",
+      "Mobile Gaming": "mobile-gaming",
+      "Bollywood & Cinema": "bollywood-cinema",
+      "Podcasting": "podcasting",
+      "Indian Classical Music": "classical-music",
+      "Classical Dance": "classical-dance",
+      "Painting & Fine Arts": "painting-arts",
+      "Yoga & Wellness": "yoga-wellness",
+      "Ayurveda & Wellness": "ayurveda-wellness",
+      "Travel & Tourism": "travel-tourism",
+      "Stock Trading": "stock-trading",
+      "Cryptocurrency & Web3": "crypto-web3"
     },
     strengthLabels: {
       "Logical thinking": "logical-thinking",
@@ -4708,7 +4723,10 @@
           "interests": [
             "technology",
             "digital-marketing",
-            "finance"
+            "finance",
+            "chess",
+            "mobile-gaming",
+            "crypto-web3"
           ],
           "strengths": [
             "logical-thinking",
@@ -4786,7 +4804,8 @@
             "data-science",
             "technology",
             "finance",
-            "digital-marketing"
+            "digital-marketing",
+            "chess"
           ],
           "strengths": [
             "analytical",
@@ -5288,7 +5307,8 @@
           "interests": [
             "medicine",
             "social-work",
-            "government-service"
+            "government-service",
+            "ayurveda-wellness"
           ],
           "strengths": [
             "empathy",
@@ -5428,7 +5448,8 @@
           "interests": [
             "pharmacy",
             "medicine",
-            "business"
+            "business",
+            "ayurveda-wellness"
           ],
           "strengths": [
             "analytical",
@@ -5570,7 +5591,11 @@
             "physiotherapy",
             "medicine",
             "sports",
-            "social-work"
+            "social-work",
+            "cricket",
+            "football",
+            "badminton",
+            "yoga-wellness"
           ],
           "strengths": [
             "empathy",
@@ -5778,7 +5803,8 @@
           "interests": [
             "investment-banking",
             "finance",
-            "business"
+            "business",
+            "stock-trading"
           ],
           "strengths": [
             "analytical",
@@ -5852,7 +5878,8 @@
         "vector": {
           "interests": [
             "finance",
-            "business"
+            "business",
+            "stock-trading"
           ],
           "strengths": [
             "analytical",
@@ -6226,7 +6253,10 @@
           "interests": [
             "media-journalism",
             "social-work",
-            "government-service"
+            "government-service",
+            "cricket",
+            "bollywood-cinema",
+            "podcasting"
           ],
           "strengths": [
             "communication",
@@ -6387,7 +6417,11 @@
           "interests": [
             "teaching",
             "social-work",
-            "government-service"
+            "government-service",
+            "classical-music",
+            "classical-dance",
+            "yoga-wellness",
+            "chess"
           ],
           "strengths": [
             "communication",
@@ -6455,7 +6489,8 @@
           "interests": [
             "arts-design",
             "digital-marketing",
-            "technology"
+            "technology",
+            "painting-arts"
           ],
           "strengths": [
             "creativity",
@@ -6590,7 +6625,8 @@
             "fashion-design",
             "arts-design",
             "performing-arts",
-            "business"
+            "business",
+            "classical-dance"
           ],
           "strengths": [
             "creativity",
@@ -6654,7 +6690,8 @@
             "culinary",
             "business",
             "arts-design",
-            "performing-arts"
+            "performing-arts",
+            "travel-tourism"
           ],
           "strengths": [
             "communication",
@@ -6726,7 +6763,10 @@
           "interests": [
             "government-service",
             "sports",
-            "social-work"
+            "social-work",
+            "cricket",
+            "football",
+            "badminton"
           ],
           "strengths": [
             "leadership",
@@ -6992,7 +7032,8 @@
           "interests": [
             "blockchain",
             "technology",
-            "finance"
+            "finance",
+            "crypto-web3"
           ],
           "strengths": [
             "logical-thinking",
@@ -7351,7 +7392,9 @@
           "interests": [
             "game-design",
             "technology",
-            "arts-design"
+            "arts-design",
+            "mobile-gaming",
+            "chess"
           ],
           "strengths": [
             "creativity",
@@ -7404,7 +7447,8 @@
           "interests": [
             "ux-ui-design",
             "arts-design",
-            "technology"
+            "technology",
+            "painting-arts"
           ],
           "strengths": [
             "creativity",
@@ -7457,7 +7501,9 @@
           "interests": [
             "animation-vfx",
             "arts-design",
-            "performing-arts"
+            "performing-arts",
+            "bollywood-cinema",
+            "painting-arts"
           ],
           "strengths": [
             "creativity",
@@ -7609,7 +7655,10 @@
           "interests": [
             "content-creation",
             "media-journalism",
-            "digital-marketing"
+            "digital-marketing",
+            "bollywood-cinema",
+            "podcasting",
+            "classical-music"
           ],
           "strengths": [
             "creativity",
@@ -8189,7 +8238,9 @@
           "interests": [
             "event-management",
             "business",
-            "performing-arts"
+            "performing-arts",
+            "classical-dance",
+            "travel-tourism"
           ],
           "strengths": [
             "communication",
@@ -8399,7 +8450,8 @@
           "interests": [
             "public-relations",
             "media-journalism",
-            "business"
+            "business",
+            "podcasting"
           ],
           "strengths": [
             "communication",

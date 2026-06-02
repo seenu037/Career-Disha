@@ -429,6 +429,9 @@ textarea{resize:vertical;min-height:78px}
 @keyframes fabPulse{0%,100%{box-shadow:0 4px 16px rgba(255,107,0,.45)}50%{box-shadow:0 6px 24px rgba(255,107,0,.7)}}
 
 /* Interactive re-score button */
+/* Interest chip category headers */
+.chips-cat-hdr{font-size:10px;font-weight:800;color:var(--deep-blue);text-transform:uppercase;letter-spacing:.6px;padding:8px 2px 3px;width:100%;opacity:.75;margin-top:4px}
+.chips-cat-hdr:first-child{margin-top:0;padding-top:2px}
 .rescore-btn{display:none;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-pale);border:1.5px solid var(--blue-light);border-radius:20px;padding:5px 12px;cursor:pointer;margin-top:10px;transition:all .2s}
 .rescore-btn:hover{background:var(--blue);color:#fff}
 .rescore-btn.visible{display:inline-flex}
@@ -505,6 +508,8 @@ textarea{resize:vertical;min-height:78px}
     <option value="8">8 · Kavitha — HSC PCMB, Medicine &amp; Forensic Science (Tamil Nadu)</option>
     <option value="9">9 · Ravi — Inter BiPC, Veterinary &amp; Agriculture (Andhra Pradesh)</option>
     <option value="10">10 · Biswajit — Inter Science, Robotics &amp; Electrical Engg (Odisha)</option>
+    <option value="11">11 · Rohit — 10th Completed, Cricket &amp; Sports Management (Punjab)</option>
+    <option value="12">12 · Shreya — Inter Commerce, Stock Trading &amp; FinTech (Rajasthan)</option>
   </select>
   <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;" onclick="loadDemo()">⚡ Load</button>
 </div>
@@ -946,7 +951,23 @@ var INTEREST_EXAM_MAP = {
   'Civil Engineering':['Engineering & Technology','Polytechnic & PG Entry'],
   'Electrical Engineering':['Engineering & Technology','Polytechnic & PG Entry'],
   'Translation & Interpretation':['Teaching & Education','Civil Services'],
-  'Public Relations':['Civil Services','Finance & Commerce']
+  'Public Relations':['Civil Services','Finance & Commerce'],
+  // New Indian cultural interests
+  'Cricket':             ['Defense & Police','SSC & Railway'],
+  'Football':            ['Defense & Police','SSC & Railway'],
+  'Badminton':           ['Defense & Police','SSC & Railway'],
+  'Chess':               ['Engineering & Technology','Civil Services'],
+  'Mobile Gaming':       ['Engineering & Technology','Polytechnic & PG Entry'],
+  'Bollywood & Cinema':  ['Architecture & Design'],
+  'Podcasting':          ['Civil Services','Finance & Commerce'],
+  'Indian Classical Music':['Teaching & Education','Civil Services'],
+  'Classical Dance':     ['Teaching & Education','Architecture & Design'],
+  'Painting & Fine Arts':['Architecture & Design'],
+  'Yoga & Wellness':     ['Medical & Pharmacy','Teaching & Education'],
+  'Ayurveda & Wellness': ['Medical & Pharmacy'],
+  'Travel & Tourism':    ['Finance & Commerce','Architecture & Design'],
+  'Stock Trading':       ['Finance & Commerce','Banking & Insurance'],
+  'Cryptocurrency & Web3':['Engineering & Technology','Finance & Commerce']
 };
 
 var EXAM_CATEGORIES = [
@@ -1009,7 +1030,14 @@ var INTEREST_DOMAIN = {
   'Non-Profit Management':['Government'], 'International Relations':['Government','Law'], 'Urban Planning':['Architecture','Engineering'],
   'Forensic Science':['Medicine','Government'], 'Aviation':['Engineering','Defense'], 'Culinary Arts':['Business'],
   'Event Management':['Business'], 'Civil Engineering':['Engineering'], 'Electrical Engineering':['Engineering'],
-  'Translation & Interpretation':['Teaching','Journalism'], 'Public Relations':['Journalism','Business']
+  'Translation & Interpretation':['Teaching','Journalism'], 'Public Relations':['Journalism','Business'],
+  'Cricket':['Sports','Defense'], 'Football':['Sports','Defense'], 'Badminton':['Sports','Defense'],
+  'Chess':['Engineering','Government'], 'Mobile Gaming':['Engineering','Design'],
+  'Bollywood & Cinema':['Design','Journalism'], 'Podcasting':['Journalism','Business'],
+  'Indian Classical Music':['Teaching','Arts'], 'Classical Dance':['Teaching','Arts'],
+  'Painting & Fine Arts':['Design','Arts'], 'Yoga & Wellness':['Medicine','Teaching'],
+  'Ayurveda & Wellness':['Medicine','Pharmacy'], 'Travel & Tourism':['Business','Hospitality'],
+  'Stock Trading':['Finance','CA/CMA/CS'], 'Cryptocurrency & Web3':['Engineering','Finance']
 };
 
 var STATE_BOARDS = {
@@ -1057,18 +1085,43 @@ var mChart = null;
 (function init() {
   buildSubjRows('tenthTbody', TENTH_SUBJECTS, 'tenth');
   buildExamCategories();
-  makeChips('interestChips',['Medicine','Law','Agriculture','Arts & Design',
-    'Music & Performing Arts','Business','Teaching','Government Service','Technology','Sports',
-    'Social Work','Media & Journalism','Digital Marketing','Finance',
-    'AI & Machine Learning','Data Science','Cybersecurity','Cloud Computing','Blockchain','Robotics',
-    'Biomedical Engineering','Environmental Science','Space & Aerospace','Psychology',
-    'Nutrition & Dietetics','Physiotherapy','Public Health','Veterinary Science','Pharmacy',
-    'Game Design','Animation & VFX','Content Creation','UX/UI Design','Fashion Design',
-    'Interior Design','Photography','Entrepreneurship','Investment Banking','Supply Chain',
-    'Human Resources','E-Commerce','Real Estate','Insurance','Non-Profit Management',
-    'International Relations','Urban Planning','Forensic Science','Aviation','Culinary Arts',
-    'Event Management','Civil Engineering','Electrical Engineering','Translation & Interpretation',
-    'Public Relations'], 'interests', false);
+  // Grouped interest chips — render with category headers
+  var INTEREST_GROUPS = [
+    { g: '🏅 Sports & Games',       items: ['Cricket','Football','Badminton','Chess','Mobile Gaming','Sports'] },
+    { g: '🎬 Entertainment',        items: ['Bollywood & Cinema','Animation & VFX','Content Creation','Photography','Podcasting','Media & Journalism'] },
+    { g: '🎨 Arts & Creativity',    items: ['Arts & Design','Painting & Fine Arts','Music & Performing Arts','Indian Classical Music','Classical Dance','Fashion Design','Interior Design','Game Design','UX/UI Design'] },
+    { g: '🍛 Food & Wellness',      items: ['Culinary Arts','Nutrition & Dietetics','Yoga & Wellness','Physiotherapy','Ayurveda & Wellness'] },
+    { g: '✈️ Travel & Culture',     items: ['Travel & Tourism','Event Management','International Relations','Social Work','Non-Profit Management'] },
+    { g: '💰 Finance & Investing',  items: ['Finance','Investment Banking','Stock Trading','Cryptocurrency & Web3','Real Estate','Insurance','Entrepreneurship'] },
+    { g: '📱 Technology & Digital', items: ['Technology','AI & Machine Learning','Data Science','Cybersecurity','Cloud Computing','Blockchain','Robotics','Digital Marketing','E-Commerce'] },
+    { g: '🏥 Health & Sciences',    items: ['Medicine','Pharmacy','Biomedical Engineering','Public Health','Veterinary Science','Psychology','Environmental Science','Space & Aerospace','Forensic Science'] },
+    { g: '⚖️ Law, Civil & Social',  items: ['Law','Government Service','Teaching','Public Relations','Translation & Interpretation','Urban Planning','Human Resources'] },
+    { g: '🏗️ Engineering & Infra',  items: ['Civil Engineering','Electrical Engineering','Aviation','Supply Chain','Agriculture'] }
+  ];
+  (function(){
+    var c = document.getElementById('interestChips');
+    INTEREST_GROUPS.forEach(function(grp) {
+      var hdr = document.createElement('div');
+      hdr.className = 'chips-cat-hdr';
+      hdr.textContent = grp.g;
+      c.appendChild(hdr);
+      grp.items.forEach(function(item) {
+        var d = document.createElement('div');
+        d.className = 'chip';
+        d.textContent = item;
+        d.addEventListener('click', function() {
+          d.classList.toggle('on');
+          d.classList.remove('primary-int');
+          var idx = sel.interests.indexOf(item);
+          if (idx === -1) sel.interests.push(item); else sel.interests.splice(idx, 1);
+          c.querySelectorAll('.chip.on').forEach(function(x,i){ if(i===0) x.classList.add('primary-int'); else x.classList.remove('primary-int'); });
+          buildExamCategories();
+          scheduleUpdate();
+        });
+        c.appendChild(d);
+      });
+    });
+  })();
   makeChips('strengthChips',['Logical thinking','Creativity','Communication','Leadership',
     'Analytical','Empathy','Technical','Research'], 'strengths', false);
   makeChips('schlChips',['SC (Scheduled Caste)','ST (Scheduled Tribe)','OBC / BC','EWS',
@@ -2593,14 +2646,16 @@ var _DEMO_NAMES = {
   '7':'Meera — HSC Science, UX/UI Design & Tech (Gujarat)',
   '8':'Kavitha — HSC PCMB, Medicine & Forensic Science (Tamil Nadu)',
   '9':'Ravi — Inter BiPC, Veterinary & Agriculture (Andhra Pradesh)',
-  '10':'Biswajit — Inter Science, Robotics & Electrical Engg (Odisha)'
+  '10':'Biswajit — Inter Science, Robotics & Electrical Engg (Odisha)',
+  '11':'Rohit — 10th Completed, Cricket & Sports Management (Punjab)',
+  '12':'Shreya — Inter Commerce, Stock Trading & FinTech (Rajasthan)'
 };
 
 function loadDemo() {
   var pid = document.getElementById('demoSelect').value;
   if (!pid) { alert('Please select a demo profile from the dropdown first.'); return; }
   _demoReset();
-  ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit})[pid]();
+  ({1:_demoArjun,2:_demoPriya,3:_demoKiran,4:_demoAnanya,5:_demoSuresh,6:_demoDeepa,7:_demoMeera,8:_demoKavitha,9:_demoRavi,10:_demoBiswajit,11:_demoRohit,12:_demoShreya})[pid]();
   var banner = document.createElement('div');
   banner.style.cssText = 'background:var(--saffron);color:#fff;text-align:center;padding:9px;font-size:13px;font-weight:600';
   banner.innerHTML = '⚡ Loaded: ' + _DEMO_NAMES[pid] + ' — review the form then click "Get AI Career Guidance"';
@@ -2878,6 +2933,43 @@ function _demoBiswajit() {
   _demoLoc('Open to other states');
   _demoChips('schlChips','scholarships',['ST (Scheduled Tribe)']);
   _demoSingle('famChips','family','Parents in government');
+}
+
+// 11 — Rohit: Punjab, 10th Completed — Cricket fan → Sports Management, Journalism, Defence
+function _demoRohit() {
+  document.getElementById('f_state').value='Punjab'; onStateChange();
+  document.getElementById('f_age').value='16';
+  document.getElementById('f_level').value='10th completed'; onClassChange();
+  document.getElementById('f_passion').value='Passionate about cricket — want to turn sport into a career in sports management or sports journalism'; updateCC();
+  document.getElementById('f_board').value='PSEB (Punjab)';
+  _demoMarks('tenth',{English:80,SecondLanguage:74,Mathematics:72,Science:78,SocialStudies:84});
+  _demoChips('interestChips','interests',['Cricket','Sports','Media & Journalism']);
+  _demoChips('strengthChips','strengths',['Leadership','Communication','Analytical']);
+  _demoBudget('₹3–7 Lakh');
+  _demoLoc('Open to other states');
+  _demoChips('schlChips','scholarships',['General / Open']);
+  _demoSingle('famChips','family','First-generation graduate');
+}
+
+// 12 — Shreya: Rajasthan, Inter 2nd Year Commerce — Stock Trading, FinTech, Investment Banking
+function _demoShreya() {
+  document.getElementById('f_state').value='Rajasthan'; onStateChange();
+  document.getElementById('f_age').value='17';
+  document.getElementById('f_level').value='Inter 2nd year'; onClassChange();
+  var br=document.getElementById('f_branch');
+  if(br){ br.value='Commerce'; currentBranch='Commerce'; onBranchChange(); }
+  document.getElementById('f_passion').value='Fascinated by stock markets and FinTech — want to build wealth through smart investing and financial advisory'; updateCC();
+  document.getElementById('f_board').value='RBSE (Rajasthan)';
+  document.getElementById('f_stream').value='Commerce'; currentStream='Commerce'; updateInterSubjects();
+  _demoMarks('tenth',{English:82,SecondLanguage:76,Mathematics:90,Science:78,SocialStudies:80});
+  _demoMarks('inter',{Commerce:92,Economics:88,BusinessStudies:84,English:80,SecondLanguage:72});
+  _demoExam('CA Foundation','Registered');
+  _demoChips('interestChips','interests',['Stock Trading','Cryptocurrency & Web3','Finance','Investment Banking']);
+  _demoChips('strengthChips','strengths',['Analytical','Logical thinking','Research']);
+  _demoBudget('₹3–7 Lakh');
+  _demoLoc('Open to other states');
+  _demoChips('schlChips','scholarships',['OBC / BC']);
+  _demoSingle('famChips','family','Business family');
 }
 
 // ── FORM SNAPSHOT ─────────────────────────────────────────
