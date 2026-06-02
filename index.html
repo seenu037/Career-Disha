@@ -276,6 +276,20 @@ textarea{resize:vertical;min-height:78px}
 .mt4{margin-top:16px}
 @media print{.header,.api-bar,.form-panel,.form-actions,.debug-section{display:none}.results-panel{display:block!important;height:auto!important}}
 
+/* ── PANEL HEADINGS ─────────────────────────────────────────── */
+.panel-heading{display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:10px;border-radius:10px;flex-wrap:wrap}
+.panel-tag{font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;flex-shrink:0}
+.panel-title{font-size:14px;font-weight:700;flex-shrink:0}
+.panel-sub{font-size:11px;color:var(--gray-500)}
+.input-heading{background:linear-gradient(135deg,var(--blue-pale),#fff);border:1.5px solid var(--blue-light)}
+.input-heading .panel-tag{background:var(--deep-blue);color:#fff}
+.input-heading .panel-title{color:var(--deep-blue)}
+.output-heading{background:linear-gradient(135deg,#FFF3E8,#fff);border:1.5px solid var(--saffron);margin-bottom:10px}
+.output-heading .panel-tag{background:var(--saffron);color:#fff}
+.output-heading .panel-title{color:var(--saffron-dark)}
+/* hide output heading in empty state */
+.results-panel.empty-state .output-heading{display:none}
+
 /* ── SPLIT-PANEL SHELL ───────────────────────────────────────── */
 /* header ≈72px + api-bar ≈46px = ~118px combined sticky bars */
 .app-shell{display:flex;align-items:flex-start;height:calc(100vh - 118px)}
@@ -382,6 +396,13 @@ textarea{resize:vertical;min-height:78px}
 <div id="formSection" class="form-panel form-section">
 
   <!-- Progress -->
+  <!-- INPUT panel heading -->
+  <div class="panel-heading input-heading">
+    <span class="panel-tag">INPUT</span>
+    <span class="panel-title">📋 Your Profile</span>
+    <span class="panel-sub">Fill in 3 steps • results update instantly</span>
+  </div>
+
   <div class="progress-wrap">
     <div class="progress-steps">
       <div class="step-circle active" id="sc1">1</div>
@@ -594,8 +615,16 @@ textarea{resize:vertical;min-height:78px}
 
 <!-- RESULTS — right panel, always visible; empty-state removed on first renderAll() -->
 <div class="results results-panel empty-state" id="results">
+
+  <!-- OUTPUT panel heading -->
+  <div class="panel-heading output-heading">
+    <span class="panel-tag">OUTPUT</span>
+    <span class="panel-title">🎯 Career Analysis</span>
+    <span class="panel-sub">AI-generated results based on your profile</span>
+  </div>
+
   <div class="results-header">
-    <div style="font-size:12px;opacity:.8;margin-bottom:4px;">🎯 AI Career Analysis Complete • <span id="resComplete">AI విశ్లేషణ పూర్తైంది</span></div>
+    <div style="font-size:12px;opacity:.8;margin-bottom:4px;">AI Career Analysis Complete • <span id="resComplete">AI విశ్లేషణ పూర్తైంది</span></div>
     <h2>Your Personalized Career Roadmap</h2>
     <div class="student-summary" id="rSummary"></div>
     <div id="rSummaryLocal" style="display:none;margin-top:8px;padding:10px 14px;background:rgba(255,255,255,0.12);border-radius:8px;font-size:13px;line-height:1.6;font-family:'Noto Sans Telugu','Inter',sans-serif"></div>
@@ -606,16 +635,7 @@ textarea{resize:vertical;min-height:78px}
   <div class="alert-green hidden" id="rScholarship"></div>
   <div class="alert-yellow hidden" id="rWarning"></div>
 
-  <!-- Profile inputs — at the top, hidden by default; JS opens it -->
-  <details class="r-section" id="inputSummaryCard">
-    <summary>📋 Your Profile Inputs</summary>
-    <div class="r-body" style="overflow-x:auto">
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px;">Summary of what you entered — this drove your match results</div>
-      <table class="btable"><tbody id="inputSummaryBody"></tbody></table>
-    </div>
-  </details>
-
-  <!-- Career recommendations — always open, no collapse chrome -->
+  <!-- Career recommendations — always open -->
   <details class="r-section r-cards" open>
     <summary></summary>
     <div class="r-body">
@@ -624,8 +644,7 @@ textarea{resize:vertical;min-height:78px}
     </div>
   </details>
 
-  <!-- All remaining sections — closed by default, click header to expand -->
-
+  <!-- Remaining sections — all collapsed, click to expand -->
   <details class="r-section">
     <summary>🗺️ Career Roadmap Decision Tree <span id="resTreeTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">మీ కెరీర్ పథం</span></summary>
     <div class="r-body"><div class="tree-wrap" id="treeWrap"></div></div>
@@ -634,22 +653,6 @@ textarea{resize:vertical;min-height:78px}
   <details class="r-section" id="chartSection">
     <summary>📊 Job Market Analysis <span id="resMarketTitle" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;">ఉద్యోగ అవకాశాలు</span></summary>
     <div class="r-body"><div class="chart-wrap"><canvas id="mChart"></canvas></div></div>
-  </details>
-
-  <details class="r-section" id="govtJobsCard">
-    <summary>🏛️ Government Jobs <span id="govtJobsState" style="font-size:12px;color:var(--gray-400);font-weight:400;margin-left:4px;"></span></summary>
-    <div class="r-body">
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Real roles routed to their official recruiting bodies. Specific vacancies &amp; exam dates vary by year — check the official portal.</div>
-      <div id="govtJobsBody"></div>
-    </div>
-  </details>
-
-  <details class="r-section" id="privateJobsCard">
-    <summary>💼 Private Jobs — Where to Apply</summary>
-    <div class="r-body">
-      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">Top private job &amp; internship portals in India. Create a profile and set alerts for your target roles.</div>
-      <div id="privateJobsBody"></div>
-    </div>
   </details>
 
   <details class="r-section">
@@ -669,6 +672,11 @@ textarea{resize:vertical;min-height:78px}
     <summary>🎓 Counsellor's Note</summary>
     <div class="r-body"><div class="counselor-note" id="rNote" style="margin:0"></div></div>
   </details>
+
+  <!-- Stub containers kept for JS compat (sections hidden from UI) -->
+  <div style="display:none" id="inputSummaryCard"><tbody id="inputSummaryBody"></tbody></div>
+  <div style="display:none" id="govtJobsCard"><div id="govtJobsBody"></div><span id="govtJobsState"></span></div>
+  <div style="display:none" id="privateJobsCard"><div id="privateJobsBody"></div></div>
 
   <!-- Footer actions -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0 4px">
