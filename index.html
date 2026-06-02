@@ -415,7 +415,7 @@ textarea{resize:vertical;min-height:78px}
 
 <div class="api-bar">
   <span style="font-size:13px;font-weight:600;color:var(--gray-700)">🔒 Powered by Groq AI — API key secured server-side</span>
-  <select id="demoSelect" style="font-size:13px;padding:7px 10px;border:1.5px solid var(--gray-300);border-radius:8px;max-width:320px;">
+  <select id="demoSelect" onchange="if(this.value)loadDemo()" style="font-size:13px;padding:7px 10px;border:1.5px solid var(--gray-300);border-radius:8px;max-width:320px;">
     <option value="">⚡ Select Demo Profile…</option>
     <option value="1">1 · Arjun — 8th Studying, AI &amp; Game Design (Delhi)</option>
     <option value="2">2 · Priya — 10th Completed, Medicine &amp; Public Health (Uttar Pradesh)</option>
@@ -2294,6 +2294,10 @@ function loadDemo() {
 
 function _demoReset() {
   step=1;
+  // Clear all basic fields so no stale values bleed across demos
+  ['f_state','f_age','f_level','f_branch','f_board','f_stream'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.value='';
+  });
   sel.interests=[]; sel.strengths=[]; sel.scholarships=[]; sel.budget=''; sel.location=''; sel.family='';
   currentBranch=''; currentStream='';
   document.querySelectorAll('#interestChips .chip,#strengthChips .chip,#schlChips .chip').forEach(function(c){ c.classList.remove('on','primary-int'); });
