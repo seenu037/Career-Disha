@@ -1963,6 +1963,7 @@ function renderAll(data, formData) {
   renderTree(data.top_paths || [], formData);
   renderChart(data.domain_market_data || []);
   renderJobListings(data.job_listings || []);
+  window._lastGovtJobs = data.govt_jobs; // cached for showCareerDetail popup
   renderGovtJobs(data.govt_jobs);
   renderPrivateJobs();
   renderBudget(data.top_paths || [], formData);
@@ -2387,21 +2388,38 @@ function showCareerDetail(idx) {
     h += '<div style="margin-top:4px;font-size:11px;color:var(--gray-600)">📍 Top cities: ' + p.job_locations.slice(0,5).map(escHtml).join(' · ') + '</div>';
   h += '</div>';
 
-  // ── Job portals ─────────────────────────────────────────────────────────
-  if (p.job_portals && p.job_portals.length) {
-    var groups = {};
-    p.job_portals.forEach(function(jp) { var g = jp.group || 'General'; if (!groups[g]) groups[g] = []; groups[g].push(jp); });
-    h += '<div class="rm-msec"><h4>🔗 Apply / Job Links</h4>';
-    Object.keys(groups).forEach(function(g) {
-      h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:6px 0 4px;text-transform:uppercase;letter-spacing:.5px">' + escHtml(g) + '</div>';
+  // ── Job portals — full lists from Private Jobs + Govt Jobs sections ─────
+  h += '<div class="rm-msec"><h4>🔗 Where to Apply</h4>';
+
+  // Private job portals (all categories from the global PRIVATE_JOB_PORTALS const)
+  if (typeof PRIVATE_JOB_PORTALS !== 'undefined') {
+    Object.keys(PRIVATE_JOB_PORTALS).forEach(function(cat) {
+      h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">💼 ' + escHtml(cat) + '</div>';
       h += '<div class="rm-portal-wrap">';
-      groups[g].slice(0, 6).forEach(function(jp) {
+      PRIVATE_JOB_PORTALS[cat].forEach(function(jp) {
         h += '<a href="' + jp.url + '" target="_blank" rel="noopener" class="rm-portal-a">' + escHtml(jp.name) + ' ↗</a>';
       });
       h += '</div>';
     });
-    h += '</div>';
   }
+
+  // Government job portals (central + state from the last rendered Govt Jobs data)
+  var gj = window._lastGovtJobs;
+  if (gj) {
+    function gjRow(rows, label) {
+      if (!rows || !rows.length) return;
+      h += '<div style="font-size:10px;font-weight:700;color:var(--gray-400);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px">🏛 ' + escHtml(label) + '</div>';
+      h += '<div class="rm-portal-wrap">';
+      rows.forEach(function(r) {
+        if (r.url) h += '<a href="' + r.url + '" target="_blank" rel="noopener" class="rm-portal-a" style="border-color:var(--deep-blue);color:var(--deep-blue);background:var(--blue-pale)">' + escHtml(r.body || r.role) + ' ↗</a>';
+      });
+      h += '</div>';
+    }
+    gjRow(gj.central, 'Central Govt Recruiters');
+    if (gj.state && gj.state.length) gjRow(gj.state, (gj.stateName || 'State') + ' Govt Portals');
+  }
+
+  h += '</div>';
 
   // ── Entrance exams ──────────────────────────────────────────────────────
   if (p.entrance_exam_links && p.entrance_exam_links.length) {
