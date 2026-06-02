@@ -4805,7 +4805,8 @@
             "technology",
             "finance",
             "digital-marketing",
-            "chess"
+            "chess",
+            "stock-trading"
           ],
           "strengths": [
             "analytical",
@@ -5239,7 +5240,8 @@
           "interests": [
             "arts-design",
             "technology",
-            "business"
+            "business",
+            "painting-arts"
           ],
           "strengths": [
             "creativity",
@@ -5879,7 +5881,8 @@
           "interests": [
             "finance",
             "business",
-            "stock-trading"
+            "stock-trading",
+            "crypto-web3"
           ],
           "strengths": [
             "analytical",
@@ -6179,7 +6182,9 @@
           "interests": [
             "government-service",
             "social-work",
-            "law"
+            "law",
+            "cricket",
+            "sports"
           ],
           "strengths": [
             "leadership",
@@ -6256,7 +6261,11 @@
             "government-service",
             "cricket",
             "bollywood-cinema",
-            "podcasting"
+            "podcasting",
+            "football",
+            "sports",
+            "classical-music",
+            "classical-dance"
           ],
           "strengths": [
             "communication",
@@ -6334,7 +6343,8 @@
             "psychology",
             "medicine",
             "social-work",
-            "teaching"
+            "teaching",
+            "yoga-wellness"
           ],
           "strengths": [
             "empathy",
@@ -6421,7 +6431,9 @@
             "classical-music",
             "classical-dance",
             "yoga-wellness",
-            "chess"
+            "chess",
+            "performing-arts",
+            "painting-arts"
           ],
           "strengths": [
             "communication",
@@ -6557,7 +6569,11 @@
             "digital-marketing",
             "business",
             "media-journalism",
-            "arts-design"
+            "arts-design",
+            "cricket",
+            "sports",
+            "travel-tourism",
+            "bollywood-cinema"
           ],
           "strengths": [
             "creativity",
@@ -6909,7 +6925,8 @@
         "vector": {
           "interests": [
             "ai-ml",
-            "technology"
+            "technology",
+            "chess"
           ],
           "strengths": [
             "logical-thinking",
@@ -7503,7 +7520,8 @@
             "arts-design",
             "performing-arts",
             "bollywood-cinema",
-            "painting-arts"
+            "painting-arts",
+            "classical-dance"
           ],
           "strengths": [
             "creativity",
@@ -7554,7 +7572,8 @@
           "interests": [
             "interior-design",
             "arts-design",
-            "business"
+            "business",
+            "painting-arts"
           ],
           "strengths": [
             "creativity",
@@ -7606,7 +7625,10 @@
           "interests": [
             "photography",
             "arts-design",
-            "media-journalism"
+            "media-journalism",
+            "painting-arts",
+            "travel-tourism",
+            "bollywood-cinema"
           ],
           "strengths": [
             "creativity",
@@ -7658,7 +7680,13 @@
             "digital-marketing",
             "bollywood-cinema",
             "podcasting",
-            "classical-music"
+            "classical-music",
+            "cricket",
+            "mobile-gaming",
+            "classical-dance",
+            "painting-arts",
+            "yoga-wellness",
+            "travel-tourism"
           ],
           "strengths": [
             "creativity",
@@ -7713,7 +7741,10 @@
           "interests": [
             "nutrition",
             "medicine",
-            "social-work"
+            "social-work",
+            "yoga-wellness",
+            "culinary",
+            "ayurveda-wellness"
           ],
           "strengths": [
             "empathy",
@@ -7771,7 +7802,9 @@
             "public-health",
             "medicine",
             "social-work",
-            "government-service"
+            "government-service",
+            "ayurveda-wellness",
+            "yoga-wellness"
           ],
           "strengths": [
             "research",
@@ -7883,7 +7916,11 @@
           "interests": [
             "entrepreneurship",
             "business",
-            "technology"
+            "technology",
+            "travel-tourism",
+            "culinary",
+            "performing-arts",
+            "sports"
           ],
           "strengths": [
             "leadership",
@@ -8240,7 +8277,10 @@
             "business",
             "performing-arts",
             "classical-dance",
-            "travel-tourism"
+            "travel-tourism",
+            "cricket",
+            "football",
+            "classical-music"
           ],
           "strengths": [
             "communication",
@@ -8346,7 +8386,8 @@
           "interests": [
             "non-profit",
             "social-work",
-            "government-service"
+            "government-service",
+            "yoga-wellness"
           ],
           "strengths": [
             "empathy",
@@ -8451,7 +8492,11 @@
             "public-relations",
             "media-journalism",
             "business",
-            "podcasting"
+            "podcasting",
+            "performing-arts",
+            "bollywood-cinema",
+            "sports",
+            "cricket"
           ],
           "strengths": [
             "communication",
@@ -8547,6 +8592,138 @@
           "Mumbai",
           "Hyderabad"
         ]
+      },
+      {
+        "id": "sports-manager",
+        "name": {
+          "en": "Sports Management / Coaching",
+          "te": "స్పోర్ట్స్ మేనేజ్‌మెంట్"
+        },
+        "streams": [],
+        "min_class": "10th-passed",
+        "vector": {
+          "interests": [
+            "sports",
+            "cricket",
+            "football",
+            "badminton",
+            "yoga-wellness",
+            "social-work",
+            "government-service"
+          ],
+          "strengths": [
+            "leadership",
+            "communication",
+            "analytical"
+          ],
+          "subjects": {
+            "social-studies": 0.2,
+            "english": 0.3,
+            "science": 0.2
+          }
+        },
+        "exams": [
+          "NIS Patiala Entrance",
+          "BPEd Entrance",
+          "BSc Sports Science",
+          "UPSC NDA (Defence pathway)"
+        ],
+        "college_tags": [
+          "Physical Education",
+          "Sports Management"
+        ],
+        "salary_inr": {
+          "entry": 300000,
+          "mid": 800000,
+          "senior": 1800000
+        },
+        "growth": "medium",
+        "job_density": {
+          "metro": 0.6,
+          "tier2": 0.5,
+          "rural": 0.3
+        },
+        "budget_tier": "low",
+        "preferred_locations": [
+          "Delhi",
+          "Mumbai",
+          "Bangalore",
+          "Hyderabad",
+          "Pune",
+          "Kolkata"
+        ],
+        "adzuna_listings": null,
+        "_market_meta": {
+          "listings_source": "estimate",
+          "salary_source": "hand-authored (estimate)",
+          "refreshed_at": "2026-06-03"
+        }
+      },
+      {
+        "id": "performing-artist",
+        "name": {
+          "en": "Music / Performing Arts",
+          "te": "సంగీతం / పర్ఫామింగ్ ఆర్ట్స్"
+        },
+        "streams": [],
+        "min_class": "10th-passed",
+        "vector": {
+          "interests": [
+            "performing-arts",
+            "classical-music",
+            "classical-dance",
+            "arts-design",
+            "content-creation",
+            "media-journalism"
+          ],
+          "strengths": [
+            "creativity",
+            "communication",
+            "leadership"
+          ],
+          "subjects": {
+            "english": 0.3,
+            "social-studies": 0.2
+          }
+        },
+        "exams": [
+          "Prayag Sangeet Samiti",
+          "Gandharva Mahavidyalaya Exam",
+          "National School of Drama Entrance",
+          "FTII Entrance",
+          "Kendriya Sangeet Natak Akademi"
+        ],
+        "college_tags": [
+          "Music",
+          "Performing Arts",
+          "Fine Arts"
+        ],
+        "salary_inr": {
+          "entry": 250000,
+          "mid": 600000,
+          "senior": 1500000
+        },
+        "growth": "medium",
+        "job_density": {
+          "metro": 0.7,
+          "tier2": 0.4,
+          "rural": 0.3
+        },
+        "budget_tier": "low",
+        "preferred_locations": [
+          "Mumbai",
+          "Delhi",
+          "Chennai",
+          "Bangalore",
+          "Kolkata",
+          "Varanasi"
+        ],
+        "adzuna_listings": null,
+        "_market_meta": {
+          "listings_source": "estimate",
+          "salary_source": "hand-authored (estimate)",
+          "refreshed_at": "2026-06-03"
+        }
       }
     ]
   };
