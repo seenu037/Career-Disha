@@ -1706,7 +1706,42 @@ async function callAPI(d) {
     }
   }
   var res = await fetch(fetchUrl, { method: 'POST', headers: fetchHeaders, body: payload });
-  console.log('[CareerDisha] cache:', res.headers.get('x-cache') || '(not set)');
+  console.log('[CareerDisha] cache:', res.headers.get('x-cache') || '(not set)',
+              '| provider:', res.headers.get('x-provider') || 'groq');
+
+  // ── Cerebras fallback (browser-side, local file:// mode only) ─────────────
+  // In deployed mode the server proxy handles this. Here we catch 429/503 from
+  // Groq when running directly as file:// and retry against Cerebras (BYOK).
+  if (!res.ok && isLocal && (res.status === 429 || res.status === 503)) {
+    console.warn('[CareerDisha] Groq returned', res.status, '— trying Cerebras fallback');
+    var cbKey = sessionStorage.getItem('CEREBRAS_KEY');
+    if (!cbKey) {
+      cbKey = window.prompt('Groq rate-limited. Enter your Cerebras API key to continue\n(stored in sessionStorage only):');
+      if (cbKey) sessionStorage.setItem('CEREBRAS_KEY', cbKey);
+    }
+    if (cbKey) {
+      // Swap model name: llama-3.3-70b-versatile → gpt-oss-120b (Cerebras)
+      var cbPayloadObj = JSON.parse(payload);
+      cbPayloadObj.model = 'gpt-oss-120b';
+      var cbRes = await fetch('https://api.cerebras.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'authorization': 'Bearer ' + cbKey },
+        body: JSON.stringify(cbPayloadObj)
+      });
+      if (cbRes.ok) {
+        console.log('[CareerDisha] Cerebras fallback succeeded');
+        res = cbRes;
+      } else {
+        var cbErr = await cbRes.json().catch(function(){ return {}; });
+        throw new Error('Groq rate-limited and Cerebras also failed: ' +
+          ((cbErr.error && cbErr.error.message) || ('status ' + cbRes.status)));
+      }
+    } else {
+      // No Cerebras key provided — re-throw original Groq error
+      var groqErr = await res.json().catch(function(){ return {}; });
+      throw new Error((groqErr.error && groqErr.error.message) || ('API error ' + res.status));
+    }
+  }
 
   if (!res.ok) {
     var err = await res.json().catch(function(){ return {}; });
