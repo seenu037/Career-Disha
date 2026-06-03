@@ -462,6 +462,10 @@ textarea{resize:vertical;min-height:78px}
 @keyframes fabPulse{0%,100%{box-shadow:0 4px 16px rgba(255,107,0,.45)}50%{box-shadow:0 6px 24px rgba(255,107,0,.7)}}
 
 /* Interactive re-score button */
+/* Sticky submit bar — pinned to bottom of form panel */
+.form-sticky-bar{position:sticky;bottom:0;z-index:10;background:#f8fafc;border-top:2px solid var(--saffron);padding:10px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 -4px 12px rgba(0,0,0,.08)}
+@media(max-width:860px){.form-sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:10px 16px}.form-panel{padding-bottom:70px}}
+
 /* Interest chip category headers */
 .chips-cat-hdr{font-size:10px;font-weight:800;color:var(--deep-blue);text-transform:uppercase;letter-spacing:.6px;padding:8px 2px 3px;width:100%;opacity:.75;margin-top:4px}
 .chips-cat-hdr:first-child{margin-top:0;padding-top:2px}
@@ -758,13 +762,13 @@ textarea{resize:vertical;min-height:78px}
   </div>
   </div><!-- /step3 -->
 
-  <!-- Single submit bar -->
-  <div class="form-actions" style="margin-top:20px;border-top:1px solid var(--gray-200);padding-top:14px">
-    <button class="btn btn-outline" onclick="loadDemo()" title="Load demo from top bar">⚡ Demo</button>
-    <button class="btn btn-submit" onclick="submitForm()">🚀 Get AI Career Guidance</button>
-  </div>
-
   </div><!-- /single card -->
+
+<!-- Sticky submit bar — always visible at bottom of form panel -->
+<div class="form-sticky-bar">
+  <button class="btn btn-outline" onclick="loadDemo()" title="Load demo from top bar" style="flex-shrink:0">⚡ Demo</button>
+  <button class="btn btn-submit" onclick="submitForm()" style="flex:1">🚀 Get AI Career Guidance</button>
+</div>
 
 </div><!-- /formSection -->
 
