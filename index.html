@@ -2285,179 +2285,6 @@ function renderInputSummary(formData) {
 }
 
 // ── CARDS (enhanced with NIRF, portals, citations) ────────
-// ── TOP RECOMMENDATIONS — rich roadmap cards (click for full detail popup) ──
-function renderCards(paths, formData) {
-  var g = document.getElementById('cardsGrid');
-  if (!paths || !paths.length) return;
-  _roadmapPaths = paths;
-  _roadmapFD    = formData;
-
-  var CC = ['c1','c2','c3','c4','c5','c6'];
-  var budgetCap = parseBudgetCap(formData && formData.budget || '');
-  var html = '';
-
-  paths.forEach(function(p, i) {
-    var cc  = CC[Math.min(i, CC.length - 1)];
-    var pct = typeof p.match_score === 'number' ? p.match_score : Math.round((p.score || 0) * 100);
-
-    // Budget feasibility
-    var costMin = p.cost_breakdown && p.cost_breakdown.total_min_l;
-    var feasCls = 'gray', feasTxt = 'Budget ?';
-    if (costMin !== undefined && budgetCap !== null) {
-      if (costMin <= budgetCap)           { feasCls = 'g'; feasTxt = '✓ Budget Feasible'; }
-      else if (costMin <= budgetCap * 2)  { feasCls = 'y'; feasTxt = '~ Stretch Budget'; }
-      else                                { feasCls = 'r'; feasTxt = '⚠ Needs Funding'; }
-    }
-
-    var tc      = p.top_colleges_ranked && p.top_colleges_ranked[0];
-    var tcTxt   = tc ? '#' + tc.nirf_rank + ' ' + tc.name.split(',')[0].split('(')[0].trim().split(' ').slice(0,4).join(' ') : '';
-    var demand  = p.supply_demand && p.supply_demand.demand_level || '';
-    var growth  = p.supply_demand && p.supply_demand.growth_trend || '';
-    var liveJobs = p.jobs_market && p.jobs_market.live_openings ? p.jobs_market.live_openings + ' live jobs' : '';
-    var sal5    = p['5yr_salary_range'] || '';
-    var costEst = p.cost_breakdown && p.cost_breakdown.total_est || p.estimated_cost || '';
-
-    html += '<div class="rm-card ' + cc + '" onclick="showCareerDetail(' + i + ')">';
-    html += '<div class="rm-card-top">';
-    html += '<div class="rm-rank-num">' + (i + 1) + '</div>';
-    html += '<div class="rm-career-block">';
-    html += '<div class="rm-career-name">' + escHtml(p.specific_career || p.career_name || 'Career') + '</div>';
-    if (p.domain) html += '<div class="rm-career-domain">' + escHtml(p.domain) + '</div>';
-    html += '<div class="rm-score-badge">' + pct + '% match</div>';
-    html += '</div></div>';
-    html += '<div class="rm-chips-row">';
-    html += '<span class="rm-chip ' + feasCls + '">' + feasTxt + '</span>';
-    if (demand)   html += '<span class="rm-chip b">📈 ' + escHtml(demand) + '</span>';
-    if (liveJobs) html += '<span class="rm-chip p">💼 ' + escHtml(liveJobs) + '</span>';
-    if (tcTxt)    html += '<span class="rm-chip gray">🏛 ' + escHtml(tcTxt) + '</span>';
-    if (growth)   html += '<span class="rm-chip g">↑ ' + escHtml(growth) + '</span>';
-    html += '</div>';
-    html += '<div class="rm-salary">₹ ' + escHtml(p.starting_salary_range || '—') + (sal5 ? ' → ' + escHtml(sal5) + ' (5yr)' : '') + '</div>';
-    if (p.duration_years || costEst) {
-      html += '<div style="font-size:10px;color:var(--gray-500);margin-top:3px">';
-      if (p.duration_years) html += '⏱ ' + p.duration_years + ' yrs';
-      if (p.duration_years && costEst) html += '  ·  ';
-      if (costEst) html += '💰 ' + escHtml(costEst);
-      html += '</div>';
-    }
-    html += '<button class="rm-view-btn" onclick="event.stopPropagation();showCareerDetail(' + i + ')">🔍 Full Details — Colleges, Jobs, Budget →</button>';
-    // Embedded role-model teaser
-    var _iclrs=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#6B7280'];
-    var _ic = _iclrs[Math.min(i, _iclrs.length-1)];
-    var st0 = INSPIRATION_STORIES[p.career_id];
-    if (st0 && st0[0]) {
-      var rv = st0[0];
-      html += '<div style="margin-top:9px;padding:9px 10px;border-radius:8px;background:'+_ic+'10;border-left:3px solid '+_ic+';cursor:pointer" onclick="event.stopPropagation();showCareerDetail('+i+')">';
-      html += '<div style="font-size:9px;font-weight:800;color:'+_ic+';letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px">🌟 Role Model</div>';
-      html += '<div style="font-size:12px;font-weight:700;color:var(--gray-900)">'+escHtml(rv.name)+'</div>';
-      html += '<div style="font-size:10px;color:var(--gray-500);margin-bottom:4px">'+escHtml(rv.bg||'')+'</div>';
-      if (rv.quote) html += '<div style="font-size:10px;font-style:italic;color:var(--gray-600)">"'+escHtml(rv.quote.length>90?rv.quote.slice(0,88)+'…':rv.quote)+'"</div>';
-      html += '</div>';
-    }
-    html += '</div>';
-  });
-
-  g.innerHTML = html;
-}
-
-// kept for compat — no longer used
-function toggleCard(el) {} // stub — old expand behavior removed
-
-
-// ── INTERACTIVE CAREER ROADMAP ────────────────────────────────
-var _roadmapPaths = [];
-var _roadmapFD = null;
-
-// parse user's budget label into a ₹Lakh cap for feasibility check
-function parseBudgetCap(label) {
-  if (!label) return null;
-  if (label.indexOf('Under ₹1') !== -1) return 1;
-  if (label.indexOf('₹1') !== -1 && label.indexOf('3') !== -1) return 3;
-  if (label.indexOf('₹3') !== -1 && label.indexOf('7') !== -1) return 7;
-  if (label.indexOf('₹7') !== -1 || label.indexOf('₹7–15') !== -1) return 15;
-  if (label.indexOf('₹15') !== -1 || label.indexOf('15–30') !== -1) return 30;
-  if (label.indexOf('30') !== -1 || label.indexOf('Above') !== -1) return 999;
-  return null;
-}
-
-// ── SVG DECISION TREE (Career Roadmap section) — clickable nodes pop up full detail ──
-function renderTree(paths, formData) {
-  var wrap = document.getElementById('treeWrap');
-  if (!paths || !paths.length) return;
-
-  var n  = Math.min(paths.length, 6);
-  // Width scales with career count so all nodes fit in one row
-  var W  = Math.max(720, n * 190 + 80);
-  var CX = W/2, NW=165, NH=78;
-  var BGCLRS=['#F0FDF4','#E0F2FE','#EDE9FE','#FFFBEB','#FDF2F8','#F9FAFB'];
-  var BDCLRS=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#9CA3AF'];
-  var TXCLRS=['#065F46','#0369A1','#4C1D95','#92400E','#831843','#374151'];
-  var R0Y=52, R1Y=152, R2Y=278;
-  var viewH = R2Y + NH/2 + 28;
-
-  // All careers in a single row, evenly spaced
-  function getXs(cnt) {
-    if(cnt===1) return [CX];
-    var gap = (W-80) / (cnt-1);
-    var xs=[];
-    for(var k=0;k<cnt;k++) xs.push(Math.round(40 + k*gap));
-    return xs;
-  }
-  function arw(x1,y1,x2,y2,c) {
-    var my=(y1+y2)/2;
-    return '<path d="M'+x1+','+y1+' C'+x1+','+my+' '+x2+','+my+' '+x2+','+y2+'" fill="none" stroke="'+(c||'#CBD5E1')+'" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr3)"/>';
-  }
-  function careerNode(p, idx, cx, cy) {
-    var pct   = typeof p.match_score==='number' ? p.match_score : Math.round((p.score||0)*100);
-    var bg=BGCLRS[idx], bd=BDCLRS[idx], tx=TXCLRS[idx];
-    var cb=p.cost_breakdown, bCap=parseBudgetCap(formData&&formData.budget||'');
-    var feas='?', feasC='#9CA3AF';
-    if(cb&&cb.total_min_l!==undefined&&bCap!==null){
-      if(cb.total_min_l<=bCap){feas='✓ Feasible';feasC='#059669';}
-      else if(cb.total_min_l<=bCap*2){feas='~ Stretch';feasC='#D97706';}
-      else{feas='⚠ Needs Plan';feasC='#DC2626';}
-    }
-    var name=(p.specific_career||'Career').slice(0,22)+(p.specific_career&&p.specific_career.length>22?'…':'');
-    var s='<g onclick="showCareerDetail('+idx+')" style="cursor:pointer">';
-    s+='<rect x="'+(cx-NW/2)+'" y="'+(cy-NH/2)+'" width="'+NW+'" height="'+NH+'" rx="12" fill="'+bg+'" stroke="'+bd+'" stroke-width="2.5" filter="url(#ds3)" opacity=".97"/>';
-    s+='<text x="'+cx+'" y="'+(cy-NH/2+19)+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+tx+'" font-family="Inter,sans-serif">'+escHtml(name)+'</text>';
-    s+='<text x="'+cx+'" y="'+(cy-NH/2+37)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+bd+'" font-family="Inter,sans-serif">'+pct+'%</text>';
-    s+='<text x="'+cx+'" y="'+(cy-NH/2+55)+'" text-anchor="middle" font-size="10" font-weight="600" fill="'+feasC+'" font-family="Inter,sans-serif">'+escHtml(feas)+'</text>';
-    s+='<text x="'+cx+'" y="'+(cy-NH/2+70)+'" text-anchor="middle" font-size="10" fill="#9CA3AF" font-family="Inter,sans-serif">↗ tap for details</text>';
-    s+='</g>';
-    return s;
-  }
-
-  var svg='<defs>'
-    +'<filter id="ds3"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".12"/></filter>'
-    +'<marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#CBD5E1"/></marker>'
-    +'</defs>';
-
-  // Current position
-  var level=(formData&&formData.level)||'Current Level';
-  var stream=(formData&&formData.stream&&formData.stream!=='Not specified'&&formData.stream!=='Not yet completed')?(' — '+formData.stream):'';
-  var cur=level+stream; if(cur.length>32)cur=cur.slice(0,30)+'…';
-  svg+='<rect x="'+(CX-115)+'" y="'+(R0Y-24)+'" width="230" height="48" rx="12" fill="#1A237E" filter="url(#ds3)"/>';
-  svg+='<text x="'+CX+'" y="'+(R0Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">📍 '+escHtml(cur)+'</text>';
-  svg+='<text x="'+CX+'" y="'+(R0Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.7)" font-family="Inter,sans-serif">Your starting point</text>';
-
-  // Decision fork
-  svg+=arw(CX,R0Y+24,CX,R1Y-24,'#CBD5E1');
-  svg+='<rect x="'+(CX-120)+'" y="'+(R1Y-24)+'" width="240" height="48" rx="12" fill="#FF6B00" filter="url(#ds3)"/>';
-  svg+='<text x="'+CX+'" y="'+(R1Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">🔀 Choose Your Career Path</text>';
-  svg+='<text x="'+CX+'" y="'+(R1Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.85)" font-family="Inter,sans-serif">Click any node below for colleges, budget, jobs &amp; more</text>';
-
-  // All career nodes in a single row
-  var xs=getXs(n);
-  paths.slice(0,n).forEach(function(p,i){
-    svg+=arw(CX,R1Y+24,xs[i],R2Y-NH/2,BDCLRS[i]);
-    svg+=careerNode(p,i,xs[i],R2Y);
-  });
-
-  wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+viewH+'" style="max-width:'+W+'px;min-width:340px;overflow:visible;display:block;margin:0 auto">'+svg+'</svg>';
-}
-
-
 // ── INSPIRATION STORIES — 2-3 real personalities per career ───────────────
 var INSPIRATION_STORIES = {
   'software-engineer':[
@@ -2800,6 +2627,180 @@ var INSPIRATION_STORIES = {
     {name:'Capt. Amelia Earhart',bg:'First Woman to fly Solo across the Atlantic | Kansas, USA',story:'At a time when women were not supposed to leave the house alone, Earhart flew solo from Newfoundland to Northern Ireland in 1932. She disappeared attempting the first round-the-world flight in 1937. Her courage to attempt what no woman had attempted before changed aviation and gender norms simultaneously. Every pilot — male or female — stands on her runway.',quote:'"The most difficult thing is the decision to act. The rest is mere tenacity.'}
   ]
 };
+
+// ── TOP RECOMMENDATIONS — rich roadmap cards (click for full detail popup) ──
+function renderCards(paths, formData) {
+  var g = document.getElementById('cardsGrid');
+  if (!paths || !paths.length) return;
+  _roadmapPaths = paths;
+  _roadmapFD    = formData;
+
+  var CC = ['c1','c2','c3','c4','c5','c6'];
+  var budgetCap = parseBudgetCap(formData && formData.budget || '');
+  var html = '';
+
+  paths.forEach(function(p, i) {
+    var cc  = CC[Math.min(i, CC.length - 1)];
+    var pct = typeof p.match_score === 'number' ? p.match_score : Math.round((p.score || 0) * 100);
+
+    // Budget feasibility
+    var costMin = p.cost_breakdown && p.cost_breakdown.total_min_l;
+    var feasCls = 'gray', feasTxt = 'Budget ?';
+    if (costMin !== undefined && budgetCap !== null) {
+      if (costMin <= budgetCap)           { feasCls = 'g'; feasTxt = '✓ Budget Feasible'; }
+      else if (costMin <= budgetCap * 2)  { feasCls = 'y'; feasTxt = '~ Stretch Budget'; }
+      else                                { feasCls = 'r'; feasTxt = '⚠ Needs Funding'; }
+    }
+
+    var tc      = p.top_colleges_ranked && p.top_colleges_ranked[0];
+    var tcTxt   = tc ? '#' + tc.nirf_rank + ' ' + tc.name.split(',')[0].split('(')[0].trim().split(' ').slice(0,4).join(' ') : '';
+    var demand  = p.supply_demand && p.supply_demand.demand_level || '';
+    var growth  = p.supply_demand && p.supply_demand.growth_trend || '';
+    var liveJobs = p.jobs_market && p.jobs_market.live_openings ? p.jobs_market.live_openings + ' live jobs' : '';
+    var sal5    = p['5yr_salary_range'] || '';
+    var costEst = p.cost_breakdown && p.cost_breakdown.total_est || p.estimated_cost || '';
+
+    html += '<div class="rm-card ' + cc + '" onclick="showCareerDetail(' + i + ')">';
+    html += '<div class="rm-card-top">';
+    html += '<div class="rm-rank-num">' + (i + 1) + '</div>';
+    html += '<div class="rm-career-block">';
+    html += '<div class="rm-career-name">' + escHtml(p.specific_career || p.career_name || 'Career') + '</div>';
+    if (p.domain) html += '<div class="rm-career-domain">' + escHtml(p.domain) + '</div>';
+    html += '<div class="rm-score-badge">' + pct + '% match</div>';
+    html += '</div></div>';
+    html += '<div class="rm-chips-row">';
+    html += '<span class="rm-chip ' + feasCls + '">' + feasTxt + '</span>';
+    if (demand)   html += '<span class="rm-chip b">📈 ' + escHtml(demand) + '</span>';
+    if (liveJobs) html += '<span class="rm-chip p">💼 ' + escHtml(liveJobs) + '</span>';
+    if (tcTxt)    html += '<span class="rm-chip gray">🏛 ' + escHtml(tcTxt) + '</span>';
+    if (growth)   html += '<span class="rm-chip g">↑ ' + escHtml(growth) + '</span>';
+    html += '</div>';
+    html += '<div class="rm-salary">₹ ' + escHtml(p.starting_salary_range || '—') + (sal5 ? ' → ' + escHtml(sal5) + ' (5yr)' : '') + '</div>';
+    if (p.duration_years || costEst) {
+      html += '<div style="font-size:10px;color:var(--gray-500);margin-top:3px">';
+      if (p.duration_years) html += '⏱ ' + p.duration_years + ' yrs';
+      if (p.duration_years && costEst) html += '  ·  ';
+      if (costEst) html += '💰 ' + escHtml(costEst);
+      html += '</div>';
+    }
+    html += '<button class="rm-view-btn" onclick="event.stopPropagation();showCareerDetail(' + i + ')">🔍 Full Details — Colleges, Jobs, Budget →</button>';
+    // Embedded role-model teaser
+    var _iclrs=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#6B7280'];
+    var _ic = _iclrs[Math.min(i, _iclrs.length-1)];
+    var st0 = INSPIRATION_STORIES[p.career_id];
+    if (st0 && st0[0]) {
+      var rv = st0[0];
+      html += '<div style="margin-top:9px;padding:9px 10px;border-radius:8px;background:'+_ic+'10;border-left:3px solid '+_ic+';cursor:pointer" onclick="event.stopPropagation();showCareerDetail('+i+')">';
+      html += '<div style="font-size:9px;font-weight:800;color:'+_ic+';letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px">🌟 Role Model</div>';
+      html += '<div style="font-size:12px;font-weight:700;color:var(--gray-900)">'+escHtml(rv.name)+'</div>';
+      html += '<div style="font-size:10px;color:var(--gray-500);margin-bottom:4px">'+escHtml(rv.bg||'')+'</div>';
+      if (rv.quote) html += '<div style="font-size:10px;font-style:italic;color:var(--gray-600)">"'+escHtml(rv.quote.length>90?rv.quote.slice(0,88)+'…':rv.quote)+'"</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  g.innerHTML = html;
+}
+
+// kept for compat — no longer used
+function toggleCard(el) {} // stub — old expand behavior removed
+
+
+// ── INTERACTIVE CAREER ROADMAP ────────────────────────────────
+var _roadmapPaths = [];
+var _roadmapFD = null;
+
+// parse user's budget label into a ₹Lakh cap for feasibility check
+function parseBudgetCap(label) {
+  if (!label) return null;
+  if (label.indexOf('Under ₹1') !== -1) return 1;
+  if (label.indexOf('₹1') !== -1 && label.indexOf('3') !== -1) return 3;
+  if (label.indexOf('₹3') !== -1 && label.indexOf('7') !== -1) return 7;
+  if (label.indexOf('₹7') !== -1 || label.indexOf('₹7–15') !== -1) return 15;
+  if (label.indexOf('₹15') !== -1 || label.indexOf('15–30') !== -1) return 30;
+  if (label.indexOf('30') !== -1 || label.indexOf('Above') !== -1) return 999;
+  return null;
+}
+
+// ── SVG DECISION TREE (Career Roadmap section) — clickable nodes pop up full detail ──
+function renderTree(paths, formData) {
+  var wrap = document.getElementById('treeWrap');
+  if (!paths || !paths.length) return;
+
+  var n  = Math.min(paths.length, 6);
+  // Width scales with career count so all nodes fit in one row
+  var W  = Math.max(720, n * 190 + 80);
+  var CX = W/2, NW=165, NH=78;
+  var BGCLRS=['#F0FDF4','#E0F2FE','#EDE9FE','#FFFBEB','#FDF2F8','#F9FAFB'];
+  var BDCLRS=['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#9CA3AF'];
+  var TXCLRS=['#065F46','#0369A1','#4C1D95','#92400E','#831843','#374151'];
+  var R0Y=52, R1Y=152, R2Y=278;
+  var viewH = R2Y + NH/2 + 28;
+
+  // All careers in a single row, evenly spaced
+  function getXs(cnt) {
+    if(cnt===1) return [CX];
+    var gap = (W-80) / (cnt-1);
+    var xs=[];
+    for(var k=0;k<cnt;k++) xs.push(Math.round(40 + k*gap));
+    return xs;
+  }
+  function arw(x1,y1,x2,y2,c) {
+    var my=(y1+y2)/2;
+    return '<path d="M'+x1+','+y1+' C'+x1+','+my+' '+x2+','+my+' '+x2+','+y2+'" fill="none" stroke="'+(c||'#CBD5E1')+'" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr3)"/>';
+  }
+  function careerNode(p, idx, cx, cy) {
+    var pct   = typeof p.match_score==='number' ? p.match_score : Math.round((p.score||0)*100);
+    var bg=BGCLRS[idx], bd=BDCLRS[idx], tx=TXCLRS[idx];
+    var cb=p.cost_breakdown, bCap=parseBudgetCap(formData&&formData.budget||'');
+    var feas='?', feasC='#9CA3AF';
+    if(cb&&cb.total_min_l!==undefined&&bCap!==null){
+      if(cb.total_min_l<=bCap){feas='✓ Feasible';feasC='#059669';}
+      else if(cb.total_min_l<=bCap*2){feas='~ Stretch';feasC='#D97706';}
+      else{feas='⚠ Needs Plan';feasC='#DC2626';}
+    }
+    var name=(p.specific_career||'Career').slice(0,22)+(p.specific_career&&p.specific_career.length>22?'…':'');
+    var s='<g onclick="showCareerDetail('+idx+')" style="cursor:pointer">';
+    s+='<rect x="'+(cx-NW/2)+'" y="'+(cy-NH/2)+'" width="'+NW+'" height="'+NH+'" rx="12" fill="'+bg+'" stroke="'+bd+'" stroke-width="2.5" filter="url(#ds3)" opacity=".97"/>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+19)+'" text-anchor="middle" font-size="11" font-weight="800" fill="'+tx+'" font-family="Inter,sans-serif">'+escHtml(name)+'</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+37)+'" text-anchor="middle" font-size="15" font-weight="800" fill="'+bd+'" font-family="Inter,sans-serif">'+pct+'%</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+55)+'" text-anchor="middle" font-size="10" font-weight="600" fill="'+feasC+'" font-family="Inter,sans-serif">'+escHtml(feas)+'</text>';
+    s+='<text x="'+cx+'" y="'+(cy-NH/2+70)+'" text-anchor="middle" font-size="10" fill="#9CA3AF" font-family="Inter,sans-serif">↗ tap for details</text>';
+    s+='</g>';
+    return s;
+  }
+
+  var svg='<defs>'
+    +'<filter id="ds3"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".12"/></filter>'
+    +'<marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#CBD5E1"/></marker>'
+    +'</defs>';
+
+  // Current position
+  var level=(formData&&formData.level)||'Current Level';
+  var stream=(formData&&formData.stream&&formData.stream!=='Not specified'&&formData.stream!=='Not yet completed')?(' — '+formData.stream):'';
+  var cur=level+stream; if(cur.length>32)cur=cur.slice(0,30)+'…';
+  svg+='<rect x="'+(CX-115)+'" y="'+(R0Y-24)+'" width="230" height="48" rx="12" fill="#1A237E" filter="url(#ds3)"/>';
+  svg+='<text x="'+CX+'" y="'+(R0Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">📍 '+escHtml(cur)+'</text>';
+  svg+='<text x="'+CX+'" y="'+(R0Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.7)" font-family="Inter,sans-serif">Your starting point</text>';
+
+  // Decision fork
+  svg+=arw(CX,R0Y+24,CX,R1Y-24,'#CBD5E1');
+  svg+='<rect x="'+(CX-120)+'" y="'+(R1Y-24)+'" width="240" height="48" rx="12" fill="#FF6B00" filter="url(#ds3)"/>';
+  svg+='<text x="'+CX+'" y="'+(R1Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">🔀 Choose Your Career Path</text>';
+  svg+='<text x="'+CX+'" y="'+(R1Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.85)" font-family="Inter,sans-serif">Click any node below for colleges, budget, jobs &amp; more</text>';
+
+  // All career nodes in a single row
+  var xs=getXs(n);
+  paths.slice(0,n).forEach(function(p,i){
+    svg+=arw(CX,R1Y+24,xs[i],R2Y-NH/2,BDCLRS[i]);
+    svg+=careerNode(p,i,xs[i],R2Y);
+  });
+
+  wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+viewH+'" style="max-width:'+W+'px;min-width:340px;overflow:visible;display:block;margin:0 auto">'+svg+'</svg>';
+}
+
+
 
 // ── CAREER DETAIL POPUP ───────────────────────────────────────
 function showCareerDetail(idx) {
