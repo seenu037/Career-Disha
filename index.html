@@ -2785,17 +2785,22 @@ function showCareerDetail(idx) {
       {name:'Savitribai Phule',bg:'India\'s First Female Teacher | Naigaon, Maharashtra',story:'In 1848 she co-founded India\'s first school for girls. Students threw stones at her — she carried an extra sari to change when she arrived, then simply taught. She transformed a nation\'s relationship with education.',quote:'Knowledge is the greatest wealth. Attain it.'}
     ]
   };
-  // Lookup: try inline first, then global INSPIRATION_STORIES
-  var _cid = p.career_id || '';
-  var _stories = _INSP_INLINE[_cid] || (typeof INSPIRATION_STORIES !== 'undefined' ? INSPIRATION_STORIES[_cid] : null);
-  // Absolute fallback: scan inline by first word of career name
-  if (!_stories && p.specific_career) {
-    var _fw = p.specific_career.toLowerCase().split(/[\s\/\(]/)[0];
-    Object.keys(_INSP_INLINE).forEach(function(k){ if(!_stories && k.indexOf(_fw)!==-1) _stories=_INSP_INLINE[k]; });
-    if (!_stories && typeof INSPIRATION_STORIES !== 'undefined') {
-      Object.keys(INSPIRATION_STORIES).forEach(function(k){ if(!_stories && k.indexOf(_fw)!==-1) _stories=INSPIRATION_STORIES[k]; });
-    }
-  }
+  // Also key by exact specific_career name (most reliable — shown in popup title)
+  var _INSP_BY_NAME = {
+    'Veterinary Doctor':           _INSP_INLINE['veterinarian'],
+    'Dentist (BDS)':               _INSP_INLINE['dentist-bds'],
+    'Agricultural Scientist':      _INSP_INLINE['agricultural-scientist'],
+    'Nurse (B.Sc Nursing)':        _INSP_INLINE['nurse'],
+    'Environmental Scientist':     _INSP_INLINE['environmental-scientist'],
+    'Doctor (MBBS)':               _INSP_INLINE['doctor-mbbs'],
+    'Civil Servant (IAS / IPS / IFS)': _INSP_INLINE['civil-servant'],
+    'Teacher (School)':            _INSP_INLINE['teacher']
+  };
+  // Lookup chain: name match → career_id match → global → null
+  var _stories = _INSP_BY_NAME[p.specific_career]
+              || _INSP_INLINE[p.career_id]
+              || (typeof INSPIRATION_STORIES !== 'undefined' ? INSPIRATION_STORIES[p.career_id] : null)
+              || null;
   // ── Why this fits ───────────────────────────────────────────────────────
   if (p.match_reason) {
     h += '<div class="rm-msec"><h4>Why This Fits You</h4>';
