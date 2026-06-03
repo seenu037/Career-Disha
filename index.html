@@ -506,8 +506,9 @@ textarea{resize:vertical;min-height:78px}
 </div>
 
 <!-- Alignment Modal -->
-<div class="modal-overlay" id="alignModal">
-  <div class="modal-box">
+<div class="modal-overlay" id="alignModal" onclick="if(event.target===this)cancelAlign()">
+  <div class="modal-box" style="position:relative">
+    <button onclick="cancelAlign()" title="Cancel" style="position:absolute;top:12px;right:12px;background:var(--gray-100);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-500);line-height:1">✕</button>
     <div class="modal-icon" id="alignIcon"></div>
     <div class="modal-title" id="alignTitle"></div>
     <div class="modal-msg" id="alignMsg"></div>
@@ -1792,6 +1793,12 @@ function showAlignModal(topSubj, topInterest, aligned) {
   document.getElementById('alignModal').classList.add('on');
 }
 
+function cancelAlign() {
+  document.getElementById('alignModal').classList.remove('on');
+  // Re-enable the submit button so user can tweak inputs and try again
+  document.getElementById('loading').classList.remove('on');
+}
+
 async function proceedWithAnalysis(pathChoice) {
   window._savedFormSnapshot = captureFormSnapshot();
   document.getElementById('alignModal').classList.remove('on');
@@ -2642,7 +2649,7 @@ function closeCareerDetail() {
 
 // Close on ESC key
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeCareerDetail();
+  if (e.key === 'Escape') { closeCareerDetail(); cancelAlign(); }
 });
 
 function escHtml(s) {
