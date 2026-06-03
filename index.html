@@ -2748,34 +2748,54 @@ function showCareerDetail(idx) {
 
   h += '<div class="rm-mbody">';
 
-  // ── Inspiring Personalities — shown FIRST so always visible ─────────────
-  var _stories = null;
-  if (typeof INSPIRATION_STORIES !== 'undefined') {
-    _stories = INSPIRATION_STORIES[p.career_id] || null;
-    if (!_stories && p.specific_career) {
-      // fallback: scan all keys for partial match
-      var _sn = p.specific_career.toLowerCase().split(/[\s\/\(]/)[0]; // first word
-      Object.keys(INSPIRATION_STORIES).forEach(function(k) {
-        if (!_stories && k.indexOf(_sn) !== -1) _stories = INSPIRATION_STORIES[k];
-      });
+  // ── Inspiring Personalities — inline hardcoded + global fallback ─────────
+  // Hardcoded inline data ensures personalities ALWAYS show even if global lookup fails
+  var _INSP_INLINE = {
+    'veterinarian':[
+      {name:'Dr. B.C. Roy',bg:'Bharat Ratna | Physician & Statesman | Patna, Bihar',story:'Awarded the Bharat Ratna in 1961, Dr. B.C. Roy pioneered One Health thinking — recognising that human and animal health are inseparable. As Chief Minister of West Bengal he championed rural veterinary infrastructure. His birthday (1 July) is celebrated as Doctors\' Day in India.',quote:'Service to man is service to God.'},
+      {name:'Dr. Verghese Kurien',bg:'Padma Vibhushan | Father of the White Revolution | Calicut',story:'Created Amul and Operation Flood, making India the world\'s largest milk producer. His cooperative model empowered 3.6 million dairy farmers and improved nutrition for hundreds of millions of Indians who depended on cattle and buffalo.',quote:'Farmers are the backbone of India. Give them tools, not charity.'},
+      {name:'Dr. Jane Goodall',bg:'UN Messenger of Peace | Wildlife Scientist',story:'Spent 60 years among chimpanzees in Tanzania — the world\'s longest wildlife study. Her discovery that chimps make and use tools shattered the assumption this was uniquely human. She became a global icon for animal welfare and conservation.',quote:'Only if we understand can we care. Only if we care will we help.'}
+    ],
+    'dentist-bds':[
+      {name:'Dr. R.K. Tuli',bg:'Padma Shri | Maxillofacial Surgeon | New Delhi',story:'Performed the first total temporomandibular joint replacement in South Asia. Built the Department of Oral & Maxillofacial Surgery at Lady Hardinge Medical College into a nationally recognised centre. His work restoring speech and chewing function to accident victims changed thousands of lives.',quote:'The face is how we present ourselves to the world. Restoring it is sacred work.'},
+      {name:'Alfred Fones',bg:'"Father of Dental Hygiene" | Connecticut, USA',story:'Founded the world\'s first dental hygiene school in 1913, shifting dentistry from extraction to prevention. Every dental checkup and fluoride treatment in India today traces back to his philosophy.',quote:'A healthy mouth is the gateway to a healthy body.'}
+    ],
+    'agricultural-scientist':[
+      {name:'Dr. M.S. Swaminathan',bg:'Bharat Ratna | Father of the Green Revolution | Kumbakonam, Tamil Nadu',story:'When India faced famine in the 1960s, Swaminathan partnered with Norman Borlaug to introduce high-yield wheat varieties across Punjab. India went from famine to surplus within a decade. He later championed farmers\' rights and biodiversity conservation.',quote:'There is no place for pessimism in Indian agriculture.'},
+      {name:'Dr. Verghese Kurien',bg:'Padma Vibhushan | White Revolution | Anand, Gujarat',story:'Turned down a US scholarship to work with dairy farmers in Anand. His cooperative model created Amul and Operation Flood, making India the world\'s largest milk producer. He proved that empowering farmers beats every government subsidy.',quote:'The problem is never about technology. It is always about human organisation.'}
+    ],
+    'environmental-scientist':[
+      {name:'Vandana Shiva',bg:'Right Livelihood Award | Physicist & Activist | Dehradun',story:'Left the lab to fight the Chipko movement — women hugging trees to prevent deforestation in the Himalayas. Founded Navdanya, preserving 5,000 crop varieties and empowering 900,000 farmers against corporate seed monopolies.',quote:'In nature\'s economy the currency is not money, it is life.'},
+      {name:'Sunita Narain',bg:'Director General, Centre for Science & Environment | New Delhi',story:'Her 2003 report on pesticides in Pepsi and Coca-Cola triggered India\'s first major food safety movement. Her pollution studies directly led Delhi\'s DTC buses to convert to CNG, improving air quality for millions.',quote:'An environmental scientist armed with data can change government policy.'}
+    ],
+    'nurse':[
+      {name:'Savitribai Phule',bg:'India\'s First Female Teacher & Social Reformer | Maharashtra',story:'In 1848 she walked to school despite mobs throwing stones and dung at her — and still taught. She set up India\'s first care home for plague victims, personally nursing them while others fled. She embodies the nursing spirit: serve without hesitation, especially when it is hardest.',quote:'Education is the mightiest weapon.'},
+      {name:'Florence Nightingale',bg:'"Lady with the Lamp" | England',story:'Reduced Crimean War soldier mortality from 42% to 2% by insisting on hygiene and clean wards — without antibiotics. She invented modern professional nursing and proved that data-driven care saves more lives than any heroic intervention.',quote:'The very first requirement in a hospital is that it should do the sick no harm.'}
+    ],
+    'doctor-mbbs':[
+      {name:'Dr. Devi Prasad Shetty',bg:'Cardiac Surgeon | Narayana Health | Mangalore, Karnataka',story:'Built a hospital system where open-heart surgery costs ₹50,000 vs ₹5 lakh elsewhere, using Walmart-style economies of scale. He has personally performed over 15,000 open-heart surgeries, many for free. His dream: make cardiac surgery affordable for every Indian.',quote:'Charity is no substitute for justice. We must make healthcare affordable for everyone.'},
+      {name:'Dr. B.R. Ambedkar',bg:'Bharat Ratna | Constitution Framer | Mhow, Madhya Pradesh',story:'A Dalit child denied water at school who earned three law degrees against extraordinary odds. He wrote India\'s Constitution abolishing untouchability and enshrining fundamental rights for 400 million people. Medicine and law: both instruments of justice.',quote:'I measure the progress of a community by the degree of progress which women have achieved.'}
+    ],
+    'civil-servant':[
+      {name:'Kiran Bedi',bg:'First Woman IPS Officer | Amritsar, Punjab',story:'India\'s first woman IPS officer transformed Tihar Jail — Asia\'s largest prison — into a rehabilitation centre with yoga, education, and meditation. Her Navjyoti Foundation continues to serve communities she was supposed to police.',quote:'You can\'t make others see the sunrise unless you have seen it yourself.'},
+      {name:'Armstrong Pame',bg:'"Gandhi of Highways", IAS | Senapati, Manipur',story:'Crowdfunded ₹1 crore on social media and built a 100-km road connecting 140 remote villages that had no road access for 60 years — with zero government budget. He drove the excavator himself.',quote:'There is no power like the power of self-determination.'}
+    ],
+    'teacher':[
+      {name:'APJ Abdul Kalam',bg:'Bharat Ratna | 11th President of India | Rameswaram, Tamil Nadu',story:'After leading ISRO and DRDO as a rocket scientist, Kalam became President and then voluntarily returned to teaching undergraduate students. He died mid-lecture in Shillong at 83, doing exactly what he loved most.',quote:'Teaching is the most noble profession that shapes the character, calibre, and future of an individual.'},
+      {name:'Savitribai Phule',bg:'India\'s First Female Teacher | Naigaon, Maharashtra',story:'In 1848 she co-founded India\'s first school for girls. Students threw stones at her — she carried an extra sari to change when she arrived, then simply taught. She transformed a nation\'s relationship with education.',quote:'Knowledge is the greatest wealth. Attain it.'}
+    ]
+  };
+  // Lookup: try inline first, then global INSPIRATION_STORIES
+  var _cid = p.career_id || '';
+  var _stories = _INSP_INLINE[_cid] || (typeof INSPIRATION_STORIES !== 'undefined' ? INSPIRATION_STORIES[_cid] : null);
+  // Absolute fallback: scan inline by first word of career name
+  if (!_stories && p.specific_career) {
+    var _fw = p.specific_career.toLowerCase().split(/[\s\/\(]/)[0];
+    Object.keys(_INSP_INLINE).forEach(function(k){ if(!_stories && k.indexOf(_fw)!==-1) _stories=_INSP_INLINE[k]; });
+    if (!_stories && typeof INSPIRATION_STORIES !== 'undefined') {
+      Object.keys(INSPIRATION_STORIES).forEach(function(k){ if(!_stories && k.indexOf(_fw)!==-1) _stories=INSPIRATION_STORIES[k]; });
     }
   }
-  if (_stories && _stories.length) {
-    h += '<div class="rm-msec"><h4>🌟 Inspiring Personalities</h4>';
-    _stories.forEach(function(sv) {
-      h += '<div style="border:1.5px solid '+clr+'33;border-radius:10px;padding:13px;margin-bottom:10px;background:linear-gradient(145deg,'+clr+'08,#fff);position:relative;overflow:hidden">';
-      h += '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+clr+'"></div>';
-      h += '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;margin-top:4px">';
-      h += '<div style="width:36px;height:36px;border-radius:50%;background:'+clr+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌟</div>';
-      h += '<div><div style="font-size:13px;font-weight:800;color:var(--gray-900)">'+escHtml(sv.name||'')+'</div>';
-      h += '<div style="font-size:10px;color:var(--gray-500);margin-top:1px">'+escHtml(sv.bg||'')+'</div></div></div>';
-      h += '<p style="font-size:12px;color:var(--gray-700);line-height:1.65;margin-bottom:'+(sv.quote?'7px':'0')+'">'+escHtml(sv.story||'')+'</p>';
-      if (sv.quote) h += '<div style="font-size:11px;font-style:italic;color:'+clr+';border-left:3px solid '+clr+';padding-left:8px;line-height:1.5">"'+escHtml(sv.quote)+'"</div>';
-      h += '</div>';
-    });
-    h += '</div>';
-  }
-
   // ── Why this fits ───────────────────────────────────────────────────────
   if (p.match_reason) {
     h += '<div class="rm-msec"><h4>Why This Fits You</h4>';
@@ -3023,6 +3043,23 @@ function showCareerDetail(idx) {
     h += '</div></div>';
   }
 
+
+  // ── Inspiring Personalities — at end, hardcoded inline data ────────────
+  if (_stories && _stories.length) {
+    h += '<div class="rm-msec"><h4>🌟 Inspiring Personalities</h4>';
+    _stories.forEach(function(sv) {
+      h += '<div style="border:1.5px solid '+clr+'33;border-radius:10px;padding:13px;margin-bottom:10px;background:linear-gradient(145deg,'+clr+'08,#fff);position:relative;overflow:hidden">';
+      h += '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+clr+'"></div>';
+      h += '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;margin-top:4px">';
+      h += '<div style="width:36px;height:36px;border-radius:50%;background:'+clr+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌟</div>';
+      h += '<div><div style="font-size:13px;font-weight:800;color:var(--gray-900)">'+escHtml(sv.name||'')+'</div>';
+      h += '<div style="font-size:10px;color:var(--gray-500);margin-top:1px">'+escHtml(sv.bg||'')+'</div></div></div>';
+      h += '<p style="font-size:12px;color:var(--gray-700);line-height:1.65;margin-bottom:'+(sv.quote?'7px':'0')+'">'+escHtml(sv.story||'')+'</p>';
+      if (sv.quote) h += '<div style="font-size:11px;font-style:italic;color:'+clr+';border-left:3px solid '+clr+';padding-left:8px;line-height:1.5">"'+escHtml(sv.quote)+'"</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
 
   h += '</div>'; // rm-mbody
 
