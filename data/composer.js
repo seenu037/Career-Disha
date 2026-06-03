@@ -308,7 +308,8 @@
     'entrepreneur': 'Management', 'supply-chain-manager': 'Management', 'hr-manager': 'Management',
     'ecommerce-manager': 'Management', 'real-estate-manager': 'Management', 'insurance-professional': 'Management',
     'event-manager': 'Management',
-    'ir-specialist': 'University', 'nonprofit-manager': 'University', 'translator': 'University', 'pr-specialist': 'University'
+    'ir-specialist': 'University', 'nonprofit-manager': 'University', 'translator': 'University', 'pr-specialist': 'University',
+    'chemical-engineer': 'Engineering', 'marine-engineer': 'Engineering', 'mining-metallurgical-engineer': 'Engineering'
     // no NIRF category: game-developer, ux-designer, animator-vfx, interior-designer, photographer,
     // content-creator, pilot, performing-artist, sports-manager → use FALLBACK_COLLEGES below
   };

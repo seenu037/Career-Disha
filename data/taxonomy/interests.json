@@ -70,7 +70,19 @@
     "Ayurveda & Wellness": "ayurveda-wellness",
     "Travel & Tourism": "travel-tourism",
     "Stock Trading": "stock-trading",
-    "Cryptocurrency & Web3": "crypto-web3"
+    "Cryptocurrency & Web3": "crypto-web3",
+    "Mechanical Engineering": "mechanical-engineering",
+    "Electronics & Communication": "electronics-comm",
+    "Chemical Engineering": "chemical-engineering",
+    "Marine Engineering": "marine-engineering",
+    "Mining Engineering": "mining-engineering",
+    "Metallurgical Engineering": "metallurgical-engineering",
+    "Industrial Engineering": "industrial-engineering",
+    "Petroleum Engineering": "petroleum-engineering",
+    "Food Technology": "food-technology",
+    "Architecture & Planning": "architecture-planning",
+    "Textile Engineering": "textile-engineering",
+    "Nuclear Engineering": "nuclear-engineering"
   },
   "canonical": {
     "medicine": {

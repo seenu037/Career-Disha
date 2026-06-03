@@ -77,7 +77,19 @@
       "Ayurveda & Wellness": "ayurveda-wellness",
       "Travel & Tourism": "travel-tourism",
       "Stock Trading": "stock-trading",
-      "Cryptocurrency & Web3": "crypto-web3"
+      "Cryptocurrency & Web3": "crypto-web3",
+      "Mechanical Engineering": "mechanical-engineering",
+      "Electronics & Communication": "electronics-comm",
+      "Chemical Engineering": "chemical-engineering",
+      "Marine Engineering": "marine-engineering",
+      "Mining Engineering": "mining-engineering",
+      "Metallurgical Engineering": "metallurgical-engineering",
+      "Industrial Engineering": "industrial-engineering",
+      "Petroleum Engineering": "petroleum-engineering",
+      "Food Technology": "food-technology",
+      "Architecture & Planning": "architecture-planning",
+      "Textile Engineering": "textile-engineering",
+      "Nuclear Engineering": "nuclear-engineering"
     },
     strengthLabels: {
       "Logical thinking": "logical-thinking",
@@ -4948,7 +4960,10 @@
         "vector": {
           "interests": [
             "technology",
-            "government-service"
+            "government-service",
+            "mechanical-engineering",
+            "industrial-engineering",
+            "metallurgical-engineering"
           ],
           "strengths": [
             "logical-thinking",
@@ -5024,7 +5039,9 @@
             "civil-engineering",
             "technology",
             "government-service",
-            "business"
+            "business",
+            "mining-engineering",
+            "architecture-planning"
           ],
           "strengths": [
             "logical-thinking",
@@ -5096,7 +5113,9 @@
         "min_class": "12th-passed",
         "vector": {
           "interests": [
-            "technology"
+            "technology",
+            "electronics-comm",
+            "electrical-engineering"
           ],
           "strengths": [
             "logical-thinking",
@@ -5170,7 +5189,9 @@
           "interests": [
             "space-aerospace",
             "technology",
-            "government-service"
+            "government-service",
+            "aerospace",
+            "marine-engineering"
           ],
           "strengths": [
             "logical-thinking",
@@ -5241,7 +5262,8 @@
             "arts-design",
             "technology",
             "business",
-            "painting-arts"
+            "painting-arts",
+            "architecture-planning"
           ],
           "strengths": [
             "creativity",
@@ -6433,7 +6455,8 @@
             "yoga-wellness",
             "chess",
             "performing-arts",
-            "painting-arts"
+            "painting-arts",
+            "nuclear-engineering"
           ],
           "strengths": [
             "communication",
@@ -6642,7 +6665,8 @@
             "arts-design",
             "performing-arts",
             "business",
-            "classical-dance"
+            "classical-dance",
+            "textile-engineering"
           ],
           "strengths": [
             "creativity",
@@ -6707,7 +6731,8 @@
             "business",
             "arts-design",
             "performing-arts",
-            "travel-tourism"
+            "travel-tourism",
+            "food-technology"
           ],
           "strengths": [
             "communication",
@@ -7109,7 +7134,9 @@
         "vector": {
           "interests": [
             "robotics",
-            "technology"
+            "technology",
+            "mechanical-engineering",
+            "industrial-engineering"
           ],
           "strengths": [
             "logical-thinking",
@@ -7170,7 +7197,8 @@
           "interests": [
             "electrical-engineering",
             "technology",
-            "government-service"
+            "government-service",
+            "electronics-comm"
           ],
           "strengths": [
             "logical-thinking",
@@ -7232,7 +7260,9 @@
           "interests": [
             "biomedical",
             "technology",
-            "medicine"
+            "medicine",
+            "chemical-engineering",
+            "food-technology"
           ],
           "strengths": [
             "analytical",
@@ -7294,7 +7324,10 @@
           "interests": [
             "environmental-science",
             "agriculture",
-            "social-work"
+            "social-work",
+            "petroleum-engineering",
+            "mining-engineering",
+            "chemical-engineering"
           ],
           "strengths": [
             "research",
@@ -7353,7 +7386,8 @@
           "interests": [
             "urban-planning",
             "government-service",
-            "technology"
+            "technology",
+            "architecture-planning"
           ],
           "strengths": [
             "analytical",
@@ -7744,7 +7778,8 @@
             "social-work",
             "yoga-wellness",
             "culinary",
-            "ayurveda-wellness"
+            "ayurveda-wellness",
+            "food-technology"
           ],
           "strengths": [
             "empathy",
@@ -7920,7 +7955,9 @@
             "travel-tourism",
             "culinary",
             "performing-arts",
-            "sports"
+            "sports",
+            "food-technology",
+            "textile-engineering"
           ],
           "strengths": [
             "leadership",
@@ -7980,7 +8017,8 @@
         "vector": {
           "interests": [
             "supply-chain",
-            "business"
+            "business",
+            "industrial-engineering"
           ],
           "strengths": [
             "analytical",
@@ -8717,6 +8755,210 @@
           "Bangalore",
           "Kolkata",
           "Varanasi"
+        ],
+        "adzuna_listings": null,
+        "_market_meta": {
+          "listings_source": "estimate",
+          "salary_source": "hand-authored (estimate)",
+          "refreshed_at": "2026-06-03"
+        }
+      },
+      {
+        "id": "chemical-engineer",
+        "name": {
+          "en": "Chemical / Process Engineer",
+          "te": "కెమికల్ ఇంజినీర్"
+        },
+        "streams": [
+          "MPC",
+          "Science (PCM)",
+          "Science"
+        ],
+        "min_class": "12th-passed",
+        "vector": {
+          "interests": [
+            "chemical-engineering",
+            "petroleum-engineering",
+            "food-technology",
+            "environmental-science",
+            "technology"
+          ],
+          "strengths": [
+            "analytical",
+            "logical-thinking",
+            "technical",
+            "research"
+          ],
+          "subjects": {
+            "math": 0.35,
+            "physics": 0.3,
+            "chemistry": 0.35
+          }
+        },
+        "exams": [
+          "JEE Main",
+          "JEE Advanced",
+          "GATE (Chemical)",
+          "BITSAT"
+        ],
+        "college_tags": [
+          "Engineering"
+        ],
+        "salary_inr": {
+          "entry": 500000,
+          "mid": 1200000,
+          "senior": 2500000
+        },
+        "growth": "medium",
+        "job_density": {
+          "metro": 0.65,
+          "tier2": 0.45,
+          "rural": 0.2
+        },
+        "budget_tier": "mid",
+        "preferred_locations": [
+          "Mumbai",
+          "Vadodara",
+          "Chennai",
+          "Hyderabad",
+          "Pune",
+          "Ahmedabad"
+        ],
+        "adzuna_listings": null,
+        "_market_meta": {
+          "listings_source": "estimate",
+          "salary_source": "hand-authored (estimate)",
+          "refreshed_at": "2026-06-03"
+        }
+      },
+      {
+        "id": "marine-engineer",
+        "name": {
+          "en": "Marine / Naval Engineer",
+          "te": "మెరైన్ ఇంజినీర్"
+        },
+        "streams": [
+          "MPC",
+          "Science (PCM)",
+          "Science"
+        ],
+        "min_class": "12th-passed",
+        "vector": {
+          "interests": [
+            "marine-engineering",
+            "mechanical-engineering",
+            "electrical-engineering",
+            "aerospace",
+            "defence"
+          ],
+          "strengths": [
+            "technical",
+            "analytical",
+            "leadership",
+            "logical-thinking"
+          ],
+          "subjects": {
+            "math": 0.4,
+            "physics": 0.35,
+            "chemistry": 0.25
+          }
+        },
+        "exams": [
+          "IMU CET",
+          "JEE Main",
+          "IMAT (Indian Maritime)",
+          "DNS (Deck Cadet)"
+        ],
+        "college_tags": [
+          "Engineering"
+        ],
+        "salary_inr": {
+          "entry": 600000,
+          "mid": 1500000,
+          "senior": 3500000
+        },
+        "growth": "medium",
+        "job_density": {
+          "metro": 0.5,
+          "tier2": 0.3,
+          "rural": 0.1
+        },
+        "budget_tier": "mid",
+        "preferred_locations": [
+          "Mumbai",
+          "Chennai",
+          "Kolkata",
+          "Visakhapatnam",
+          "Kochi",
+          "Mangalore"
+        ],
+        "adzuna_listings": null,
+        "_market_meta": {
+          "listings_source": "estimate",
+          "salary_source": "hand-authored (estimate)",
+          "refreshed_at": "2026-06-03"
+        }
+      },
+      {
+        "id": "mining-metallurgical-engineer",
+        "name": {
+          "en": "Mining / Metallurgical Engineer",
+          "te": "మైనింగ్ / మెటలర్జికల్ ఇంజినీర్"
+        },
+        "streams": [
+          "MPC",
+          "Science (PCM)",
+          "Science"
+        ],
+        "min_class": "12th-passed",
+        "vector": {
+          "interests": [
+            "mining-engineering",
+            "metallurgical-engineering",
+            "nuclear-engineering",
+            "environmental-science",
+            "technology"
+          ],
+          "strengths": [
+            "analytical",
+            "technical",
+            "research",
+            "logical-thinking"
+          ],
+          "subjects": {
+            "math": 0.35,
+            "physics": 0.35,
+            "chemistry": 0.3
+          }
+        },
+        "exams": [
+          "JEE Main",
+          "JEE Advanced",
+          "GATE (Mining/Metallurgy)",
+          "BITSAT"
+        ],
+        "college_tags": [
+          "Engineering"
+        ],
+        "salary_inr": {
+          "entry": 450000,
+          "mid": 1000000,
+          "senior": 2200000
+        },
+        "growth": "medium",
+        "job_density": {
+          "metro": 0.5,
+          "tier2": 0.4,
+          "rural": 0.3
+        },
+        "budget_tier": "mid",
+        "preferred_locations": [
+          "Dhanbad",
+          "Raipur",
+          "Hyderabad",
+          "Bhubaneswar",
+          "Nagpur",
+          "Kolkata"
         ],
         "adzuna_listings": null,
         "_market_meta": {
