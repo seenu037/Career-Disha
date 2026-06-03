@@ -2748,6 +2748,34 @@ function showCareerDetail(idx) {
 
   h += '<div class="rm-mbody">';
 
+  // ── Inspiring Personalities — shown FIRST so always visible ─────────────
+  var _stories = null;
+  if (typeof INSPIRATION_STORIES !== 'undefined') {
+    _stories = INSPIRATION_STORIES[p.career_id] || null;
+    if (!_stories && p.specific_career) {
+      // fallback: scan all keys for partial match
+      var _sn = p.specific_career.toLowerCase().split(/[\s\/\(]/)[0]; // first word
+      Object.keys(INSPIRATION_STORIES).forEach(function(k) {
+        if (!_stories && k.indexOf(_sn) !== -1) _stories = INSPIRATION_STORIES[k];
+      });
+    }
+  }
+  if (_stories && _stories.length) {
+    h += '<div class="rm-msec"><h4>🌟 Inspiring Personalities</h4>';
+    _stories.forEach(function(sv) {
+      h += '<div style="border:1.5px solid '+clr+'33;border-radius:10px;padding:13px;margin-bottom:10px;background:linear-gradient(145deg,'+clr+'08,#fff);position:relative;overflow:hidden">';
+      h += '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+clr+'"></div>';
+      h += '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;margin-top:4px">';
+      h += '<div style="width:36px;height:36px;border-radius:50%;background:'+clr+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌟</div>';
+      h += '<div><div style="font-size:13px;font-weight:800;color:var(--gray-900)">'+escHtml(sv.name||'')+'</div>';
+      h += '<div style="font-size:10px;color:var(--gray-500);margin-top:1px">'+escHtml(sv.bg||'')+'</div></div></div>';
+      h += '<p style="font-size:12px;color:var(--gray-700);line-height:1.65;margin-bottom:'+(sv.quote?'7px':'0')+'">'+escHtml(sv.story||'')+'</p>';
+      if (sv.quote) h += '<div style="font-size:11px;font-style:italic;color:'+clr+';border-left:3px solid '+clr+';padding-left:8px;line-height:1.5">"'+escHtml(sv.quote)+'"</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
   // ── Why this fits ───────────────────────────────────────────────────────
   if (p.match_reason) {
     h += '<div class="rm-msec"><h4>Why This Fits You</h4>';
@@ -2995,27 +3023,6 @@ function showCareerDetail(idx) {
     h += '</div></div>';
   }
 
-  // ── Inspirational Personalities — try multiple key strategies ───────────
-  var stories = null;
-  if (typeof INSPIRATION_STORIES !== 'undefined') {
-    stories = INSPIRATION_STORIES[p.career_id]
-           || INSPIRATION_STORIES[(p.specific_career||'').toLowerCase().replace(/\s*[\/(].*/,'').trim().replace(/\s+/g,'-').replace(/[^a-z\-]/g,'')]
-           || null;
-  }
-  if (stories && stories.length) {
-    h += '<div class="rm-msec"><h4>🌟 Inspiring Personalities</h4>';
-    stories.forEach(function(s) {
-      h += '<div style="border:1px solid var(--gray-100);border-radius:10px;padding:12px;margin-bottom:10px;background:linear-gradient(135deg,#FFFBEB,#fff)">';
-      h += '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:6px">';
-      h += '<div style="width:38px;height:38px;border-radius:50%;background:'+clr+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">🌟</div>';
-      h += '<div><div style="font-size:13px;font-weight:800;color:var(--gray-900)">'+escHtml(s.name)+'</div>';
-      h += '<div style="font-size:10px;color:var(--gray-500);margin-top:1px">'+escHtml(s.bg||'')+'</div></div></div>';
-      h += '<p style="font-size:12px;color:var(--gray-700);line-height:1.65;margin-bottom:'+(s.quote?'6px':'0')+'">'+escHtml(s.story||'')+'</p>';
-      if (s.quote) h += '<div style="font-size:11px;font-style:italic;color:'+clr+';border-left:3px solid '+clr+';padding-left:8px;margin-top:4px">"'+escHtml(s.quote)+'"</div>';
-      h += '</div>';
-    });
-    h += '</div>';
-  }
 
   h += '</div>'; // rm-mbody
 
