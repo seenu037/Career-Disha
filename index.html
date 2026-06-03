@@ -3650,19 +3650,14 @@ function _demoSanjay() {
   _demoSingle('famChips','family','Parents in government');
 }
 
-// 18 — Satwik: Bihar, Inter MPC — Quantum Computing + AI/ML
+// 18 — Satwik: Bihar, 9th Class (10th Studying or Below) — Quantum Computing + AI/ML
 function _demoSatwik() {
   document.getElementById('f_state').value='Bihar'; onStateChange();
-  document.getElementById('f_age').value='17';
-  document.getElementById('f_level').value='Inter 2nd year'; onClassChange();
-  var br=document.getElementById('f_branch');
-  if(br){ br.value='MPC'; currentBranch='MPC'; onBranchChange(); }
-  document.getElementById('f_passion').value='Fascinated by quantum mechanics and computing — want to build quantum algorithms that solve problems impossible for classical computers, and work at ISRO, IBM Quantum, or Google Quantum AI'; updateCC();
-  document.getElementById('f_board').value='BSEB';
-  document.getElementById('f_stream').value='MPC'; currentStream='MPC'; updateInterSubjects();
-  _demoMarks('tenth',{English:92,SecondLanguage:88,Mathematics:98,Science:96,SocialStudies:85});
-  _demoMarks('inter',{Mathematics:98,Physics:95,Chemistry:88,English:90,SecondLanguage:85});
-  _demoExam('JEE Mains','99 percentile');
+  document.getElementById('f_age').value='15';
+  document.getElementById('f_level').value='10th studying'; onClassChange();
+  document.getElementById('f_passion').value='In 9th class and already exploring quantum computing — dream of building quantum algorithms at ISRO or Google Quantum AI'; updateCC();
+  // 8th class (previous year) marks — shown as "Previous Class Marks" for 10th-studying
+  _demoMarks('tenth',{English:90,SecondLanguage:85,Mathematics:98,Science:96,SocialStudies:82});
   _demoChips('interestChips','interests',['Quantum Computing','AI & Machine Learning','Technology','Data Science']);
   _demoChips('strengthChips','strengths',['Analytical','Logical thinking','Research','Technical']);
   _demoBudget('₹7–15 Lakh');
