@@ -844,6 +844,12 @@ textarea{resize:vertical;min-height:78px}
     <div class="r-body"><div class="counselor-note" id="rNote" style="margin:0"></div></div>
   </details>
 
+  <!-- Inspiration stories — one card per recommended career, open by default -->
+  <details class="r-section" id="inspirationSection" open>
+    <summary>🌟 Inspiring Personalities — per Career</summary>
+    <div class="r-body" id="inspirationBody"></div>
+  </details>
+
   <!-- Collapsed by default — click to expand -->
   <details class="r-section" id="inputSummaryCard">
     <summary>📋 Your Profile Inputs</summary>
@@ -2141,6 +2147,7 @@ function renderAll(data, formData) {
   renderGovtJobs(data.govt_jobs);
   renderPrivateJobs();
   renderBudget(data.top_paths || [], formData);
+  renderInspiration(data.top_paths || []);
   // Force-close sections that must always start collapsed after render
   var _isc = document.getElementById('inputSummaryCard'); if (_isc) _isc.open = false;
   var _gjc = document.getElementById('govtJobsCard');     if (_gjc) _gjc.open = false;
@@ -3040,6 +3047,53 @@ function renderChart(domains) {
 }
 
 // ── BUDGET TABLE ──────────────────────────────────────────
+// ── INSPIRATION SECTION ───────────────────────────────────────────────────
+function renderInspiration(paths) {
+  var body = document.getElementById('inspirationBody');
+  if (!body) return;
+  var CLRS = ['#059669','#0891B2','#7C3AED','#D97706','#EC4899','#6B7280'];
+  var html = '';
+
+  paths.forEach(function(p, idx) {
+    var stories = INSPIRATION_STORIES[p.career_id];
+    if (!stories || !stories.length) return;
+    var clr = CLRS[Math.min(idx, CLRS.length - 1)];
+
+    // Career sub-header
+    html += '<div style="margin-bottom:14px">';
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">';
+    html += '<span style="background:'+clr+';color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:12px">#'+(idx+1)+' '+escHtml(p.specific_career||'')+'</span>';
+    html += '</div>';
+
+    // Story cards for this career
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">';
+    stories.forEach(function(s) {
+      html += '<div style="border:1.5px solid '+clr+'33;border-radius:12px;padding:14px;background:linear-gradient(145deg,'+clr+'08,#fff);position:relative;overflow:hidden">';
+      // Accent bar
+      html += '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+clr+'"></div>';
+      // Name + background
+      html += '<div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;margin-top:4px">';
+      html += '<div style="width:36px;height:36px;border-radius:50%;background:'+clr+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌟</div>';
+      html += '<div><div style="font-size:13px;font-weight:800;color:var(--gray-900);line-height:1.3">'+escHtml(s.name)+'</div>';
+      html += '<div style="font-size:10px;color:var(--gray-500);margin-top:1px">'+escHtml(s.bg||'')+'</div></div>';
+      html += '</div>';
+      // Story
+      html += '<p style="font-size:11.5px;color:var(--gray-700);line-height:1.7;margin-bottom:'+(s.quote?'8px':'0')+'">'+escHtml(s.story||'')+'</p>';
+      // Quote
+      if (s.quote) {
+        html += '<div style="font-size:11px;font-style:italic;color:'+clr+';border-left:3px solid '+clr+';padding-left:8px;line-height:1.5">"'+escHtml(s.quote)+'"</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  if (!html) {
+    html = '<div style="font-size:12px;color:var(--gray-400);padding:8px">No inspiration stories available for current recommendations.</div>';
+  }
+  body.innerHTML = html;
+}
+
 function renderBudget(paths, formData) {
   var userBudget = (formData && formData.budget) || 'Not specified';
   // Upper bound of the student's budget bracket, in ₹ Lakh.
@@ -3682,6 +3736,7 @@ function startOver() {
   var ic = document.getElementById('inputSummaryCard'); if (ic) ic.open = false;
   var gc = document.getElementById('govtJobsCard'); if (gc) gc.open = false;
   document.getElementById('rNote').innerHTML = '';
+  var ib = document.getElementById('inspirationBody'); if (ib) ib.innerHTML = '';
   document.getElementById('debugJson').textContent = '';
   document.getElementById('debugJson').style.display = 'none';
   if (mChart) { mChart.destroy(); mChart=null; }
