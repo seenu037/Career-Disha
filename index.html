@@ -469,12 +469,12 @@ textarea{resize:vertical;min-height:78px}
 /* Interest chip category headers */
 .chips-cat-hdr{font-size:10px;font-weight:800;color:var(--deep-blue);text-transform:uppercase;letter-spacing:.6px;padding:8px 2px 3px;width:100%;opacity:.75;margin-top:4px}
 .chips-cat-hdr:first-child{margin-top:0;padding-top:2px}
-.rescore-btn{display:none;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-pale);border:1.5px solid var(--blue-light);border-radius:20px;padding:5px 12px;cursor:pointer;margin-top:10px;transition:all .2s}
-.rescore-btn:hover{background:var(--blue);color:#fff}
+.rescore-btn{display:none;align-items:center;gap:6px;font-size:12px;font-weight:700;border:none;border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .rescore-btn.visible{display:inline-flex}
-.rescore-btn.pending{background:var(--saffron);color:#fff;border-color:var(--saffron-dark);animation:fabPulse 1.4s ease-in-out infinite}
-.rescore-flash{font-size:11px;color:var(--green);font-weight:600;margin-left:8px;opacity:0;transition:opacity .4s}
-.rescore-flash.show{opacity:1}
+/* In sticky bar: teal idle state, orange pulsing when changes are pending */
+.rescore-bar{background:var(--blue-pale);color:var(--blue);border:1.5px solid var(--blue-light)}
+.rescore-bar:hover{background:var(--blue);color:#fff}
+.rescore-btn.pending{background:var(--saffron)!important;color:#fff!important;border-color:var(--saffron-dark)!important;animation:fabPulse 1.4s ease-in-out infinite}
 
 @media(max-width:860px){
   .mobile-tabbar{display:flex}
@@ -580,8 +580,6 @@ textarea{resize:vertical;min-height:78px}
       <span class="panel-title">📋 Your Profile</span>
       <span class="panel-sub">Fill in 3 steps</span>
     </div>
-    <button class="rescore-btn" id="rescoreBtn" onclick="liveUpdate()" title="Apply input changes to output (no AI call needed)">⚡ Refresh Scores</button>
-    <span class="rescore-flash" id="rescoreFlash">✓ Updated</span>
   </div>
 
   <!-- Single-page form — all sections visible, scroll to fill -->
@@ -766,7 +764,7 @@ textarea{resize:vertical;min-height:78px}
 
 <!-- Sticky submit bar — always visible at bottom of form panel -->
 <div class="form-sticky-bar">
-  <button class="btn btn-outline" onclick="loadDemo()" title="Load demo from top bar" style="flex-shrink:0">⚡ Demo</button>
+  <button id="rescoreBtn" class="rescore-btn rescore-bar" onclick="liveUpdate()" title="Apply input changes to output instantly">🔄 Apply Changes</button>
   <button class="btn btn-submit" onclick="submitForm()" style="flex:1">🚀 Get AI Career Guidance</button>
 </div>
 
