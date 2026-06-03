@@ -82,7 +82,8 @@
     "Food Technology": "food-technology",
     "Architecture & Planning": "architecture-planning",
     "Textile Engineering": "textile-engineering",
-    "Nuclear Engineering": "nuclear-engineering"
+    "Nuclear Engineering": "nuclear-engineering",
+    "Quantum Computing": "quantum-computing"
   },
   "canonical": {
     "medicine": {

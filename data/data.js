@@ -89,7 +89,8 @@
       "Food Technology": "food-technology",
       "Architecture & Planning": "architecture-planning",
       "Textile Engineering": "textile-engineering",
-      "Nuclear Engineering": "nuclear-engineering"
+      "Nuclear Engineering": "nuclear-engineering",
+      "Quantum Computing": "quantum-computing"
     },
     strengthLabels: {
       "Logical thinking": "logical-thinking",
@@ -4738,7 +4739,8 @@
             "finance",
             "chess",
             "mobile-gaming",
-            "crypto-web3"
+            "crypto-web3",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
@@ -4818,7 +4820,8 @@
             "finance",
             "digital-marketing",
             "chess",
-            "stock-trading"
+            "stock-trading",
+            "quantum-computing"
           ],
           "strengths": [
             "analytical",
@@ -4888,7 +4891,8 @@
           "interests": [
             "cybersecurity",
             "technology",
-            "government-service"
+            "government-service",
+            "quantum-computing"
           ],
           "strengths": [
             "analytical",
@@ -5191,7 +5195,8 @@
             "technology",
             "government-service",
             "aerospace",
-            "marine-engineering"
+            "marine-engineering",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
@@ -6951,7 +6956,8 @@
           "interests": [
             "ai-ml",
             "technology",
-            "chess"
+            "chess",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
@@ -7012,7 +7018,8 @@
         "vector": {
           "interests": [
             "cloud-computing",
-            "technology"
+            "technology",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
@@ -7075,7 +7082,8 @@
             "blockchain",
             "technology",
             "finance",
-            "crypto-web3"
+            "crypto-web3",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
@@ -7198,7 +7206,8 @@
             "electrical-engineering",
             "technology",
             "government-service",
-            "electronics-comm"
+            "electronics-comm",
+            "quantum-computing"
           ],
           "strengths": [
             "logical-thinking",
