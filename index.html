@@ -667,6 +667,12 @@ textarea{resize:vertical;min-height:78px}
     <div class="form-group mt4">
       <label class="field-label">Career Interests <span class="tel" data-lkey="interests">ఆసక్తులు</span></label>
       <div id="interestHint" style="font-size:12px;color:var(--saffron);font-weight:600;margin-bottom:5px;">⭐ Your FIRST selection becomes your primary interest for alignment analysis</div>
+      <!-- Selected interests summary — updated on every click -->
+      <div id="selectedInterestsBar" style="display:none;flex-wrap:wrap;gap:5px;padding:7px 10px;background:var(--green-light);border:1.5px solid var(--green);border-radius:8px;margin-bottom:6px;align-items:center">
+        <span style="font-size:10px;font-weight:700;color:var(--green);white-space:nowrap">✓ Selected:</span>
+        <div id="selectedInterestsTags" style="display:flex;flex-wrap:wrap;gap:4px;flex:1"></div>
+        <button onclick="clearAllInterests()" style="font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;padding:0 4px;white-space:nowrap;font-weight:600">✕ Clear all</button>
+      </div>
       <input type="text" id="interestSearch" placeholder="🔍 Search interests… (e.g. AI, design, finance)" oninput="filterInterestChips()" style="width:100%;box-sizing:border-box;font-size:12px;padding:7px 10px;border:1.5px solid var(--gray-200);border-radius:8px;margin-bottom:6px;">
       <div class="chips chips-scroll" id="interestChips"></div>
     </div>
@@ -1182,6 +1188,7 @@ var mChart = null;
           if (idx === -1) sel.interests.push(item); else sel.interests.splice(idx, 1);
           c.querySelectorAll('.chip.on').forEach(function(x,i){ if(i===0) x.classList.add('primary-int'); else x.classList.remove('primary-int'); });
           buildExamCategories();
+          updateSelectedDisplay();
           scheduleUpdate();
         });
         c.appendChild(d);
@@ -1623,6 +1630,48 @@ function getExamCategoriesForState(state) {
 }
 
 // Filter the (long) interest chip list by the search box; selected chips stay selected.
+function updateSelectedDisplay() {
+  var bar  = document.getElementById('selectedInterestsBar');
+  var tags = document.getElementById('selectedInterestsTags');
+  if (!bar || !tags) return;
+  var list = sel.interests || [];
+  if (!list.length) { bar.style.display = 'none'; tags.innerHTML = ''; return; }
+  bar.style.display = 'flex';
+  tags.innerHTML = list.map(function(item, i) {
+    var isFirst = i === 0;
+    return '<span style="display:inline-flex;align-items:center;gap:3px;background:'+(isFirst?'var(--green)':'var(--blue)')+
+      ';color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px">' +
+      (isFirst ? '⭐ ' : '') + escHtml(item) +
+      '<span onclick="removeInterest(\''+escHtml(item).replace(/'/g,"\\'")+'\')" style="cursor:pointer;opacity:.75;margin-left:2px;font-size:11px">×</span></span>';
+  }).join('');
+}
+
+function removeInterest(item) {
+  var idx = sel.interests.indexOf(item);
+  if (idx !== -1) sel.interests.splice(idx, 1);
+  // remove .on/.primary-int from the chip
+  document.querySelectorAll('#interestChips .chip').forEach(function(c) {
+    if (c.textContent === item) { c.classList.remove('on', 'primary-int'); }
+  });
+  // re-assign primary-int to first remaining
+  document.querySelectorAll('#interestChips .chip.on').forEach(function(c, i) {
+    if (i === 0) c.classList.add('primary-int'); else c.classList.remove('primary-int');
+  });
+  updateSelectedDisplay();
+  buildExamCategories();
+  scheduleUpdate();
+}
+
+function clearAllInterests() {
+  sel.interests = [];
+  document.querySelectorAll('#interestChips .chip').forEach(function(c) {
+    c.classList.remove('on', 'primary-int');
+  });
+  updateSelectedDisplay();
+  buildExamCategories();
+  scheduleUpdate();
+}
+
 function filterInterestChips() {
   var q = (document.getElementById('interestSearch').value || '').toLowerCase().trim();
   document.querySelectorAll('#interestChips .chip').forEach(function(c) {
@@ -2838,6 +2887,7 @@ function _demoReset() {
   });
   sel.interests=[]; sel.strengths=[]; sel.scholarships=[]; sel.budget=''; sel.location=''; sel.family='';
   currentBranch=''; currentStream='';
+  updateSelectedDisplay(); // clear the selected bar
   document.querySelectorAll('#interestChips .chip,#strengthChips .chip,#schlChips .chip').forEach(function(c){ c.classList.remove('on','primary-int'); });
   document.querySelectorAll('#famChips .chip').forEach(function(c){ c.classList.remove('on'); });
   document.querySelectorAll('.budget-opt').forEach(function(b){ b.classList.remove('on'); });
@@ -2862,7 +2912,7 @@ function _demoChips(cid, key, vals) {
       }
     });
   });
-  if (key==='interests') buildExamCategories();
+  if (key==='interests') { buildExamCategories(); updateSelectedDisplay(); }
 }
 
 function _demoSingle(cid, key, val) {
