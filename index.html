@@ -894,6 +894,11 @@ textarea{resize:vertical;min-height:78px}
 // ── INSPIRATION STORIES — 2-3 real personalities per career ───────────────
 var INSPIRATION_STORIES = {
   // ── Quantum Computing ────────────────────────────────────────────────────
+  'quantum-engineer':[
+    {name:'Dr. John Preskill',bg:'Caltech Professor | Father of Quantum Information',story:'Coined the term "Quantum Supremacy" and built the theoretical foundation for quantum computing. His free Caltech lecture notes are used by quantum researchers at IITs and IISc. He predicted Google\'s 2019 quantum supremacy result years before it happened.',quote:'"Quantum computing will be transformative, but the path there is longer than the hype suggests."'},
+    {name:'Dr. Rohit Prasad',bg:'Chief AI Officer, Amazon | Patna, Bihar',story:'A Bihar-born engineer who led Alexa development and now drives Amazon Braket — Amazon\'s quantum cloud platform. His journey from a small Bihar town to leading Amazon\'s quantum and AI strategy proves that the quantum future belongs to anyone with curiosity and persistence.',quote:'"Quantum is not a replacement for classical computing — it is a new dimension of problem-solving."'},
+    {name:'Dr. Urbasi Sinha',bg:'Quantum Physicist, RRI Bangalore | India',story:'One of India\'s leading quantum scientists, her lab demonstrated single-photon quantum key distribution over 200m, establishing India\'s first quantum communication testbed. She is building the scientific foundation for India\'s National Quantum Mission (₹6,000 Cr allocation).',quote:'"India is not behind in quantum — we are building the right foundations to leap ahead."'}
+  ],
   'quantum-computing':[
     {name:'Dr. Preskill (John Preskill)',bg:'Caltech Professor | Father of Quantum Information',story:'Coined the term "Quantum Supremacy" and has spent 30 years building the theoretical foundation for quantum computing. His free Caltech lecture notes (available online) are used by quantum researchers worldwide including at IISc, IITs, and TIFR. He predicted Google\'s 2019 quantum supremacy result years before it happened.',quote:'"Quantum computing will be transformative, but the path there is longer than the hype suggests."'},
     {name:'Dr. Rohit Prasad',bg:'Chief AI Officer, Amazon | Patna, Bihar',story:'A Bihar-born engineer who led the development of Alexa — a quantum-classical hybrid AI system at scale — and is now driving Amazon\'s quantum cloud platform (Amazon Braket). His journey from a small Bihar town to leading Amazon\'s AI and quantum strategy is the defining Indian quantum computing success story.',quote:'"Quantum is not a replacement for classical computing — it is a new dimension of problem-solving."'},
@@ -2702,21 +2707,53 @@ function renderTree(paths, formData) {
     +'<marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#CBD5E1"/></marker>'
     +'</defs>';
 
-  // Current position
-  var level=(formData&&formData.level)||'Current Level';
-  var stream=(formData&&formData.stream&&formData.stream!=='Not specified'&&formData.stream!=='Not yet completed')?(' — '+formData.stream):'';
-  var cur=level+stream; if(cur.length>32)cur=cur.slice(0,30)+'…';
+  var level=(formData&&formData.level)||'';
+  var stream=(formData&&formData.stream&&formData.stream!=='Not specified'&&formData.stream!=='Not yet completed')?formData.stream:'';
+  var state=(formData&&formData.state)||'';
+  var isBelow10th = level==='10th studying';
+
+  // ── For young students (9th/below 10th): show sequential academic journey ─
+  if (isBelow10th) {
+    // Sequential path: Current Class → 10th Board → Stream Choice → Exam → Career Fork
+    var MSTEPS=[
+      {label:'📍 Current: ' + level.replace('10th studying','9th / 10th Studying') + (state?' — '+state:''), sub:'Your starting point', bg:'#1A237E'},
+      {label:'📚 Clear 10th Board Exam', sub:'CBSE / State Board — target 85%+', bg:'#0369A1'},
+      {label:'🔬 Choose Inter Stream', sub:'MPC (Tech/Engg) · BiPC (Medical) · Commerce', bg:'#7C3AED'},
+      {label:'✏️ Crack JEE / NEET / CUET', sub:'Prepare from 11th itself', bg:'#D97706'},
+      {label:'🔀 Choose Your Career', sub:'Click nodes below — colleges, budget, jobs', bg:'#FF6B00'}
+    ];
+    var stepH=54, stepGap=62, totalH=(MSTEPS.length-1)*stepGap+stepH;
+    var stepW=240;
+    MSTEPS.forEach(function(ms,i){
+      var y=i*(stepGap)+stepH/2;
+      if(i>0) svg+=arw(CX,( (i-1)*stepGap+stepH ), CX, y-stepH/2+2, '#CBD5E1');
+      svg+='<rect x="'+(CX-stepW/2)+'" y="'+(y-stepH/2)+'" width="'+stepW+'" height="'+stepH+'" rx="12" fill="'+ms.bg+'" filter="url(#ds3)"/>';
+      svg+='<text x="'+CX+'" y="'+(y-8)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+escHtml(ms.label)+'</text>';
+      svg+='<text x="'+CX+'" y="'+(y+12)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.8)" font-family="Inter,sans-serif">'+escHtml(ms.sub)+'</text>';
+    });
+    // Career nodes below the last step
+    var forkY=totalH+8;
+    var xs2=getXs(n);
+    paths.slice(0,n).forEach(function(p2,i){
+      svg+=arw(CX, totalH, xs2[i], forkY+20, BDCLRS[i]);
+      svg+=careerNode(p2,i,xs2[i],forkY+NH/2+20);
+    });
+    var totalViewH=forkY+NH+40;
+    wrap.innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+totalViewH+'" style="max-width:'+W+'px;min-width:340px;overflow:visible;display:block;margin:0 auto">'+svg+'</svg>';
+    return;
+  }
+
+  // ── For Inter / Degree students: existing fork layout ─────────────────────
+  var cur=level+(stream?' — '+stream:''); if(cur.length>32)cur=cur.slice(0,30)+'…';
   svg+='<rect x="'+(CX-115)+'" y="'+(R0Y-24)+'" width="230" height="48" rx="12" fill="#1A237E" filter="url(#ds3)"/>';
   svg+='<text x="'+CX+'" y="'+(R0Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">📍 '+escHtml(cur)+'</text>';
   svg+='<text x="'+CX+'" y="'+(R0Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.7)" font-family="Inter,sans-serif">Your starting point</text>';
 
-  // Decision fork
   svg+=arw(CX,R0Y+24,CX,R1Y-24,'#CBD5E1');
   svg+='<rect x="'+(CX-120)+'" y="'+(R1Y-24)+'" width="240" height="48" rx="12" fill="#FF6B00" filter="url(#ds3)"/>';
   svg+='<text x="'+CX+'" y="'+(R1Y-5)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter,sans-serif">🔀 Choose Your Career Path</text>';
   svg+='<text x="'+CX+'" y="'+(R1Y+13)+'" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.85)" font-family="Inter,sans-serif">Click any node below for colleges, budget, jobs &amp; more</text>';
 
-  // All career nodes in a single row
   var xs=getXs(n);
   paths.slice(0,n).forEach(function(p,i){
     svg+=arw(CX,R1Y+24,xs[i],R2Y-NH/2,BDCLRS[i]);
@@ -2788,19 +2825,20 @@ function showCareerDetail(idx) {
       {name:'Savitribai Phule',bg:'India\'s First Female Teacher | Naigaon, Maharashtra',story:'In 1848 she co-founded India\'s first school for girls. Students threw stones at her — she carried an extra sari to change when she arrived, then simply taught. She transformed a nation\'s relationship with education.',quote:'Knowledge is the greatest wealth. Attain it.'}
     ]
   };
-  // Also key by exact specific_career name (most reliable — shown in popup title)
-  var _INSP_BY_NAME = {
-    'Veterinary Doctor':           _INSP_INLINE['veterinarian'],
-    'Dentist (BDS)':               _INSP_INLINE['dentist-bds'],
-    'Agricultural Scientist':      _INSP_INLINE['agricultural-scientist'],
-    'Nurse (B.Sc Nursing)':        _INSP_INLINE['nurse'],
-    'Environmental Scientist':     _INSP_INLINE['environmental-scientist'],
-    'Doctor (MBBS)':               _INSP_INLINE['doctor-mbbs'],
-    'Civil Servant (IAS / IPS / IFS)': _INSP_INLINE['civil-servant'],
-    'Teacher (School)':            _INSP_INLINE['teacher']
-  };
-  // Lookup chain: name match → career_id match → global → null
+  // Build name→stories map from CAREER_DATA (all 65 careers, guaranteed match)
+  var _INSP_BY_NAME = {};
+  if (window.CAREER_DATA && window.CAREER_DATA.careers && typeof INSPIRATION_STORIES !== 'undefined') {
+    window.CAREER_DATA.careers.forEach(function(c) {
+      var s = INSPIRATION_STORIES[c.id] || _INSP_INLINE[c.id];
+      if (s) { _INSP_BY_NAME[c.name.en] = s; _INSP_BY_NAME[c.id] = s; }
+    });
+  }
+  // Also add inline hardcoded entries
+  Object.keys(_INSP_INLINE).forEach(function(k){ if(!_INSP_BY_NAME[k]) _INSP_BY_NAME[k]=_INSP_INLINE[k]; });
+
+  // Lookup chain: name → id → inline → null
   var _stories = _INSP_BY_NAME[p.specific_career]
+              || _INSP_BY_NAME[p.career_id]
               || _INSP_INLINE[p.career_id]
               || (typeof INSPIRATION_STORIES !== 'undefined' ? INSPIRATION_STORIES[p.career_id] : null)
               || null;
@@ -2964,6 +3002,7 @@ function showCareerDetail(idx) {
     'civil-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
     'electrical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
     'mechanical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
+    'quantum-engineer':  ['General job boards','Startup / Tech','Fresher / Internship'],
     'aerospace-engineer':['General job boards','Startup / Tech'],
     'electronics-engineer':['General job boards','Startup / Tech','Fresher / Internship'],
     'biomedical-engineer':['General job boards','Startup / Tech','Fresher / Internship'],

@@ -4256,6 +4256,78 @@
         "salary_source": "hand-authored (estimate)",
         "refreshed_at": "2026-06-03"
       }
+    },
+    {
+      "id": "quantum-engineer",
+      "name": {
+        "en": "Quantum Computing Engineer",
+        "te": "క్వాంటమ్ కంప్యూటింగ్ ఇంజినీర్"
+      },
+      "streams": [
+        "MPC",
+        "Science (PCM)",
+        "Science"
+      ],
+      "min_class": "12th-passed",
+      "vector": {
+        "interests": [
+          "quantum-computing",
+          "technology",
+          "data-science",
+          "ai-ml",
+          "cybersecurity",
+          "space-aerospace",
+          "nuclear-engineering"
+        ],
+        "strengths": [
+          "analytical",
+          "research",
+          "logical-thinking",
+          "technical"
+        ],
+        "subjects": {
+          "math": 0.5,
+          "physics": 0.4,
+          "chemistry": 0.1
+        }
+      },
+      "exams": [
+        "JEE Advanced",
+        "GATE (Physics / CS)",
+        "JEST (Joint Entrance Screening Test)",
+        "TIFR GS (Physics/CS)",
+        "BARC OCES/DGFS"
+      ],
+      "college_tags": [
+        "Engineering",
+        "University"
+      ],
+      "salary_inr": {
+        "entry": 1200000,
+        "mid": 3000000,
+        "senior": 6000000
+      },
+      "growth": "high",
+      "job_density": {
+        "metro": 0.9,
+        "tier2": 0.2,
+        "rural": 0.1
+      },
+      "budget_tier": "high",
+      "preferred_locations": [
+        "Bengaluru",
+        "Mumbai",
+        "Hyderabad",
+        "Delhi",
+        "Pune",
+        "Chennai"
+      ],
+      "adzuna_listings": null,
+      "_market_meta": {
+        "listings_source": "estimate",
+        "salary_source": "hand-authored (estimate, IBM/Google quantum roles)",
+        "refreshed_at": "2026-06-03"
+      }
     }
   ]
 }
